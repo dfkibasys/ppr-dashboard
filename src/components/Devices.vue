@@ -2,12 +2,11 @@
     <div class="cardContainer" id="deviceContainer">
         <div class="card" v-for="device in devices" :key="device.id">
             <div class="card-header">
-                <h5 class="card-title"><span>{{device.componentName}}</span>
+                <h5 class="card-title">{{device.componentName}}
                     <button type="button" data-toggle="modal" data-target="#finiteAutomaton"
                             class="btn btn-info float-right"
                             data-bind="attr: { 'data-state': currentState, 'data-index': $index }">
-                        <span>{{device.currentMode}}</span> -
-                        <span>{{device.currentState}}</span>
+                        {{device.currentMode}} - {{device.currentState}}
                     </button>
                 </h5>
             </div>
@@ -15,7 +14,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-4 image">
-                            <img data-bind="attr: { 'src': '/img/' + type() + '.png' }"/>
+                            <img :src="require('../assets/' + device.type + '.png')">
                         </div>
                         <div class="col-3">
                             {{$t("translation.type_k")}}: <br>
@@ -24,16 +23,15 @@
                             {{$t("translation.capability_k")}}: <br>
                         </div>
                         <div class="col-5 properties">
-                            <a target="_blank" data-bind="attr: { href: docuLink }"><span>{{device.type}}</span></a>
+                            <a target="_blank" data-bind="attr: { href: docuLink }">{{device.type}}</a>
                             <br>
-                            <!--                         <span data-bind="text: location"></span><br> -->
-                            <span>{{device.serial}}</span><br>
-                            <span>{{device.capability.length-1}}</span> <a href="#capabilityOverview"
+                            <!--  {{device.location}}<br> -->
+                            {{device.serial}}<br>
+                            {{device.capability.length-1}} <a href="#capabilityOverview"
                                                                                      data-toggle="modal"
                                                                                      data-target="#capabilityOverview"
                                                                                      data-bind="attr: {'data-index': $index}"
-                                                                                     class="cap-link">(<span
-                                data-bind="i18n: 'show'"></span>)</a><br>
+                                                                                     class="cap-link">({{$t("translation.show")}})</a><br>
                         </div>
                     </div>
                 </div>
@@ -53,7 +51,18 @@
                     componentName: "My MiR",
                     currentMode: "AA",
                     currentState: "BB",
+                    location: "MRK4.0 Lab",
                     serial: 3232,
+                    type: "logo",
+                    capability: ["Pick and Place", "default"]
+                },
+                {
+                    id: 2,
+                    componentName: "My KUKA",
+                    currentMode: "AA",
+                    currentState: "BB",
+                    location: "MRK4.0 Lab",
+                    serial: 3254332,
                     type: "MiR 100",
                     capability: ["Pick and Place", "default"]
                 }]

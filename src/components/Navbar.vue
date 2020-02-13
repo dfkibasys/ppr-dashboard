@@ -1,8 +1,8 @@
 <template>
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <img src="../assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt="">
-            <img src="../assets/BaSys-Logo.png" width="150" alt="">
+            <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt="">
+            <img src="@/assets/BaSys-Logo.png" width="150" alt="">
         </a>
 
         <ul class="nav navbar-nav flex-row" id="pagination">
