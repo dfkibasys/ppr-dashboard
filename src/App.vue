@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar />
     <Devices />
+
   </div>
 </template>
 
