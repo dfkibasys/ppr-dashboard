@@ -114,7 +114,7 @@
             as="geometry"/&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
         </div>
         <div class="mxgraph" style="position:relative;overflow:auto;"></div>
-        <b-modal id="modal-1" title="BootstrapVue" size="lg">
+        <b-modal id="modal-pack" title="BootstrapVue" size="lg">
             <template v-slot:modal-header>
                 <h5 class="modal-title">PackML Automaton</h5>
                 <button type="button" id="stop-btn" class="btn btn-danger ml-3">Stop</button>

@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="cardContainer" id="deviceContainer">
-            <div class="card" v-for="device in devices" :key="device.id">
+            <div class="card" v-for="(device, index) in devices" :key="device.id">
                 <div class="card-header">
                     <h5 class="card-title">{{device.componentName}}
-                        <b-button v-b-modal.modal-1
+                        <b-button v-b-modal.modal-pack
                                   class="btn btn-info float-right"
                                   data-bind="attr: { 'data-state': currentState, 'data-index': $index }">
                             {{device.currentMode}} - {{device.currentState}}
@@ -24,15 +24,12 @@
                                 {{$t("translation.capability_k")}}: <br>
                             </div>
                             <div class="col-5 properties">
-                                <a target="_blank" data-bind="attr: { href: docuLink }">{{device.type}}</a>
+                                <a target="_blank" v-bind:href="device.docuLink">{{device.type}}</a>
                                 <br>
                                 {{device.location}}<br>
                                 {{device.serial}}<br>
-                                {{device.capability.length-1}} <a href="#capabilityOverview"
-                                                                  data-toggle="modal"
-                                                                  data-target="#capabilityOverview"
-                                                                  data-bind="attr: {'data-index': $index}"
-                                                                  class="cap-link">({{$t("translation.show")}})</a><br>
+                                {{device.capability.length-1}}
+                                <a href="#" v-on:click="openCapabilityOverview(index)">({{$t("translation.show")}})</a><br>
                             </div>
                         </div>
                     </div>
@@ -41,19 +38,34 @@
             </div>
         </div>
         <PackML></PackML>
+        <CapabilityOverview v-bind:current-capabilities="currentCapabilities"> </CapabilityOverview>
     </div>
 </template>
 
 <script>
     import PackML from "../PackML";
+    import CapabilityOverview from "../CapabilityOverview";
 
     export default {
         name: "Devices",
         components: {
-            PackML
+            PackML,
+            CapabilityOverview
+        },
+        data() {
+            return {
+                currentCapabilities: []
+            }
         },
         props: {
             devices: Array
+        },
+        methods: {
+            openCapabilityOverview: function(index){
+                console.log("open",  this.devices[index].capability);
+                this.currentCapabilities = this.devices[index].capability;
+                this.$bvModal.show("modal-cap");
+            }
         }
     }
 </script>

@@ -24,6 +24,7 @@
         data() {
             return {
                 route: "devices",
+                hostname: "http://10.2.10.3:8080",
                 devices: [],
                 services: [],
                 managements: []
@@ -32,12 +33,12 @@
         methods: {
             loadInitialData: function (mockData, callback) {
                 let that = this;
-                let hostname = "http://10.2.10.3:8080";
-                let dev_url = (mockData) ? "/data/device_components.json" : hostname + "/services/registry/DEVICE_COMPONENT",
-                    man_url = (mockData) ? "/data/management_components.json" : hostname + "/services/registry/MANAGEMENT_COMPONENT",
-                    serv_url = (mockData) ? "/data/service_components.json" : hostname + "/services/registry/SERVICE_COMPONENT",
-                    inst_url = (mockData) ? "/data/resource_instances.json" : hostname + "/services/resourceinstance/",
-                    typ_url = (mockData) ? "/data/resource_types.json" : hostname + "/services/resourcetype/";
+
+                let dev_url = (mockData) ? "/data/device_components.json" : that.hostname + "/services/registry/DEVICE_COMPONENT",
+                    man_url = (mockData) ? "/data/management_components.json" : that.hostname + "/services/registry/MANAGEMENT_COMPONENT",
+                    serv_url = (mockData) ? "/data/service_components.json" : that.hostname + "/services/registry/SERVICE_COMPONENT",
+                    inst_url = (mockData) ? "/data/resource_instances.json" : that.hostname + "/services/resourceinstance/",
+                    typ_url = (mockData) ? "/data/resource_types.json" : that.hostname + "/services/resourcetype/";
                     //lic_url = "/licenses/releaseLICENSES";
 
                 let devCount = 0,
@@ -57,11 +58,11 @@
                     .then(axios.spread((dev, man, serv, inst, typ) => { //,lic
 
                         function addTeachCapability(index, id) {
-                            axios.get(hostname + '/services/entity/' + id)
+                            axios.get(that.hostname + '/services/entity/' + id)
                                 .then(ent => {
-                                    //console.log("adding "+ent.name+"to" , devices[index-1]);
+                                    console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                     devices[index - 1].capability.push({
-                                        'name': ent.name,
+                                        'name': ent.data.name,
                                         'taught': false
                                     });
                                     capabilityCounter++;
@@ -130,7 +131,7 @@
                             if (typeof instance[0].role !== 'undefined') {
                                 let topId = instance[0].role.$ref.substr(instance[0].role.$ref.lastIndexOf('/') + 1);
                                 if (!mockData) {
-                                    axios.get(hostname + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
+                                    axios.get(that.hostname + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
                                         .then(top => {
                                             obj.location = top.name;
                                             addDevice(obj);
