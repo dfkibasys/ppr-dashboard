@@ -62,7 +62,6 @@
         },
         methods: {
             openCapabilityOverview: function(index){
-                console.log("open",  this.devices[index].capability);
                 this.currentCapabilities = this.devices[index].capability;
                 this.$bvModal.show("modal-cap");
             }

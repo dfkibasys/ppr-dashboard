@@ -60,7 +60,7 @@
                         function addTeachCapability(index, id) {
                             axios.get(that.hostname + '/services/entity/' + id)
                                 .then(ent => {
-                                    console.log("adding "+ent.data.name+"to" , devices[index-1]);
+                                    //console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                     devices[index - 1].capability.push({
                                         'name': ent.data.name,
                                         'taught': false
@@ -200,7 +200,7 @@
                                 that.managements = management;
                                 //ko.mapping.fromJS(licenses, viewModel.licenses);
 
-                                console.log("new devices", devices);
+                                //console.log("new devices", devices);
                                 callback();
                             }
 
@@ -248,6 +248,9 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    a {
+                        color: #1fc8e3;
+                    }
                 }
             }
 

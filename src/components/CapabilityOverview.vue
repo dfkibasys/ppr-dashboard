@@ -15,8 +15,8 @@
                         <th scope="row">{{index}}</th>
                         <td>{{capability.name}}</td>
                         <td>
-                            <button type="button" id="remove-btn" class="btn btn-danger" v-if="capability.taught" data-bind="click: $parent.removeCapability, css:{disabled: name != 'Apply light blue cap'}">Remove</button>
-                            <button type="button" id="teach-btn" class="btn btn-info" v-else data-bind="click: $parent.startTeaching, css:{disabled: name != 'UR3 PickAndPlace'}">Teach</button>
+                            <button type="button" id="remove-btn" class="btn btn-danger" v-if="capability.taught" v-bind:disabled="true" data-bind="click: $parent.removeCapability">Remove</button>
+                            <button type="button" id="teach-btn" class="btn btn-info" v-else v-bind:disabled="true" data-bind="click: $parent.startTeaching">Teach</button>
                         </td>
                     </tr>
                     </tbody>
