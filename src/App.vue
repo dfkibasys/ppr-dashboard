@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <Navbar />
-    <Devices />
+    <PageContent />
 
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
-import Devices from "./components/Devices";
+import PageContent from "./components/PageContent";
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Devices
+    PageContent
   }
 }
 </script>

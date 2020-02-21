@@ -1,20 +1,21 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+//Bootstrap
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+//i18n
 import VueI18n from 'vue-i18n'
 
 
-Vue.config.productionTip = false
-
 // Install BootstrapVue
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+Vue.use(IconsPlugin);
 
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 
 // Ready translated locale messages
 const messages = {
