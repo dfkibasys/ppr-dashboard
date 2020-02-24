@@ -20,10 +20,7 @@
                         {{$t('translation.set_language')}}:
                     </b-col>
                     <b-col>
-                        <select data-bind="value: language">
-                            <option value="en">English</option>
-                            <option value="de">Deutsch</option>
-                        </select>
+                        <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
                     </b-col>
                     <div class="w-100"></div>
                     <b-col>
@@ -51,7 +48,7 @@
                         REST URL:
                     </b-col>
                     <b-col class="rest">
-                        <input class="form-control" data-bind="value: restConfig.hostname"/>
+                        <input class="form-control" v-model="$store.state.hostname"/>
                         <button type="button" class="btn btn-success" data-bind="click: changeRESTdata">
                             {{$t('translation.set_change')}}
                         </button>
@@ -82,7 +79,15 @@
 
 <script>
     export default {
-        name: "Navbar"
+        name: "Navbar",
+        data() {
+            return{
+                langs: [
+                    {value: 'de', text: 'Deutsch'},
+                    {value: 'en', text: 'English'}
+                ]
+            }
+        }
     }
 </script>
 
