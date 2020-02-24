@@ -19,17 +19,16 @@
                     <b-col>
                         {{$t('translation.set_language')}}:
                     </b-col>
-                    <b-col>
+                    <b-col cols="9">
                         <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
                     </b-col>
                     <div class="w-100"></div>
                     <b-col>
                         Broker URL:
                     </b-col>
-                    <b-col class="broker">
-                        <input class="form-control" data-bind="value: mqttConfig.hostname"/>
-                        <input class="form-control" data-bind="value: mqttConfig.port"/>
-                        <button type="button" class="btn btn-success" data-bind="click: changeMQTTdata">
+                    <b-col class="rest" cols="9">
+                        <input class="form-control" v-model="$store.state.MQTT_BROKER_URL"/>
+                        <button type="button" class="btn btn-success" v-on:click="changeMQTTdata">
                             {{$t('translation.set_change')}}
                         </button>
                     </b-col>
@@ -37,19 +36,16 @@
                     <b-col>
                         Mock data:
                     </b-col>
-                    <b-col>
-                        <button type="button" class="btn btn-sm btn-toggle" data-toggle="button"
-                                data-bind="click: changeMockData" aria-pressed="false" autocomplete="off">
-                            <div class="handle"></div>
-                        </button>
+                    <b-col cols="9">
+                        <b-form-checkbox name="check-button" @change="changeMockData" switch></b-form-checkbox>
                     </b-col>
                     <div class="w-100"></div>
                     <b-col>
-                        REST URL:
+                        BaSys URL:
                     </b-col>
-                    <b-col class="rest">
-                        <input class="form-control" v-model="$store.state.hostname"/>
-                        <button type="button" class="btn btn-success" data-bind="click: changeRESTdata">
+                    <b-col class="rest" cols="9">
+                        <input class="form-control" v-model="$store.state.BASYS_REST_URL"/>
+                        <button type="button" class="btn btn-success" v-on:click="changeBASYSdata">
                             {{$t('translation.set_change')}}
                         </button>
                     </b-col>
@@ -57,13 +53,16 @@
                     <b-col>
                         Camunda URL:
                     </b-col>
-                    <b-col>
-                        <input class="form-control" data-bind="value: camundaConfig.hostname"/>
+                    <b-col class="rest" cols="9">
+                        <input class="form-control" v-model="$store.state.CAMUNDA_REST_URL"/>
+                        <button type="button" class="btn btn-success" v-on:click="changeCAMUNDAdata">
+                            {{$t('translation.set_change')}}
+                        </button>
                     </b-col>
                     <div class="w-100"></div>
                     <b-col>
                     </b-col>
-                    <b-col>
+                    <b-col cols="9">
                         <button type="button" data-toggle="modal" data-target="#buildLicenses"
                                 class="btn btn-info float-right">
                             <b-icon-question font-scale="2"></b-icon-question>
@@ -85,7 +84,22 @@
                 langs: [
                     {value: 'de', text: 'Deutsch'},
                     {value: 'en', text: 'English'}
-                ]
+                ],
+                checked: false
+            }
+        },
+        methods: {
+            changeMockData(checked) {
+                //change mockData variable
+            },
+            changeMQTTdata(){
+
+            },
+            changeBASYSdata(){
+
+            },
+            changeCAMUNDAdata(){
+
             }
         }
     }
@@ -93,30 +107,23 @@
 
 <style scoped lang="less">
     .navbar-collapse {
-        .row {
-            margin-bottom: 5px;
+        .container{
+            max-width: 970px;
         }
-
-        .broker {
-            input {
-                width: 42%;
-                float: left;
-            }
-
-            button {
-                float: left;
-            }
+        .col-9 {
+            margin-bottom: 5px;
+            line-height: 35px;
+            text-align: left;
         }
 
         .rest {
             input {
-                width: 84%;
+                width: 87%;
                 float: left;
-
             }
-
             button {
                 float: left;
+                margin-left: 8px;
             }
         }
 

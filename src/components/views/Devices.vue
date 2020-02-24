@@ -66,9 +66,9 @@
             loadInitialData: function (mockData, callback) {
                 let that = this;
 
-                let dev_url = (mockData) ? "/data/device_components.json" : that.$store.state.hostname + "/services/registry/DEVICE_COMPONENT",
-                    inst_url = (mockData) ? "/data/resource_instances.json" : that.$store.state.hostname + "/services/resourceinstance/",
-                    typ_url = (mockData) ? "/data/resource_types.json" : that.$store.state.hostname + "/services/resourcetype/";
+                let dev_url = (mockData) ? "/data/device_components.json" : that.$store.state.BASYS_REST_URL + "/services/registry/DEVICE_COMPONENT",
+                    inst_url = (mockData) ? "/data/resource_instances.json" : that.$store.state.BASYS_REST_URL + "/services/resourceinstance/",
+                    typ_url = (mockData) ? "/data/resource_types.json" : that.$store.state.BASYS_REST_URL + "/services/resourcetype/";
 
                 let devCount = 0,
                     devices = [];
@@ -81,7 +81,7 @@
                     .then(axios.spread((dev, inst, typ) => { //,lic
 
                         function addTeachCapability(index, id) {
-                            axios.get(that.$store.state.hostname + '/services/entity/' + id)
+                            axios.get(that.$store.state.BASYS_REST_URL + '/services/entity/' + id)
                                 .then(ent => {
                                     //console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                     devices[index - 1].capability.push({
@@ -154,7 +154,7 @@
                             if (typeof instance[0].role !== 'undefined') {
                                 let topId = instance[0].role.$ref.substr(instance[0].role.$ref.lastIndexOf('/') + 1);
                                 if (!mockData) {
-                                    axios.get(that.$store.state.hostname + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
+                                    axios.get(that.$store.state.BASYS_REST_URL + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
                                         .then(top => {
                                             obj.location = top.name;
                                             addDevice(obj);

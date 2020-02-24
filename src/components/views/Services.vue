@@ -39,7 +39,7 @@
         methods: {
             loadInitialData: function (mockData, callback) {
                 let that = this;
-                let serv_url = (mockData) ? "/data/service_components.json" :that.$store.state.hostname + "/services/registry/SERVICE_COMPONENT";
+                let serv_url = (mockData) ? "/data/service_components.json" :that.$store.state.BASYS_REST_URL + "/services/registry/SERVICE_COMPONENT";
                 let services = [];
 
                 axios.get(serv_url)
