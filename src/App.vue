@@ -1,20 +1,19 @@
 <template>
   <div id="app">
     <Navbar />
-    <PageContent />
-
+    <router-view></router-view>
   </div>
 </template>
 
+
+
 <script>
 import Navbar from './components/Navbar.vue'
-import PageContent from "./components/PageContent";
 
 export default {
   name: 'App',
   components: {
-    Navbar,
-    PageContent
+    Navbar
   }
 }
 </script>
@@ -26,5 +25,41 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  .cardContainer {
+    .card {
+      width: 500px;
+      margin: 10px;
+      float: left;
+      background-color: lighten(#555555, 15%);
+      color: white;
+      text-align: left;
+
+      .card-body {
+        padding-left: 0;
+        padding-right: 0;
+        height: 145px;
+
+        .image {
+          align-self: center;
+
+          img {
+            max-height: 90px;
+            max-width: 160px;
+          }
+        }
+
+        .properties {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          a {
+            color: #1fc8e3;
+          }
+        }
+      }
+
+    }
+  }
 }
 </style>

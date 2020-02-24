@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from './router.js'
+import store from "./store";
 
 //Bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -14,7 +16,7 @@ import VueI18n from 'vue-i18n'
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
-
+//i18n
 Vue.use(VueI18n);
 
 // Ready translated locale messages
@@ -55,10 +57,12 @@ const messages = {
 const i18n = new VueI18n({
   locale: 'en', // set locale
   messages, // set locale messages
-})
+});
 
 
 new Vue({
   render: h => h(App),
-  i18n
-}).$mount('#app')
+  i18n,
+  router,
+  store
+}).$mount('#app');

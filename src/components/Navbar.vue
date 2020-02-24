@@ -6,11 +6,9 @@
         </b-navbar-brand>
 
         <b-navbar-nav is-nav class="flex-row">
-            <b-nav-item class="pr-3" href="#">{{$t("translation.menu_devices")}}</b-nav-item>
-            <b-nav-item class="pr-3" href="#">Services</b-nav-item>
-            <b-nav-item class="pr-3" href="#">Management</b-nav-item>
-
-            <!--<li class="nav-item"><a id="processes-link" class="nav-link" href="#">{{$t("translation.menu_processes")}}</a></li>-->
+            <b-link class="pr-3" to="/devices">{{$t("translation.menu_devices")}}</b-link>
+            <b-link class="pr-3" to="/services">Services</b-link>
+            <b-link to="/management">Management</b-link>
         </b-navbar-nav>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

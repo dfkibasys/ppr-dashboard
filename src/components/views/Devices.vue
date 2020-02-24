@@ -1,64 +1,87 @@
 <template>
     <div>
-        <Devices v-if="route === 'devices'" v-bind:devices="devices"></Devices>
-        <Services v-else-if="route === 'services'" v-bind:services="services"></Services>
-        <Management v-else-if="route === 'managements'" v-bind:managements="managements"></Management>
+        <div class="cardContainer" id="deviceContainer">
+            <div class="card" v-for="(device, index) in devices" :key="device.id">
+                <div class="card-header">
+                    <h5 class="card-title">{{device.componentName}}</h5>
+                    <b-button v-b-modal.modal-pack
+                              class="btn btn-info float-right"
+                              data-bind="attr: { 'data-state': currentState, 'data-index': $index }">
+                        {{device.currentMode}} - {{device.currentState}}
+                    </b-button>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4 image">
+                                <img :src="require('@/assets/' + device.type + '.png')">
+                            </div>
+                            <div class="col-3">
+                                {{$t("translation.type_k")}}: <br>
+                                {{$t("translation.location_k")}}: <br>
+                                {{$t("translation.serial_k")}}: <br>
+                                {{$t("translation.capability_k")}}: <br>
+                            </div>
+                            <div class="col-5 properties">
+                                <a target="_blank" v-bind:href="device.docuLink">{{device.type}}</a>
+                                <br>
+                                {{device.location}}<br>
+                                {{device.serial}}<br>
+                                {{device.capability.length-1}}
+                                <a href="#" v-on:click="openCapabilityOverview(index)">({{$t("translation.show")}})</a><br>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+        <PackML></PackML>
+        <CapabilityOverview v-bind:current-capabilities="currentCapabilities"> </CapabilityOverview>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-
-    import Devices from './PageContent/Devices'
-    import Services from "./PageContent/Services";
-    import Management from "./PageContent/Management";
+    import PackML from "../modals/PackML";
+    import CapabilityOverview from "../modals/CapabilityOverview";
+    import axios from "axios";
 
     export default {
-        name: "PageContent",
+        name: "Devices",
         components: {
-            Management,
-            Devices,
-            Services
+            PackML,
+            CapabilityOverview
         },
         data() {
             return {
-                route: "devices",
-                hostname: "http://10.2.10.3:8080",
-                devices: [],
-                services: [],
-                managements: []
+                currentCapabilities: [],
+                devices: []
             }
         },
         methods: {
+            openCapabilityOverview: function(index){
+                this.currentCapabilities = this.devices[index].capability;
+                this.$bvModal.show("modal-cap");
+            },
             loadInitialData: function (mockData, callback) {
                 let that = this;
 
-                let dev_url = (mockData) ? "/data/device_components.json" : that.hostname + "/services/registry/DEVICE_COMPONENT",
-                    man_url = (mockData) ? "/data/management_components.json" : that.hostname + "/services/registry/MANAGEMENT_COMPONENT",
-                    serv_url = (mockData) ? "/data/service_components.json" : that.hostname + "/services/registry/SERVICE_COMPONENT",
-                    inst_url = (mockData) ? "/data/resource_instances.json" : that.hostname + "/services/resourceinstance/",
-                    typ_url = (mockData) ? "/data/resource_types.json" : that.hostname + "/services/resourcetype/";
-                    //lic_url = "/licenses/releaseLICENSES";
+                let dev_url = (mockData) ? "/data/device_components.json" : that.$store.state.hostname + "/services/registry/DEVICE_COMPONENT",
+                    inst_url = (mockData) ? "/data/resource_instances.json" : that.$store.state.hostname + "/services/resourceinstance/",
+                    typ_url = (mockData) ? "/data/resource_types.json" : that.$store.state.hostname + "/services/resourcetype/";
 
                 let devCount = 0,
-                    devices = [],
-                    services = [],
-                    management = [],
-                    licenses = [];
+                    devices = [];
 
                 axios.all([
                     axios.get(dev_url),
-                    axios.get(man_url),
-                    axios.get(serv_url),
                     axios.get(inst_url),
                     axios.get(typ_url)
-                    //axios.get(lic_url)
                 ])
-                    .then(axios.spread((dev, man, serv, inst, typ) => { //,lic
+                    .then(axios.spread((dev, inst, typ) => { //,lic
 
                         function addTeachCapability(index, id) {
-                            axios.get(that.hostname + '/services/entity/' + id)
+                            axios.get(that.$store.state.hostname + '/services/entity/' + id)
                                 .then(ent => {
                                     //console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                     devices[index - 1].capability.push({
@@ -92,9 +115,9 @@
                             obj.currentMode = devs[i].currentMode;
                             obj.currentState = devs[i].currentState;
 
+
                             //get instance of device
                             let instance = inst.data.resourceInstances.filter(val2 => val2.id === devs[i].componentId);
-
                             obj.serial = instance[0].serialNumber;
 
                             //get capability
@@ -131,12 +154,13 @@
                             if (typeof instance[0].role !== 'undefined') {
                                 let topId = instance[0].role.$ref.substr(instance[0].role.$ref.lastIndexOf('/') + 1);
                                 if (!mockData) {
-                                    axios.get(that.hostname + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
+                                    axios.get(that.$store.state.hostname + "/services/topology/parent/" + topId) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
                                         .then(top => {
                                             obj.location = top.name;
                                             addDevice(obj);
                                         })
-                                        .catch(() => {
+                                        .catch((err) => {
+                                            console.log(err);
                                             obj.location = "Not Found";
                                             addDevice(obj);
                                         });
@@ -151,54 +175,19 @@
 
                         }
 
-                        //services
-                        services = serv.data.map((val, index, arr) => {
-                            // return element to new Array
-                            return {
-                                "componentId": val.componentId,
-                                "type": "Service",
-                                "componentName": val.componentName,
-                                "location": val.hostName
-                            };
-                        });
-
-                        //management
-                        management = man.data.map((val, index, arr) => {
-                            // return element to new Array
-                            return {
-                                "componentId": val.componentId,
-                                "type": "Management",
-                                "componentName": val.componentName,
-                                "location": val.hostName
-                            };
-                        });
-
-                        /*licenses = Object.keys(lic[0]).map(function (key) {
-                            return {'name': key, 'type': lic[0][key].licenses};
-                        });*/
-
                         checkCallback();
 
                         //all data needs to be loaded first before executing main()
                         function checkCallback() {
-                            //console.log(devCount, devs.length);
-                            // console.log(services.length , serv[0].length);
-                            // console.log(management.length, man[0].length);
-
                             if (mockData) {
                                 capabilityCounter = devs.length;
                             }
 
                             if (devCount === devs.length &&
-                                services.length === serv.data.length &&
-                                management.length === man.data.length &&
                                 capabilityCounter === devs.length
                             ) {
                                 //update new requested files
                                 that.devices = devices;
-                                that.services = services;
-                                that.managements = management;
-                                //ko.mapping.fromJS(licenses, viewModel.licenses);
 
                                 //console.log("new devices", devices);
                                 callback();
@@ -206,8 +195,8 @@
 
                         }
 
-                    })).catch(() => {
-                    console.log("Failed to get JSON data");
+                    })).catch((err) => {
+                    console.error(err);
                     /* $(".alert-danger span").text(`Failed to get all JSON data from ${viewModel.restConfig.hostname()}`).show();
                         $(".alert-danger").show();*/
                 });
@@ -215,45 +204,14 @@
             }
         },
         mounted() {
-            this.loadInitialData(false, function(){});
+            this.loadInitialData(false, function () {})
         }
     }
 </script>
 
-<style lang="less">
-    .cardContainer {
-        .card {
-            width: 500px;
-            margin: 10px;
-            float: left;
-            background-color: lighten(#555555, 15%);
-            color: white;
-            text-align: left;
-
-            .card-body {
-                padding-left: 0;
-                padding-right: 0;
-                height: 145px;
-
-                .image {
-                    align-self: center;
-
-                    img {
-                        max-height: 90px;
-                        max-width: 160px;
-                    }
-                }
-
-                .properties {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    a {
-                        color: #1fc8e3;
-                    }
-                }
-            }
-
-        }
+<style lang="less" scoped>
+    h5 {
+        width: 50%;
+        float: left;
     }
 </style>
