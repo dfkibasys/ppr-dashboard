@@ -204,7 +204,38 @@
             }
         },
         mounted() {
-            this.loadInitialData(false, function () {})
+            let that = this;
+
+            this.loadInitialData(false, function () {});
+
+            this.$mqtt.subscribe("hybrit/devices");
+
+            this.$mqtt.on((topic, message) => {
+                let msg = JSON.parse(message.toString());
+                console.log("Message arrived on topic " + topic + ",msg: ", msg);
+
+                let updatedDevices = that.devices.map((val, index, arr) => {
+
+                    if (val.componentId === msg.componentId) {  //update currentMode and currentState
+                        return {
+                            "componentId": val.componentId,
+                            "type": val.type,
+                            "componentName": val.componentName,
+                            "location": val.location,
+                            "serial": val.serial,
+                            "capability": val.capability,
+                            "currentMode": msg.currentMode, //update
+                            "currentState": msg.currentState, //update
+                            "docuLink": val.docuLink
+                        }
+                    }
+                    else { //don't change properties
+                        return val;
+                    }
+                });
+
+                that.devices = updatedDevices;
+            })
         }
     }
 </script>

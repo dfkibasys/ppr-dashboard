@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
 import store from "./store";
+import mqtt from './mqtt'
 
 //Bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -11,12 +12,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 //i18n
 import VueI18n from 'vue-i18n'
 
+Vue.prototype.$mqtt = mqtt;
 
-// Install BootstrapVue
 Vue.use(BootstrapVue);
-// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
-//i18n
 Vue.use(VueI18n);
 
 // Ready translated locale messages
@@ -51,7 +50,7 @@ const messages = {
       "show": "Anzeigen"
     }
   }
-}
+};
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
