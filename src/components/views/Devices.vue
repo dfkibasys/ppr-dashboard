@@ -4,7 +4,7 @@
             <div class="card" v-for="(device, index) in devices" :key="device.id">
                 <div class="card-header">
                     <h5 class="card-title">{{device.componentName}}</h5>
-                    <b-button v-b-modal.modal-pack
+                    <b-button v-on:click="openPackML(index)"
                               class="btn btn-info float-right"
                               data-bind="attr: { 'data-state': currentState, 'data-index': $index }">
                         {{device.currentMode}} - {{device.currentState}}
@@ -36,8 +36,9 @@
                 </div>
             </div>
         </div>
-        <PackML></PackML>
-        <CapabilityOverview v-bind:current-capabilities="currentCapabilities"> </CapabilityOverview>
+        <br />
+        <PackML :opened-device="devices[openedIndex]"></PackML>
+        <CapabilityOverview :current-capabilities="currentCapabilities"></CapabilityOverview>
     </div>
 </template>
 
@@ -55,10 +56,15 @@
         data() {
             return {
                 currentCapabilities: [],
-                devices: []
+                openedIndex: Number,
+                devices: Array
             }
         },
         methods: {
+            openPackML: function(index){
+                this.openedIndex = index;
+                this.$bvModal.show("modal-pack");
+            },
             openCapabilityOverview: function(index){
                 this.currentCapabilities = this.devices[index].capability;
                 this.$bvModal.show("modal-cap");
@@ -234,6 +240,7 @@
                     }
                 });
 
+                console.log(updatedDevices);
                 that.devices = updatedDevices;
             })
         }
