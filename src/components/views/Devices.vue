@@ -47,7 +47,7 @@
     </div>
     <br />
     <PackML :opened-device="devices[openedIndex]"></PackML>
-    <CapabilityOverview :current-capabilities="currentCapabilities"></CapabilityOverview>
+    <CapabilityOverview :opened-device="devices[openedIndex]" :current-capabilities="currentCapabilities"></CapabilityOverview>
   </div>
 </template>
 
@@ -75,6 +75,7 @@ export default {
       this.$bvModal.show("modal-pack");
     },
     openCapabilityOverview: function(index) {
+      this.openedIndex = index;
       this.currentCapabilities = this.devices[index].capability;
       this.$bvModal.show("modal-cap");
     },
