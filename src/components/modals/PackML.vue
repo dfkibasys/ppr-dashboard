@@ -1,21 +1,22 @@
 <template>
-  <b-modal @shown="initGraph" id="modal-pack" ref="modal" size="lg" title="BootstrapVue">
+  <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
     <template v-slot:modal-header>
       <h5 class="modal-title">PackML Automaton</h5>
-      <button class="btn btn-danger ml-3" id="stop-btn" type="button">Stop</button>
-      <button class="btn btn-warning ml-3" id="reset-btn" type="button">Reset</button>
 
-      <div class="btn-group btn-group-toggle ml-3 mode-group" data-toggle="buttons">
-        <label class="btn btn-info active" data-mode="PRODUCTION" id="l_PRODUCTION">
-          <input autocomplete="off" checked name="options" type="radio" /> PRODUCTION
-        </label>
-        <label class="btn btn-info" data-mode="CHANGE_OVER" id="l_CHANGE_OVER">
-          <input autocomplete="off" name="options" type="radio" /> CHANGEOVER
-        </label>
-        <label class="btn btn-info" data-mode="SIMULATION" id="l_SIMULATION">
-          <input autocomplete="off" name="options" type="radio" /> SIMULATION
-        </label>
-      </div>
+      <b-button variant="danger" @click="stopButton">Stop</b-button>
+      <b-button variant="warning" @click="resetButton">Reset</b-button>
+
+      <b-form-group>
+        <b-form-radio-group
+          button-variant="info"
+          id="btn-radios-1"
+          v-model="selected"
+          :options="options"
+          buttons
+          name="radios-btn-default"
+          @change="modeButton"
+        ></b-form-radio-group>
+      </b-form-group>
     </template>
 
     <div class="mxgraph" ref="graphy" style="position:relative;overflow:auto;"></div>
@@ -49,7 +50,13 @@ export default {
       graph: Object,
       oldBorderColor: String,
       currentCell: Object,
-      xmlLoaded: false
+      xmlLoaded: false,
+      selected: "PRODUCTION",
+      options: [
+        { text: "PRODUCTION", value: "PRODUCTION", disabled: false },
+        { text: "CHANGEOVER", value: "CHANGEOVER", disabled: false },
+        { text: "SIMULATION", value: "SIMULATION", disabled: false }
+      ]
     };
   },
   props: {
@@ -98,7 +105,6 @@ export default {
 
           this.markCurrentState(this.openedDevice.currentState);
           this.xmlLoaded = true;
-
         });
       }
     },
@@ -126,64 +132,75 @@ export default {
         that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, "#F00", [
           that.currentCell
         ]);
-
       } else {
         console.error("Current state '" + state + "' not found.");
         that.oldBorderColor = null;
       }
+    },
+    clear: function() {
+      this.xmlLoaded = false;
+    },
+    stopButton: function() {
+      let msg = {
+        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
+        componentId: this.openedDevice.componentId,
+        controlCommand: "STOP"
+      };
+
+      this.$mqtt.publish("basys/components/command", msg);
+    },
+    resetButton: function() {
+      let msg = {
+        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
+        componentId: this.openedDevice.componentId,
+        controlCommand: "RESET"
+      };
+      
+      this.$mqtt.publish("basys/components/command", msg);
+    },
+    modeButton: function(value) {
+      let msg = {
+        eClass:
+          "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
+        componentId: this.openedDevice.componentId,
+        mode: value
+      };
+
+      this.$mqtt.publish("basys/components/command", msg);
     }
   },
-  mounted() {
-  
-    //this.initGraph();
-    /*
-                        let button = $(event.relatedTarget); // Button that triggered the modal
-                        // Extract info from data-* attributes
-                        let state = button.data('state');
-                        openedIndex = button.data('index');
-
-                        oldStyle = markCurrentState(state);
-
-                        //set toggle buttons
-                        $(".mode-group > label.active").removeClass("active");
-                        $(".mode-group > label").addClass("disabled");
-
-                        $("#l_" + viewModel.devices()[openedIndex].currentMode()).addClass('active').removeClass('disabled');
-
-                        if (state === "STOPPED") {
-                            $(".mode-group > label.disabled").removeClass("disabled");
-                        }
-
-                        //detect changes on currently opened instance for further UI updates
-                        sub = ko.computed( () => {
-                            return ko.toJSON(viewModel.devices()[openedIndex]);
-                        }).subscribe( () => {
-                            let unmapped = ko.mapping.toJS(viewModel.devices);
-                            console.log("changed to ", unmapped[openedIndex].currentState);
-                            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, oldStyle, [currentCell]);
-                            oldStyle = markCurrentState(unmapped[openedIndex].currentState);
-
-                            //set toggle buttons
-                            $(".mode-group > label.active").removeClass("active");
-                            $(".mode-group > label").addClass("disabled");
-
-                            $("#l_" + unmapped[openedIndex].currentMode).addClass('active').removeClass('disabled');
-
-                            if (unmapped[openedIndex].currentState === "STOPPED") {
-                                $(".mode-group > label.disabled").removeClass("disabled");
-                            }
-                        });
-                        */
-  },
   watch: {
-      openedDevice: function(val){
-          if (this.xmlLoaded){
-            //set old cell border to previous color
-            this.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, this.oldBorderColor, [this.currentCell]);
-            //set new cell border to red
-            this.markCurrentState(val.currentState);
+    openedDevice: function(val) {
+      //set mode toggle button
+      this.selected = val.currentMode;
+
+      //avoid mode switching when not in stopped state
+      if (val.currentState !== "STOPPED") {
+        this.options.map(val => {
+          if (val.value !== this.selected) {
+            val.disabled = true;
+          } else {
+            val.disabled = false;
           }
+        });
+      } else {
+        this.options.map(val => {
+          val.disabled = false;
+        });
       }
+
+      //set state cell
+      if (this.xmlLoaded) {
+        //set old cell border to previous color
+        this.graph.setCellStyles(
+          mxConstants.STYLE_STROKECOLOR,
+          this.oldBorderColor,
+          [this.currentCell]
+        );
+        //set new cell border to red
+        this.markCurrentState(val.currentState);
+      }
+    }
   }
 };
 </script>
