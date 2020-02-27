@@ -46,126 +46,16 @@ export default {
   name: "PackML",
   data() {
     return {
-      graph: ""
+      graph: Object,
+      oldBorderColor: String,
+      currentCell: Object,
+      xmlLoaded: false
     };
   },
   props: {
     openedDevice: Object
   },
   methods: {
-    testGraph() {
-      // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported()) {
-        // Displays an error message if the browser is not supported.
-        mxUtils.error("Browser is not supported!", 200, false);
-      }
-
-      let container = document.getElementById("testgraph");
-
-      let model = new mxGraphModel();
-      let graph = new mxGraph(container, model);
-
-      //var themes = new Object();
-      //themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement();
-
-      var data =
-        '<mxGraphModel dx="759" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0"><root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root></mxGraphModel>';
-
-      var codec = new mxCodec(doc);
-
-      var elt = doc.documentElement.firstChild;
-      var cells = [];
-
-      while (elt != null) {
-        console.log("elt:", elt);
-        cells.push(codec.decodeCell(elt));
-        elt = elt.nextSibling;
-      }
-
-      //mxCodec.prototype.insertIntoGraph = function(	cell	)
-      console.log(cells);
-      graph.addCells(cells);
-      /*
-                                // Gets the default parent for inserting new cells. This
-                                // is normally the first child of the root (ie. layer 0).
-                                var parent = graph.getDefaultParent();
-
-                                // Adds cells to the model in a single step
-                                model.beginUpdate();
-                                try
-                                {
-
-                                    var xml = mxUtils.parseXml(data).documentElement;
-
-                                    //var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-                                   // var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-                                   // var e1 = graph.insertEdge(parent, null, '', v1, v2);
-                                }
-                                catch(e){
-                                    console.log(e);
-                                }
-                                finally
-                                {
-                                    // Updates the display
-                                   model.endUpdate();
-                                }
-
-                                //reverse
-                                //var xml ='<root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="2" value="Hello," vertex="1" parent="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/> </mxCell><mxCell id="3" value="World!" vertex="1" parent="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/> </mxCell><mxCell id="4" value="" edge="1" parent="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
-
-                                let container2 = document.getElementById('modelgraph');
-
-                                model.beginUpdate(); //oder ohne graph
-                                try {
-                                    var xml2 = '<mxGraphModel dx="759" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0"><root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root></mxGraphModel>';
-                                    var xml = mxUtils.parseXml(xml2).documentElement;
-                                    //Editor.setGraphXml(xml);
-                                    this.setGraphXml(xml);
-                                }
-                                catch (e) {
-                                    console.log(e);
-                                }
-                                finally {
-                                    model.endUpdate();
-                                }
-                */
-      /*
-                var codec = new mxCodec(doc);
-
-
-                var elt = doc.documentElement.firstChild;
-                var cells = [];
-
-                while (elt != null)
-                {
-                    console.log("elt:", elt);
-                    cells.push(codec.decodeCell(elt));
-                    elt = elt.nextSibling;
-                }
-
-                //mxCodec.prototype.insertIntoGraph = function(	cell	)
-                console.log(cells);
-                graph.addCells(cells);
-*/
-      /*
-                let container2 = document.getElementById('modelgraph');
-                let xml = mxUtils.getTextContent(container2);
-                let xmlDocument = mxUtils.parseXml(xml);
-
-                let codec = new mxCodec(xmlDocument);
-                let node = xmlDocument.documentElement;
-
-                mxUtils.popup(mxUtils.getPrettyXml(node), true);
-
-                graph = new mxGraph(container2);
-
-                codec.decode(node, graph.getModel());
-*/
-      //var encoder = new mxCodec();
-      //var node = encoder.encode(graph.getModel());
-
-      //mxUtils.popup(mxUtils.getPrettyXml(node), true);
-    },
     initGraph: function() {
       let that = this;
       if (mxClient.isBrowserSupported()) {
@@ -207,12 +97,13 @@ export default {
           })(div);
 
           this.markCurrentState(this.openedDevice.currentState);
+          this.xmlLoaded = true;
+
         });
       }
     },
     markCurrentState: function(state) {
-      let that = this,
-        currentCell;
+      let that = this;
 
       let vertices = that.graph.getChildCells(
         that.graph.getDefaultParent(),
@@ -222,28 +113,28 @@ export default {
 
       for (let i = 0; i < vertices.length; i++) {
         if (vertices[i].value === state) {
-          currentCell = vertices[i];
+          that.currentCell = vertices[i];
         }
       }
 
-      //change style of active state
-      if (currentCell !== null) {
-        let oldColor = that.graph.getCellStyle(currentCell)[
+      //change style of active state and save color for updates
+      if (that.currentCell !== null) {
+        that.oldBorderColor = that.graph.getCellStyle(that.currentCell)[
           mxConstants.STYLE_STROKECOLOR
         ];
 
         that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, "#F00", [
-          currentCell
+          that.currentCell
         ]);
 
-        return oldColor;
       } else {
         console.error("Current state '" + state + "' not found.");
-        return null;
+        that.oldBorderColor = null;
       }
     }
   },
   mounted() {
+  
     //this.initGraph();
     /*
                         let button = $(event.relatedTarget); // Button that triggered the modal
@@ -283,6 +174,16 @@ export default {
                             }
                         });
                         */
+  },
+  watch: {
+      openedDevice: function(val){
+          if (this.xmlLoaded){
+            //set old cell border to previous color
+            this.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, this.oldBorderColor, [this.currentCell]);
+            //set new cell border to red
+            this.markCurrentState(val.currentState);
+          }
+      }
   }
 };
 </script>
