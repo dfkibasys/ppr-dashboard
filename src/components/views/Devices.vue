@@ -47,7 +47,10 @@
     </div>
     <br />
     <PackML :opened-device="devices[openedIndex]"></PackML>
-    <CapabilityOverview :opened-device="devices[openedIndex]" :current-capabilities="currentCapabilities"></CapabilityOverview>
+    <CapabilityOverview
+      :opened-device="devices[openedIndex]"
+      :current-capabilities="currentCapabilities"
+    ></CapabilityOverview>
   </div>
 </template>
 
@@ -55,6 +58,7 @@
 import PackML from "../modals/PackML";
 import CapabilityOverview from "../modals/CapabilityOverview";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Devices",
@@ -62,6 +66,7 @@ export default {
     PackML,
     CapabilityOverview
   },
+  computed:mapGetters(['basysUrl']),
   data() {
     return {
       currentCapabilities: [],
@@ -84,14 +89,14 @@ export default {
 
       let dev_url = mockData
           ? "/data/device_components.json"
-          : that.$store.state.BASYS_REST_URL +
+          : this.basysUrl +
             "/services/registry/DEVICE_COMPONENT",
         inst_url = mockData
           ? "/data/resource_instances.json"
-          : that.$store.state.BASYS_REST_URL + "/services/resourceinstance/",
+          : this.basysUrl + "/services/resourceinstance/",
         typ_url = mockData
           ? "/data/resource_types.json"
-          : that.$store.state.BASYS_REST_URL + "/services/resourcetype/";
+          : this.basysUrl + "/services/resourcetype/";
 
       let devCount = 0,
         devices = [];
@@ -105,7 +110,7 @@ export default {
             function addTeachCapability(index, id) {
               axios
                 .get(
-                  that.$store.state.BASYS_REST_URL + "/services/entity/" + id
+                  this.basysUrl + "/services/entity/" + id
                 )
                 .then(ent => {
                   //console.log("adding "+ent.data.name+"to" , devices[index-1]);
@@ -206,7 +211,7 @@ export default {
                 if (!mockData) {
                   axios
                     .get(
-                      that.$store.state.BASYS_REST_URL +
+                      this.basysUrl +
                         "/services/topology/parent/" +
                         topId
                     ) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues

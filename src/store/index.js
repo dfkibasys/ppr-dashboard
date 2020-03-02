@@ -1,15 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import endpoints from "./modules/endpoints"
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        BASYS_REST_URL: "http://10.2.10.3:8080",
-        MQTT_BROKER_URL: "ws://10.2.10.1:8083/mqtt",
-        CAMUNDA_REST_URL: "http://10.2.10.4:8080"
-    },
-    getters: {},
-    mutations: {},
-    actions: {}
+    modules: {
+        endpoints
+    }
 });

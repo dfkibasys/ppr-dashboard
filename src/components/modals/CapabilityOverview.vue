@@ -45,6 +45,7 @@
 
 <script>
 import axios from "axios";
+import {mapGetters} from "vuex";
 
 export default {
   name: "CapabilityOverview",
@@ -52,10 +53,11 @@ export default {
     openedDevice: Object,
     currentCapabilities: Array
   },
+  computed: mapGetters(["camundaUrl"]),
   methods: {
     removeCapability(capability) {
       let url =
-        this.$store.state.CAMUNDA_REST_URL +
+        this.camundaUrl +
         "/services/resourceinstance/" +
         this.openedDevice.componentId +
         "/capability/" +
@@ -69,7 +71,7 @@ export default {
       });
     },
     startTeaching() {
-      let url = this.$store.state.CAMUNDA_REST_URL + "/engine-rest/message";
+      let url = this.camundaUrl + "/engine-rest/message";
       const data = {
           messageName : "Process.TeachIn.Prepare",
           businessKey: "cebit2018"
