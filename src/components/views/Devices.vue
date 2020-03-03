@@ -110,7 +110,7 @@ export default {
             function addTeachCapability(index, id) {
               axios
                 .get(
-                  this.basysUrl + "/services/entity/" + id
+                  that.basysUrl + "/services/entity/" + id
                 )
                 .then(ent => {
                   //console.log("adding "+ent.data.name+"to" , devices[index-1]);
@@ -211,7 +211,7 @@ export default {
                 if (!mockData) {
                   axios
                     .get(
-                      this.basysUrl +
+                      that.basysUrl +
                         "/services/topology/parent/" +
                         topId
                     ) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
