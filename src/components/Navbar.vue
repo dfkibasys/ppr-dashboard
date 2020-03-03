@@ -49,11 +49,6 @@
           <b-col>Camunda URL:</b-col>
           <b-col class="rest" cols="9">
             <input class="form-control" v-model="camundaUrl" />
-            <button
-              type="button"
-              class="btn btn-success"
-              v-on:click="changeCAMUNDAdata"
-            >{{$t('translation.set_change')}}</button>
           </b-col>
           <div class="w-100"></div>
           <b-col></b-col>
@@ -74,6 +69,7 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 export default {
   name: "Navbar",
   data() {
@@ -85,7 +81,8 @@ export default {
       checked: false
     };
   },
-  computed: { //using a two-way computed property with a setter to mutate vuex states
+  computed: {
+    //using a two-way computed property with a setter to mutate vuex states
     basysUrl: {
       get() {
         return this.$store.getters.basysUrl;
@@ -112,12 +109,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["fetchDevices"]),
     changeMockData(checked) {
       //change mockData variable
     },
-    changeMQTTdata() {},
-    changeBASYSdata() {},
-    changeCAMUNDAdata() {}
+    changeMQTTdata() {
+      this.$mqtt.end();
+      this.$mqtt.connect();
+    },
+    changeBASYSdata() {
+      this.fetchDevices();
+    }
   }
 };
 </script>

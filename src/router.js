@@ -11,7 +11,10 @@ export default new Router({
         {
             path: '/devices',
             name: 'Devices',
-            component: Devices
+            component: Devices,
+            props: {
+                'ref': 'dev'
+            }
         },
         {
             path: '/services',
