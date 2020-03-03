@@ -1,5 +1,4 @@
 import store from "./store";
-import {mapGetters} from "vuex";
 
 let mqtt = require('mqtt'),
     uuid = require('uuid'),
@@ -7,10 +6,10 @@ let mqtt = require('mqtt'),
 
 export default {
     connect() {
-        client = mqtt.connect(store.state.MQTT_BROKER_URL, {clientId: uuid.v4(), clean: true});
+        client = mqtt.connect(store.getters.mqttUrl, {clientId: uuid.v4(), clean: true});
 
         client.on('connect', function () {
-            console.log("Connected to " + mapGetters["mqttUrl"]);
+            console.log("Connected to " + store.getters.mqttUrl);
         })
     },
     on(callback) {

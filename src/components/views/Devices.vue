@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(device, index) in devices" :key="device.id">
+      <div class="card" v-for="(device, index) in devices" :key="device.componentId">
         <div class="card-header">
           <h5 class="card-title">{{device.componentName}}</h5>
           <b-button
