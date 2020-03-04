@@ -1,0 +1,98 @@
+ansicolors@0.3.2 [license(s): MIT]
+└── package.json:  MIT
+
+archy@1.0.0 [license(s): MIT]
+├── package.json:  MIT
+├── license files: MIT
+└── readme files: MIT
+
+axios@0.19.2 [license(s): MIT]
+└── package.json:  MIT
+
+bootstrap@4.4.1 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+bootstrap-vue@2.5.0 [license(s): MIT]
+├── package.json:  MIT
+├── license files: MIT
+└── readme files: MIT
+
+compare-versions@3.4.0 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+core-js@3.6.4 [license(s): MIT]
+└── package.json:  MIT
+
+glob-all@3.1.0 [license(s): MIT]
+├── package.json:  MIT
+└── readme files: MIT
+
+lodash.assign@4.2.0 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.assignin@4.2.0 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.clone@4.5.0 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.clonedeep@4.5.0 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.flatten@4.4.0 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.get@4.4.2 [license(s): MIT]
+└── package.json:  MIT
+
+lodash.set@4.3.2 [license(s): MIT]
+└── package.json:  MIT
+
+mqtt@3.0.0 [license(s): MIT]
+├── package.json:  MIT
+├── license files: MIT
+└── readme files: MIT
+
+mxgraph@3.9.12 [license(s): Apache, Apache-2.0]
+├── package.json:  Apache-2.0
+└── license files: Apache
+
+nlf@2.1.1 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+ppr-dashboard@0.1.0 [license(s): EPLv2]
+└── package.json:  EPLv2
+
+snyk-module@1.9.1 [license(s): Apache-2.0]
+└── package.json:  Apache-2.0
+
+snyk-resolve@1.0.1 [license(s): Apache-2.0]
+└── package.json:  Apache-2.0
+
+snyk-resolve-deps@4.0.2 [license(s): Apache-2.0]
+└── package.json:  Apache-2.0
+
+uuid@7.0.0 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+vue@2.6.11 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+vue-i18n@8.15.3 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+vue-router@3.1.5 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+vuex@3.1.2 [license(s): MIT]
+├── package.json:  MIT
+└── license files: MIT
+
+LICENSES: Apache, Apache-2.0, EPLv2, MIT

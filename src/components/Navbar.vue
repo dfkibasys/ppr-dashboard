@@ -1,5 +1,6 @@
 <template>
-  <nav class="navbar navbar-light bg-light">
+<div>
+ <nav class="navbar navbar-light bg-light">
     <b-navbar-brand href="#">
       <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt />
       <img src="@/assets/BaSys-Logo.png" width="150" alt />
@@ -55,9 +56,8 @@
           <b-col cols="9">
             <button
               type="button"
-              data-toggle="modal"
-              data-target="#buildLicenses"
               class="btn btn-info float-right"
+              v-b-modal.modal-licences
             >
               <b-icon-question font-scale="2"></b-icon-question>
             </button>
@@ -66,12 +66,20 @@
       </b-container>
     </b-collapse>
   </nav>
+  <Licences></Licences>
+</div>
+ 
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import Licences from "./modals/Licences";
+
 export default {
   name: "Navbar",
+  components: {
+    Licences
+  },
   data() {
     return {
       langs: [
