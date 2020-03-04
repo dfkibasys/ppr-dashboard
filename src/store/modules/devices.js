@@ -2,18 +2,20 @@ import axios from 'axios';
 import store from "../../store";
 
 const state = {
-    devices: []
+    devices: [],
+    mockData: false
 };
 
 const getters = {
-    allDevices: (state) => state.devices
+    allDevices: (state) => state.devices,
+    mockDataEnabled: (state) => state.mockData
 };
 
 const actions = {
     async fetchDevices({
         commit
     }) {
-        let mockData = false;
+        let mockData = store.getters.mockDataEnabled;
         let basysUrl = store.getters.basysUrl;
 
         let dev_url = mockData ?
@@ -187,7 +189,8 @@ const actions = {
 };
 
 const mutations = {
-    setDevices: (state, devices) => (state.devices = devices)
+    setDevices: (state, devices) => (state.devices = devices),
+    switchMockDataState: (state, value) => (state.mockData = value)
 };
 
 

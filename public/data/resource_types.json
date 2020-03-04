@@ -1,0 +1,1118 @@
+{
+    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//ResourceTypeCatalogueCollection",
+    "catalogues": [
+        {
+            "manufacturer": "Festo",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_yIFSQjB3Eei1bbwBPPZWOA",
+                    "name": "Festo Component",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_QGmo8F8yEeiUo-65_7rTBQ",
+                            "name": "Festo Component PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "expression": "",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "expression": "",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "expression": "",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 200,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Universal Robotics",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_Hi37STD5EeiuBvcKgWzd3Q",
+                    "name": "UR3",
+                    "documentation": "https://www.universal-robots.com/media/1801288/eng_199901_ur3_tech_spec_web_a4.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgp8FNhEeibbdo05KXxGQ",
+                            "name": "UR3 PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 3,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 500,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_Jve8yTD5EeiuBvcKgWzd3Q",
+                    "name": "UR5",
+                    "documentation": "https://www.universal-robots.com/media/1801303/eng_199901_ur5_tech_spec_web_a4.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgp8FNxEeibbdo05KXzGQ",
+                            "name": "UR5 PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 5,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 850,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_LILOCTD5EeiuBvcKgWzd3Q",
+                    "name": "UR10",
+                    "documentation": "https://www.universal-robots.com/media/1801323/eng_199901_ur10_tech_spec_web_a4.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgp8FNhEexbbdo05KXzGQ",
+                            "name": "UR10 PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 10,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 1300,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Kuka",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_Vvb1uTD7EeiuBvcKgWzd3Q",
+                    "name": "LBR iiwa 7 R800",
+                    "documentation": "https://www.kuka.com/de-de/produkte-leistungen/robotersysteme/industrieroboter/lbr-iiwa",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgx8FNhEeibbdo05KXzGQ",
+                            "name": "LBR iiwa 7 PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 7,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 800,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_9rqBszD8EeiuBvcKgWzd3Q",
+                    "name": "LBR iiwa 14 R820",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgp8FNhEeibbdx05KXzGQ",
+                            "name": "LBR iiwa 14 PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 14,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 820,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "ABB",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_NnuuyTD7EeiuBvcKgWzd3Q",
+                    "name": "YuMi",
+                    "documentation": "https://library.e.abb.com/public/848462e58ba244f38532d23534bb4067/Datenblatt%20YuMi_lowres.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNg99FNhEeibbdo05KXzGQ",
+                            "name": "YuMi PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 0.5,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 559,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.02,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Franka Emika",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                    "id": "_0xCaqTD9EeiuBvcKgWzd3Q",
+                    "name": "Panda",
+                    "documentation": "https://s3-eu-central-1.amazonaws.com/franka-de-uploads-staging/uploads/2018/04/2018-04-datasheet-panda.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_jNgp8FNhEeibbdo05KXzGQ",
+                            "name": "Panda PickAndPlace",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 3,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/reach"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 855,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//PickAndPlace/positionRepeatability"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "value": {
+                                                                "value": 0.1,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Mobile Industrial Robots",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//AVG",
+                    "id": "_ZRW8sjJhEei1p5hKOf5Slw",
+                    "name": "MiR 100",
+                    "documentation": "http://www.mobile-industrial-robots.com/media/2947/mir100_specs_eng_corrected.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_vmBh8FNlEei1Nvtoff5AwQ",
+                            "name": "MiR100 Transport",
+                            "pattern": {
+                                "varName": "",
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//Transport"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 100,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//AVG",
+                    "id": "_77wTIlNmEei1Nvtofg5AwQ",
+                    "name": "MiR 200",
+                    "documentation": "http://www.mobile-industrial-robots.com/media/3026/mir200_specs_eng_corrected.pdf",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_vmBh8FNlEei1Nvtofg5AwQ",
+                            "name": "MiR200 Transport",
+                            "pattern": {
+                                "varName": "",
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//Transport"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//LogisticsCapability/payload"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+                                                },
+                                                "restrictions": {
+                                                    "restriction": [
+                                                        {
+                                                            "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PDoubleRestriction",
+                                                            "function": "<",
+                                                            "value": {
+                                                                "value": 200,
+                                                                "resolved": true,
+                                                                "expression": ""
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "LAP Laser",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_BcwkYlIxEeidSe5vp9A3oA",
+                    "name": "Projection Laser",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_fijDUGWlEeimHJMdsEZOIA",
+                            "name": "Project Path",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//ProjectPath"
+                                }
+                            }
+                        },
+                        {
+                            "id": "_ks7dgGWlEeimHJMdsEZOIA",
+                            "name": "Project ETA",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//ProjectETA"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Captron",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_GHTn8lIxEeidSe5vp9A3oA",
+                    "name": "Button",
+                    "capabilityAssertions": [
+                        {
+                            "binding": "",
+                            "id": "_RrMR8GWlEeimHJMdsEZOIA",
+                            "name": "Button Confirmation",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//ConfirmationCapability"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "WGS",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_3cuNYlIxEeidSe5vp9A3oA",
+                    "name": "Worker Guidance",
+                    "capabilityAssertions": [
+                        {
+                            "binding": "",
+                            "id": "_be_uUGWlEeimHJMdsEZOIA",
+                            "name": "WGS Confirmation",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//ConfirmationCapability"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "Philips",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_XEoEQmsVEeiPYI9_h6Hhzw",
+                    "name": "Hue Light",
+                    "documentation": "https://www2.meethue.com/de-de/p/hue-white-and-color-ambiance-white-and-color-ambiance-lightstrip-plus-basis/7190155PH/technische-daten",
+                    "image": "",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_ndTi4GsVEeiPYI9_h6Hhzw",
+                            "name": "IO Signal",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//QAVisualisationCapability"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//QAVisualisationCapability/qaResult"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "manufacturer": "DFKI",
+            "resourceTypes": [
+                {
+                    "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                    "id": "_Euwm8mtnEeihVrieHNgo3Q",
+                    "name": "SiAM Multimodal Dialogue Platform",
+                    "documentation": "https://madmacs.dfki.de/?page_id=21",
+                    "capabilityAssertions": [
+                        {
+                            "id": "_NP5sIGtoEeihVrieHNgo3Q",
+                            "name": "Perform Dialogue",
+                            "pattern": {
+                                "type": {
+                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+                                    "$ref": "http://www.dfki.de/iui/basys/model/capability#//InteractionCapability"
+                                },
+                                "slot": [
+                                    {
+                                        "feature": {
+                                            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+                                            "$ref": "http://www.dfki.de/iui/basys/model/capability#//InteractionCapability/topic"
+                                        },
+                                        "range": [
+                                            {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/pattern#//PValue",
+                                                "type": {
+                                                    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+                                                    "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

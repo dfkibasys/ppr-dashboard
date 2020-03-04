@@ -33,7 +33,11 @@
           <div class="w-100"></div>
           <b-col>Mock data:</b-col>
           <b-col cols="9">
-            <b-form-checkbox name="check-button" @change="changeMockData" switch></b-form-checkbox>
+            <b-form-checkbox
+              name="check-button"
+              v-model="mockDataEnabled"
+              switch
+            ></b-form-checkbox>
           </b-col>
           <div class="w-100"></div>
           <b-col>BaSys URL:</b-col>
@@ -69,7 +73,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Navbar",
   data() {
@@ -106,13 +110,19 @@ export default {
       set(value) {
         this.$store.commit("setCamundaUrl", value);
       }
+    },
+    mockDataEnabled: {
+      get() {
+        return this.$store.getters.mockDataEnabled;
+      },
+      set(value) {
+        this.$store.commit("switchMockDataState", value);
+        this.fetchDevices();
+      }
     }
   },
   methods: {
     ...mapActions(["fetchDevices"]),
-    changeMockData(checked) {
-      //change mockData variable
-    },
     changeMQTTdata() {
       this.$mqtt.end();
       this.$mqtt.connect();
