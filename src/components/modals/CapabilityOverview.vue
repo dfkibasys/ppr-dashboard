@@ -20,7 +20,7 @@
                   id="remove-btn"
                   class="btn btn-danger"
                   v-if="capability.taught"
-                  v-bind:disabled="false"
+                  v-bind:disabled="true"
                   @click="removeCapability(capability)"
                 >Remove</button>
                 <button

@@ -130,6 +130,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+ a {
+    color: gray;
+  }
+  .router-link-active {
+    color: darken(gray, 50%);
+  }
+
 .navbar-collapse {
   .container {
     max-width: 970px;
