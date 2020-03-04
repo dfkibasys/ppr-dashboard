@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(device, index) in allDevices" :key="device.componentId">
+      <div class="card" v-for="(device, index) in allDevices" :key="index">
         <div class="card-header">
           <h5 class="card-title">{{device.componentName}}</h5>
           <b-button
@@ -46,11 +46,8 @@
       </div>
     </div>
     <br />
-    <PackML :opened-device="allDevices[openedIndex]"></PackML>
-    <CapabilityOverview
-      :opened-device="allDevices[openedIndex]"
-      :current-capabilities="currentCapabilities"
-    ></CapabilityOverview>
+    <PackML :opened-device-index="openedIndex"></PackML>
+    <CapabilityOverview :opened-device-index="openedIndex"></CapabilityOverview>
   </div>
 </template>
 
@@ -69,8 +66,7 @@ export default {
   computed: mapGetters(["allDevices"]),
   data() {
     return {
-      currentCapabilities: [],
-      openedIndex: Number
+      openedIndex: 0
     };
   },
   methods: {
@@ -81,7 +77,6 @@ export default {
     },
     openCapabilityOverview: function(index) {
       this.openedIndex = index;
-      this.currentCapabilities = this.allDevices[index].capability;
       this.$bvModal.show("modal-cap");
     }
   },
@@ -94,30 +89,7 @@ export default {
     this.$mqtt.on((topic, message) => {
       let msg = JSON.parse(message.toString());
       console.log("Message arrived on topic " + topic + ",msg: ", msg);
-
-      let updatedDevices = that.allDevices.map((val, index, arr) => {
-        if (val.componentId === msg.componentId) {
-          //update currentMode and currentState
-          return {
-            componentId: val.componentId,
-            type: val.type,
-            componentName: val.componentName,
-            location: val.location,
-            serial: val.serial,
-            capability: val.capability,
-            currentMode: msg.currentMode, //update
-            currentState: msg.currentState, //update
-            docuLink: val.docuLink
-          };
-        } else {
-          //don't change properties
-          return val;
-        }
-      });
-
-      //TODO
-      console.log(updatedDevices);
-      that.devices = updatedDevices;
+      this.$store.commit("updateDevices", msg);
     });
   }
 };

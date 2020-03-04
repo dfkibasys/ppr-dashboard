@@ -12,9 +12,7 @@ const getters = {
 };
 
 const actions = {
-    async fetchDevices({
-        commit
-    }) {
+    async fetchDevices({commit}) {
         let mockData = store.getters.mockDataEnabled;
         let basysUrl = store.getters.basysUrl;
 
@@ -184,13 +182,34 @@ const actions = {
                               $(".alert-danger").show();*/
             })
     }
-
-
 };
 
 const mutations = {
     setDevices: (state, devices) => (state.devices = devices),
-    switchMockDataState: (state, value) => (state.mockData = value)
+
+    switchMockDataState: (state, value) => (state.mockData = value),
+
+    updateDevices: (state, device) => {
+        state.devices = state.devices.map((val, index, arr) => {
+            if (val.componentId === device.componentId) {
+              //update currentMode and currentState
+              return {
+                componentId: val.componentId,
+                type: val.type,
+                componentName: val.componentName,
+                location: val.location,
+                serial: val.serial,
+                capability: val.capability,
+                currentMode: device.currentMode, //update
+                currentState: device.currentState, //update
+                docuLink: val.docuLink
+              };
+            } else {
+              //don't change properties
+              return val;
+            }
+          });
+    }
 };
 
 

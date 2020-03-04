@@ -1,0 +1,243 @@
+{
+    "eClass": "http://www.dfki.de/iui/basys/model/topology#//Enterprise",
+    "id": "_mkrEADB4Eei1bbwBPPZWOA",
+    "name": "DemoEnterprise",
+    "sites": [
+        {
+            "id": "_m9aUIDB4Eei1bbwBPPZWOA",
+            "name": "CeBIT Hannover",
+            "areas": [
+                {
+                    "id": "_nb0HYDB4Eei1bbwBPPZWOA",
+                    "name": "BMBF Stand",
+                    "workCenters": [
+                        {
+                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//ProductionLine",
+                            "id": "_nuSXcjB4Eei1bbwBPPZWOA",
+                            "name": "Montage",
+                            "workCells": [
+                                {
+                                    "id": "_zr-RcTB4Eei1bbwBPPZWOA",
+                                    "name": "Endmontage",
+                                    "stations": [
+                                        {
+                                            "id": "_1yPaZzB4Eei1bbwBPPZWOA",
+                                            "name": "S1",
+                                            "equipmentModules": [
+                                                {
+                                                    "id": "_5cpPkDB4Eei1bbwBPPZWOA",
+                                                    "name": "Presse"
+                                                },
+                                                {
+                                                    "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                                                    "id": "_14ta0V2TEeit97PGgoQOAQ",
+                                                    "name": "Station-BaSys"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "_2P5mwTB4Eei1bbwBPPZWOA",
+                                            "name": "S2",
+                                            "equipmentModules": [
+                                                {
+                                                    "id": "_5vbBoDB4Eei1bbwBPPZWOA",
+                                                    "name": "Schrauber"
+                                                },
+                                                {
+                                                    "id": "_rcKlkFIxEeidSe5vp9A3oA",
+                                                    "name": "Handtaster",
+                                                    "assignedResourceType": {
+                                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                                                        "$ref": "http://localhost:8080/services/entity/_GHTn8lIxEeidSe5vp9A3oA"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "_2jROsTB4Eei1bbwBPPZWOA",
+                                            "name": "S3",
+                                            "equipmentModules": [
+                                                {
+                                                    "id": "_6CV9oDB4Eei1bbwBPPZWOA",
+                                                    "name": "Deckelaufleger",
+                                                    "capabilityRequirement": {
+                                                        "eClass": "http://www.dfki.de/iui/basys/model/capability#//Pressing",
+                                                        "id": "_LmHydzDyEeixrJ0x1ZWKig",
+                                                        "pressure": 50
+                                                    },
+                                                    "assignedResourceType": {
+                                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                                                        "$ref": "http://localhost:8080/services/entity/_yIFSQjB3Eei1bbwBPPZWOA"
+                                                    }
+                                                },
+                                                {
+                                                    "binding": "",
+                                                    "id": "_AzQQwDB5Eei1bbwBPPZWOA",
+                                                    "name": "Werkerführung"
+                                                },
+                                                {
+                                                    "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                                                    "id": "_zzNG4V2TEeit97PGgoQOAQ",
+                                                    "name": "Station-Festo"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "_C-v38TB5Eei1bbwBPPZWOA",
+                                    "name": "Qualitätssicherung",
+                                    "equipmentModules": [
+                                        {
+                                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                                            "id": "_xHhjwV2TEeit97PGgoQOAQ",
+                                            "name": "Station-QA"
+                                        }
+                                    ],
+                                    "stations": [
+                                        {
+                                            "id": "_F6qPdzB5Eei1bbwBPPZWOA",
+                                            "name": "Inspektion",
+                                            "equipmentModules": [
+                                                {
+                                                    "id": "_IvknEDB5Eei1bbwBPPZWOA",
+                                                    "name": "Sichtkontrolle",
+                                                    "assignedResourceType": {
+                                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                                                        "$ref": "http://localhost:8080/services/entity/_NnuuyTD7EeiuBvcKgWzd3Q"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "_7yRYkmmvEei3B5AQTC2gAw",
+                                            "name": "Materialbereitstellung",
+                                            "equipmentModules": [
+                                                {
+                                                    "id": "_HlgntTB5Eei1bbwBPPZWOA",
+                                                    "name": "Positioniereinheit",
+                                                    "assignedResourceType": {
+                                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                                                        "$ref": "http://localhost:8080/services/entity/_LILOCTD5EeiuBvcKgWzd3Q"
+                                                    }
+                                                },
+                                                {
+                                                    "id": "_KjUf0GsVEeiPYI9_h6Hhzw",
+                                                    "name": "IO-Anzeige"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//StorageZone",
+                            "id": "_NQFk4zB5Eei1bbwBPPZWOA",
+                            "name": "Colastation",
+                            "equipmentModules": [
+                                {
+                                    "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                                    "id": "_rBfZoV2TEeit97PGgoQOAQ",
+                                    "name": "Station-Cola"
+                                }
+                            ],
+                            "storageUnits": [
+                                {
+                                    "id": "_O8321zB5Eei1bbwBPPZWOA",
+                                    "name": "Cola-Station",
+                                    "equipmentModules": [
+                                        {
+                                            "id": "_ROxA8zB5Eei1bbwBPPZWOA",
+                                            "name": "Positioniereinheit",
+                                            "assignedResourceType": {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                                                "$ref": "http://localhost:8080/services/entity/_0xCaqTD9EeiuBvcKgWzd3Q"
+                                            }
+                                        },
+                                        {
+                                            "binding": "",
+                                            "id": "_bbI0sGsZEeixZrynCv8ohQ",
+                                            "name": "IO Signal",
+                                            "assignedResourceType": {
+                                                "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                                                "$ref": "http://localhost:8080/services/entity/_XEoEQmsVEeiPYI9_h6Hhzw"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "equipmentModules": [
+                        {
+                            "id": "_gUuXFFIxEeidSe5vp9A3oA",
+                            "name": "Laser Projection",
+                            "assignedResourceType": {
+                                "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                                "$ref": "http://localhost:8080/services/entity/_BcwkYlIxEeidSe5vp9A3oA"
+                            }
+                        },
+                        {
+                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                            "id": "_4Xw3NV2TEeit97PGgoQOAQ",
+                            "name": "Station-TeachIn"
+                        },
+                        {
+                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//AGVStation",
+                            "id": "_5AENVV2TEeit97PGgoQOAQ",
+                            "name": "Station-Wait"
+                        },
+                        {
+                            "id": "_yb80hGnSEeiQ6ti_SIagCw",
+                            "name": "Milkrunner",
+                            "equipmentModules": [
+                                {
+                                    "id": "_6lOowWnSEeiQ6ti_SIagCw",
+                                    "name": "Positioniereinheit",
+                                    "assignedResourceType": {
+                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Robot",
+                                        "$ref": "http://localhost:8080/services/entity/_Hi37STD5EeiuBvcKgWzd3Q"
+                                    }
+                                },
+                                {
+                                    "id": "_uATSAWtmEeihVrieHNgo3Q",
+                                    "name": "Dialogsystem",
+                                    "assignedResourceType": {
+                                        "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//Tool",
+                                        "$ref": "http://localhost:8080/services/entity/_Euwm8mtnEeihVrieHNgo3Q"
+                                    }
+                                }
+                            ],
+                            "assignedResourceType": {
+                                "eClass": "http://www.dfki.de/iui/basys/model/resourcetype#//AVG",
+                                "$ref": "http://localhost:8080/services/entity/_ZRW8sjJhEei1p5hKOf5Slw"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "_JUNX8EegEeiuhP6xdl274w",
+                    "name": "DFKI Stand",
+                    "workCenters": [
+                        {
+                            "eClass": "http://www.dfki.de/iui/basys/model/topology#//ProductionLine",
+                            "id": "_Pn-cEkegEeiuhP6xdl274w",
+                            "workCells": [
+                                {
+                                    "id": "_R4WjQUegEeiuhP6xdl274w",
+                                    "stations": [
+                                        {
+                                            "id": "_Sap_EUegEeiuhP6xdl274w",
+                                            "name": "Remote Teach-In"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

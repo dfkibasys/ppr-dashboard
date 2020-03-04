@@ -33,11 +33,7 @@
           <div class="w-100"></div>
           <b-col>Mock data:</b-col>
           <b-col cols="9">
-            <b-form-checkbox
-              name="check-button"
-              v-model="mockDataEnabled"
-              switch
-            ></b-form-checkbox>
+            <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
           </b-col>
           <div class="w-100"></div>
           <b-col>BaSys URL:</b-col>
@@ -73,7 +69,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "Navbar",
   data() {
@@ -81,8 +77,7 @@ export default {
       langs: [
         { value: "de", text: "Deutsch" },
         { value: "en", text: "English" }
-      ],
-      checked: false
+      ]
     };
   },
   computed: {

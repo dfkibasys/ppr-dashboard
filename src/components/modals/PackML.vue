@@ -30,6 +30,7 @@
 <script>
 import * as mxgraph from "mxgraph";
 import axios from "axios";
+import {mapGetters} from "vuex";
 
 const {
   mxClient,
@@ -60,8 +61,9 @@ export default {
     };
   },
   props: {
-    openedDevice: Object
+    openedDeviceIndex: 0
   },
+  computed: mapGetters(["allDevices"]),
   methods: {
     initGraph: function() {
       let that = this;
@@ -103,7 +105,7 @@ export default {
             }
           })(div);
 
-          this.markCurrentState(this.openedDevice.currentState);
+          this.markCurrentState(this.allDevices[this.openedDeviceIndex].currentState);
           this.xmlLoaded = true;
         });
       }
@@ -143,7 +145,7 @@ export default {
     stopButton: function() {
       let msg = {
         eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.openedDevice.componentId,
+        componentId: this.allDevices[openedDeviceIndex].componentId,
         controlCommand: "STOP"
       };
 
@@ -152,7 +154,7 @@ export default {
     resetButton: function() {
       let msg = {
         eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.openedDevice.componentId,
+        componentId: this.allDevices[openedDeviceIndex].componentId,
         controlCommand: "RESET"
       };
       
@@ -162,7 +164,7 @@ export default {
       let msg = {
         eClass:
           "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
-        componentId: this.openedDevice.componentId,
+        componentId: this.allDevices[openedDeviceIndex].componentId,
         mode: value
       };
 
@@ -170,12 +172,12 @@ export default {
     }
   },
   watch: {
-    openedDevice: function(val) {
+    allDevices: function(val) {
       //set mode toggle button
-      this.selected = val.currentMode;
+      this.selected = val[this.openedDeviceIndex].currentMode;
 
       //avoid mode switching when not in stopped state
-      if (val.currentState !== "STOPPED") {
+      if (val[this.openedDeviceIndex].currentState !== "STOPPED") {
         this.options.map(val => {
           if (val.value !== this.selected) {
             val.disabled = true;
@@ -198,7 +200,7 @@ export default {
           [this.currentCell]
         );
         //set new cell border to red
-        this.markCurrentState(val.currentState);
+        this.markCurrentState(val[this.openedDeviceIndex].currentState);
       }
     }
   }

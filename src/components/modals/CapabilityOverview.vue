@@ -10,7 +10,7 @@
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody v-for="(capability, index) in currentCapabilities" :key="index">
+          <tbody v-for="(capability, index) in allDevices[openedDeviceIndex].capability" :key="index">
             <tr>
               <th scope="row">{{index}}</th>
               <td>{{capability.name}}</td>
@@ -20,7 +20,7 @@
                   id="remove-btn"
                   class="btn btn-danger"
                   v-if="capability.taught"
-                  v-bind:disabled="true"
+                  v-bind:disabled="false"
                   @click="removeCapability(capability)"
                 >Remove</button>
                 <button
@@ -50,24 +50,23 @@ import {mapGetters} from "vuex";
 export default {
   name: "CapabilityOverview",
   props: {
-    openedDevice: Object,
-    currentCapabilities: Array
+    openedDeviceIndex: 0,
   },
-  computed: mapGetters(["camundaUrl"]),
+  computed: mapGetters(["camundaUrl", "allDevices"]),
   methods: {
     removeCapability(capability) {
       let url =
         this.camundaUrl +
         "/services/resourceinstance/" +
-        this.openedDevice.componentId +
+        this.allDevices[this.openedDeviceIndex].componentId +
         "/capability/" +
-        this.openedDevice.capabilityAssertionId +
+        this.allDevices[this.openedDeviceIndex].capabilityAssertionId +
         "/variant/" +
         capability.id;
 
       axios.delete(url).then(res => {
         //GUI updates
-        //TODO: remove capability from devices
+        //TODO: remove capability from devices in mutations
       });
     },
     startTeaching() {
