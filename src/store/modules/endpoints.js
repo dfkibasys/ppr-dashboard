@@ -1,7 +1,7 @@
 const state = {
-    BASYS_REST_URL: "http://10.2.10.3:8080",
-    MQTT_BROKER_URL: "ws://10.2.10.1:8083/mqtt",
-    CAMUNDA_REST_URL: "http://10.2.10.4:8080"
+    BASYS_REST_URL: process.env.VUE_APP_BASYS_REST_URL,
+    MQTT_BROKER_URL: process.env.VUE_APP_MQTT_BROKER_URL,
+    CAMUNDA_REST_URL: process.env.VUE_APP_CAMUNDA_REST_URL
 };
 const getters = {
     basysUrl: (state) => state.BASYS_REST_URL,
