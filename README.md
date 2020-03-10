@@ -15,15 +15,17 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
+## Docker
+Set the needed BaSys/MQTT/Camunda URLS in .env file
+
 ```
-npm run test
+VUE_APP_BASYS_REST_URL=http://10.2.10.3:8080
+VUE_APP_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
+VUE_APP_CAMUNDA_REST_URL=http://10.2.10.4:8080
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+Run docker script
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+./docker.sh
+```
