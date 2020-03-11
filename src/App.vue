@@ -24,18 +24,20 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @cardWidth: 500px;
 
   .cardContainer {
+    padding-top: 10px;
     display: grid;
-    grid-template-columns: 500px;
+    grid-template-columns: @cardWidth;
     @media (min-width: 1010px) {
-          grid-template-columns: 500px 500px;
+          grid-template-columns: @cardWidth @cardWidth;
     }
     @media (min-width: 1520px) {
-          grid-template-columns: 500px 500px 500px;
+          grid-template-columns: @cardWidth @cardWidth @cardWidth;
     }
     @media (min-width: 2030px) {
-         grid-template-columns: 500px 500px 500px 500px;
+         grid-template-columns: @cardWidth @cardWidth @cardWidth @cardWidth;
     }
 
     justify-content: center;

@@ -1,74 +1,69 @@
 <template>
-<div>
- <nav class="navbar navbar-light bg-light">
-    <b-navbar-brand href="#">
-      <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt />
-      <img src="@/assets/BaSys-Logo.png" width="150" alt />
-    </b-navbar-brand>
+  <div>
+    <nav class="navbar navbar-light bg-light">
+      <b-navbar-brand href="#">
+        <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt />
+        <img src="@/assets/BaSys-Logo.png" width="150" alt />
+      </b-navbar-brand>
 
-    <b-navbar-nav is-nav class="flex-row">
-      <b-link class="pr-3" to="/devices">{{$t("translation.menu_devices")}}</b-link>
-      <b-link class="pr-3" to="/services">Services</b-link>
-      <b-link to="/management">Management</b-link>
-    </b-navbar-nav>
+      <b-navbar-nav is-nav class="flex-row">
+        <b-link class="pr-3" to="/devices">{{$t("translation.menu_devices")}}</b-link>
+        <b-link class="pr-3" to="/services">Services</b-link>
+        <b-link to="/management">Management</b-link>
+      </b-navbar-nav>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" class="navbar-collapse" is-nav>
-      <b-container>
-        <b-row>
-          <b-col>{{$t('translation.set_language')}}:</b-col>
-          <b-col cols="9">
-            <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
-          </b-col>
-          <div class="w-100"></div>
-          <b-col>Broker URL:</b-col>
-          <b-col class="rest" cols="9">
-            <input class="form-control" v-model="mqttUrl" />
-            <button
-              type="button"
-              class="btn btn-success"
-              v-on:click="changeMQTTdata"
-            >{{$t('translation.set_change')}}</button>
-          </b-col>
-          <div class="w-100"></div>
-          <b-col>Mock data:</b-col>
-          <b-col cols="9">
-            <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
-          </b-col>
-          <div class="w-100"></div>
-          <b-col>BaSys URL:</b-col>
-          <b-col class="rest" cols="9">
-            <input class="form-control" v-model="basysUrl" />
-            <button
-              type="button"
-              class="btn btn-success"
-              v-on:click="changeBASYSdata"
-            >{{$t('translation.set_change')}}</button>
-          </b-col>
-          <div class="w-100"></div>
-          <b-col>Camunda URL:</b-col>
-          <b-col class="rest" cols="9">
-            <input class="form-control" v-model="camundaUrl" />
-          </b-col>
-          <div class="w-100"></div>
-          <b-col></b-col>
-          <b-col cols="9">
-            <button
-              type="button"
-              class="btn btn-info float-right"
-              v-b-modal.modal-licences
-            >
-              <b-icon-question font-scale="2"></b-icon-question>
-            </button>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-collapse>
-  </nav>
-  <Licences></Licences>
-</div>
- 
+      <b-collapse id="nav-collapse" class="navbar-collapse" is-nav>
+        <b-container>
+          <b-row>
+            <b-col>{{$t('translation.set_language')}}:</b-col>
+            <b-col cols="9">
+              <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
+            </b-col>
+            <div class="w-100"></div>
+            <b-col>Broker URL:</b-col>
+            <b-col class="rest" cols="9">
+              <input class="form-control" v-model="mqttUrl" />
+              <button
+                type="button"
+                class="btn btn-success"
+                v-on:click="changeMQTTdata"
+              >{{$t('translation.set_change')}}</button>
+            </b-col>
+            <div class="w-100"></div>
+            <b-col>Mock data:</b-col>
+            <b-col cols="9">
+              <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
+            </b-col>
+            <div class="w-100"></div>
+            <b-col>BaSys URL:</b-col>
+            <b-col class="rest" cols="9">
+              <input class="form-control" v-model="basysUrl" />
+              <button
+                type="button"
+                class="btn btn-success"
+                v-on:click="changeBASYSdata"
+              >{{$t('translation.set_change')}}</button>
+            </b-col>
+            <div class="w-100"></div>
+            <b-col>Camunda URL:</b-col>
+            <b-col class="rest" cols="9">
+              <input class="form-control" v-model="camundaUrl" />
+            </b-col>
+            <div class="w-100"></div>
+            <b-col></b-col>
+            <b-col cols="9">
+              <button type="button" class="btn btn-info float-right" v-b-modal.modal-licences>
+                <b-icon-question font-scale="2"></b-icon-question>
+              </button>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-collapse>
+    </nav>
+    <Licences></Licences>
+  </div>
 </template>
 
 <script>
@@ -138,12 +133,12 @@ export default {
 </script>
 
 <style scoped lang="less">
- a {
-    color: gray;
-  }
-  .router-link-active {
-    color: darken(gray, 50%);
-  }
+a {
+  color: gray;
+}
+.router-link-active {
+  color: darken(gray, 50%);
+}
 
 .navbar-collapse {
   .container {
@@ -156,14 +151,9 @@ export default {
   }
 
   .rest {
-    input {
-      width: 87%;
-      float: left;
-    }
-    button {
-      float: left;
-      margin-left: 8px;
-    }
+    display: grid;
+    grid-template-columns: auto 100px;
+    grid-gap: 10px;
   }
 }
 </style>
