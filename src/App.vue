@@ -26,10 +26,22 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   .cardContainer {
+    display: grid;
+    grid-template-columns: 500px;
+    @media (min-width: 1010px) {
+          grid-template-columns: 500px 500px;
+    }
+    @media (min-width: 1520px) {
+          grid-template-columns: 500px 500px 500px;
+    }
+    @media (min-width: 2030px) {
+         grid-template-columns: 500px 500px 500px 500px;
+    }
+
+    justify-content: center;
+    grid-gap: 10px;
+
     .card {
-      width: 500px;
-      margin: 10px;
-      float: left;
       background-color: lighten(#555555, 15%);
       color: white;
 
