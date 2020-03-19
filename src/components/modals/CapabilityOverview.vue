@@ -10,7 +10,7 @@
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody v-for="(capability, index) in allDevices[openedDeviceIndex].capability" :key="index">
+          <tbody v-for="(capability, index) in allDevices[openedDeviceIndex].capability" :key="capability.name + capability.taught">
             <tr>
               <th scope="row">{{index}}</th>
               <td>{{capability.name}}</td>
@@ -20,7 +20,7 @@
                   id="remove-btn"
                   class="btn btn-danger"
                   v-if="capability.taught"
-                  v-bind:disabled="true"
+                  :disabled="true"
                   @click="removeCapability(capability)"
                 >Remove</button>
                 <button
@@ -28,7 +28,7 @@
                   id="teach-btn"
                   class="btn btn-info"
                   v-else
-                  v-bind:disabled="true"
+                  :disabled="true"
                   @click="startTeaching"
                 >Teach</button>
               </td>

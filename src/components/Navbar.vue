@@ -28,7 +28,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                v-on:click="changeMQTTdata"
+                @click="changeMQTTdata"
               >{{$t('translation.set_change')}}</button>
             </b-col>
             <div class="w-100"></div>
@@ -43,7 +43,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                v-on:click="changeBASYSdata"
+                @click="changeBASYSdata"
               >{{$t('translation.set_change')}}</button>
             </b-col>
             <div class="w-100"></div>

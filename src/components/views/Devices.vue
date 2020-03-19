@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(device, index) in allDevices" :key="index">
+      <div class="card" v-for="(device, index) in allDevices" :key="device.componentId">
         <div class="card-header">
           <h5 class="card-title">{{device.componentName}}</h5>
           <b-button
-            v-on:click="openPackML(index)"
+            @click="openPackML(index)"
             class="btn btn-info float-right"
             data-bind="attr: { 'data-state': currentState, 'data-index': $index }"
           >{{device.currentMode}} - {{device.currentState}}</b-button>
@@ -27,7 +27,7 @@
                 <br />
               </div>
               <div class="col-5 properties">
-                <a target="_blank" v-bind:href="device.docuLink">{{device.type}}</a>
+                <a target="_blank" :href="device.docuLink">{{device.type}}</a>
                 <br />
                 {{device.location}}
                 <br />
@@ -36,7 +36,7 @@
                 {{device.capability.length-1}}
                 <a
                   href="#"
-                  v-on:click="openCapabilityOverview(index)"
+                  @click="openCapabilityOverview(index)"
                 >({{$t("translation.show")}})</a>
                 <br />
               </div>

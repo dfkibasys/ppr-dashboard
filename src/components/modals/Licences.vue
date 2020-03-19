@@ -8,7 +8,7 @@
           <th scope="col">License</th>
         </tr>
       </thead>
-      <tbody v-for="(licence, index) in licences" :key="index">
+      <tbody v-for="licence in licences" :key="licence.name">
         <tr>
           <td>{{licence.name}}</td>
           <td>{{licence.version}}</td>
