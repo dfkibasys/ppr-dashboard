@@ -50,7 +50,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "CapabilityOverview",
   props: {
-    openedDeviceIndex: 0,
+    openedDeviceIndex: Number,
   },
   computed: mapGetters(["camundaUrl", "allDevices"]),
   methods: {

@@ -61,7 +61,7 @@ export default {
     };
   },
   props: {
-    openedDeviceIndex: 0
+    openedDeviceIndex: Number
   },
   computed: mapGetters(["allDevices"]),
   methods: {
