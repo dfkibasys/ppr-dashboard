@@ -50,9 +50,12 @@ export default {
           "/services/registry/SERVICE_COMPONENT";
       let services = [];
 
+      that.$Progress.start();
+
       axios
-        .get(serv_url)
+        .get(serv_url, {timeout: 5000})
         .then(serv => {
+          that.$Progress.finish();
           //services
           services = serv.data.map((val, index, arr) => {
             // return element to new Array
@@ -67,9 +70,8 @@ export default {
           that.services = services;
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
-          /* $(".alert-danger span").text(`Failed to get all JSON data from ${viewModel.restConfig.hostname()}`).show();
-                        $(".alert-danger").show();*/
         });
     }
   },

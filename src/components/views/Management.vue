@@ -49,9 +49,12 @@ export default {
         : that.basysUrl + "/services/registry/MANAGEMENT_COMPONENT";
       let management = [];
 
+      that.$Progress.start();
+
       axios
-        .get(man_url)
+        .get(man_url, {timeout: 5000})
         .then(man => {
+          that.$Progress.finish();
           //management
           management = man.data.map((val, index, arr) => {
             // return element to new Array
@@ -66,9 +69,8 @@ export default {
           that.managements = management;
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
-          /* $(".alert-danger span").text(`Failed to get all JSON data from ${viewModel.restConfig.hostname()}`).show();
-                        $(".alert-danger").show();*/
         });
     }
   },

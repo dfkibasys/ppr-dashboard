@@ -1,3 +1,4 @@
+import Vue from "vue";
 import axios from 'axios';
 import store from "../../store";
 
@@ -30,8 +31,10 @@ const actions = {
         let devCount = 0,
             devices = [];
 
+        Vue.prototype.$Progress.start();
+
         axios
-            .all([axios.get(dev_url), axios.get(inst_url), axios.get(typ_url)])
+            .all([axios.get(dev_url, {timeout: 5000}), axios.get(inst_url, {timeout: 5000}), axios.get(typ_url, {timeout: 5000})])
             .then(
                 axios.spread((dev, inst, typ) => {
                     
@@ -170,6 +173,7 @@ const actions = {
                             devCount === devs.length &&
                             capabilityCounter === devs.length
                         ) {
+                            Vue.prototype.$Progress.finish();
                             //update new requested files
                             commit('setDevices', devices);
                         }
@@ -177,9 +181,9 @@ const actions = {
                 })
             )
             .catch(err => {
+                Vue.prototype.$Progress.fail();
+                commit('setDevices', []);
                 console.error(err);
-                /* $(".alert-danger span").text(`Failed to get all JSON data from ${viewModel.restConfig.hostname()}`).show();
-                              $(".alert-danger").show();*/
             })
     }
 };

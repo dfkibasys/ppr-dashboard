@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
-import store from "./store";
+import store from "./store"
 import mqtt from './mqtt'
 
 //Bootstrap
@@ -9,14 +9,29 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-//i18n
+
 import VueI18n from 'vue-i18n'
+import VueProgressBar from 'vue-progressbar'
 
 Vue.prototype.$mqtt = mqtt;
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueI18n);
+
+const options = {
+  color: '#385ebc',
+  failedColor: 'red',
+  thickness: '3px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: false,
+  position: 'relative'
+}
+Vue.use(VueProgressBar, options)
 
 // Ready translated locale messages
 const messages = {

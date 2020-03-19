@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
+    <vue-progress-bar></vue-progress-bar>
     <router-view></router-view>
   </div>
 </template>
