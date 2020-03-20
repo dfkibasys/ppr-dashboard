@@ -19,6 +19,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueI18n);
 
+//vue-progressbar
 const options = {
   color: '#385ebc',
   failedColor: 'red',
@@ -28,7 +29,6 @@ const options = {
     opacity: '0.6s',
     termination: 300
   },
-  autoRevert: false,
   position: 'relative'
 }
 Vue.use(VueProgressBar, options)
