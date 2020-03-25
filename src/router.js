@@ -4,7 +4,8 @@ import Devices from "./components/views/Devices";
 import Services from "./components/views/Services";
 import Management from "./components/views/Management";
 import Processes from "./components/views/Processes";
-import ProcessesOverview from "./components/views/ProcessesOverview";
+import ProcessesOverview from "./components/views/processes/ProcessesOverview";
+import ProcessesDetails from "./components/views/processes/ProcessesDetails"
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
             path: '/processes/overview',
             name: 'ProcessesOverview',
             component: ProcessesOverview
+        },
+        {
+            path: '/processes/:id',
+            name: 'ProcessesDetails',
+            component: ProcessesDetails
         },
         { path: '*', redirect: '/devices' }
     ]

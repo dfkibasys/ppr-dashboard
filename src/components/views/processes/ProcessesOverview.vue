@@ -14,14 +14,14 @@ export default {
       ctrl: {
         groupedprocessDefinitions: [
           {
-            id: "hoergorgh",
+            id: "id-1",
             instances: 6,
             name: "Invoice",
             key: "invoice",
             tenantId: "je"
           },
           {
-            id: "hberhe",
+            id: "id-2",
             instances: 2,
             name: "Review",
             key: "review",
@@ -33,7 +33,8 @@ export default {
   },
   methods: {
       goToProcessView(item) {
-          console.log(`${item.id} clicked`);  
+        this.$router.push({name: 'ProcessesDetails', params: {id: item.id}});
+          //console.log(`${item.id} clicked`);  
       }
   }
 };
