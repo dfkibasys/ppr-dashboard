@@ -1,13 +1,16 @@
 <template>
   <b-container>
     <h2>Deployed</h2>
-    <b-table hover striped @row-clicked="goToProcessView" :items="ctrl.groupedprocessDefinitions" :fields="fields"></b-table>
+    <b-table hover striped @row-clicked="goToProcessView" :items="getProcessDefinitions" :fields="fields"></b-table>
   </b-container>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "ProcessesOverview",
+  computed: mapGetters(["getProcessDefinitions"]),
   data() {
     return {
       fields: ["instances", "name", "key", "tenantId"],
@@ -32,10 +35,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["fetchProcessDefinitions"]),
       goToProcessView(item) {
         this.$router.push({name: 'ProcessesDetails', params: {pid: item.id}});
           //console.log(`${item.id} clicked`);  
       }
+  },
+  created(){
+    this.fetchProcessDefinitions();
   }
 };
 </script>
