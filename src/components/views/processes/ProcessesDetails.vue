@@ -11,36 +11,36 @@
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Version:</h5>
             <p class="mb-0">
-              <b-form-select v-model="ctrl.currentVersionID" :options="ctrl.versions"></b-form-select>
+              <b-form-select v-model="getProcessDefinitionById.version" :options="ctrl.versions"></b-form-select>
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Version Tag:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.versionTag || "null"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.versionTag || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition ID:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.id || "-"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.id || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Key:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.key || "-"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.key || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Name:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.name || "-"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.name || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Tenant ID:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.tenantId || "null"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.tenantId || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Deployment ID:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.deploymentId || "-"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.deploymentId || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Instances Running:</h5>
-            <p class="mb-0">{{ctrl.processDefinition.instances || "0"}}</p>
+            <p class="mb-0">{{getProcessDefinitionById.instances || "0"}}</p>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -78,12 +78,14 @@
 
 <script>
 import VueBpmn from "vue-bpmn";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: "ProcessesDetails",
   components: {
     VueBpmn
   },
+  computed: mapGetters(["getProcessDefinitionById"]),
   data() {
     return {
       ctrl: {
@@ -120,6 +122,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["fetchProcessDefinitionById"]),
     goToProcessInstance() {
         this.$router.push({name: 'ProcessesInstance', params: {pid: this.$route.params.pid, iid: "545"}});
     },
@@ -128,7 +131,10 @@ export default {
     },
     handleShown: function() {
       console.log("diagram shown");
-    }
+    },
+  },
+  created(){
+    this.fetchProcessDefinitionById(this.$route.params.pid);
   }
 };
 </script>

@@ -6,7 +6,8 @@ const state = {
     decisionDefinitionsCount: 0,
     caseDefinitionsCount: 0,
     deploymentsCount: 0,
-    processDefinitions: []
+    processDefinitions: [],
+    processDefinition: {}
 }
 
 const getters = {
@@ -14,7 +15,8 @@ const getters = {
     getDecisionDefinitionsCount: (state) => state.decisionDefinitionsCount,
     getCaseDefinitionsCount: (state) => state.caseDefinitionsCount,
     getDeploymentsCount: (state) => state.deploymentsCount,
-    getProcessDefinitions: (state) => state.processDefinitions
+    getProcessDefinitions: (state) => state.processDefinitions,
+    getProcessDefinitionById: (state) => state.processDefinition
 }
 
 const mutations = {
@@ -22,7 +24,8 @@ const mutations = {
     setDecisionDefinitionsCount: (state, count) => (state.decisionDefinitionsCount = count),
     setCaseDefinitionsCount: (state, count) => (state.caseDefinitionsCount = count),
     setDeploymentsCount: (state, count) => (state.deploymentsCount = count),
-    setProcessDefinitions: (state, definitions) => (state.processDefinitions = definitions)
+    setProcessDefinitions: (state, definitions) => (state.processDefinitions = definitions),
+    setProcessDefinitionById: (state, definition) => (state.processDefinition = definition)
 }
 
 const actions = {
@@ -96,6 +99,14 @@ const actions = {
             .catch(err => {
                 console.error(err);
             });
+    },
+    fetchProcessDefinitionById({commit}, id){
+        let baseUrl = store.getters.camundaUrl + '/engine-rest';
+
+        axios.get(baseUrl + "/process-definition/" + id)
+        .then(res => {
+            commit("setProcessDefinitionById", res.data);
+        })
     }
 }
 

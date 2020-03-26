@@ -1,7 +1,11 @@
 <template>
   <b-container>
     <h2>Deployed</h2>
-    <b-table hover striped @row-clicked="goToProcessView" :items="getProcessDefinitions" :fields="fields"></b-table>
+    <b-table hover striped @row-clicked="goToProcessView" :items="getProcessDefinitions" :fields="fields">
+      <template v-slot:cell(tenantId)="{ value }">
+            {{value.tenantId || "-"}}
+      </template>
+    </b-table>
   </b-container>
 </template>
 
@@ -13,25 +17,7 @@ export default {
   computed: mapGetters(["getProcessDefinitions"]),
   data() {
     return {
-      fields: ["instances", "name", "key", "tenantId"],
-      ctrl: {
-        groupedprocessDefinitions: [
-          {
-            id: "id-1",
-            instances: 6,
-            name: "Invoice",
-            key: "invoice",
-            tenantId: "je"
-          },
-          {
-            id: "id-2",
-            instances: 2,
-            name: "Review",
-            key: "review",
-            tenantId: "-"
-          }
-        ]
-      }
+      fields: ["instances", "name", "key", "tenantId"]
     }
   },
   methods: {
