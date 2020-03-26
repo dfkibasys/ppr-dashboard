@@ -33,7 +33,7 @@ export default {
   },
   methods: {
       goToProcessView(item) {
-        this.$router.push({name: 'ProcessesDetails', params: {id: item.id}});
+        this.$router.push({name: 'ProcessesDetails', params: {pid: item.id}});
           //console.log(`${item.id} clicked`);  
       }
   }

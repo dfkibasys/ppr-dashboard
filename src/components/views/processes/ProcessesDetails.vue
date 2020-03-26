@@ -63,7 +63,7 @@
             <b-table
               hover
               striped
-              @row-clicked="goToProcessDefinition"
+              @row-clicked="goToProcessInstance"
               :items="ctrl.processInstances"
             ></b-table>
           </b-tab>
@@ -120,7 +120,9 @@ export default {
     };
   },
   methods: {
-    goToProcessDefinition() {},
+    goToProcessInstance() {
+        this.$router.push({name: 'ProcessesInstance', params: {pid: this.$route.params.pid, iid: "545"}});
+    },
     handleError: function(err) {
       console.error("failed to show diagram", err);
     },
