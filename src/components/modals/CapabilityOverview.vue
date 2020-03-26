@@ -28,7 +28,7 @@
                   id="teach-btn"
                   class="btn btn-info"
                   v-else
-                  :disabled="true"
+                  :disabled="false"
                   @click="startTeaching"
                 >Teach</button>
               </td>
@@ -52,11 +52,11 @@ export default {
   props: {
     openedDeviceIndex: Number,
   },
-  computed: mapGetters(["camundaUrl", "allDevices"]),
+  computed: mapGetters(["basysUrl", "camundaUrl", "allDevices"]),
   methods: {
     removeCapability(capability) {
       let url =
-        this.camundaUrl +
+        this.basysUrl +
         "/services/resourceinstance/" +
         this.allDevices[this.openedDeviceIndex].componentId +
         "/capability/" +

@@ -145,7 +145,7 @@ export default {
     stopButton: function() {
       let msg = {
         eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[openedDeviceIndex].componentId,
+        componentId: this.allDevices[this.openedDeviceIndex].componentId,
         controlCommand: "STOP"
       };
 
@@ -154,7 +154,7 @@ export default {
     resetButton: function() {
       let msg = {
         eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[openedDeviceIndex].componentId,
+        componentId: this.allDevices[this.openedDeviceIndex].componentId,
         controlCommand: "RESET"
       };
       
@@ -164,7 +164,7 @@ export default {
       let msg = {
         eClass:
           "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
-        componentId: this.allDevices[openedDeviceIndex].componentId,
+        componentId: this.allDevices[this.openedDeviceIndex].componentId,
         mode: value
       };
 
