@@ -26,57 +26,76 @@ const mutations = {
 }
 
 const actions = {
-    fetchCounts({commit}) {
+    fetchCounts({
+        commit
+    }) {
 
-        let baseUrl = store.getters.camundaUrl;
-        axios.get(baseUrl + "/engine-rest/process-definition/count?latestVersion=true")
-        .then(res => {
-            commit("setProcessDefintionsCount", res.data.count);
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-        axios.get(baseUrl + "/engine-rest/decision-definition/count")
-        .then(res => {
-            commit("setDecisionDefinitionsCount", res.data.count);
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-        axios.get(baseUrl + "/engine-rest/case-definition/count")
-        .then(res => {
-            commit("setCaseDefinitionsCount", res.data.count);
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-        axios.get(baseUrl + "/engine-rest/deployment/count")
-        .then(res => {
-            commit("setDeploymentsCount", res.data.count);
-        })
-        .catch(err => {
-            console.error(err);
-        });
-    },
-    fetchProcessDefinitions({commit}){
-        let baseUrl = store.getters.camundaUrl;
-        axios.get(baseUrl + "/engine-rest/process-definition")
-        .then(res => {
-            console.log(res.data);
-            /*
-            axios.get(baseUrl + "/count?processDefinitionKey=" + res.data.key)
+        let baseUrl = store.getters.camundaUrl + '/engine-rest';
+        axios.get(baseUrl + "/process-definition/count?latestVersion=true")
             .then(res => {
-                res.data.count
+                commit("setProcessDefintionsCount", res.data.count);
             })
-            */
-            commit("setProcessDefinitions", res.data);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+            .catch(err => {
+                console.error(err);
+            });
+
+        axios.get(baseUrl + "/decision-definition/count")
+            .then(res => {
+                commit("setDecisionDefinitionsCount", res.data.count);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+
+        axios.get(baseUrl + "/case-definition/count")
+            .then(res => {
+                commit("setCaseDefinitionsCount", res.data.count);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+
+        axios.get(baseUrl + "/deployment/count")
+            .then(res => {
+                commit("setDeploymentsCount", res.data.count);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    },
+    fetchProcessDefinitions({
+        commit
+    }) {
+        let baseUrl = store.getters.camundaUrl + '/engine-rest';
+        let processDefinitions = [];
+
+        axios.get(baseUrl + "/process-definition?latestVersion=true")
+            .then(res => {
+                processDefinitions = res.data;
+                let receivedCounts = 0;
+           
+                processDefinitions.map(pp => {
+                    axios.get(baseUrl + "/process-instance/count", {
+                            params: {
+                                processDefinitionKey: pp.key
+                            }
+                        })
+                        .then(res => {
+                            pp.instances = res.data.count;
+                            receivedCounts++;
+                            if (receivedCounts == processDefinitions.length){
+                                commit("setProcessDefinitions", processDefinitions);
+                            }
+                        })
+                        .catch (err => {
+                            console.error(err);
+                        })
+                });
+                
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 }
 
