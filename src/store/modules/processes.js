@@ -7,7 +7,9 @@ const state = {
     caseDefinitionsCount: 0,
     deploymentsCount: 0,
     processDefinitions: [],
-    processDefinition: {}
+    processDefinition: {},
+    processInstances: [],
+    auditLog: []
 }
 
 const getters = {
@@ -16,7 +18,9 @@ const getters = {
     getCaseDefinitionsCount: (state) => state.caseDefinitionsCount,
     getDeploymentsCount: (state) => state.deploymentsCount,
     getProcessDefinitions: (state) => state.processDefinitions,
-    getProcessDefinitionById: (state) => state.processDefinition
+    getProcessDefinitionById: (state) => state.processDefinition,
+    getProcessInstances: (state) => state.processInstances,
+    getAuditLog: (state) => state.auditLog
 }
 
 const mutations = {
@@ -25,7 +29,9 @@ const mutations = {
     setCaseDefinitionsCount: (state, count) => (state.caseDefinitionsCount = count),
     setDeploymentsCount: (state, count) => (state.deploymentsCount = count),
     setProcessDefinitions: (state, definitions) => (state.processDefinitions = definitions),
-    setProcessDefinitionById: (state, definition) => (state.processDefinition = definition)
+    setProcessDefinitionById: (state, definition) => (state.processDefinition = definition),
+    setProcessInstances: (state, instances) => (state.processInstances = instances),
+    setAuditLog: (state, log) => (state.auditLog = log)
 }
 
 const actions = {
@@ -105,7 +111,30 @@ const actions = {
 
         axios.get(baseUrl + "/process-definition/" + id)
         .then(res => {
+            axios.get(baseUrl + "/process-instance?processDefinitionId=" + res.data.id)
+            .then(res => {
+                commit("setProcessInstances", res.data);
+            })
             commit("setProcessDefinitionById", res.data);
+        })
+    },
+    fetchActivityInstance({commit}, id){
+        let baseUrl = store.getters.camundaUrl + '/engine-rest';
+        
+        axios.get(baseUrl + "/history/activity-instance", {
+            params: {
+                processDefinitionId: id,
+                sortBy: 'startTime',
+                sortOrder: 'asc'
+            }
+        })
+        .then(res => {
+            commit("setAuditLog", res.data);
+            
+        })
+        .catch(err => {
+            console.log(err);
+            
         })
     }
 }

@@ -64,11 +64,12 @@
               hover
               striped
               @row-clicked="goToProcessInstance"
-              :items="ctrl.processInstances"
+              :items="getProcessInstances"
+              :fields="instanceFields"
             ></b-table>
           </b-tab>
           <b-tab title="Audit Log">
-            <b-table hover striped :items="ctrl.auditlog"></b-table>
+            <b-table hover striped :items="getAuditLog" :fields="auditFields"></b-table>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -85,44 +86,20 @@ export default {
   components: {
     VueBpmn
   },
-  computed: mapGetters(["getProcessDefinitionById"]),
+  computed: mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog"]),
   data() {
     return {
+      instanceFields: ["id", "businessKey"],
+      auditFields: ["processInstanceId", "activityName", "startTime", "endTime", "activityId"],
       ctrl: {
         showLeftDetails: true,
         currentVersionID: 1,
-        versions: [1, 2],
-        processDefinition: {
-          versionTag: "V2.0",
-          id: "id-1",
-          key: "invoice",
-          name: "Invoice",
-          tenantId: "null",
-          deploymentId: "ergrw",
-          instances: 6
-        },
-        processInstances: [
-          {
-            id: "dsdf",
-            startTime: "4545",
-            businessKey: "hkgejrg"
-          }
-        ],
-        auditlog: [
-          {
-            processInstanceId: "gergerg",
-            activityName: "fhrthr",
-            _startTime: "2020-03-17T07:49:21.783+0000",
-            endTime: "gregreh",
-            _endTime: "dgerg",
-            activityId: "dgerg"
-          }
-        ]
+        versions: [1, 2]
       }
     };
   },
   methods: {
-    ...mapActions(["fetchProcessDefinitionById"]),
+    ...mapActions(["fetchProcessDefinitionById", "fetchActivityInstance"]),
     goToProcessInstance() {
         this.$router.push({name: 'ProcessesInstance', params: {pid: this.$route.params.pid, iid: "545"}});
     },
@@ -135,6 +112,7 @@ export default {
   },
   created(){
     this.fetchProcessDefinitionById(this.$route.params.pid);
+    this.fetchActivityInstance(this.$route.params.pid);
   }
 };
 </script>
