@@ -8,6 +8,7 @@ const state = {
     deploymentsCount: 0,
     processDefinitions: [],
     processDefinition: {},
+    processDefinitionXML: "",
     processInstances: [],
     auditLog: []
 }
@@ -19,6 +20,7 @@ const getters = {
     getDeploymentsCount: (state) => state.deploymentsCount,
     getProcessDefinitions: (state) => state.processDefinitions,
     getProcessDefinitionById: (state) => state.processDefinition,
+    getProcessDefinitionXML: (state) => state.processDefinitionXML,
     getProcessInstances: (state) => state.processInstances,
     getAuditLog: (state) => state.auditLog
 }
@@ -30,6 +32,7 @@ const mutations = {
     setDeploymentsCount: (state, count) => (state.deploymentsCount = count),
     setProcessDefinitions: (state, definitions) => (state.processDefinitions = definitions),
     setProcessDefinitionById: (state, definition) => (state.processDefinition = definition),
+    setProcessDefinitionXML: (state, xml) => (state.processDefinitionXML = xml),
     setProcessInstances: (state, instances) => (state.processInstances = instances),
     setAuditLog: (state, log) => (state.auditLog = log)
 }
@@ -115,7 +118,21 @@ const actions = {
             .then(res => {
                 commit("setProcessInstances", res.data);
             })
+            .catch(err => {
+                console.error(err);
+            })
             commit("setProcessDefinitionById", res.data);
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    },
+    fetchProcessDefinitionXML({commit}, id){
+        let baseUrl = store.getters.camundaUrl + '/engine-rest';
+
+        axios.get(baseUrl + "/process-definition/" + id + "/xml")
+        .then(res => {
+            commit("setProcessDefinitionXML", res.data.bpmn20Xml);
         })
     },
     fetchActivityInstance({commit}, id){
@@ -133,8 +150,7 @@ const actions = {
             
         })
         .catch(err => {
-            console.log(err);
-            
+            console.error(err);
         })
     }
 }

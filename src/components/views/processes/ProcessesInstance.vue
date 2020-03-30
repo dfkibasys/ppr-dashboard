@@ -50,7 +50,7 @@
           </b-button>
         </div>
         <div id="diagram-container">
-          <vue-bpmn url="data/diagram.bpmn" v-on:error="handleError" v-on:shown="handleShown"></vue-bpmn>
+          <bpmn-display url="data/diagram.bpmn" v-on:error="handleError" v-on:shown="handleShown"></bpmn-display>
         </div>
       </b-col>
     </b-row>
@@ -73,12 +73,12 @@
 </template>
 
 <script>
-import VueBpmn from "vue-bpmn";
+import BpmnDisplay from "./BpmnDisplay";
 
 export default {
   name: "ProcessesInstance",
   components: {
-    VueBpmn
+    BpmnDisplay
   },
   data() {
     return {

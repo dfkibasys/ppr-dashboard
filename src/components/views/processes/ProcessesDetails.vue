@@ -52,7 +52,7 @@
           </b-button>
         </div>
         <div id="diagram-container" >
-          <vue-bpmn url="data/diagram.bpmn" v-on:error="handleError" v-on:shown="handleShown"></vue-bpmn>
+          <bpmn-display :xml="getProcessDefinitionXML" @error="handleError" @shown="handleShown"></bpmn-display>
         </div>
       </b-col>
     </b-row>
@@ -78,15 +78,15 @@
 </template>
 
 <script>
-import VueBpmn from "vue-bpmn";
+import BpmnDisplay from "./BpmnDisplay";
 import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: "ProcessesDetails",
   components: {
-    VueBpmn
+    BpmnDisplay
   },
-  computed: mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog"]),
+  computed: mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog", "getProcessDefinitionXML"]),
   data() {
     return {
       instanceFields: ["id", "businessKey"],
@@ -99,7 +99,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchProcessDefinitionById", "fetchActivityInstance"]),
+    ...mapActions(["fetchProcessDefinitionById", "fetchActivityInstance", "fetchProcessDefinitionXML"]),
     goToProcessInstance() {
         this.$router.push({name: 'ProcessesInstance', params: {pid: this.$route.params.pid, iid: "545"}});
     },
@@ -113,6 +113,7 @@ export default {
   created(){
     this.fetchProcessDefinitionById(this.$route.params.pid);
     this.fetchActivityInstance(this.$route.params.pid);
+    this.fetchProcessDefinitionXML(this.$route.params.pid);
   }
 };
 </script>
