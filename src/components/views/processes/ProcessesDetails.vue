@@ -11,7 +11,11 @@
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Version:</h5>
             <p class="mb-0">
-              <b-form-select v-model="currentVersionID" :options="getVersions" @change="versionChange"></b-form-select>
+              <b-form-select
+                v-model="currentVersionID"
+                :options="getVersions"
+                @change="versionChange"
+              ></b-form-select>
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
@@ -79,7 +83,7 @@
 
 <script>
 import BpmnDisplay from "./BpmnDisplay";
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ProcessesDetails",
@@ -87,7 +91,13 @@ export default {
     BpmnDisplay
   },
   computed: {
-  ...mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog", "getProcessDefinitionXML", "getVersions"]),
+    ...mapGetters([
+      "getProcessDefinitionById",
+      "getProcessInstances",
+      "getAuditLog",
+      "getProcessDefinitionXML",
+      "getVersions"
+    ]),
     currentVersionID: {
       get() {
         return this.$store.getters.getCurrentVersionID;
@@ -95,18 +105,32 @@ export default {
       set(value) {
         this.$store.commit("setCurrentVersionID", value);
       }
-    }},
+    }
+  },
   data() {
     return {
       instanceFields: ["id", "businessKey"],
-      auditFields: ["processInstanceId", "activityName", "startTime", "endTime", "activityId"],
-      showLeftDetails: true,
+      auditFields: [
+        "processInstanceId",
+        "activityName",
+        "startTime",
+        "endTime",
+        "activityId"
+      ],
+      showLeftDetails: true
     };
   },
   methods: {
-    ...mapActions(["fetchProcessDefinitionById", "fetchActivityInstance", "fetchProcessDefinitionXML"]),
+    ...mapActions([
+      "fetchProcessDefinitionById",
+      "fetchActivityInstance",
+      "fetchProcessDefinitionXML"
+    ]),
     goToProcessInstance() {
-        this.$router.push({name: 'ProcessesInstance', params: {pid: this.$route.params.pid, iid: "545"}});
+      this.$router.push({
+        name: "ProcessesInstance",
+        params: { pid: this.$route.params.pid, iid: "545" }
+      });
     },
     handleError: function(err) {
       console.error("failed to show diagram", err);
@@ -114,16 +138,22 @@ export default {
     handleShown: function() {
       console.log("diagram shown");
     },
-    versionChange(){
-      this.$router.push({name: 'ProcessesDetails', params: {pid: this.currentVersionID}});
+    versionChange() {
+      this.$router.push({
+        name: "ProcessesDetails",
+        params: { pid: this.currentVersionID }
+      });
+      this.fetchProcessDefinitionById(this.$route.params.pid);
+      this.fetchActivityInstance(this.$route.params.pid);
+      this.fetchProcessDefinitionXML(this.$route.params.pid);
     }
   },
-  created(){
+  created() {
     this.fetchProcessDefinitionById(this.$route.params.pid);
     this.fetchActivityInstance(this.$route.params.pid);
     this.fetchProcessDefinitionXML(this.$route.params.pid);
   }
-}
+};
 </script>
 
 <style lang=less scoped>
