@@ -10,7 +10,9 @@ const state = {
     processDefinition: {},
     processDefinitionXML: "",
     processInstances: [],
-    auditLog: []
+    auditLog: [],
+    currentVersionID: null,
+    versions: []
 }
 
 const getters = {
@@ -22,7 +24,9 @@ const getters = {
     getProcessDefinitionById: (state) => state.processDefinition,
     getProcessDefinitionXML: (state) => state.processDefinitionXML,
     getProcessInstances: (state) => state.processInstances,
-    getAuditLog: (state) => state.auditLog
+    getAuditLog: (state) => state.auditLog,
+    getCurrentVersionID: (state) => state.currentVersionID,
+    getVersions: (state) => state.versions
 }
 
 const mutations = {
@@ -34,7 +38,9 @@ const mutations = {
     setProcessDefinitionById: (state, definition) => (state.processDefinition = definition),
     setProcessDefinitionXML: (state, xml) => (state.processDefinitionXML = xml),
     setProcessInstances: (state, instances) => (state.processInstances = instances),
-    setAuditLog: (state, log) => (state.auditLog = log)
+    setAuditLog: (state, log) => (state.auditLog = log),
+    setCurrentVersionID: (state, id) => (state.currentVersionID = id),
+    setVersions: (state, versions) => (state.versions = versions)
 }
 
 const actions = {
@@ -114,6 +120,23 @@ const actions = {
 
         axios.get(baseUrl + "/process-definition/" + id)
         .then(res => {
+
+            commit("setCurrentVersionID", res.data.id);
+
+            axios.get(baseUrl + "/process-definition?key=" + res.data.key)
+            .then(pds => {
+                let versions = [];
+                pds.data.forEach(val => {
+                    //formatting for b-form-select component
+                    versions.push({value: val.id, text: val.version});
+                });
+                commit("setVersions", versions);
+            })
+            .catch(err => {
+                console.log("Error", err);
+                
+            })
+
             axios.get(baseUrl + "/process-instance?processDefinitionId=" + res.data.id)
             .then(res => {
                 commit("setProcessInstances", res.data);

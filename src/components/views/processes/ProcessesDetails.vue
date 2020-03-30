@@ -2,8 +2,8 @@
   <b-container fluid>
     <b-row class="pb-2">
       <b-col class="leftDetails pl-2 border">
-        <div class="button" v-show="ctrl.showLeftDetails">
-          <b-button variant="light" @click="ctrl.showLeftDetails = !ctrl.showLeftDetails">
+        <div class="button" v-show="showLeftDetails">
+          <b-button variant="light" @click="showLeftDetails = !showLeftDetails">
             <b-icon-chevron-left font-scale="1"></b-icon-chevron-left>
           </b-button>
         </div>
@@ -11,7 +11,7 @@
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Version:</h5>
             <p class="mb-0">
-              <b-form-select v-model="getProcessDefinitionById.version" :options="ctrl.versions"></b-form-select>
+              <b-form-select v-model="currentVersionID" :options="getVersions" @change="versionChange"></b-form-select>
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
@@ -46,12 +46,12 @@
       </b-col>
 
       <b-col class="border">
-        <div v-show="!ctrl.showLeftDetails" style="position: absolute;left: 0px;z-index: 9999;">
-          <b-button variant="light" @click="ctrl.showLeftDetails = !ctrl.showLeftDetails">
+        <div v-show="!showLeftDetails" style="position: absolute;left: 0px;z-index: 9999;">
+          <b-button variant="light" @click="showLeftDetails = !showLeftDetails">
             <b-icon-chevron-right font-scale="1"></b-icon-chevron-right>
           </b-button>
         </div>
-        <div id="diagram-container" >
+        <div id="diagram-container">
           <bpmn-display :xml="getProcessDefinitionXML" @error="handleError" @shown="handleShown"></bpmn-display>
         </div>
       </b-col>
@@ -86,16 +86,21 @@ export default {
   components: {
     BpmnDisplay
   },
-  computed: mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog", "getProcessDefinitionXML"]),
+  computed: {
+  ...mapGetters(["getProcessDefinitionById", "getProcessInstances", "getAuditLog", "getProcessDefinitionXML", "getVersions"]),
+    currentVersionID: {
+      get() {
+        return this.$store.getters.getCurrentVersionID;
+      },
+      set(value) {
+        this.$store.commit("setCurrentVersionID", value);
+      }
+    }},
   data() {
     return {
       instanceFields: ["id", "businessKey"],
       auditFields: ["processInstanceId", "activityName", "startTime", "endTime", "activityId"],
-      ctrl: {
-        showLeftDetails: true,
-        currentVersionID: 1,
-        versions: [1, 2]
-      }
+      showLeftDetails: true,
     };
   },
   methods: {
@@ -109,13 +114,16 @@ export default {
     handleShown: function() {
       console.log("diagram shown");
     },
+    versionChange(){
+      this.$router.push({name: 'ProcessesDetails', params: {pid: this.currentVersionID}});
+    }
   },
   created(){
     this.fetchProcessDefinitionById(this.$route.params.pid);
     this.fetchActivityInstance(this.$route.params.pid);
     this.fetchProcessDefinitionXML(this.$route.params.pid);
   }
-};
+}
 </script>
 
 <style lang=less scoped>
