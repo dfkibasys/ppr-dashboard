@@ -66,7 +66,15 @@
               @row-clicked="goToProcessInstance"
               :items="processInstances"
               :fields="instanceFields"
-            ></b-table>
+            >
+              <template v-slot:head(action)>
+                <b-button variant="success">Create</b-button>
+              </template>
+              <template v-slot:cell(businessKey)="value">{{value.businessKey || "-"}}</template>
+              <template v-slot:cell(action)="value">
+                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete </b-button>
+              </template>
+            </b-table>
           </b-tab>
           <b-tab title="Audit Log">
             <b-table hover striped :items="auditLog" :fields="auditFields"></b-table>
@@ -90,12 +98,12 @@ export default {
   computed: {
     ...mapGetters(["camundaUrl"]),
     baseUrl: function() {
-      return this.camundaUrl + "/engine-rest";
+      return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
     }
   },
   data() {
     return {
-      instanceFields: ["id", "businessKey"],
+      instanceFields: ["id", "startTime", "businessKey", "action"],
       auditFields: [
         "processInstanceId",
         "activityName",
@@ -135,7 +143,6 @@ export default {
       this.fetchProcessDefinitionXML(this.$route.params.pid);
     },
     fetchProcessDefinitionById(id) {
-
       axios
         .get(this.baseUrl + "/process-definition/" + id)
         .then(res => {
@@ -144,9 +151,13 @@ export default {
 
           axios
             .all([
-              axios.get(this.baseUrl + "/process-definition?key=" + res.data.key),
               axios.get(
-                this.baseUrl + "/process-instance?processDefinitionId=" + res.data.id
+                this.baseUrl + "/process-definition?key=" + res.data.key
+              ),
+              axios.get(
+                this.baseUrl +
+                  "/history/process-instance?processDefinitionId=" +
+                  res.data.id + "&unfinished=true"
               ),
               axios.get(
                 this.baseUrl +
@@ -203,6 +214,16 @@ export default {
         .catch(err => {
           console.error(err);
         });
+    },
+    deleteProcessInstance(id){
+       axios.delete(this.baseUrl + "/process-instance/" + id)
+       .then(res => {
+         this.processInstances = this.processInstances.filter(pi => pi.id !== id);
+       })
+       .catch(err => {
+         console.error(err);
+       })
+        
     }
   },
   created() {

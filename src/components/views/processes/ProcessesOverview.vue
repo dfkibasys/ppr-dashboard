@@ -8,7 +8,7 @@
       :items="processDefinitions"
       :fields="fields"
     >
-      <template v-slot:cell(tenantId)="{ value }">{{value.tenantId || "-"}}</template>
+      <template v-slot:cell(tenantId)="value">{{value.item.tenantId || "-"}}</template>
     </b-table>
   </b-container>
 </template>
@@ -33,7 +33,7 @@ export default {
     }
   },
   created() {
-    let baseUrl = this.camundaUrl + "/engine-rest";
+    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
 
     axios
       .get(baseUrl + "/process-definition?latestVersion=true")

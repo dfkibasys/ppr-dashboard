@@ -40,7 +40,8 @@ export default {
   },
   computed: mapGetters(["camundaUrl"]),
   created() {
-    let baseUrl = this.camundaUrl + "/engine-rest";
+    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //this.camundaUrl + "/engine-rest"
+
     axios
       .all([
         axios.get(baseUrl + "/process-definition/count?latestVersion=true"),
