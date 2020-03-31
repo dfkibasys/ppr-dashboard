@@ -11,40 +11,36 @@
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Version:</h5>
             <p class="mb-0">
-              <b-form-select
-                v-model="currentVersionID"
-                :options="getVersions"
-                @change="versionChange"
-              ></b-form-select>
+              <b-form-select v-model="currentVersionID" :options="versions" @change="versionChange"></b-form-select>
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Version Tag:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.versionTag || "null"}}</p>
+            <p class="mb-0">{{processDefinition.versionTag || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition ID:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.id || "-"}}</p>
+            <p class="mb-0">{{processDefinition.id || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Key:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.key || "-"}}</p>
+            <p class="mb-0">{{processDefinition.key || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Definition Name:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.name || "-"}}</p>
+            <p class="mb-0">{{processDefinition.name || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Tenant ID:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.tenantId || "null"}}</p>
+            <p class="mb-0">{{processDefinition.tenantId || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Deployment ID:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.deploymentId || "-"}}</p>
+            <p class="mb-0">{{processDefinition.deploymentId || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">Instances Running:</h5>
-            <p class="mb-0">{{getProcessDefinitionById.instances || "0"}}</p>
+            <p class="mb-0">{{processDefinition.instances || "0"}}</p>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -56,7 +52,7 @@
           </b-button>
         </div>
         <div id="diagram-container">
-          <bpmn-display :xml="getProcessDefinitionXML" @error="handleError" @shown="handleShown"></bpmn-display>
+          <bpmn-display :xml="processDefinitionXML" @error="handleError" @shown="handleShown"></bpmn-display>
         </div>
       </b-col>
     </b-row>
@@ -68,12 +64,12 @@
               hover
               striped
               @row-clicked="goToProcessInstance"
-              :items="getProcessInstances"
+              :items="processInstances"
               :fields="instanceFields"
             ></b-table>
           </b-tab>
           <b-tab title="Audit Log">
-            <b-table hover striped :items="getAuditLog" :fields="auditFields"></b-table>
+            <b-table hover striped :items="auditLog" :fields="auditFields"></b-table>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -84,6 +80,7 @@
 <script>
 import BpmnDisplay from "./BpmnDisplay";
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: "ProcessesDetails",
@@ -91,20 +88,9 @@ export default {
     BpmnDisplay
   },
   computed: {
-    ...mapGetters([
-      "getProcessDefinitionById",
-      "getProcessInstances",
-      "getAuditLog",
-      "getProcessDefinitionXML",
-      "getVersions"
-    ]),
-    currentVersionID: {
-      get() {
-        return this.$store.getters.getCurrentVersionID;
-      },
-      set(value) {
-        this.$store.commit("setCurrentVersionID", value);
-      }
+    ...mapGetters(["camundaUrl"]),
+    baseUrl: function() {
+      return this.camundaUrl + "/engine-rest";
     }
   },
   data() {
@@ -117,15 +103,16 @@ export default {
         "endTime",
         "activityId"
       ],
-      showLeftDetails: true
+      showLeftDetails: true,
+      currentVersionID: null,
+      versions: [],
+      processInstances: [],
+      processDefinition: {},
+      processDefinitionXML: "",
+      auditLog: []
     };
   },
   methods: {
-    ...mapActions([
-      "fetchProcessDefinitionById",
-      "fetchActivityInstance",
-      "fetchProcessDefinitionXML"
-    ]),
     goToProcessInstance() {
       this.$router.push({
         name: "ProcessesInstance",
@@ -146,6 +133,76 @@ export default {
       this.fetchProcessDefinitionById(this.$route.params.pid);
       this.fetchActivityInstance(this.$route.params.pid);
       this.fetchProcessDefinitionXML(this.$route.params.pid);
+    },
+    fetchProcessDefinitionById(id) {
+
+      axios
+        .get(this.baseUrl + "/process-definition/" + id)
+        .then(res => {
+          this.currentVersionID = res.data.id;
+          this.processDefinition = res.data;
+
+          axios
+            .all([
+              axios.get(this.baseUrl + "/process-definition?key=" + res.data.key),
+              axios.get(
+                this.baseUrl + "/process-instance?processDefinitionId=" + res.data.id
+              ),
+              axios.get(
+                this.baseUrl +
+                  "/process-instance/count?processDefinitionId=" +
+                  res.data.id
+              )
+            ])
+            .then(
+              axios.spread((pds, pis, pic) => {
+                //pds
+                this.versions = [];
+                pds.data.forEach(val => {
+                  //formatting for b-form-select component
+                  this.versions.push({ value: val.id, text: val.version });
+                });
+
+                //pis
+                this.processInstances = pis.data;
+
+                //pic
+                this.$set(this.processDefinition, "instances", pic.data.count);
+              })
+            )
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    fetchProcessDefinitionXML(id) {
+      axios
+        .get(this.baseUrl + "/process-definition/" + id + "/xml")
+        .then(res => {
+          this.processDefinitionXML = res.data.bpmn20Xml;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    fetchActivityInstance(id) {
+      axios
+        .get(this.baseUrl + "/history/activity-instance", {
+          params: {
+            processDefinitionId: id,
+            sortBy: "startTime",
+            sortOrder: "asc"
+          }
+        })
+        .then(res => {
+          this.auditLog = res.data;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   },
   created() {

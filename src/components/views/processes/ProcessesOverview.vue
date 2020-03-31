@@ -1,34 +1,64 @@
 <template>
   <b-container>
     <h2>Deployed</h2>
-    <b-table hover striped @row-clicked="goToProcessView" :items="getProcessDefinitions" :fields="fields">
-      <template v-slot:cell(tenantId)="{ value }">
-            {{value.tenantId || "-"}}
-      </template>
+    <b-table
+      hover
+      striped
+      @row-clicked="goToProcessView"
+      :items="processDefinitions"
+      :fields="fields"
+    >
+      <template v-slot:cell(tenantId)="{ value }">{{value.tenantId || "-"}}</template>
     </b-table>
   </b-container>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   name: "ProcessesOverview",
-  computed: mapGetters(["getProcessDefinitions"]),
+  computed: mapGetters(["camundaUrl"]),
   data() {
     return {
+      processDefinitions: [],
       fields: ["instances", "name", "key", "tenantId"]
-    }
+    };
   },
   methods: {
-    ...mapActions(["fetchProcessDefinitions"]),
-      goToProcessView(item) {
-        this.$router.push({name: 'ProcessesDetails', params: {pid: item.id}});
-          //console.log(`${item.id} clicked`);  
-      }
+    goToProcessView(item) {
+      this.$router.push({ name: "ProcessesDetails", params: { pid: item.id } });
+      //console.log(`${item.id} clicked`);
+    }
   },
-  created(){
-    this.fetchProcessDefinitions();
+  created() {
+    let baseUrl = this.camundaUrl + "/engine-rest";
+
+    axios
+      .get(baseUrl + "/process-definition?latestVersion=true")
+      .then(res => {
+        this.processDefinitions = res.data;
+
+        this.processDefinitions.forEach(pp => {
+          axios
+            .get(baseUrl + "/process-instance/count", {
+              params: {
+                processDefinitionKey: pp.key
+              }
+            })
+            .then(res => {
+              //add reactive properties to nested object
+              this.$set(pp, 'instances', res.data.count);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 };
 </script>
