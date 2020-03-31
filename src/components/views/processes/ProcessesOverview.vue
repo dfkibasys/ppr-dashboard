@@ -1,41 +1,64 @@
 <template>
   <b-container>
     <h2>Deployed</h2>
-    <b-table hover striped @row-clicked="goToProcessView" :items="ctrl.groupedprocessDefinitions" :fields="fields"></b-table>
+    <b-table
+      hover
+      striped
+      @row-clicked="goToProcessView"
+      :items="processDefinitions"
+      :fields="fields"
+    >
+      <template v-slot:cell(tenantId)="value">{{value.item.tenantId || "-"}}</template>
+    </b-table>
   </b-container>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import axios from "axios";
+
 export default {
   name: "ProcessesOverview",
+  computed: mapGetters(["camundaUrl"]),
   data() {
     return {
-      fields: ["instances", "name", "key", "tenantId"],
-      ctrl: {
-        groupedprocessDefinitions: [
-          {
-            id: "id-1",
-            instances: 6,
-            name: "Invoice",
-            key: "invoice",
-            tenantId: "je"
-          },
-          {
-            id: "id-2",
-            instances: 2,
-            name: "Review",
-            key: "review",
-            tenantId: "-"
-          }
-        ]
-      }
-    }
+      processDefinitions: [],
+      fields: ["instances", "name", "key", "tenantId"]
+    };
   },
   methods: {
-      goToProcessView(item) {
-        this.$router.push({name: 'ProcessesDetails', params: {id: item.id}});
-          //console.log(`${item.id} clicked`);  
-      }
+    goToProcessView(item) {
+      this.$router.push({ name: "ProcessesDetails", params: { pid: item.id } });
+      //console.log(`${item.id} clicked`);
+    }
+  },
+  created() {
+    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+
+    axios
+      .get(baseUrl + "/process-definition?latestVersion=true")
+      .then(res => {
+        this.processDefinitions = res.data;
+
+        this.processDefinitions.forEach(pp => {
+          axios
+            .get(baseUrl + "/process-instance/count", {
+              params: {
+                processDefinitionKey: pp.key
+              }
+            })
+            .then(res => {
+              //add reactive properties to nested object
+              this.$set(pp, 'instances', res.data.count);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 };
 </script>

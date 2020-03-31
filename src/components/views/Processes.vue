@@ -5,37 +5,61 @@
       <b-col>
         <span>Process Definitions</span>
         <b-link to="/processes/overview">
-          <h3>{{ctrl.processDefinitionsCount || 0}}</h3>
+          <h3>{{processDefinitionsCount || 0}}</h3>
         </b-link>
       </b-col>
       <b-col>
         <span>Decision Definitions</span>
-        <h3>{{ctrl.decisionDefinitionsCount || 0}}</h3>
+        <h3>{{decisionDefinitionsCount || 0}}</h3>
       </b-col>
       <b-col>
         <span>Case Definitions</span>
-        <h3>{{ctrl.caseDefinitionsCount || 0}}</h3>
+        <h3>{{caseDefinitionsCount || 0}}</h3>
       </b-col>
       <b-col>
         <span>Deployments</span>
-        <h3>{{ctrl.deploymentsCount || 0}}</h3>
+        <h3>{{deploymentsCount || 0}}</h3>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import axios from 'axios';
+
 export default {
   name: "Processes",
   data() {
     return {
-      ctrl: {
-        processDefinitionsCount: 1,
-        decisionDefinitionsCount: 1,
-        caseDefinitionsCount: 1,
-        deploymentsCount: 1
-      }
+      processDefinitionsCount: 0,
+      decisionDefinitionsCount: 0,
+      caseDefinitionsCount: 0,
+      deploymentsCount: 0
     };
+  },
+  computed: mapGetters(["camundaUrl"]),
+  created() {
+    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //this.camundaUrl + "/engine-rest"
+
+    axios
+      .all([
+        axios.get(baseUrl + "/process-definition/count?latestVersion=true"),
+        axios.get(baseUrl + "/decision-definition/count"),
+        axios.get(baseUrl + "/case-definition/count"),
+        axios.get(baseUrl + "/deployment/count")
+      ])
+      .then(
+        axios.spread((pdc, ddc, cdc, dc) => {
+          this.processDefinitionsCount = pdc.data.count;
+          this.decisionDefinitionsCount = ddc.data.count;
+          this.caseDefinitionsCount = cdc.data.count;
+          this.deploymentsCount = dc.data.count;
+        })
+      )
+      .catch(err => {
+        console.error(err);
+      });
   }
 };
 </script>
