@@ -70,14 +70,19 @@
               <template v-slot:head(action)>
                 <b-button variant="success">Create</b-button>
               </template>
-              <template v-slot:cell(businessKey)="value">{{value.businessKey || "-"}}</template>
+              <template v-slot:cell(startTime)="value">{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template v-slot:cell(businessKey)="value">{{value.item.businessKey || "-"}}</template>
               <template v-slot:cell(action)="value">
                 <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete </b-button>
               </template>
             </b-table>
           </b-tab>
           <b-tab title="Audit Log">
-            <b-table hover striped :items="auditLog" :fields="auditFields"></b-table>
+            <b-table hover striped :items="auditLog" :fields="auditFields">
+              <template v-slot:cell(state)="value"><b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle><b-icon-circle-half font-scale="2" v-else></b-icon-circle-half></template>
+              <template v-slot:cell(startTime)="value">{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template v-slot:cell(endTime)="value">{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+            </b-table>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -105,6 +110,7 @@ export default {
     return {
       instanceFields: ["id", "startTime", "businessKey", "action"],
       auditFields: [
+        "state",
         "processInstanceId",
         "activityName",
         "startTime",

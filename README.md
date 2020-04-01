@@ -45,6 +45,7 @@ All AJAX requests will be sent to the local address of the VueJS application, wh
 ```
 VUE_APP_AJAX_REQUEST_DOMAIN=http://localhost:8081/engine-rest
 ```
+Source: https://medium.com/js-dojo/how-to-deal-with-cors-error-on-vue-cli-3-d78c024ce8d3
 
 ### Production (Docker)
 Since the Docker production version uses nginx, relevant headers have been set and the server has been configured as proxy in `default.conf`:
@@ -60,3 +61,5 @@ The AJAX request domain needs to be adapted to the public domain of the VueJS ap
 ```
 VUE_APP_AJAX_REQUEST_DOMAIN=http://hybrit-lnv-1:8090/engine-rest
 ```
+
+Source: https://medium.com/pareture/simple-docker-nginx-cors-reverse-proxy-5202a3445847

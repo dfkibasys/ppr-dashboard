@@ -33,6 +33,8 @@ const options = {
 }
 Vue.use(VueProgressBar, options)
 
+Vue.use(require('vue-moment'));
+
 // Ready translated locale messages
 const messages = {
   "en": {
