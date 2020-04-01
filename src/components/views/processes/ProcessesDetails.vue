@@ -122,6 +122,8 @@ export default {
   },
   data() {
     return {
+      updateInterval: 500,
+      intervalRef: null,
       instanceFields: ["id", "startTime", "businessKey", "action"],
       auditFields: [
         "state",
@@ -137,7 +139,8 @@ export default {
       processInstances: [],
       processDefinition: {},
       processDefinitionXML: "",
-      auditLog: []
+      auditLog: [],
+      overlaysArr: []
     };
   },
   methods: {
@@ -215,7 +218,12 @@ export default {
         .get(this.baseUrl + "/process-definition/" + id + "/xml")
         .then(res => {
           this.processDefinitionXML = res.data.bpmn20Xml;
-          this.updateDiagram();
+
+          clearInterval(this.intervalRef);
+          this.intervalRef = setInterval(() => {
+            this.updateDiagram();
+          }, this.updateInterval);
+       
         })
         .catch(err => {
           console.error(err);
@@ -239,42 +247,82 @@ export default {
     },
     updateDiagram() {
       axios
-        .get(this.baseUrl + "/history/activity-instance", {
-          params: {
-            processDefinitionId: this.$route.params.pid,
-            unfinished: true
-          }
-        })
-        .then(res => {
-          let ai = res.data;
-          let overlays = this.$refs.bpmn.getOverlays();
-          let activityIdsCount = {};
+        .all([
+          axios.get(this.baseUrl + "/history/activity-instance", {
+            params: {
+              processDefinitionId: this.$route.params.pid,
+              unfinished: true
+            }
+          }),
+          axios.get(this.baseUrl + "/history/incident", {
+            params: {
+              processDefinitionId: this.$route.params.pid,
+              open: true
+            }
+          })
+        ])
+        .then(
+          axios.spread((ais, incidents) => {
+            let overlays = this.$refs.bpmn.getOverlays();
 
-          ai.forEach(val => {
-            if (activityIdsCount[val.activityId] === undefined) {
-              activityIdsCount[val.activityId] = 0;
-            } 
-            activityIdsCount[val.activityId]++;
-          });
-
-          for (let id in activityIdsCount) {
-            overlays.add(id, {
-              position: {
-                bottom: 0,
-                left: 0
-              },
-              html:
-                '<span class="badge badge-pill badge-primary">' +
-                activityIdsCount[id] +
-                "</span>"
+            this.overlaysArr.forEach(o => {
+              overlays.remove(o);
             });
-          }
-        })
+
+            //ais
+            let activityIdsCount = {};
+
+            ais.data.forEach(val => {
+              if (activityIdsCount[val.activityId] === undefined) {
+                activityIdsCount[val.activityId] = 0;
+              }
+              activityIdsCount[val.activityId]++;
+            });
+
+            for (let id in activityIdsCount) {
+              let oID = overlays.add(id, {
+                position: {
+                  bottom: 0,
+                  left: 0
+                },
+                html:
+                  '<span class="badge badge-pill badge-primary">' +
+                  activityIdsCount[id] +
+                  "</span>"
+              });
+              this.overlaysArr.push(oID);
+            }
+
+            //incidents
+            var incidentIdsCount = {};
+
+            incidents.data.forEach(val => {
+              if (incidentIdsCount[val.activityId] === undefined) {
+                incidentIdsCount[val.activityId] = 0;
+              }
+              incidentIdsCount[val.activityId]++;
+            });
+
+            for (let id in incidentIdsCount) {
+              let oID = overlays.add(id, {
+                position: {
+                  bottom: 0,
+                  left: 30
+                },
+                html:
+                  '<span class="badge badge-pill badge-danger">' +
+                  incidentIdsCount[id] +
+                  "</span>"
+              });
+              this.overlaysArr.push(oID);
+            }
+          })
+        )
         .catch(err => {
           console.error(err);
         });
     },
-    createProcessInstance(){},
+    createProcessInstance() {},
     deleteProcessInstance(id) {
       axios
         .delete(this.baseUrl + "/process-instance/" + id)
@@ -292,6 +340,9 @@ export default {
     this.fetchProcessDefinitionById(this.$route.params.pid);
     this.fetchActivityInstance(this.$route.params.pid);
     this.fetchProcessDefinitionXML(this.$route.params.pid);
+  },
+  destroyed() {
+    clearInterval(this.intervalRef);
   }
 };
 </script>
