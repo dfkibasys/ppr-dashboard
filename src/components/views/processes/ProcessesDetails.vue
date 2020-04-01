@@ -1,9 +1,9 @@
 <template>
   <b-container fluid>
-    <b-row class="pb-2">
-      <b-col class="leftDetails pl-2 border">
+    <b-row class="pb-2 container-top">
+      <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
-          <b-button variant="light" @click="showLeftDetails = !showLeftDetails">
+          <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
             <b-icon-chevron-left font-scale="1"></b-icon-chevron-left>
           </b-button>
         </div>
@@ -47,7 +47,7 @@
 
       <b-col class="border">
         <div v-show="!showLeftDetails" style="position: absolute;left: 0px;z-index: 9999;">
-          <b-button variant="light" @click="showLeftDetails = !showLeftDetails">
+          <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
             <b-icon-chevron-right font-scale="1"></b-icon-chevron-right>
           </b-button>
         </div>
@@ -348,6 +348,9 @@ export default {
 </script>
 
 <style lang=less scoped>
+.container-top {
+  height: 700px;
+}
 .leftDetails {
   position: relative;
   color: rgba(0, 0, 0, 0.87);
