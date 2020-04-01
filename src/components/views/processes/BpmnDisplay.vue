@@ -81,6 +81,9 @@
           .catch(function(err) {
             self.$emit('error', err);
           });
+      },
+      getOverlays: function() {
+        return this.bpmnViewer.get('overlays');
       }
     }
   };

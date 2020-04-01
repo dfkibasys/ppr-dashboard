@@ -52,7 +52,12 @@
           </b-button>
         </div>
         <div id="diagram-container">
-          <bpmn-display :xml="processDefinitionXML" @error="handleError" @shown="handleShown"></bpmn-display>
+          <bpmn-display
+            ref="bpmn"
+            :xml="processDefinitionXML"
+            @error="handleError"
+            @shown="handleShown"
+          ></bpmn-display>
         </div>
       </b-col>
     </b-row>
@@ -68,20 +73,29 @@
               :fields="instanceFields"
             >
               <template v-slot:head(action)>
-                <b-button variant="success">Create</b-button>
+                <b-button variant="success" @click="createProcessInstance">Create</b-button>
               </template>
-              <template v-slot:cell(startTime)="value">{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template
+                v-slot:cell(startTime)="value"
+              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
               <template v-slot:cell(businessKey)="value">{{value.item.businessKey || "-"}}</template>
               <template v-slot:cell(action)="value">
-                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete </b-button>
+                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete</b-button>
               </template>
             </b-table>
           </b-tab>
           <b-tab title="Audit Log">
             <b-table hover striped :items="auditLog" :fields="auditFields">
-              <template v-slot:cell(state)="value"><b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle><b-icon-circle-half font-scale="2" v-else></b-icon-circle-half></template>
-              <template v-slot:cell(startTime)="value">{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
-              <template v-slot:cell(endTime)="value">{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template v-slot:cell(state)="value">
+                <b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle>
+                <b-icon-circle-half font-scale="2" v-else></b-icon-circle-half>
+              </template>
+              <template
+                v-slot:cell(startTime)="value"
+              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template
+                v-slot:cell(endTime)="value"
+              >{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
             </b-table>
           </b-tab>
         </b-tabs>
@@ -163,7 +177,8 @@ export default {
               axios.get(
                 this.baseUrl +
                   "/history/process-instance?processDefinitionId=" +
-                  res.data.id + "&unfinished=true"
+                  res.data.id +
+                  "&unfinished=true"
               ),
               axios.get(
                 this.baseUrl +
@@ -200,6 +215,7 @@ export default {
         .get(this.baseUrl + "/process-definition/" + id + "/xml")
         .then(res => {
           this.processDefinitionXML = res.data.bpmn20Xml;
+          this.updateDiagram();
         })
         .catch(err => {
           console.error(err);
@@ -221,15 +237,55 @@ export default {
           console.error(err);
         });
     },
-    deleteProcessInstance(id){
-       axios.delete(this.baseUrl + "/process-instance/" + id)
-       .then(res => {
-         this.processInstances = this.processInstances.filter(pi => pi.id !== id);
-       })
-       .catch(err => {
-         console.error(err);
-       })
-        
+    updateDiagram() {
+      axios
+        .get(this.baseUrl + "/history/activity-instance", {
+          params: {
+            processDefinitionId: this.$route.params.pid,
+            unfinished: true
+          }
+        })
+        .then(res => {
+          let ai = res.data;
+          let overlays = this.$refs.bpmn.getOverlays();
+          let activityIdsCount = {};
+
+          ai.forEach(val => {
+            if (activityIdsCount[val.activityId] === undefined) {
+              activityIdsCount[val.activityId] = 0;
+            } 
+            activityIdsCount[val.activityId]++;
+          });
+
+          for (let id in activityIdsCount) {
+            overlays.add(id, {
+              position: {
+                bottom: 0,
+                left: 0
+              },
+              html:
+                '<span class="badge badge-pill badge-primary">' +
+                activityIdsCount[id] +
+                "</span>"
+            });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    createProcessInstance(){},
+    deleteProcessInstance(id) {
+      axios
+        .delete(this.baseUrl + "/process-instance/" + id)
+        .then(res => {
+          this.processInstances = this.processInstances.filter(
+            pi => pi.id !== id
+          );
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   },
   created() {
