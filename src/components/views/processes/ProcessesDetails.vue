@@ -1,6 +1,7 @@
 <template>
   <b-container fluid>
     <b-row class="pb-2 container-top">
+      <create-process-instance></create-process-instance>
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
           <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
@@ -106,13 +107,15 @@
 
 <script>
 import BpmnDisplay from "./BpmnDisplay";
+import CreateProcessInstance from "../../modals/CreateProcessInstance";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 
 export default {
   name: "ProcessesDetails",
   components: {
-    BpmnDisplay
+    BpmnDisplay,
+    CreateProcessInstance
   },
   computed: {
     ...mapGetters(["camundaUrl"]),
@@ -322,7 +325,9 @@ export default {
           console.error(err);
         });
     },
-    createProcessInstance() {},
+    createProcessInstance() {
+      this.$bvModal.show("modal-instance");
+    },
     deleteProcessInstance(id) {
       axios
         .delete(this.baseUrl + "/process-instance/" + id)
