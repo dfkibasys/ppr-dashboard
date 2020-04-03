@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-row class="pb-2 container-top">
-      <create-process-instance></create-process-instance>
+      <create-process-instance @process-started="fetchAllData"></create-process-instance>
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
           <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
@@ -164,6 +164,9 @@ export default {
         name: "ProcessesDetails",
         params: { pid: this.currentVersionID }
       });
+      this.fetchAllData();
+    },
+    fetchAllData(){
       this.fetchProcessDefinitionById(this.$route.params.pid);
       this.fetchActivityInstance(this.$route.params.pid);
       this.fetchProcessDefinitionXML(this.$route.params.pid);
@@ -335,6 +338,7 @@ export default {
           this.processInstances = this.processInstances.filter(
             pi => pi.id !== id
           );
+          this.processDefinition.instances--;
         })
         .catch(err => {
           console.error(err);
@@ -342,9 +346,7 @@ export default {
     }
   },
   created() {
-    this.fetchProcessDefinitionById(this.$route.params.pid);
-    this.fetchActivityInstance(this.$route.params.pid);
-    this.fetchProcessDefinitionXML(this.$route.params.pid);
+      this.fetchAllData();
   },
   destroyed() {
     clearInterval(this.intervalRef);

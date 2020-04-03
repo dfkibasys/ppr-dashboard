@@ -17,7 +17,7 @@
             <b-form-input v-model="variable.name" placeholder="Name"></b-form-input>
           </b-col>
           <b-col>
-            <b-form-select v-model="variable.type" :options="typeOptions"></b-form-select>
+            <b-form-select v-model="variable.type" :options="typeOptions"  placeholder="Type"></b-form-select>
           </b-col>
           <b-col>
             <b-form-input
@@ -37,7 +37,7 @@
               v-model="variable.value"
               :options="boolOptions"
             ></b-form-select>
-            <b-form-input :disabled="true" v-else></b-form-input>
+            <b-form-input :disabled="true" v-else  placeholder="Value"></b-form-input>
           </b-col>
           <b-col cols="1">
             <b-button @click="deleteVariable(variable.id)" variant="danger">-</b-button>
@@ -64,7 +64,7 @@ export default {
       businessKey: "",
       processVariables: [],
       processVariableID: 0,
-      typeOptions: ["boolean", "string", "integer"],
+      typeOptions: ["Type", "boolean", "string", "integer"],
       boolOptions: ["true", "false"]
     };
   },
@@ -78,7 +78,7 @@ export default {
       this.processVariables.push({
         id: this.processVariableID++,
         name: "",
-        type: "",
+        type: "Type",
         value: ""
       });
     },
@@ -86,6 +86,17 @@ export default {
       this.processVariables = this.processVariables.filter(pv => pv.id !== id);
     },
     createInstance() {
+
+      //format processVariables
+      let variables = {};
+      this.processVariables.forEach(v => {
+          variables[v.name] = {
+              value: v.value,
+              type: v.type,
+              valueInfo: {}
+          };
+      });
+
       axios
         .post(
           process.env.VUE_APP_AJAX_REQUEST_DOMAIN +
@@ -94,11 +105,12 @@ export default {
             "/start",
           {
             businessKey: this.businessKey,
-            variables: {}
+            variables: variables
           }
         )
         .then(res => {
           console.log("started", res);
+          this.$emit("process-started");
         });
     }
   }
