@@ -75,12 +75,12 @@
                 v-slot:cell(durationInMillis)="value"
               >{{value.item.durationInMillis | duration('humanize')}}</template>
               <template v-slot:cell(referenceTime)="value">{{value.item.referenceTime || "-"}}</template>
-               <template v-slot:empty>No log data available.</template>
+              <template v-slot:empty>No log data available.</template>
             </b-table>
           </b-tab>
           <b-tab title="Variables">
             <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
-               <template v-slot:empty>No variables set.</template>
+              <template v-slot:empty>No variables set.</template>
             </b-table>
           </b-tab>
           <b-tab title="Incidents">
@@ -166,8 +166,8 @@ export default {
     fetchLeftDetails(piid, pdid) {
       axios
         .all([
-          axios.get(this.baseUrl + "/history/process-instance/" + piid),
-          axios.get(this.baseUrl + "/process-definition/" + pdid)
+          axios.get(`${this.baseUrl}/history/process-instance/${piid}`),
+          axios.get(`${this.baseUrl}/process-definition/${pdid}`)
         ])
         .then(
           axios.spread((pi, pd) => {
@@ -181,7 +181,7 @@ export default {
     },
     fetchProcessDefinitionXML(id) {
       axios
-        .get(this.baseUrl + "/process-definition/" + id + "/xml")
+        .get(`${this.baseUrl}/process-definition/${id}/xml`)
         .then(res => {
           this.processDefinitionXML = res.data.bpmn20Xml;
 
@@ -197,14 +197,14 @@ export default {
     updateDiagram() {
       axios
         .all([
-          axios.get(this.baseUrl + "/history/activity-instance", {
+          axios.get(`${this.baseUrl}/history/activity-instance`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               processInstanceId: this.$route.params.iid,
               unfinished: true
             }
           }),
-          axios.get(this.baseUrl + "/history/incident", {
+          axios.get(`${this.baseUrl}/history/incident`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               processInstanceId: this.$route.params.iid,
@@ -252,7 +252,7 @@ export default {
     fetchTabContent() {
       axios
         .all([
-          axios.get(this.baseUrl + "/history/activity-instance", {
+          axios.get(`${this.baseUrl}/history/activity-instance`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               processInstanceId: this.$route.params.iid,
@@ -260,14 +260,14 @@ export default {
               sortOrder: "asc"
             }
           }),
-          axios.get(this.baseUrl + "/history/incident", {
+          axios.get(`${this.baseUrl}/history/incident`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               processInstanceId: this.$route.params.iid,
               open: true //TODO: check if 'open' or 'unfinished'
             }
           }),
-          axios.get(this.baseUrl + "/history/variable-instance", {
+          axios.get(`${this.baseUrl}/history/variable-instance`, {
             params: {
               processInstanceId: this.$route.params.iid
             }
@@ -281,7 +281,7 @@ export default {
 
             this.auditlog.forEach(_a => {
               axios
-                .get(this.baseUrl + "/history/variable-instance", {
+                .get(`${this.baseUrl}/history/variable-instance`, {
                   params: {
                     processInstanceIdIn: this.$route.params.iid,
                     activityInstanceIdIn: _a.id

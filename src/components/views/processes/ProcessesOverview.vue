@@ -41,20 +41,19 @@ export default {
   methods: {
     goToProcessView(item) {
       this.$router.push({ name: "ProcessesDetails", params: { pid: item.id } });
-      //console.log(`${item.id} clicked`);
     }
   },
   created() {
     let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
 
     axios
-      .get(baseUrl + "/process-definition?latestVersion=true")
+      .get(`${baseUrl}/process-definition?latestVersion=true`)
       .then(res => {
         this.processDefinitions = res.data;
 
         this.processDefinitions.forEach(pp => {
           axios
-            .get(baseUrl + "/process-instance/count", {
+            .get(`${baseUrl}/process-instance/count`, {
               params: {
                 processDefinitionKey: pp.key
               }

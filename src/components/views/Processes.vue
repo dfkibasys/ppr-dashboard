@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
@@ -46,16 +45,15 @@ export default {
       deploymentsCount: 0
     };
   },
-  computed: mapGetters(["camundaUrl"]),
   created() {
-    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //this.camundaUrl + "/engine-rest"
+    let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //camundaUrl + "/engine-rest"
 
     axios
       .all([
-        axios.get(baseUrl + "/process-definition/count?latestVersion=true"),
-        axios.get(baseUrl + "/decision-definition/count"),
-        axios.get(baseUrl + "/case-definition/count"),
-        axios.get(baseUrl + "/deployment/count")
+        axios.get(`${baseUrl}/process-definition/count?latestVersion=true`),
+        axios.get(`${baseUrl}/decision-definition/count`),
+        axios.get(`${baseUrl}/case-definition/count`),
+        axios.get(`${baseUrl}/deployment/count`)
       ])
       .then(
         axios.spread((pdc, ddc, cdc, dc) => {

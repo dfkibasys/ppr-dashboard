@@ -99,17 +99,13 @@ export default {
 
       axios
         .post(
-          process.env.VUE_APP_AJAX_REQUEST_DOMAIN +
-            "/process-definition/" +
-            this.$route.params.pid +
-            "/start",
+          `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/start`,
           {
             businessKey: this.businessKey,
             variables: variables
           }
         )
         .then(res => {
-          console.log("started", res);
           this.$emit("process-started");
         });
     }

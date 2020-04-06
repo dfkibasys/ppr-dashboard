@@ -10,7 +10,10 @@
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody v-for="(capability, index) in allDevices[openedDeviceIndex].capability" :key="capability.name + capability.taught">
+          <tbody
+            v-for="(capability, index) in allDevices[openedDeviceIndex].capability"
+            :key="capability.name + capability.taught"
+          >
             <tr>
               <th scope="row">{{index}}</th>
               <td>{{capability.name}}</td>
@@ -45,24 +48,21 @@
 
 <script>
 import axios from "axios";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CapabilityOverview",
   props: {
-    openedDeviceIndex: Number,
+    openedDeviceIndex: Number
   },
   computed: mapGetters(["basysUrl", "camundaUrl", "allDevices"]),
   methods: {
     removeCapability(capability) {
-      let url =
-        this.basysUrl +
-        "/services/resourceinstance/" +
-        this.allDevices[this.openedDeviceIndex].componentId +
-        "/capability/" +
-        this.allDevices[this.openedDeviceIndex].capabilityAssertionId +
-        "/variant/" +
-        capability.id;
+      let url = `${this.basysUrl}/services/resourceinstance/${
+        this.allDevices[this.openedDeviceIndex].componentId
+      }/capability/${
+        this.allDevices[this.openedDeviceIndex].capabilityAssertionId
+      }/variant/${capability.id}`;
 
       axios.delete(url).then(res => {
         //GUI updates
@@ -72,15 +72,13 @@ export default {
     startTeaching() {
       let url = this.camundaUrl + "/engine-rest/message";
       const data = {
-          messageName : "Process.TeachIn.Prepare",
-          businessKey: "cebit2018"
-      }
+        messageName: "Process.TeachIn.Prepare",
+        businessKey: "cebit2018"
+      };
 
-      axios
-        .post(url, data)
-        .then(res => {
-          //worked
-        });
+      axios.post(url, data).then(res => {
+        //worked
+      });
     }
   }
 };

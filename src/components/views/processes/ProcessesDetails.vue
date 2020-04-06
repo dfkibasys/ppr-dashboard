@@ -129,7 +129,7 @@ export default {
   data() {
     return {
       bcItems: [
-         {
+        {
           text: "Processes",
           to: "/processes"
         },
@@ -190,7 +190,7 @@ export default {
     },
     fetchProcessDefinitionById(id) {
       axios
-        .get(this.baseUrl + "/process-definition/" + id)
+        .get(`${this.baseUrl}/process-definition/${id}`)
         .then(res => {
           this.currentVersionID = res.data.id;
           this.processDefinition = res.data;
@@ -198,18 +198,13 @@ export default {
           axios
             .all([
               axios.get(
-                this.baseUrl + "/process-definition?key=" + res.data.key
+                `${this.baseUrl}/process-definition?key=${res.data.key}`
               ),
               axios.get(
-                this.baseUrl +
-                  "/history/process-instance?processDefinitionId=" +
-                  res.data.id +
-                  "&unfinished=true"
+                `${this.baseUrl}/history/process-instance?processDefinitionId=${res.data.id}&unfinished=true`
               ),
               axios.get(
-                this.baseUrl +
-                  "/process-instance/count?processDefinitionId=" +
-                  res.data.id
+                `${this.baseUrl}/process-instance/count?processDefinitionId=${res.data.id}`
               )
             ])
             .then(
@@ -238,7 +233,7 @@ export default {
     },
     fetchProcessDefinitionXML(id) {
       axios
-        .get(this.baseUrl + "/process-definition/" + id + "/xml")
+        .get(`${this.baseUrl}/process-definition/${id}/xml`)
         .then(res => {
           this.processDefinitionXML = res.data.bpmn20Xml;
 
@@ -253,7 +248,7 @@ export default {
     },
     fetchActivityInstance(id) {
       axios
-        .get(this.baseUrl + "/history/activity-instance", {
+        .get(`${this.baseUrl}/history/activity-instance`, {
           params: {
             processDefinitionId: id,
             sortBy: "startTime",
@@ -270,13 +265,13 @@ export default {
     updateDiagram() {
       axios
         .all([
-          axios.get(this.baseUrl + "/history/activity-instance", {
+          axios.get(`${this.baseUrl}/history/activity-instance`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               unfinished: true
             }
           }),
-          axios.get(this.baseUrl + "/history/incident", {
+          axios.get(`${this.baseUrl}/history/incident`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               open: true
@@ -308,9 +303,7 @@ export default {
                   left: 0
                 },
                 html:
-                  '<span class="badge badge-pill badge-primary">' +
-                  activityIdsCount[id] +
-                  "</span>"
+                  `<span class="badge badge-pill badge-primary">${activityIdsCount[id]}</span>`
               });
               this.overlaysArr.push(oID);
             }
@@ -332,9 +325,7 @@ export default {
                   left: 30
                 },
                 html:
-                  '<span class="badge badge-pill badge-danger">' +
-                  incidentIdsCount[id] +
-                  "</span>"
+                   `<span class="badge badge-pill badge-primary">${incidentIdsCount[id]}</span>`
               });
               this.overlaysArr.push(oID);
             }
@@ -349,7 +340,7 @@ export default {
     },
     deleteProcessInstance(id) {
       axios
-        .delete(this.baseUrl + "/process-instance/" + id)
+        .delete(`${this.baseUrl}/process-instance/${id}`)
         .then(res => {
           this.processInstances = this.processInstances.filter(
             pi => pi.id !== id
