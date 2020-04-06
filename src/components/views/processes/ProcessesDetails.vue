@@ -108,7 +108,6 @@
 <script>
 import BpmnDisplay from "./BpmnDisplay";
 import CreateProcessInstance from "../../modals/CreateProcessInstance";
-import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 
 export default {
@@ -118,7 +117,6 @@ export default {
     CreateProcessInstance
   },
   computed: {
-    ...mapGetters(["camundaUrl"]),
     baseUrl: function() {
       return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
     }
@@ -147,10 +145,10 @@ export default {
     };
   },
   methods: {
-    goToProcessInstance() {
+    goToProcessInstance(item) {
       this.$router.push({
         name: "ProcessesInstance",
-        params: { pid: this.$route.params.pid, iid: "545" }
+        params: { pid: this.$route.params.pid, iid: item.id }
       });
     },
     handleError: function(err) {
