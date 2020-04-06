@@ -7,17 +7,17 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+import Navbar from "./components/Navbar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Navbar
   },
   created() {
     this.$mqtt.connect();
   }
-}
+};
 </script>
 
 <style lang="less">
@@ -32,13 +32,13 @@ export default {
     display: grid;
     grid-template-columns: @cardWidth;
     @media (min-width: 1010px) {
-          grid-template-columns: @cardWidth @cardWidth;
+      grid-template-columns: @cardWidth @cardWidth;
     }
     @media (min-width: 1520px) {
-          grid-template-columns: @cardWidth @cardWidth @cardWidth;
+      grid-template-columns: @cardWidth @cardWidth @cardWidth;
     }
     @media (min-width: 2030px) {
-         grid-template-columns: @cardWidth @cardWidth @cardWidth @cardWidth;
+      grid-template-columns: @cardWidth @cardWidth @cardWidth @cardWidth;
     }
 
     justify-content: center;
@@ -71,7 +71,12 @@ export default {
           }
         }
       }
+    }
+  }
 
+  .clickable-table {
+    tr {
+      cursor: pointer;
     }
   }
 }

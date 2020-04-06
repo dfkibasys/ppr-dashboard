@@ -8,6 +8,7 @@
       @row-clicked="goToProcessView"
       :items="processDefinitions"
       :fields="fields"
+      class="clickable-table"
     >
       <template v-slot:cell(tenantId)="value">{{value.item.tenantId || "-"}}</template>
     </b-table>

@@ -73,6 +73,7 @@
               @row-clicked="goToProcessInstance"
               :items="processInstances"
               :fields="instanceFields"
+              class="clickable-table"
             >
               <template v-slot:head(action)>
                 <b-button variant="success" @click="createProcessInstance">Create</b-button>
@@ -366,7 +367,7 @@ export default {
 };
 </script>
 
-<style lang=less scoped>
+<style lang="less" scoped>
 .container-top {
   height: 700px;
 }
