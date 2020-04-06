@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <b-breadcrumb :items="bcItems"></b-breadcrumb>
     <b-row class="pb-2 container-top">
       <create-process-instance @process-started="fetchAllData"></create-process-instance>
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
@@ -123,6 +124,20 @@ export default {
   },
   data() {
     return {
+      bcItems: [
+         {
+          text: "Processes",
+          to: "/processes"
+        },
+        {
+          text: "Overview",
+          to: "/processes/overview"
+        },
+        {
+          text: "Definition",
+          to: `/processes/${this.$route.params.pid}`
+        }
+      ],
       updateInterval: 500,
       intervalRef: null,
       instanceFields: ["id", "startTime", "businessKey", "action"],
@@ -164,7 +179,7 @@ export default {
       });
       this.fetchAllData();
     },
-    fetchAllData(){
+    fetchAllData() {
       this.fetchProcessDefinitionById(this.$route.params.pid);
       this.fetchActivityInstance(this.$route.params.pid);
       this.fetchProcessDefinitionXML(this.$route.params.pid);
@@ -227,7 +242,6 @@ export default {
           this.intervalRef = setInterval(() => {
             this.updateDiagram();
           }, this.updateInterval);
-       
         })
         .catch(err => {
           console.error(err);
@@ -344,7 +358,7 @@ export default {
     }
   },
   created() {
-      this.fetchAllData();
+    this.fetchAllData();
   },
   destroyed() {
     clearInterval(this.intervalRef);

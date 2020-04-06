@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <b-breadcrumb :items="bcItems"></b-breadcrumb>
     <h2>Deployed</h2>
     <b-row>
       <b-col>
@@ -26,12 +27,19 @@
 
 <script>
 import { mapGetters } from "vuex";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Processes",
   data() {
     return {
+      bcItems: [
+        {
+          text: "Processes",
+          to: "/processes",
+          active: true
+        }
+      ],
       processDefinitionsCount: 0,
       decisionDefinitionsCount: 0,
       caseDefinitionsCount: 0,

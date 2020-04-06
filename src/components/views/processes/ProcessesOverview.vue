@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <b-breadcrumb :items="bcItems"></b-breadcrumb>
     <h2>Deployed</h2>
     <b-table
       hover
@@ -23,7 +24,17 @@ export default {
   data() {
     return {
       processDefinitions: [],
-      fields: ["instances", "name", "key", "tenantId"]
+      fields: ["instances", "name", "key", "tenantId"],
+      bcItems: [
+        {
+          text: "Processes",
+          to: "/processes"
+        },
+        {
+          text: "Overview",
+          to: "/processes/overview"
+        }
+      ]
     };
   },
   methods: {
@@ -49,7 +60,7 @@ export default {
             })
             .then(res => {
               //add reactive properties to nested object
-              this.$set(pp, 'instances', res.data.count);
+              this.$set(pp, "instances", res.data.count);
             })
             .catch(err => {
               console.error(err);

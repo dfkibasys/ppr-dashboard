@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <b-breadcrumb :items="bcItems"></b-breadcrumb>
     <b-row class="pb-2 container-top">
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
@@ -108,6 +109,24 @@ export default {
   },
   data() {
     return {
+      bcItems: [
+        {
+          text: "Processes",
+          to: "/processes"
+        },
+        {
+          text: "Overview",
+          to: "/processes/overview"
+        },
+        {
+          text: "Definition",
+          to: `/processes/${this.$route.params.pid}`
+        },
+        {
+          text: "Instance",
+          to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`,
+        }
+      ],
       updateInterval: 500,
       intervalRef: null,
       overlaysArr: [],
@@ -229,25 +248,21 @@ export default {
     fetchTabContent() {
       axios
         .all([
-          axios.get(
-            this.baseUrl + "/history/activity-instance",
-            {
-              params: {
-                processDefinitionId: this.$route.params.pid,
-                processInstanceId: this.$route.params.iid,
-                sortBy: "startTime",
-                sortOrder: "asc"
-              }
-            }),
-            axios.get(this.baseUrl + "/history/incident",
-            {
-              params: {
-                processDefinitionId: this.$route.params.pid,
-                processInstanceId: this.$route.params.iid,
-                open: true //TODO: check if 'open' or 'unfinished'
-              }
+          axios.get(this.baseUrl + "/history/activity-instance", {
+            params: {
+              processDefinitionId: this.$route.params.pid,
+              processInstanceId: this.$route.params.iid,
+              sortBy: "startTime",
+              sortOrder: "asc"
             }
-          ),
+          }),
+          axios.get(this.baseUrl + "/history/incident", {
+            params: {
+              processDefinitionId: this.$route.params.pid,
+              processInstanceId: this.$route.params.iid,
+              open: true //TODO: check if 'open' or 'unfinished'
+            }
+          }),
           axios.get(this.baseUrl + "/history/variable-instance", {
             params: {
               processInstanceId: this.$route.params.iid
