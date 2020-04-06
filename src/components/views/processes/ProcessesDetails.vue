@@ -74,6 +74,7 @@
               :items="processInstances"
               :fields="instanceFields"
               class="clickable-table"
+              show-empty
             >
               <template v-slot:head(action)>
                 <b-button variant="success" @click="createProcessInstance">Create</b-button>
@@ -85,10 +86,11 @@
               <template v-slot:cell(action)="value">
                 <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete</b-button>
               </template>
+              <template v-slot:empty>No process instances running.</template>
             </b-table>
           </b-tab>
           <b-tab title="Audit Log">
-            <b-table hover striped :items="auditLog" :fields="auditFields">
+            <b-table hover striped :items="auditLog" :fields="auditFields" show-empty>
               <template v-slot:cell(state)="value">
                 <b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle>
                 <b-icon-circle-half font-scale="2" v-else></b-icon-circle-half>
@@ -99,6 +101,7 @@
               <template
                 v-slot:cell(endTime)="value"
               >{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template v-slot:empty>No log data available.</template>
             </b-table>
           </b-tab>
         </b-tabs>

@@ -64,7 +64,7 @@
       <b-col>
         <b-tabs>
           <b-tab title="Audit Log">
-            <b-table hover striped :items="auditlog" :fields="auditfields">
+            <b-table hover striped :items="auditlog" :fields="auditfields" show-empty>
               <template
                 v-slot:cell(startTime)="value"
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
@@ -75,16 +75,20 @@
                 v-slot:cell(durationInMillis)="value"
               >{{value.item.durationInMillis | duration('humanize')}}</template>
               <template v-slot:cell(referenceTime)="value">{{value.item.referenceTime || "-"}}</template>
+               <template v-slot:empty>No log data available.</template>
             </b-table>
           </b-tab>
           <b-tab title="Variables">
-            <b-table hover striped :items="variables" :fields="variablesFields"></b-table>
+            <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
+               <template v-slot:empty>No variables set.</template>
+            </b-table>
           </b-tab>
           <b-tab title="Incidents">
-            <b-table hover striped :items="incidents" :fields="incidentsFields">
+            <b-table hover striped :items="incidents" :fields="incidentsFields" show-empty>
               <template
                 v-slot:cell(startTime)="value"
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              <template v-slot:empty>No incidents reported.</template>
             </b-table>
           </b-tab>
         </b-tabs>
@@ -124,7 +128,7 @@ export default {
         },
         {
           text: "Instance",
-          to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`,
+          to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`
         }
       ],
       updateInterval: 500,
@@ -299,6 +303,9 @@ export default {
     this.fetchLeftDetails(this.$route.params.iid, this.$route.params.pid);
     this.fetchProcessDefinitionXML(this.$route.params.pid);
     this.fetchTabContent();
+  },
+  destroyed() {
+    clearInterval(this.intervalRef);
   }
 };
 </script>
