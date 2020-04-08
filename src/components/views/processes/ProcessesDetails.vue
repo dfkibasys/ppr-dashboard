@@ -394,7 +394,7 @@ export default {
   created() {
     this.fetchAllData();
   },
-  destroyed() {
+  beforeDestroy() {
     clearInterval(this.intervalRef);
   }
 };

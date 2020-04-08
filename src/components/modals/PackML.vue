@@ -22,7 +22,7 @@
     <div class="mxgraph" ref="graphy" style="position:relative;overflow:auto;"></div>
 
     <template v-slot:modal-footer="{cancel}">
-      <b-button @click="cancel" variant="secondary">{{$t("translation.modal_close")}}</b-button>
+      <b-button @click="cancel" variant="secondary">{{$t("modal.close")}}</b-button>
     </template>
   </b-modal>
 </template>

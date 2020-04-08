@@ -17,13 +17,13 @@
                 <img :src="require('@/assets/' + device.type + '.png')" />
               </div>
               <div class="col-3">
-                {{$t("translation.type_k")}}:
+                {{$t("card.type")}}:
                 <br />
-                {{$t("translation.location_k")}}:
+                {{$t("card.location")}}:
                 <br />
-                {{$t("translation.serial_k")}}:
+                {{$t("card.serial")}}:
                 <br />
-                {{$t("translation.capability_k")}}:
+                {{$t("card.capability")}}:
                 <br />
               </div>
               <div class="col-5 properties">
@@ -37,7 +37,7 @@
                 <a
                   href="#"
                   @click="openCapabilityOverview(index)"
-                >({{$t("translation.show")}})</a>
+                >({{$t("card.show")}})</a>
                 <br />
               </div>
             </div>

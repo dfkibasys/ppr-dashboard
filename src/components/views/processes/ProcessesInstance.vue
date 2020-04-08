@@ -346,7 +346,7 @@ export default {
       that.cbCount++;
     });
   },
-  destroyed() {
+  beforeDestroy() {
     clearInterval(this.intervalRef);
   }
 };

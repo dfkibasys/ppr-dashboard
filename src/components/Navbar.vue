@@ -7,7 +7,7 @@
       </b-navbar-brand>
 
       <b-navbar-nav is-nav class="flex-row">
-        <b-link class="pr-3" to="/devices">{{$t("translation.menu_devices")}}</b-link>
+        <b-link class="pr-3" to="/devices">{{$t("navbar.devices")}}</b-link>
         <b-link class="pr-3" to="/services">Services</b-link>
         <b-link class="pr-3" to="/management">Management</b-link>
         <b-link class="pr-3" to="/processes">Processes</b-link>
@@ -18,7 +18,7 @@
       <b-collapse id="nav-collapse" class="navbar-collapse" is-nav>
         <b-container>
           <b-row>
-            <b-col>{{$t('translation.set_language')}}:</b-col>
+            <b-col>{{$t('navbar.language')}}:</b-col>
             <b-col cols="9">
               <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
             </b-col>
@@ -30,7 +30,7 @@
                 type="button"
                 class="btn btn-success"
                 @click="changeMQTTdata"
-              >{{$t('translation.set_change')}}</button>
+              >{{$t('navbar.change')}}</button>
             </b-col>
             <div class="w-100"></div>
             <b-col>Mock data:</b-col>
@@ -45,7 +45,7 @@
                 type="button"
                 class="btn btn-success"
                 @click="changeBASYSdata"
-              >{{$t('translation.set_change')}}</button>
+              >{{$t('navbar.change')}}</button>
             </b-col>
             <div class="w-100"></div>
             <b-col>Camunda URL:</b-col>

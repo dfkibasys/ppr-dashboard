@@ -1,0 +1,38 @@
+{
+    "en": {
+      "navbar": {
+        "language": "Language",
+        "change": "Change",
+        "devices": "Devices",
+        "processes": "Processes"
+      },
+      "modal": {
+        "close": "Close"
+      },
+      "card": {
+        "type": "Type",
+        "location": "Location",
+        "serial": "Serial",
+        "capability": "Capability",
+        "show": "Show"
+      }
+    },
+    "de": {
+      "navbar": {
+        "language": "Sprache",
+        "change": "Ändern",
+        "devices": "Geräte",
+        "processes": "Prozesse"
+      },
+      "modal": {
+        "close": "Schließen"
+      },
+      "card": {
+        "type": "Typ",
+        "location": "Ort",
+        "serial": "Seriennr.",
+        "capability": "Fähigkeit",
+        "show": "Anzeigen"
+      }
+    }
+  }

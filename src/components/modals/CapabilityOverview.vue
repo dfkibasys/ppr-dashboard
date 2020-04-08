@@ -41,7 +41,7 @@
       </div>
     </div>
     <template v-slot:modal-footer="{cancel}">
-      <b-button variant="secondary" @click="cancel">{{$t("translation.modal_close")}}</b-button>
+      <b-button variant="secondary" @click="cancel">{{$t("modal.close")}}</b-button>
     </template>
   </b-modal>
 </template>
