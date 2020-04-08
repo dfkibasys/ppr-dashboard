@@ -10,7 +10,7 @@
         <b-link class="pr-3" to="/devices">{{$t("navbar.devices")}}</b-link>
         <b-link class="pr-3" to="/services">Services</b-link>
         <b-link class="pr-3" to="/management">Management</b-link>
-        <b-link class="pr-3" to="/processes">Processes</b-link>
+        <b-link class="pr-3" to="/processes">{{$t("navbar.processes")}}</b-link>
       </b-navbar-nav>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

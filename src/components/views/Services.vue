@@ -40,7 +40,7 @@ export default {
       services: []
     };
   },
-  computed: mapGetters(["basysUrl"]),
+  computed: mapGetters(["basysUrl", "mockDataEnabled"]),
   methods: {
     loadInitialData: function(mockData, callback) {
       let that = this;
@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.loadInitialData(false, function() {});
+    this.loadInitialData(this.mockDataEnabled, function() {});
   }
 };
 </script>

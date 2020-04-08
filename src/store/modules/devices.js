@@ -3,13 +3,11 @@ import axios from 'axios';
 import store from "../../store";
 
 const state = {
-    devices: [],
-    mockData: false
+    devices: []
 };
 
 const getters = {
-    allDevices: (state) => state.devices,
-    mockDataEnabled: (state) => state.mockData
+    allDevices: (state) => state.devices
 };
 
 const actions = {
@@ -190,8 +188,6 @@ const actions = {
 
 const mutations = {
     setDevices: (state, devices) => (state.devices = devices),
-
-    switchMockDataState: (state, value) => (state.mockData = value),
 
     updateDevices: (state, device) => {
         state.devices = state.devices.map((val, index, arr) => {
