@@ -53,7 +53,7 @@ export default {
       that.$Progress.start();
 
       axios
-        .get(serv_url, {timeout: 5000})
+        .get(serv_url)
         .then(serv => {
           that.$Progress.finish();
           //services

@@ -3,15 +3,17 @@ import App from './App.vue'
 import router from './router.js'
 import store from "./store"
 import mqtt from './mqtt'
+import Axios from 'axios'
 
 //Bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-
 import VueI18n from 'vue-i18n'
 import VueProgressBar from 'vue-progressbar'
+
+Axios.defaults.timeout = 4000;
 
 Vue.prototype.$mqtt = mqtt;
 

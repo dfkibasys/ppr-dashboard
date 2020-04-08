@@ -65,7 +65,7 @@ export default {
               that.$set(pp, "instances", res.data.count);
             })
             .catch(err => {
-              that.$Progress.finish();
+              that.$Progress.fail();
               console.error(err);
             });
         });

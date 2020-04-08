@@ -34,7 +34,7 @@ const actions = {
         Vue.prototype.$Progress.start();
 
         axios
-            .all([axios.get(dev_url, {timeout: 5000}), axios.get(inst_url, {timeout: 5000}), axios.get(typ_url, {timeout: 5000})])
+            .all([axios.get(dev_url), axios.get(inst_url), axios.get(typ_url)])
             .then(
                 axios.spread((dev, inst, typ) => {
                     

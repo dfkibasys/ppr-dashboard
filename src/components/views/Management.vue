@@ -52,7 +52,7 @@ export default {
       that.$Progress.start();
 
       axios
-        .get(man_url, {timeout: 5000})
+        .get(man_url)
         .then(man => {
           that.$Progress.finish();
           //management
