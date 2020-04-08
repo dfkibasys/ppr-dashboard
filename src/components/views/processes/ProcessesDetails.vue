@@ -160,8 +160,16 @@ export default {
       processDefinition: {},
       processDefinitionXML: "",
       auditLog: [],
-      overlaysArr: []
+      overlaysArr: [],
+      cbCount: 0 //counts callbacks of api requests for progress bar
     };
+  },
+  watch: {
+    cbCount: function(val) {
+      if (val == 3) {
+        this.$Progress.finish();
+      }
+    }
   },
   methods: {
     goToProcessInstance(item) {
@@ -184,105 +192,134 @@ export default {
       this.fetchAllData();
     },
     fetchAllData() {
-      this.fetchProcessDefinitionById(this.$route.params.pid);
-      this.fetchActivityInstance(this.$route.params.pid);
-      this.fetchProcessDefinitionXML(this.$route.params.pid);
+      let that = this;
+      that.cbCount = 0;
+      that.$Progress.start();
+
+      that.fetchLeftDetails(that.$route.params.pid, function() {
+        that.cbCount++;
+      });
+      that.fetchTabContent(that.$route.params.pid, function() {
+        that.cbCount++;
+      });
+      that.fetchBPMN(that.$route.params.pid, function() {
+        that.cbCount++;
+      });
     },
-    fetchProcessDefinitionById(id) {
+    fetchLeftDetails(id, callback) {
+      let that = this;
+
       axios
-        .get(`${this.baseUrl}/process-definition/${id}`)
+        .get(`${that.baseUrl}/process-definition/${id}`)
         .then(res => {
-          this.currentVersionID = res.data.id;
-          this.processDefinition = res.data;
+          that.currentVersionID = res.data.id;
+          that.processDefinition = res.data;
 
           axios
             .all([
               axios.get(
-                `${this.baseUrl}/process-definition?key=${res.data.key}`
+                `${that.baseUrl}/process-definition?key=${res.data.key}`
               ),
               axios.get(
-                `${this.baseUrl}/history/process-instance?processDefinitionId=${res.data.id}&unfinished=true`
-              ),
-              axios.get(
-                `${this.baseUrl}/process-instance/count?processDefinitionId=${res.data.id}`
+                `${that.baseUrl}/process-instance/count?processDefinitionId=${id}`
               )
             ])
             .then(
-              axios.spread((pds, pis, pic) => {
+              axios.spread((pds, pic) => {
                 //pds
-                this.versions = [];
+                that.versions = [];
                 pds.data.forEach(val => {
                   //formatting for b-form-select component
-                  this.versions.push({ value: val.id, text: val.version });
+                  that.versions.push({ value: val.id, text: val.version });
                 });
 
-                //pis
-                this.processInstances = pis.data;
-
                 //pic
-                this.$set(this.processDefinition, "instances", pic.data.count);
+                that.$set(that.processDefinition, "instances", pic.data.count);
+
+                callback();
               })
             )
             .catch(err => {
+              that.$Progress.fail();
               console.error(err);
             });
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
-    fetchProcessDefinitionXML(id) {
-      axios
-        .get(`${this.baseUrl}/process-definition/${id}/xml`)
-        .then(res => {
-          this.processDefinitionXML = res.data.bpmn20Xml;
+    fetchBPMN(id, callback) {
+      let that = this;
 
-          clearInterval(this.intervalRef);
-          this.intervalRef = setInterval(() => {
-            this.updateDiagram();
-          }, this.updateInterval);
+      axios
+        .get(`${that.baseUrl}/process-definition/${id}/xml`)
+        .then(res => {
+          that.processDefinitionXML = res.data.bpmn20Xml;
+
+          clearInterval(that.intervalRef);
+          that.intervalRef = setInterval(() => {
+            that.updateDiagram();
+          }, that.updateInterval);
+          callback();
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
-    fetchActivityInstance(id) {
+    fetchTabContent(id, callback) {
+      let that = this;
+
       axios
-        .get(`${this.baseUrl}/history/activity-instance`, {
-          params: {
-            processDefinitionId: id,
-            sortBy: "startTime",
-            sortOrder: "asc"
-          }
-        })
-        .then(res => {
-          this.auditLog = res.data;
-        })
+        .all([
+          axios.get(
+            `${that.baseUrl}/history/process-instance?processDefinitionId=${id}&unfinished=true`
+          ),
+          axios.get(`${that.baseUrl}/history/activity-instance`, {
+            params: {
+              processDefinitionId: id,
+              sortBy: "startTime",
+              sortOrder: "asc"
+            }
+          })
+        ])
+        .then(
+          axios.spread((pi, ai) => {
+            that.auditLog = ai.data;
+            that.processInstances = pi.data;
+
+            callback();
+          })
+        )
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
     updateDiagram() {
+      let that = this;
+
       axios
         .all([
-          axios.get(`${this.baseUrl}/history/activity-instance`, {
+          axios.get(`${that.baseUrl}/history/activity-instance`, {
             params: {
-              processDefinitionId: this.$route.params.pid,
+              processDefinitionId: that.$route.params.pid,
               unfinished: true
             }
           }),
-          axios.get(`${this.baseUrl}/history/incident`, {
+          axios.get(`${that.baseUrl}/history/incident`, {
             params: {
-              processDefinitionId: this.$route.params.pid,
+              processDefinitionId: that.$route.params.pid,
               open: true
             }
           })
         ])
         .then(
           axios.spread((ais, incidents) => {
-            let overlays = this.$refs.bpmn.getOverlays();
+            let overlays = that.$refs.bpmn.getOverlays();
 
-            this.overlaysArr.forEach(o => {
+            that.overlaysArr.forEach(o => {
               overlays.remove(o);
             });
 
@@ -302,10 +339,9 @@ export default {
                   bottom: 0,
                   left: 0
                 },
-                html:
-                  `<span class="badge badge-pill badge-primary">${activityIdsCount[id]}</span>`
+                html: `<span class="badge badge-pill badge-primary">${activityIdsCount[id]}</span>`
               });
-              this.overlaysArr.push(oID);
+              that.overlaysArr.push(oID);
             }
 
             //incidents
@@ -324,14 +360,14 @@ export default {
                   bottom: 0,
                   left: 30
                 },
-                html:
-                   `<span class="badge badge-pill badge-primary">${incidentIdsCount[id]}</span>`
+                html: `<span class="badge badge-pill badge-primary">${incidentIdsCount[id]}</span>`
               });
-              this.overlaysArr.push(oID);
+              that.overlaysArr.push(oID);
             }
           })
         )
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
@@ -339,15 +375,18 @@ export default {
       this.$bvModal.show("modal-instance");
     },
     deleteProcessInstance(id) {
+      let that = this;
+
       axios
-        .delete(`${this.baseUrl}/process-instance/${id}`)
+        .delete(`${that.baseUrl}/process-instance/${id}`)
         .then(res => {
-          this.processInstances = this.processInstances.filter(
+          that.processInstances = that.processInstances.filter(
             pi => pi.id !== id
           );
-          this.processDefinition.instances--;
+          that.processDefinition.instances--;
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     }

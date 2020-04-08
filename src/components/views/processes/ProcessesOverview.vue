@@ -44,14 +44,16 @@ export default {
     }
   },
   created() {
+    let that = this;
     let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+    that.$Progress.start();
 
     axios
       .get(`${baseUrl}/process-definition?latestVersion=true`)
       .then(res => {
-        this.processDefinitions = res.data;
+        that.processDefinitions = res.data;
 
-        this.processDefinitions.forEach(pp => {
+        that.processDefinitions.forEach(pp => {
           axios
             .get(`${baseUrl}/process-instance/count`, {
               params: {
@@ -60,14 +62,18 @@ export default {
             })
             .then(res => {
               //add reactive properties to nested object
-              this.$set(pp, "instances", res.data.count);
+              that.$set(pp, "instances", res.data.count);
             })
             .catch(err => {
+              that.$Progress.finish();
               console.error(err);
             });
         });
+
+        that.$Progress.finish();
       })
       .catch(err => {
+        that.$Progress.fail();
         console.error(err);
       });
   }

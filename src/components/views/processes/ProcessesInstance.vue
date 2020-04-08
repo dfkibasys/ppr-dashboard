@@ -153,8 +153,16 @@ export default {
       incidents: [],
       incidentsFields: ["message", "startTime", "activityName"],
       variables: [],
-      variablesFields: ["name", "value", "type"]
+      variablesFields: ["name", "value", "type"],
+      cbCount: 0 //counts callbacks of api requests for progress bar
     };
+  },
+  watch: {
+    cbCount: function(val) {
+      if (val == 3) {
+        this.$Progress.finish();
+      }
+    }
   },
   methods: {
     handleError: function(err) {
@@ -163,60 +171,71 @@ export default {
     handleShown: function() {
       console.log("diagram shown");
     },
-    fetchLeftDetails(piid, pdid) {
+    fetchLeftDetails(piid, pdid, callback) {
+      let that = this;
+
       axios
         .all([
-          axios.get(`${this.baseUrl}/history/process-instance/${piid}`),
-          axios.get(`${this.baseUrl}/process-definition/${pdid}`)
+          axios.get(`${that.baseUrl}/history/process-instance/${piid}`),
+          axios.get(`${that.baseUrl}/process-definition/${pdid}`)
         ])
         .then(
           axios.spread((pi, pd) => {
-            this.processInstance = pi.data;
-            this.processDefinition = pd.data;
+            that.processInstance = pi.data;
+            that.processDefinition = pd.data;
+
+            callback();
           })
         )
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
-    fetchProcessDefinitionXML(id) {
-      axios
-        .get(`${this.baseUrl}/process-definition/${id}/xml`)
-        .then(res => {
-          this.processDefinitionXML = res.data.bpmn20Xml;
+    fetchBPMN(id, callback) {
+      let that = this;
 
-          clearInterval(this.intervalRef);
-          this.intervalRef = setInterval(() => {
-            this.updateDiagram();
-          }, this.updateInterval);
+      axios
+        .get(`${that.baseUrl}/process-definition/${id}/xml`)
+        .then(res => {
+          that.processDefinitionXML = res.data.bpmn20Xml;
+
+          clearInterval(that.intervalRef);
+          that.intervalRef = setInterval(() => {
+            that.updateDiagram();
+          }, that.updateInterval);
+          callback();
         })
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
     updateDiagram() {
+      let that = this;
+
       axios
         .all([
-          axios.get(`${this.baseUrl}/history/activity-instance`, {
+          axios.get(`${that.baseUrl}/history/activity-instance`, {
             params: {
-              processDefinitionId: this.$route.params.pid,
-              processInstanceId: this.$route.params.iid,
+              processDefinitionId: that.$route.params.pid,
+              processInstanceId: that.$route.params.iid,
               unfinished: true
             }
           }),
-          axios.get(`${this.baseUrl}/history/incident`, {
+          axios.get(`${that.baseUrl}/history/incident`, {
             params: {
-              processDefinitionId: this.$route.params.pid,
-              processInstanceId: this.$route.params.iid,
+              processDefinitionId: that.$route.params.pid,
+              processInstanceId: that.$route.params.iid,
               open: true
             }
           })
         ])
         .then(
           axios.spread((ais, incidents) => {
-            let overlays = this.$refs.bpmn.getOverlays();
+            let overlays = that.$refs.bpmn.getOverlays();
 
-            this.overlaysArr.forEach(o => {
+            that.overlaysArr.forEach(o => {
               overlays.remove(o);
             });
 
@@ -229,7 +248,7 @@ export default {
                 },
                 html: '<span class="badge badge-pill badge-primary">1</span>'
               });
-              this.overlaysArr.push(oID);
+              that.overlaysArr.push(oID);
             });
 
             //incidents
@@ -241,18 +260,21 @@ export default {
                 },
                 html: '<span class="badge badge-pill badge-danger">1</span>'
               });
-              this.overlaysArr.push(oID);
+              that.overlaysArr.push(oID);
             });
           })
         )
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     },
-    fetchTabContent() {
+    fetchTabContent(callback) {
+      let that = this;
+
       axios
         .all([
-          axios.get(`${this.baseUrl}/history/activity-instance`, {
+          axios.get(`${that.baseUrl}/history/activity-instance`, {
             params: {
               processDefinitionId: this.$route.params.pid,
               processInstanceId: this.$route.params.iid,
@@ -260,49 +282,69 @@ export default {
               sortOrder: "asc"
             }
           }),
-          axios.get(`${this.baseUrl}/history/incident`, {
+          axios.get(`${that.baseUrl}/history/incident`, {
             params: {
-              processDefinitionId: this.$route.params.pid,
-              processInstanceId: this.$route.params.iid,
+              processDefinitionId: that.$route.params.pid,
+              processInstanceId: that.$route.params.iid,
               open: true //TODO: check if 'open' or 'unfinished'
             }
           }),
-          axios.get(`${this.baseUrl}/history/variable-instance`, {
+          axios.get(`${that.baseUrl}/history/variable-instance`, {
             params: {
-              processInstanceId: this.$route.params.iid
+              processInstanceId: that.$route.params.iid
             }
           })
         ])
         .then(
           axios.spread((ai, incidents, vi) => {
-            this.auditlog = ai.data;
-            this.incidents = incidents ? incidents.data : [];
-            this.variables = vi.data;
+            that.auditlog = ai.data;
+            that.incidents = incidents ? incidents.data : [];
+            that.variables = vi.data;
 
-            this.auditlog.forEach(_a => {
+            that.auditlog.forEach(_a => {
               axios
-                .get(`${this.baseUrl}/history/variable-instance`, {
+                .get(`${that.baseUrl}/history/variable-instance`, {
                   params: {
-                    processInstanceIdIn: this.$route.params.iid,
+                    processInstanceIdIn: that.$route.params.iid,
                     activityInstanceIdIn: _a.id
                   }
                 })
                 .then(res => {
                   let v = res.data.find(v => v.name == "referenceTime");
-                  this.$set(_a, "referenceTime", v ? v.value : null);
+                  that.$set(_a, "referenceTime", v ? v.value : null);
+                })
+                .catch(err => {
+                  that.$Progress.fail();
+                  console.error(err);
                 });
             });
+            callback();
           })
         )
         .catch(err => {
+          that.$Progress.fail();
           console.error(err);
         });
     }
   },
   created() {
-    this.fetchLeftDetails(this.$route.params.iid, this.$route.params.pid);
-    this.fetchProcessDefinitionXML(this.$route.params.pid);
-    this.fetchTabContent();
+    let that = this;
+    that.cbCount = 0;
+    that.$Progress.start();
+
+    that.fetchLeftDetails(
+      that.$route.params.iid,
+      that.$route.params.pid,
+      function() {
+        that.cbCount++;
+      }
+    );
+    that.fetchBPMN(that.$route.params.pid, function() {
+      that.cbCount++;
+    });
+    that.fetchTabContent(function() {
+      that.cbCount++;
+    });
   },
   destroyed() {
     clearInterval(this.intervalRef);

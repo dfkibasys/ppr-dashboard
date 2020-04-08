@@ -46,7 +46,9 @@ export default {
     };
   },
   created() {
+    let that = this;
     let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //camundaUrl + "/engine-rest"
+    that.$Progress.start();
 
     axios
       .all([
@@ -57,13 +59,15 @@ export default {
       ])
       .then(
         axios.spread((pdc, ddc, cdc, dc) => {
-          this.processDefinitionsCount = pdc.data.count;
-          this.decisionDefinitionsCount = ddc.data.count;
-          this.caseDefinitionsCount = cdc.data.count;
-          this.deploymentsCount = dc.data.count;
+          that.processDefinitionsCount = pdc.data.count;
+          that.decisionDefinitionsCount = ddc.data.count;
+          that.caseDefinitionsCount = cdc.data.count;
+          that.deploymentsCount = dc.data.count;
+          that.$Progress.finish();
         })
       )
       .catch(err => {
+        that.$Progress.fail();
         console.error(err);
       });
   }
