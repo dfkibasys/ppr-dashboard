@@ -155,7 +155,7 @@ export default {
       ],
       showLeftDetails: true,
       currentVersionID: null,
-      versions: [],
+      versions: {},
       processInstances: [],
       processDefinition: {},
       processDefinitionXML: "",
@@ -227,10 +227,13 @@ export default {
             .then(
               axios.spread((pds, pic) => {
                 //pds
-                that.versions = [];
-                pds.data.forEach(val => {
-                  //formatting for b-form-select component
-                  that.versions.push({ value: val.id, text: val.version });
+                that.versions = {};
+                pds.data.forEach(v => {
+                  //formatting for b-form-select component 1: { text: '1', value: 'ID' },
+                  that.versions[v.version] = {
+                    value: v.id,
+                    text: v.version
+                  };
                 });
 
                 //pic
