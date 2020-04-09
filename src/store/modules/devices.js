@@ -17,14 +17,15 @@ const actions = {
 
         let dev_url = mockData ?
             "/data/device_components.json" :
-            basysUrl +
-            "/services/registry/DEVICE_COMPONENT",
+            `${basysUrl}/services/registry/DEVICE_COMPONENT`,
+
             inst_url = mockData ?
             "/data/resource_instances.json" :
-            basysUrl + "/services/resourceinstance/",
+            `${basysUrl}/services/resourceinstance/`,
+
             typ_url = mockData ?
             "/data/resource_types.json" :
-            basysUrl + "/services/resourcetype/";
+            `${basysUrl}/services/resourcetype/`;
 
         let devCount = 0,
             devices = [];
@@ -38,9 +39,7 @@ const actions = {
                     
                     function addTeachCapability(index, id) {
                         axios
-                            .get(
-                                basysUrl + "/services/entity/" + id
-                            )
+                            .get(`${basysUrl}/services/entity/${id}`)
                             .then(ent => {
                                 //console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                 devices[index - 1].capability.push({
@@ -135,11 +134,7 @@ const actions = {
                             );
                             if (!mockData) {
                                 axios
-                                    .get(
-                                        basysUrl +
-                                        "/services/topology/parent/" +
-                                        topId
-                                    ) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
+                                    .get(`${basysUrl}/services/topology/parent/${topId}`) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
                                     .then(top => {
                                         obj.location = top.name;
                                         addDevice(obj);

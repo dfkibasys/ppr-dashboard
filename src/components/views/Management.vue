@@ -46,7 +46,7 @@ export default {
       let that = this;
       let man_url = mockData
         ? "/data/management_components.json"
-        : that.basysUrl + "/services/registry/MANAGEMENT_COMPONENT";
+        : `${that.basysUrl}/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
       that.$Progress.start();

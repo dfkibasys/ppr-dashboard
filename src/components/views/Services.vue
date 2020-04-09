@@ -46,8 +46,7 @@ export default {
       let that = this;
       let serv_url = mockData
         ? "/data/service_components.json"
-        : that.basysUrl +
-          "/services/registry/SERVICE_COMPONENT";
+        : `${that.basysUrl}/services/registry/SERVICE_COMPONENT`;
       let services = [];
 
       that.$Progress.start();
