@@ -286,7 +286,7 @@ export default {
             params: {
               processDefinitionId: that.$route.params.pid,
               processInstanceId: that.$route.params.iid,
-              open: true //TODO: check if 'open' or 'unfinished'
+              open: true
             }
           }),
           axios.get(`${that.baseUrl}/history/variable-instance`, {

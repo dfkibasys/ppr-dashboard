@@ -11,9 +11,9 @@
               <b-icon-gear-fill font-scale="7.5"></b-icon-gear-fill>
             </div>
             <div class="col-3">
-              {{$t("translation.type_k")}}:
+              {{$t("card.type")}}:
               <br />
-              {{$t("translation.location_k")}}:
+              {{$t("card.location")}}:
               <br />
             </div>
             <div class="col-5">

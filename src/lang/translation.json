@@ -15,6 +15,9 @@
         "serial": "Serial",
         "capability": "Capability",
         "show": "Show"
+      },
+      "process": {
+
       }
     },
     "de": {
@@ -33,6 +36,9 @@
         "serial": "Seriennr.",
         "capability": "Fähigkeit",
         "show": "Anzeigen"
+      },
+      "process": {
+        
       }
     }
   }
