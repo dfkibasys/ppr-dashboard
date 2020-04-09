@@ -135,7 +135,7 @@ export default {
           that.currentCell
         ]);
       } else {
-        console.error("Current state '" + state + "' not found.");
+        console.error(`Current state ${state} not found.`);
         that.oldBorderColor = null;
       }
     },

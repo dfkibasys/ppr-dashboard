@@ -41,7 +41,6 @@ const actions = {
                         axios
                             .get(`${basysUrl}/services/entity/${id}`)
                             .then(ent => {
-                                //console.log("adding "+ent.data.name+"to" , devices[index-1]);
                                 devices[index - 1].capability.push({
                                     name: ent.data.name,
                                     taught: false

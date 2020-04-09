@@ -88,7 +88,7 @@ export default {
 
     this.$mqtt.on((topic, message) => {
       let msg = JSON.parse(message.toString());
-      console.log("Message arrived on topic " + topic + ",msg: ", msg);
+      console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
       this.$store.commit("updateDevices", msg);
     });
   }

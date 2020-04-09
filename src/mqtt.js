@@ -9,7 +9,7 @@ export default {
         client = mqtt.connect(store.getters.mqttUrl, {clientId: uuid.v4(), clean: true});
 
         client.on('connect', function () {
-            console.log("Connected to " + store.getters.mqttUrl);
+            console.log(`Connected to ${store.getters.mqttUrl}`);
         })
     },
     on(callback) {
@@ -23,7 +23,7 @@ export default {
     subscribe(topic) {
         client.subscribe(topic, function (err) {
             if (!err) {
-                console.log('Subscribed to topic', topic);
+                console.log(`Subscribed to topic ${topic}`);
             }
         });
     },
