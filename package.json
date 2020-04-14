@@ -1,6 +1,6 @@
 {
   "name": "ppr-dashboard",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "EPLv2",
   "author": "Jonas Mohr (jonas.mohr@dfki.de)",
   "private": true,
