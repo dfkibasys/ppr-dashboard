@@ -10,7 +10,7 @@
       </thead>
       <tbody v-for="licence in licences" :key="licence.name">
         <tr>
-          <td>{{licence.name}}</td>
+          <td><a target="_blank" :href="licence.repository">{{licence.name}}</a></td>
           <td>{{licence.version}}</td>
           <td>{{licence.summary}}</td>
         </tr>

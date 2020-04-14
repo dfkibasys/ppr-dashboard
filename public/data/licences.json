@@ -1,23 +1,5 @@
 [
     {
-      "name": "ansicolors",
-      "version": "0.3.2",
-      "repository": "http://github.com/thlorenz/ansicolors",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "archy",
-      "version": "1.0.0",
-      "repository": "ssh://git@github.com/substack/node-archy",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": "MIT"
-    },
-    {
       "name": "axios",
       "version": "0.19.2",
       "repository": "https://github.com/axios/axios",
@@ -37,7 +19,7 @@
     },
     {
       "name": "bootstrap-vue",
-      "version": "2.5.0",
+      "version": "2.11.0",
       "repository": "https://github.com/bootstrap-vue/bootstrap-vue",
       "summary": "MIT",
       "from package.json": "MIT",
@@ -45,90 +27,18 @@
       "from readme": "MIT"
     },
     {
-      "name": "compare-versions",
-      "version": "3.4.0",
-      "repository": "https://github.com/omichelsen/compare-versions",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
+      "name": "bpmn-js",
+      "version": "6.4.1",
+      "repository": "https://github.com/bpmn-io/bpmn-js",
+      "summary": "",
+      "from package.json": "",
+      "from license": "",
       "from readme": ""
     },
     {
       "name": "core-js",
-      "version": "3.6.4",
+      "version": "3.6.5",
       "repository": "https://github.com/zloirock/core-js",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "glob-all",
-      "version": "3.1.0",
-      "repository": "https://github.com/jpillora/node-glob-all",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": "MIT"
-    },
-    {
-      "name": "lodash.assign",
-      "version": "4.2.0",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.assignin",
-      "version": "4.2.0",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.clone",
-      "version": "4.5.0",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.clonedeep",
-      "version": "4.5.0",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.flatten",
-      "version": "4.4.0",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.get",
-      "version": "4.4.2",
-      "repository": "https://github.com/lodash/lodash",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "lodash.set",
-      "version": "4.3.2",
-      "repository": "https://github.com/lodash/lodash",
       "summary": "MIT",
       "from package.json": "MIT",
       "from license": "",
@@ -145,20 +55,11 @@
     },
     {
       "name": "mxgraph",
-      "version": "3.9.12",
+      "version": "4.1.1",
       "repository": "https://github.com/jgraph/mxgraph",
       "summary": "Apache;Apache-2.0",
       "from package.json": "Apache-2.0",
       "from license": "Apache",
-      "from readme": ""
-    },
-    {
-      "name": "nlf",
-      "version": "2.1.1",
-      "repository": "http://github.com/iandotkelly/nlf",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
       "from readme": ""
     },
     {
@@ -171,35 +72,8 @@
       "from readme": ""
     },
     {
-      "name": "snyk-module",
-      "version": "1.9.1",
-      "repository": "https://github.com/snyk/module",
-      "summary": "Apache-2.0",
-      "from package.json": "Apache-2.0",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "snyk-resolve",
-      "version": "1.0.1",
-      "repository": "https://github.com/Snyk/resolve-package",
-      "summary": "Apache-2.0",
-      "from package.json": "Apache-2.0",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "snyk-resolve-deps",
-      "version": "4.0.2",
-      "repository": "https://github.com/Snyk/resolve-deps",
-      "summary": "Apache-2.0",
-      "from package.json": "Apache-2.0",
-      "from license": "",
-      "from readme": ""
-    },
-    {
       "name": "uuid",
-      "version": "7.0.0",
+      "version": "7.0.3",
       "repository": "https://github.com/uuidjs/uuid",
       "summary": "MIT",
       "from package.json": "MIT",
@@ -217,7 +91,7 @@
     },
     {
       "name": "vue-i18n",
-      "version": "8.15.3",
+      "version": "8.17.0",
       "repository": "https://github.com/kazupon/vue-i18n",
       "summary": "MIT",
       "from package.json": "MIT",
@@ -225,8 +99,17 @@
       "from readme": ""
     },
     {
+      "name": "vue-moment",
+      "version": "4.1.0",
+      "repository": "https://github.com/brockpetrie/vue-moment",
+      "summary": "MIT",
+      "from package.json": "MIT",
+      "from license": "MIT",
+      "from readme": ""
+    },
+    {
       "name": "vue-router",
-      "version": "3.1.5",
+      "version": "3.1.6",
       "repository": "https://github.com/vuejs/vue-router",
       "summary": "MIT",
       "from package.json": "MIT",
@@ -235,7 +118,7 @@
     },
     {
       "name": "vuex",
-      "version": "3.1.2",
+      "version": "3.1.3",
       "repository": "https://github.com/vuejs/vuex",
       "summary": "MIT",
       "from package.json": "MIT",

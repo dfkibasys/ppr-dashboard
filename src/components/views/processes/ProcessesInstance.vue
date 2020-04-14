@@ -352,7 +352,7 @@ export default {
 };
 </script>
 
-<style lang=less scoped>
+<style lang="scss" scoped>
 .leftDetails {
   position: relative;
   color: rgba(0, 0, 0, 0.87);
