@@ -95,7 +95,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 h5 {
   width: 50%;
   float: left;
