@@ -54,7 +54,6 @@
         "value": "Value",
         "type": "Type",
         "breadcrumb": {
-          "processes": "Processes",
           "overview": "Overview",
           "definition": "Definition",
           "instance": "Instance"

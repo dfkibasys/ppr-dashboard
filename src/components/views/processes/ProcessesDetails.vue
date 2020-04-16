@@ -130,12 +130,8 @@ export default {
     return {
       bcItems: [
         {
-          text: this.$t("process.breadcrumb.processes"),
-          to: "/processes"
-        },
-        {
           text: this.$t("process.breadcrumb.overview"),
-          to: "/processes/overview"
+          to: "/processes"
         },
         {
           text: this.$t("process.breadcrumb.definition"),

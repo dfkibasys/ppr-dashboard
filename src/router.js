@@ -4,7 +4,6 @@ import Devices from "./components/views/Devices";
 import Services from "./components/views/Services";
 import Management from "./components/views/Management";
 import Processes from "./components/views/Processes";
-import ProcessesOverview from "./components/views/processes/ProcessesOverview";
 import ProcessesDetails from "./components/views/processes/ProcessesDetails";
 import ProcessesInstance from "./components/views/processes/ProcessesInstance";
 
@@ -31,11 +30,6 @@ export default new Router({
             path: '/processes',
             name: 'Processes',
             component: Processes
-        },
-        {
-            path: '/processes/overview',
-            name: 'ProcessesOverview',
-            component: ProcessesOverview
         },
         {
             path: '/processes/:pid',
