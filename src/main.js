@@ -41,8 +41,9 @@ Vue.use(require('vue-moment'));
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'en', // set locale
-  messages: translation, // set locale messages
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: translation,
 });
 
 

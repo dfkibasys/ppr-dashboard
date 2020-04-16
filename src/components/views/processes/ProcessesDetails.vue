@@ -11,37 +11,37 @@
         </div>
         <b-list-group>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Version:</h5>
+            <h5 class="mb-0">{{$t('process.definitionVersion')}}:</h5>
             <p class="mb-0">
               <b-form-select v-model="currentVersionID" :options="versions" @change="versionChange"></b-form-select>
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Version Tag:</h5>
+            <h5 class="mb-0">{{$t('process.versionTag')}}:</h5>
             <p class="mb-0">{{processDefinition.versionTag || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition ID:</h5>
+            <h5 class="mb-0">{{$t('process.definitionId')}}:</h5>
             <p class="mb-0">{{processDefinition.id || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Key:</h5>
+            <h5 class="mb-0">{{$t('process.definitionKey')}}:</h5>
             <p class="mb-0">{{processDefinition.key || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Name:</h5>
+            <h5 class="mb-0">{{$t('process.definitionName')}}:</h5>
             <p class="mb-0">{{processDefinition.name || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Tenant ID:</h5>
+            <h5 class="mb-0">{{$t('process.tenantId')}}:</h5>
             <p class="mb-0">{{processDefinition.tenantId || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Deployment ID:</h5>
+            <h5 class="mb-0">{{$t('process.deploymentId')}}:</h5>
             <p class="mb-0">{{processDefinition.deploymentId || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Instances Running:</h5>
+            <h5 class="mb-0">{{$t('process.instancesRunning')}}:</h5>
             <p class="mb-0">{{processDefinition.instances || "0"}}</p>
           </b-list-group-item>
         </b-list-group>
@@ -66,7 +66,7 @@
     <b-row class="px-2">
       <b-col>
         <b-tabs>
-          <b-tab title="Process Instances">
+          <b-tab :title="$t('process.processInstances')">
             <b-table
               hover
               striped
@@ -77,19 +77,19 @@
               show-empty
             >
               <template v-slot:head(action)>
-                <b-button variant="success" @click="createProcessInstance">Create</b-button>
+                <b-button variant="success" @click="createProcessInstance">{{$t('process.create')}}</b-button>
               </template>
               <template
                 v-slot:cell(startTime)="value"
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
               <template v-slot:cell(businessKey)="value">{{value.item.businessKey || "-"}}</template>
               <template v-slot:cell(action)="value">
-                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">Delete</b-button>
+                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">{{$t('process.delete')}}</b-button>
               </template>
               <template v-slot:empty>No process instances running.</template>
             </b-table>
           </b-tab>
-          <b-tab title="Audit Log">
+          <b-tab :title="$t('process.auditLog')">
             <b-table hover striped :items="auditLog" :fields="auditFields" show-empty>
               <template v-slot:cell(state)="value">
                 <b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle>
@@ -130,28 +130,33 @@ export default {
     return {
       bcItems: [
         {
-          text: "Processes",
+          text: this.$t("process.breadcrumb.processes"),
           to: "/processes"
         },
         {
-          text: "Overview",
+          text: this.$t("process.breadcrumb.overview"),
           to: "/processes/overview"
         },
         {
-          text: "Definition",
+          text: this.$t("process.breadcrumb.definition"),
           to: `/processes/${this.$route.params.pid}`
         }
       ],
       updateInterval: 500,
       intervalRef: null,
-      instanceFields: ["id", "startTime", "businessKey", "action"],
+      instanceFields: [
+        { key: "id", label: this.$t("process.id") },
+        { key: "startTime", label: this.$t("process.startTime") },
+        { key: "businessKey", label: this.$t("process.businessKey") },
+        "action"
+      ],
       auditFields: [
-        "state",
-        "processInstanceId",
-        "activityName",
-        "startTime",
-        "endTime",
-        "activityId"
+        { key: "state", label: this.$t("process.state") },
+        { key: "processInstanceId", label: this.$t("process.processInstanceId") },
+        { key: "activityName", label: this.$t("process.activityName") },
+        { key: "startTime", label: this.$t("process.startTime") },
+        { key: "endTime", label: this.$t("process.endTime") },
+        { key: "activityId", label: this.$t("process.activityId") }
       ],
       showLeftDetails: true,
       currentVersionID: null,

@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-breadcrumb :items="bcItems"></b-breadcrumb>
-    <h2>Deployed</h2>
+    <h2>{{$t('process.deployed')}}</h2>
     <b-table
       hover
       striped
@@ -25,14 +25,19 @@ export default {
   data() {
     return {
       processDefinitions: [],
-      fields: ["instances", "name", "key", "tenantId"],
+      fields: [
+        { key: "instances", label: this.$t("process.instances") },
+        { key: "name", label: this.$t("process.name") },
+        { key: "key", label: this.$t("process.key") },
+        { key: "tenantId", label: this.$t("process.tenantId") }
+      ],
       bcItems: [
         {
-          text: "Processes",
+          text: this.$t('process.breadcrumb.processes'),
           to: "/processes"
         },
         {
-          text: "Overview",
+          text: this.$t('process.breadcrumb.overview'),
           to: "/processes/overview"
         }
       ]

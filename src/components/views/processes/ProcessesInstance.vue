@@ -10,35 +10,35 @@
         </div>
         <b-list-group>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Instance ID:</h5>
+            <h5 class="mb-0">{{$t('process.instanceId')}}:</h5>
             <p class="mb-0">{{processInstance.id || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Business Key:</h5>
+            <h5 class="mb-0">{{$t('process.businessKey')}}:</h5>
             <p class="mb-0">{{processInstance.businessKey || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Version:</h5>
+            <h5 class="mb-0">{{$t('process.definitionVersion')}}:</h5>
             <p class="mb-0">{{processDefinition.version || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition ID:</h5>
+            <h5 class="mb-0">{{$t('process.definitionId')}}:</h5>
             <p class="mb-0">{{processInstance.processDefinitionId || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Key:</h5>
+            <h5 class="mb-0">{{$t('process.definitionKey')}}:</h5>
             <p class="mb-0">{{processInstance.processDefinitionKey || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Definition Name:</h5>
+            <h5 class="mb-0">{{$t('process.definitionName')}}:</h5>
             <p class="mb-0">{{processInstance.processDefinitionName || "null"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Tenant ID:</h5>
+            <h5 class="mb-0">{{$t('process.tenantId')}}:</h5>
             <p class="mb-0">{{processInstance.tenantId || "-"}}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">Deployment ID:</h5>
+            <h5 class="mb-0">{{$t('process.deploymentId')}}:</h5>
             <p class="mb-0">{{processDefinition.deploymentId || "-"}}</p>
           </b-list-group-item>
         </b-list-group>
@@ -63,7 +63,7 @@
     <b-row class="px-2">
       <b-col>
         <b-tabs>
-          <b-tab title="Audit Log">
+          <b-tab :title="$t('process.auditLog')">
             <b-table hover striped :items="auditlog" :fields="auditfields" show-empty>
               <template
                 v-slot:cell(startTime)="value"
@@ -78,12 +78,12 @@
               <template v-slot:empty>No log data available.</template>
             </b-table>
           </b-tab>
-          <b-tab title="Variables">
+          <b-tab :title="$t('process.variables')">
             <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
               <template v-slot:empty>No variables set.</template>
             </b-table>
           </b-tab>
-          <b-tab title="Incidents">
+          <b-tab :title="$t('process.incidents')">
             <b-table hover striped :items="incidents" :fields="incidentsFields" show-empty>
               <template
                 v-slot:cell(startTime)="value"
@@ -115,19 +115,19 @@ export default {
     return {
       bcItems: [
         {
-          text: "Processes",
+          text: this.$t("process.breadcrumb.processes"),
           to: "/processes"
         },
         {
-          text: "Overview",
+          text: this.$t("process.breadcrumb.overview"),
           to: "/processes/overview"
         },
         {
-          text: "Definition",
+          text: this.$t("process.breadcrumb.definition"),
           to: `/processes/${this.$route.params.pid}`
         },
         {
-          text: "Instance",
+          text: this.$t("process.breadcrumb.instance"),
           to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`
         }
       ],
@@ -140,20 +140,25 @@ export default {
       showLeftDetails: true,
       auditlog: [],
       auditfields: [
-        "activityName",
-        "startTime",
-        "endTime",
-        {
-          key: "durationInMillis",
-          label: "Duration"
-        },
-        "referenceTime",
-        "activityId"
+        { key: "activityName", label: this.$t("process.activityName") },
+        { key: "startTime", label: this.$t("process.startTime") },
+        { key: "endTime", label: this.$t("process.endTime") },
+        { key: "durationInMillis", label: this.$t("process.duration") },
+        { key: "referenceTime", label: this.$t("process.referenceTime") },
+        { key: "activityId", label: this.$t("process.activityId") }
       ],
       incidents: [],
-      incidentsFields: ["message", "startTime", "activityName"],
+      incidentsFields: [
+        { key: "message", label: this.$t("process.message") },
+        { key: "startTime", label: this.$t("process.startTime") },
+        { key: "activityName", label: this.$t("process.activityName") }
+      ],
       variables: [],
-      variablesFields: ["name", "value", "type"],
+      variablesFields: [
+        { key: "name", label: this.$t("process.name") },
+        { key: "value", label: this.$t("process.value") },
+        { key: "type", label: this.$t("process.type") }
+      ],
       cbCount: 0 //counts callbacks of api requests for progress bar
     };
   },

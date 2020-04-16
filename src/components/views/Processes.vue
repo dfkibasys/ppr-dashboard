@@ -1,25 +1,25 @@
 <template>
   <b-container>
     <b-breadcrumb :items="bcItems"></b-breadcrumb>
-    <h2>Deployed</h2>
+    <h2>{{$t('process.deployed')}}</h2>
     <b-row>
       <b-col>
-        <span>Process Definitions</span>
+        <span>{{$tc("process.processDefinition", processDefinitionsCount)}}</span>
         <b-link to="/processes/overview">
-          <h3>{{processDefinitionsCount || 0}}</h3>
+          <h3>{{processDefinitionsCount}}</h3>
         </b-link>
       </b-col>
       <b-col>
-        <span>Decision Definitions</span>
-        <h3>{{decisionDefinitionsCount || 0}}</h3>
+        <span>{{$tc("process.decisionDefinition", decisionDefinitionsCount)}}</span>
+        <h3>{{decisionDefinitionsCount}}</h3>
       </b-col>
       <b-col>
-        <span>Case Definitions</span>
-        <h3>{{caseDefinitionsCount || 0}}</h3>
+        <span>{{$tc("process.caseDefinition", caseDefinitionsCount)}}</span>
+        <h3>{{caseDefinitionsCount}}</h3>
       </b-col>
       <b-col>
-        <span>Deployments</span>
-        <h3>{{deploymentsCount || 0}}</h3>
+        <span>{{$tc("process.deployment", deploymentsCount)}}</span>
+        <h3>{{deploymentsCount}}</h3>
       </b-col>
     </b-row>
   </b-container>
@@ -34,7 +34,7 @@ export default {
     return {
       bcItems: [
         {
-          text: "Processes",
+          text: this.$t('process.breadcrumb.processes'),
           to: "/processes",
           active: true
         }
