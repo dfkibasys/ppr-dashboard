@@ -1,0 +1,21 @@
+{
+    "navbar": {
+      "language": "Sprache",
+      "change": "Ändern",
+      "devices": "Geräte",
+      "processes": "Prozesse"
+    },
+    "modal": {
+      "close": "Schließen"
+    },
+    "card": {
+      "type": "Typ",
+      "location": "Ort",
+      "serial": "Seriennr.",
+      "capability": "Fähigkeit",
+      "show": "Anzeigen"
+    },
+    "process": {
+      
+    }
+}

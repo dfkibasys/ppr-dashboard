@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VueI18n from 'vue-i18n'
-import translation from './lang/translation';
+import messages from "./lang";
 
 import VueProgressBar from 'vue-progressbar'
 
@@ -43,7 +43,7 @@ Vue.use(require('vue-moment'));
 const i18n = new VueI18n({
   locale: 'en',
   fallbackLocale: 'en',
-  messages: translation,
+  messages: messages
 });
 
 
