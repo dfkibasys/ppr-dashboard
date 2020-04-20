@@ -31,6 +31,10 @@
           :fields="fields"
           class="clickable-table"
         >
+          <template v-slot:head(instances)>{{ $t('process.instances') }}</template>
+          <template v-slot:head(name)>{{ $t('process.name') }}</template>
+          <template v-slot:head(key)>{{ $t('process.key') }}</template>
+          <template v-slot:head(tenantId)>{{ $t('process.tenantId') }}</template>
           <template v-slot:cell(tenantId)="value">{{value.item.tenantId || "-"}}</template>
         </b-table>
       </b-col>
@@ -57,12 +61,7 @@ export default {
       caseDefinitionsCount: 0,
       deploymentsCount: 0,
       processDefinitions: [],
-      fields: [
-        { key: "instances", label: this.$t("process.instances") },
-        { key: "name", label: this.$t("process.name") },
-        { key: "key", label: this.$t("process.key") },
-        { key: "tenantId", label: this.$t("process.tenantId") }
-      ]
+      fields: ["instances", "name", "key", "tenantId"]
     };
   },
   methods: {

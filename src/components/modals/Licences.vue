@@ -1,6 +1,9 @@
 <template>
   <b-modal id="modal-licences" size="lg" :title="$t('modal.licences.title')">
     <b-table striped :items="licences" :fields="fields">
+      <template v-slot:head(name)>{{ $t('modal.licences.name') }}</template>
+      <template v-slot:head(version)>{{ $t('modal.licences.version') }}</template>
+      <template v-slot:head(summary)>{{ $t('modal.licences.summary') }}</template>
       <template v-slot:cell(name)="value">
         <b-link :href="value.item.repository" target="_blank">{{value.item.name}}</b-link>
       </template>
@@ -19,11 +22,7 @@ export default {
   data() {
     return {
       licences: [],
-      fields: [
-        { key: "name", label: this.$t("modal.licences.name") },
-        { key: "version", label: this.$t("modal.licences.version") },
-        { key: "summary", label: this.$t("modal.licences.summary") }
-      ]
+      fields: ["name", "version", "summary"]
     };
   },
   created() {
