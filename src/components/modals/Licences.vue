@@ -1,21 +1,10 @@
 <template>
-  <b-modal id="modal-licences" size="lg" title="Licences">
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Package</th>
-          <th scope="col">Version</th>
-          <th scope="col">License</th>
-        </tr>
-      </thead>
-      <tbody v-for="licence in licences" :key="licence.name">
-        <tr>
-          <td><a target="_blank" :href="licence.repository">{{licence.name}}</a></td>
-          <td>{{licence.version}}</td>
-          <td>{{licence.summary}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <b-modal id="modal-licences" size="lg" :title="$t('modal.licences.title')">
+    <b-table striped :items="licences" :fields="fields">
+      <template v-slot:cell(name)="value">
+        <b-link :href="value.item.repository" target="_blank">{{value.item.name}}</b-link>
+      </template>
+    </b-table>
     <template v-slot:modal-footer="{cancel}">
       <b-button variant="secondary" @click="cancel">{{$t("modal.close")}}</b-button>
     </template>
@@ -29,7 +18,12 @@ export default {
   name: "Licences",
   data() {
     return {
-      licences: []
+      licences: [],
+      fields: [
+        { key: "name", label: this.$t("modal.licences.name") },
+        { key: "version", label: this.$t("modal.licences.version") },
+        { key: "summary", label: this.$t("modal.licences.summary") }
+      ]
     };
   },
   created() {

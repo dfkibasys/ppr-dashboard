@@ -8,7 +8,13 @@
       "info": "Only available for components"
     },
     "modal": {
-      "close": "Close"
+      "close": "Close",
+      "licences": {
+        "title": "Licences",
+        "name": "Name",
+        "version": "Version",
+        "summary": "Summary"
+      }
     },
     "card": {
       "type": "Type",
