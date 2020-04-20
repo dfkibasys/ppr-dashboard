@@ -33,7 +33,7 @@
               >{{$t('navbar.change')}}</button>
             </b-col>
             <div class="w-100"></div>
-            <b-col>Mock data:</b-col>
+            <b-col>{{$t('navbar.mockObjects')}} <b-icon-info-circle-fill v-b-popover.hover.right="$t('navbar.info')"></b-icon-info-circle-fill>:</b-col>
             <b-col cols="9">
               <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
             </b-col>

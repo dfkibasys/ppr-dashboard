@@ -3,7 +3,9 @@
       "language": "Sprache",
       "change": "Ändern",
       "devices": "Geräte",
-      "processes": "Prozesse"
+      "processes": "Prozesse",
+      "mockObjects": "Mock-Objekte",
+      "info": "Nur für Komponenten verfügbar"
     },
     "modal": {
       "close": "Schließen"

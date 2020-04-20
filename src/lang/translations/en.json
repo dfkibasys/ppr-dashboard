@@ -3,7 +3,9 @@
       "language": "Language",
       "change": "Change",
       "devices": "Devices",
-      "processes": "Processes"
+      "processes": "Processes",
+      "mockObjects": "Mock objects",
+      "info": "Only available for components"
     },
     "modal": {
       "close": "Close"
