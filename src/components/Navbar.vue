@@ -8,8 +8,8 @@
 
       <b-navbar-nav is-nav class="flex-row">
         <b-link class="pr-3" to="/devices">{{$t("navbar.devices")}}</b-link>
-        <b-link class="pr-3" to="/services">Services</b-link>
-        <b-link class="pr-3" to="/management">Management</b-link>
+        <b-link class="pr-3" to="/services">{{$t("navbar.services")}}</b-link>
+        <b-link class="pr-3" to="/management">{{$t("navbar.management")}}</b-link>
         <b-link class="pr-3" to="/processes">{{$t("navbar.processes")}}</b-link>
       </b-navbar-nav>
 

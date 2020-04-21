@@ -3,18 +3,31 @@
       "language": "Sprache",
       "change": "Ändern",
       "devices": "Geräte",
+      "services": "Services",
+      "management": "Management",
       "processes": "Prozesse",
       "mockObjects": "Mock-Objekte",
       "info": "Nur für Komponenten verfügbar"
     },
     "modal": {
       "close": "Schließen",
+      "packML": {
+        "title": "PackML Automat"
+      },
+      "capabilityOverview": {
+        "title": "Fähigkeiten Übersicht",
+        "name": "Name",
+        "status": "Status",
+        "remove": "Entfernen",
+        "teach": "Lernen"
+      },
       "licences": {
         "title": "Lizenzen",
         "name": "Name",
         "version": "Version",
         "summary": "Zusammenfassung"
-      }
+      },
+      "createProcessInstance": {}
     },
     "card": {
       "type": "Typ",

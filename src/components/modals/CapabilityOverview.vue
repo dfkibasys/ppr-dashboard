@@ -1,13 +1,13 @@
 <template>
-  <b-modal id="modal-cap" size="lg" title="Capability Overview">
+  <b-modal id="modal-cap" size="lg" :title="$t('modal.capabilityOverview.title')">
     <div class="modal-body">
       <div id="currentCapability">
         <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Status</th>
+              <th scope="col">{{$t('modal.capabilityOverview.name')}}</th>
+              <th scope="col">{{$t('modal.capabilityOverview.status')}}</th>
             </tr>
           </thead>
           <tbody
@@ -25,7 +25,7 @@
                   v-if="capability.taught"
                   :disabled="true"
                   @click="removeCapability(capability)"
-                >Remove</button>
+                >{{$t('modal.capabilityOverview.remove')}}</button>
                 <button
                   type="button"
                   id="teach-btn"
@@ -33,7 +33,7 @@
                   v-else
                   :disabled="false"
                   @click="startTeaching"
-                >Teach</button>
+                >{{$t('modal.capabilityOverview.teach')}}</button>
               </td>
             </tr>
           </tbody>

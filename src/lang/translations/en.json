@@ -3,17 +3,44 @@
       "language": "Language",
       "change": "Change",
       "devices": "Devices",
+      "services": "Services",
+      "management": "Management",
       "processes": "Processes",
       "mockObjects": "Mock objects",
       "info": "Only available for components"
     },
     "modal": {
       "close": "Close",
+      "packML": {
+        "title": "PackML Automaton"
+      },
+      "capabilityOverview": {
+        "title": "Capability Overview",
+        "name": "Name",
+        "status": "Status",
+        "remove": "Remove",
+        "teach": "Teach"
+      },
       "licences": {
         "title": "Licences",
         "name": "Name",
         "version": "Version",
         "summary": "Summary"
+      },
+      "createProcessInstance": {
+        "title": "Create Process Instance",
+        "businessKey": {
+          "label": "Business Key",
+          "placeholder": "Enter Business Key",
+          "feedback": "The business key is required."
+          },
+          "variable": {
+            "button": "Add Variable",
+            "name": "Name",
+            "placeholder": "Value"
+          },
+          "create": "Create",
+          "dontCreate": "Don't create"   
       }
     },
     "card": {

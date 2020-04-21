@@ -1,7 +1,7 @@
 <template>
   <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
     <template v-slot:modal-header>
-      <h5 class="modal-title">PackML Automaton</h5>
+      <h5 class="modal-title">{{$t("modal.packML.title")}}</h5>
 
       <b-button variant="danger" @click="stopButton">Stop</b-button>
       <b-button variant="warning" @click="resetButton">Reset</b-button>
