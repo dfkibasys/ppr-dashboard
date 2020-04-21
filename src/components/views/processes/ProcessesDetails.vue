@@ -76,6 +76,9 @@
               class="clickable-table"
               show-empty
             >
+              <template v-slot:head(id)>{{ $t('process.id') }}</template>
+              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
+              <template v-slot:head(businessKey)>{{ $t('process.businessKey') }}</template>
               <template v-slot:head(action)>
                 <b-button variant="success" @click="createProcessInstance">{{$t('process.create')}}</b-button>
               </template>
@@ -84,13 +87,22 @@
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
               <template v-slot:cell(businessKey)="value">{{value.item.businessKey || "-"}}</template>
               <template v-slot:cell(action)="value">
-                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">{{$t('process.delete')}}</b-button>
+                <b-button
+                  variant="danger"
+                  @click="deleteProcessInstance(value.item.id)"
+                >{{$t('process.delete')}}</b-button>
               </template>
               <template v-slot:empty>No process instances running.</template>
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.auditLog')">
             <b-table hover striped :items="auditLog" :fields="auditFields" show-empty>
+              <template v-slot:head(state)>{{ $t('process.state') }}</template>
+              <template v-slot:head(processInstanceId)>{{ $t('process.processInstanceId') }}</template>
+              <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
+              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
+              <template v-slot:head(endTime)>{{ $t('process.endTime') }}</template>
+              <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
               <template v-slot:cell(state)="value">
                 <b-icon-check-circle font-scale="2" v-if="value.item.endTime !== null"></b-icon-check-circle>
                 <b-icon-circle-half font-scale="2" v-else></b-icon-circle-half>
@@ -140,19 +152,14 @@ export default {
       ],
       updateInterval: 500,
       intervalRef: null,
-      instanceFields: [
-        { key: "id", label: this.$t("process.id") },
-        { key: "startTime", label: this.$t("process.startTime") },
-        { key: "businessKey", label: this.$t("process.businessKey") },
-        "action"
-      ],
+      instanceFields: ["id", "startTime", "businessKey", "action"],
       auditFields: [
-        { key: "state", label: this.$t("process.state") },
-        { key: "processInstanceId", label: this.$t("process.processInstanceId") },
-        { key: "activityName", label: this.$t("process.activityName") },
-        { key: "startTime", label: this.$t("process.startTime") },
-        { key: "endTime", label: this.$t("process.endTime") },
-        { key: "activityId", label: this.$t("process.activityId") }
+        "state",
+        "processInstanceId",
+        "activityName",
+        "startTime",
+        "endTime",
+        "activityId"
       ],
       showLeftDetails: true,
       currentVersionID: null,

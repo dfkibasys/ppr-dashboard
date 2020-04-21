@@ -65,6 +65,12 @@
         <b-tabs>
           <b-tab :title="$t('process.auditLog')">
             <b-table hover striped :items="auditlog" :fields="auditfields" show-empty>
+              <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
+              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
+              <template v-slot:head(endTime)>{{ $t('process.endTime') }}</template>
+              <template v-slot:head(durationInMillis)>{{ $t('process.duration') }}</template>
+              <template v-slot:head(referenceTime)>{{ $t('process.referenceTime') }}</template>
+              <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
               <template
                 v-slot:cell(startTime)="value"
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
@@ -81,10 +87,16 @@
           <b-tab :title="$t('process.variables')">
             <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
               <template v-slot:empty>No variables set.</template>
+              <template v-slot:head(name)>{{ $t('process.name') }}</template>
+              <template v-slot:head(value)>{{ $t('process.value') }}</template>
+              <template v-slot:head(type)>{{ $t('process.type') }}</template>
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.incidents')">
             <b-table hover striped :items="incidents" :fields="incidentsFields" show-empty>
+              <template v-slot:head(message)>{{ $t('process.message') }}</template>
+              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
+              <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
               <template
                 v-slot:cell(startTime)="value"
               >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
@@ -136,25 +148,17 @@ export default {
       showLeftDetails: true,
       auditlog: [],
       auditfields: [
-        { key: "activityName", label: this.$t("process.activityName") },
-        { key: "startTime", label: this.$t("process.startTime") },
-        { key: "endTime", label: this.$t("process.endTime") },
-        { key: "durationInMillis", label: this.$t("process.duration") },
-        { key: "referenceTime", label: this.$t("process.referenceTime") },
-        { key: "activityId", label: this.$t("process.activityId") }
-      ],
-      incidents: [],
-      incidentsFields: [
-        { key: "message", label: this.$t("process.message") },
-        { key: "startTime", label: this.$t("process.startTime") },
-        { key: "activityName", label: this.$t("process.activityName") }
+        "activityName",
+        "startTime",
+        "endTime",
+        "durationInMillis",
+        "referenceTime",
+        "activityId"
       ],
       variables: [],
-      variablesFields: [
-        { key: "name", label: this.$t("process.name") },
-        { key: "value", label: this.$t("process.value") },
-        { key: "type", label: this.$t("process.type") }
-      ],
+      variablesFields: ["name", "value", "type"],
+      incidents: [],
+      incidentsFields: ["message", "startTime", "activityName"],
       cbCount: 0 //counts callbacks of api requests for progress bar
     };
   },
