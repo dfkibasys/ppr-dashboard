@@ -11,7 +11,12 @@
         <b-list-group>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.instanceId')}}:</h5>
-            <p class="mb-0">{{processInstance.id || "-"}}</p>
+            <p class="mb-0">
+              <b-link
+                :href="`${camundaUrl}/engine-rest/process-instance/${processInstance.id}`"
+                target="_blank"
+              >{{processInstance.id || "-"}}</b-link>
+            </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.businessKey')}}:</h5>
@@ -23,7 +28,12 @@
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.definitionId')}}:</h5>
-            <p class="mb-0">{{processInstance.processDefinitionId || "-"}}</p>
+            <p class="mb-0">
+              <b-link
+                :href="`${camundaUrl}/engine-rest/process-definition/${processInstance.processDefinitionId}`"
+                target="_blank"
+              >{{processInstance.processDefinitionId || "-"}}</b-link>
+            </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.definitionKey')}}:</h5>
@@ -39,7 +49,12 @@
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.deploymentId')}}:</h5>
-            <p class="mb-0">{{processDefinition.deploymentId || "-"}}</p>
+            <p class="mb-0">
+              <b-link
+                :href="`${camundaUrl}/engine-rest/deployment/${processDefinition.deploymentId}`"
+                target="_blank"
+              >{{processDefinition.deploymentId || "-"}}</b-link>
+            </p>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -112,6 +127,7 @@
 <script>
 import BpmnDisplay from "./BpmnDisplay";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProcessesInstance",
@@ -119,6 +135,7 @@ export default {
     BpmnDisplay
   },
   computed: {
+    ...mapGetters(["camundaUrl"]),
     baseUrl: function() {
       return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
     }

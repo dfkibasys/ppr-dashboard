@@ -22,7 +22,12 @@
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.definitionId')}}:</h5>
-            <p class="mb-0">{{processDefinition.id || "-"}}</p>
+            <p class="mb-0">
+              <b-link
+                :href="`${camundaUrl}/engine-rest/process-definition/${processDefinition.id}`"
+                target="_blank"
+              >{{processDefinition.id || "-"}}</b-link>
+            </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.definitionKey')}}:</h5>
@@ -38,7 +43,12 @@
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.deploymentId')}}:</h5>
-            <p class="mb-0">{{processDefinition.deploymentId || "-"}}</p>
+            <p class="mb-0">
+              <b-link
+                :href="`${camundaUrl}/engine-rest/deployment/${processDefinition.deploymentId}`"
+                target="_blank"
+              >{{processDefinition.deploymentId || "-"}}</b-link>
+            </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
             <h5 class="mb-0">{{$t('process.instancesRunning')}}:</h5>
@@ -126,6 +136,7 @@
 import BpmnDisplay from "./BpmnDisplay";
 import CreateProcessInstance from "../../modals/CreateProcessInstance";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProcessesDetails",
@@ -134,6 +145,7 @@ export default {
     CreateProcessInstance
   },
   computed: {
+    ...mapGetters(["camundaUrl"]),
     baseUrl: function() {
       return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
     }
