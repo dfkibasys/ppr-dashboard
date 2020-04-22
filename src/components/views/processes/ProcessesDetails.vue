@@ -84,7 +84,7 @@
               </template>
               <template
                 v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
               <template v-slot:cell(businessKey)="value">{{value.item.businessKey || "-"}}</template>
               <template v-slot:cell(action)="value">
                 <b-button
@@ -92,7 +92,7 @@
                   @click="deleteProcessInstance(value.item.id)"
                 >{{$t('process.delete')}}</b-button>
               </template>
-              <template v-slot:empty>No process instances running.</template>
+              <template v-slot:empty>{{$t('process.emptyProcessInstancesMessage')}}</template>
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.auditLog')">
@@ -109,11 +109,11 @@
               </template>
               <template
                 v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
               <template
                 v-slot:cell(endTime)="value"
-              >{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
-              <template v-slot:empty>No log data available.</template>
+              >{{value.item.endTime | moment($t('process.timeFormat'))}}</template>
+              <template v-slot:empty>{{$t('process.emptyLogDataMessage')}}</template>
             </b-table>
           </b-tab>
         </b-tabs>

@@ -73,20 +73,20 @@
               <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
               <template
                 v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
               <template
                 v-slot:cell(endTime)="value"
-              >{{value.item.endTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
+              >{{value.item.endTime | moment($t('process.timeFormat'))}}</template>
               <template
                 v-slot:cell(durationInMillis)="value"
               >{{value.item.durationInMillis | duration('humanize')}}</template>
               <template v-slot:cell(referenceTime)="value">{{value.item.referenceTime || "-"}}</template>
-              <template v-slot:empty>No log data available.</template>
+              <template v-slot:empty>{{$t('process.emptyLogDataMessage')}}</template>
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.variables')">
             <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
-              <template v-slot:empty>No variables set.</template>
+              <template v-slot:empty>{{$t('process.emptyVariablesMessage')}}</template>
               <template v-slot:head(name)>{{ $t('process.name') }}</template>
               <template v-slot:head(value)>{{ $t('process.value') }}</template>
               <template v-slot:head(type)>{{ $t('process.type') }}</template>
@@ -99,8 +99,8 @@
               <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
               <template
                 v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment("YYYY/MM/DD HH:mm:ss")}}</template>
-              <template v-slot:empty>No incidents reported.</template>
+              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
+              <template v-slot:empty>{{$t('process.emptyIncidentsMessage')}}</template>
             </b-table>
           </b-tab>
         </b-tabs>

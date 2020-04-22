@@ -87,6 +87,11 @@
       "message": "Message",
       "value": "Value",
       "type": "Type",
+      "emptyProcessInstancesMessage": "No process instances running.",
+      "emptyLogDataMessage": "No log data available.",
+      "emptyIncidentsMessage": "No incidents reported.",
+      "emptyVariablesMessage": "No variables set.",
+      "timeFormat": "YYYY/MM/DD HH:mm:ss",
       "breadcrumb": {
         "overview": "Overview",
         "definition": "Definition",
