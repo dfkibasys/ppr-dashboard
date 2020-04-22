@@ -54,6 +54,9 @@
             <h5 class="mb-0">{{$t('process.instancesRunning')}}:</h5>
             <p class="mb-0">{{processDefinition.instances || "0"}}</p>
           </b-list-group-item>
+          <b-list-group-item class="border-0">
+            <b-button variant="danger" @click="deleteDeployment">{{$t('process.delete')}}</b-button>
+          </b-list-group-item>
         </b-list-group>
       </b-col>
 
@@ -210,6 +213,29 @@ export default {
         params: { pid: this.currentVersionID }
       });
       this.fetchAllData();
+    },
+    deleteDeployment() {
+      let version = this.processDefinition.version;
+
+      axios
+        .delete(
+          `${this.baseUrl}/deployment/${this.processDefinition.deploymentId}`
+        )
+        .then(res => {
+          delete this.versions[version];
+          if (Object.values(this.versions).length > 0) { // another deployment version available, switch to it
+            let otherVersionId = Object.values(this.versions)[0].value;
+            this.currentVersionID = otherVersionId;
+            this.versionChange();
+          } else { // no more deployments, go back to overview
+            this.$router.push({
+              name: "Processes",
+            });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
     fetchAllData() {
       let that = this;
