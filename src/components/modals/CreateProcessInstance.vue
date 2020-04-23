@@ -1,5 +1,10 @@
 <template>
-  <b-modal @ok="createInstance" id="modal-instance" size="md" :title="$t('modal.createProcessInstance.title')">
+  <b-modal
+    @ok="createInstance"
+    id="modal-instance"
+    size="md"
+    :title="$t('modal.createProcessInstance.title')"
+  >
     <label for="businessKeyInput">{{$t('modal.createProcessInstance.businessKey.label')}}</label>
     <b-form-input
       id="businessKeyInput"
@@ -9,47 +14,61 @@
       :placeholder="$t('modal.createProcessInstance.businessKey.placeholder')"
       class="mb-2"
     ></b-form-input>
-    <b-form-invalid-feedback id="input-live-feedback" class="mb-2">{{$t('modal.createProcessInstance.businessKey.feedback')}}</b-form-invalid-feedback>
+    <b-form-invalid-feedback
+      id="input-live-feedback"
+      class="mb-2"
+    >{{$t('modal.createProcessInstance.businessKey.feedback')}}</b-form-invalid-feedback>
 
-      <b-container class="p-0">
-        <b-form-row class="mb-2" v-for="variable in processVariables" :key="variable.id">
-          <b-col>
-            <b-form-input v-model="variable.name" :placeholder="$t('modal.createProcessInstance.variable.name')"></b-form-input>
-          </b-col>
-          <b-col>
-            <b-form-select v-model="variable.type" :options="typeOptions"  placeholder="Type"></b-form-select>
-          </b-col>
-          <b-col>
-            <b-form-input
-              v-if="variable.type === 'string'"
-              v-model="variable.value"
-              :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
-              :type="'text'"
-            ></b-form-input>
-            <b-form-input
-              v-else-if="variable.type === 'integer'"
-              v-model="variable.value"
-              :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
-              :type="'number'"
-            ></b-form-input>
-            <b-form-select
-              v-else-if="variable.type === 'boolean'"
-              v-model="variable.value"
-              :options="boolOptions"
-            ></b-form-select>
-            <b-form-input :disabled="true" v-else :placeholder="$t('modal.createProcessInstance.variable.placeholder')"></b-form-input>
-          </b-col>
-          <b-col cols="1">
-            <b-button @click="deleteVariable(variable.id)" variant="danger">-</b-button>
-          </b-col>
-        </b-form-row>
-      </b-container>
+    <b-container class="p-0">
+      <b-form-row class="mb-2" v-for="variable in processVariables" :key="variable.id">
+        <b-col>
+          <b-form-input
+            v-model="variable.name"
+            :placeholder="$t('modal.createProcessInstance.variable.name')"
+          ></b-form-input>
+        </b-col>
+        <b-col>
+          <b-form-select v-model="variable.type" :options="typeOptions" placeholder="Type"></b-form-select>
+        </b-col>
+        <b-col>
+          <b-form-input
+            v-if="variable.type === 'String'"
+            v-model="variable.value"
+            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+            :type="'text'"
+          ></b-form-input>
+          <b-form-input
+            v-else-if="variable.type === 'Long'"
+            v-model="variable.value"
+            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+            :type="'number'"
+          ></b-form-input>
+          <b-form-select
+            v-else-if="variable.type === 'boolean'"
+            v-model="variable.value"
+            :options="boolOptions"
+          ></b-form-select>
+          <b-form-input
+            :disabled="true"
+            v-else
+            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+          ></b-form-input>
+        </b-col>
+        <b-col cols="1">
+          <b-button @click="deleteVariable(variable.id)" variant="danger">-</b-button>
+        </b-col>
+      </b-form-row>
+    </b-container>
 
     <b-button @click="addVariable">{{$t("modal.createProcessInstance.variable.button")}}</b-button>
 
     <template v-slot:modal-footer="{ok, cancel}">
       <b-button @click="cancel">{{$t("modal.createProcessInstance.dontCreate")}}</b-button>
-      <b-button :disabled="!keyState" variant="success" @click="ok">{{$t("modal.createProcessInstance.create")}}</b-button>
+      <b-button
+        :disabled="!keyState"
+        variant="success"
+        @click="ok"
+      >{{$t("modal.createProcessInstance.create")}}</b-button>
     </template>
   </b-modal>
 </template>
@@ -64,7 +83,7 @@ export default {
       businessKey: "",
       processVariables: [],
       processVariableID: 0,
-      typeOptions: ["Type", "boolean", "string", "integer"],
+      typeOptions: ["Type", "boolean", "String", "Long"],
       boolOptions: ["true", "false"]
     };
   },
@@ -86,15 +105,14 @@ export default {
       this.processVariables = this.processVariables.filter(pv => pv.id !== id);
     },
     createInstance() {
-
       //format processVariables
       let variables = {};
       this.processVariables.forEach(v => {
-          variables[v.name] = {
-              value: v.value,
-              type: v.type,
-              valueInfo: {}
-          };
+        variables[v.name] = {
+          value: v.value,
+          type: v.type,
+          valueInfo: {}
+        };
       });
 
       axios
@@ -108,7 +126,28 @@ export default {
         .then(res => {
           this.$emit("process-started");
         });
+    },
+    checkFormVariables() {
+      let that = this;
+      axios
+        .get(
+          `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/form-variables`
+        )
+        .then(res => {
+          let keys = Object.keys(res.data);
+          keys.forEach(key => {
+            that.processVariables.push({
+              id: that.processVariableID++,
+              name: key,
+              type: res.data[key].type,
+              value: res.data[key].value
+            });
+          });
+        });
     }
+  },
+  created() {
+    this.checkFormVariables();
   }
 };
 </script>
