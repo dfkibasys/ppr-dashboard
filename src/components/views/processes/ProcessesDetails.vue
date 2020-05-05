@@ -409,7 +409,7 @@ export default {
                   bottom: 0,
                   left: 30
                 },
-                html: `<span class="badge badge-pill badge-primary">${incidentIdsCount[id]}</span>`
+                html: `<span class="badge badge-pill badge-danger">${incidentIdsCount[id]}</span>`
               });
               that.overlaysArr.push(oID);
             }
