@@ -1,6 +1,9 @@
 image: docker:19.03.6
 services:
-  - docker:19.03.6-dind
+  - name: docker:19.03.6-dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: ["dockerd-entrypoint.sh"]
+
 variables:
   CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
   DOCKER_TLS_CERTDIR: "/certs"
