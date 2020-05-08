@@ -1,9 +1,9 @@
-image: docker:stable
+image: docker:19.03.6
 services:
-  - docker:18.09.7-dind
+  - docker:19.03.6-dind
 variables:
   CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
-
+  DOCKER_TLS_CERTDIR: "/certs"
 deploy_production:
   stage: deploy
   before_script:
