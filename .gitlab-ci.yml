@@ -1,8 +1,11 @@
+image: docker:stable
+services:
+  - docker:18.09.7-dind
+variables:
+  CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
+
 deploy_production:
   stage: deploy
-  image: docker:stable
-  variables:
-    CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
   before_script:
    - docker login -u "$VAR_REGISTRY_USER" -p "$VAR_REGISTRY_PASSWORD" "$VAR_REGISTRY"
   script:
