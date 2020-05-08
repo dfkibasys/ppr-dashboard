@@ -1,0 +1,9 @@
+deploy_production:
+  stage: deploy
+  image: ubuntu:18.04
+  before_script:
+   - apt-get update -qq && apt-get install -qq sshpass
+  script:
+  - sshpass -p "${SERVER_PASS}" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no mrk-admin@hybrit-lnv-1 "cd ppr-dashboard && git pull https://mrk40:${MRK_PASS}@mrk40.dfki.de/mrk-4.0/ppr-dashboard.git && ./docker.sh"
+  only:
+  - master
