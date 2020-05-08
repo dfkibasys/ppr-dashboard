@@ -10,6 +10,8 @@ variables:
 deploy_production:
   stage: deploy
   before_script:
+   - ping -c 4 "$VAR_REGISTRY" || true
+   - wget "$VAR_REGISTRY"/v2/ || true
    - docker login -u "$VAR_REGISTRY_USER" -p "$VAR_REGISTRY_PASSWORD" "$VAR_REGISTRY"
   script:
   - docker build -t "$CI_REGISTRY_NAME:latest"
