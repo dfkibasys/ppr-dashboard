@@ -1,6 +1,6 @@
 deploy_production:
   stage: deploy
-  image: docker:dind
+  image: docker:stable
   variables:
     CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
   before_script:
