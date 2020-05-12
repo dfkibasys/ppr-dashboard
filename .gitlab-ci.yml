@@ -1,20 +1,9 @@
-image: docker:19.03.6
-services:
-  - name: docker:19.03.6-dind
-    entrypoint: ["env", "-u", "DOCKER_HOST"]
-    command: ["dockerd-entrypoint.sh"]
-
-variables:
-  CI_REGISTRY_NAME: "$VAR_REGISTRY/basys/ppr-dashboard"
-  DOCKER_TLS_CERTDIR: "/certs"
 deploy_production:
   stage: deploy
+  image: ubuntu:18.04
   before_script:
-   - ping -c 4 "$VAR_REGISTRY" || true
-   - wget "$VAR_REGISTRY"/v2/ || true
-   - docker login -u "$VAR_REGISTRY_USER" -p "$VAR_REGISTRY_PASSWORD" "$VAR_REGISTRY"
+   - apt-get update -qq && apt-get install -qq sshpass
   script:
-  - docker build -t "$CI_REGISTRY_NAME:latest"
-  - docker push "$CI_REGISTRY_NAME:latest"
+  - sshpass -p "${SERVER_PASS}" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no mrk-admin@hybrit-lnv-1 "cd ppr-dashboard && git pull https://mrk40:${MRK_PASS}@mrk40.dfki.de/mrk-4.0/ppr-dashboard.git && ./docker.sh"
   only:
   - master
