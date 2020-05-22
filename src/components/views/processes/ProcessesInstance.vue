@@ -5,7 +5,7 @@
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
           <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
-            <b-icon-chevron-left font-scale="1"></b-icon-chevron-left>
+            <b-icon-chevron-left font-scale="1" variant="secondary"></b-icon-chevron-left>
           </b-button>
         </div>
         <b-list-group>
@@ -59,13 +59,13 @@
         </b-list-group>
       </b-col>
 
-      <b-col class="border">
-        <div v-show="!showLeftDetails" style="position: absolute;left: 0px;z-index: 9999;">
+      <b-col class="rightDiagram border">
+        <div class="button" v-show="!showLeftDetails">
           <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
-            <b-icon-chevron-right font-scale="1"></b-icon-chevron-right>
+            <b-icon-chevron-right font-scale="1" variant="secondary"></b-icon-chevron-right>
           </b-button>
         </div>
-        <div id="diagram-container">
+        <div id="diagram-container" class="h-100">
           <bpmn-display
             ref="bpmn"
             :xml="processDefinitionXML"
@@ -377,15 +377,19 @@ export default {
 <style lang="scss" scoped>
 .leftDetails {
   position: relative;
-  color: rgba(0, 0, 0, 0.87);
-  max-width: 20%;
+  flex: 0 0 350px;
   .button {
     position: absolute;
     right: 0px;
     z-index: 9999;
   }
 }
-#diagram-container {
-  height: 100%;
+.rightDiagram {
+  height: 650px;
+  .button {
+    position: absolute;
+    left: 0px;
+    z-index: 9999;
+  }
 }
 </style>
