@@ -97,7 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 h5 {
-  width: 50%;
+  width: 40%;
   float: left;
 }
 </style>
