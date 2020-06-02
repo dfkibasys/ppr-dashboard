@@ -24,10 +24,10 @@ VUE_APP_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
 VUE_APP_CAMUNDA_REST_URL=http://10.2.10.4:8080
 ```
 
-Run docker script
+Build and start container
 
 ```
-./docker.sh
+docker-compose up -d
 ```
 
 ## Circumventing CORS error

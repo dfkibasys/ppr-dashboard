@@ -1,0 +1,12 @@
+version: "3.0"
+
+services:
+  dashboard:
+    container_name: "ppr-dashboard"
+    build: .
+    env_file:
+      - .env
+    image: basys/ppr-dashboard
+    ports:
+      - "8090:80"
+    restart: always
