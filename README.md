@@ -30,6 +30,14 @@ Build and start container
 docker-compose up -d
 ```
 
+Rebuild container after changes
+
+```
+docker-compose build
+docker-compose up -d
+```
+
+
 ## Circumventing CORS error
 The same-origin policy of the browser protects web applications to interact only with apps of the same origin (protocol, domain, port). CORS allows cross-origin requests by setting specific headers for requests. Since the Camunda REST interface doesn't have CORS enabled and is running under another domain than the Vue application, two methods to circumvent those restrictions in development and production have been implemented.
 
