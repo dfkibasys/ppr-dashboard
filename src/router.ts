@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Devices from "./components/views/Devices";
-import Services from "./components/views/Services";
-import Management from "./components/views/Management";
-import Processes from "./components/views/Processes";
-import ProcessesDetails from "./components/views/processes/ProcessesDetails";
-import ProcessesInstance from "./components/views/processes/ProcessesInstance";
+import Devices from "@/components/views/Devices.vue"
+import Services from "@/components/views/Services.vue"
+import Management from "@/components/views/Management.vue"
+import Processes from "@/components/views/Processes.vue"
+import ProcessesDetails from "@/components/views/processes/ProcessesDetails.vue"
+import ProcessesInstance from "@/components/views/processes/ProcessesInstance.vue"
 
 Vue.use(Router);
 

@@ -42,10 +42,12 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from "axios";
+import { Data, Methods, Computed, Props } from "@/interfaces/IProcesses";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Processes",
   data() {
     return {
@@ -72,7 +74,7 @@ export default {
   created() {
     let that = this;
     let baseUrl = process.env.VUE_APP_AJAX_REQUEST_DOMAIN; //camundaUrl + "/engine-rest"
-    that.$Progress.start();
+    this.$Progress.start();
 
     axios
       .all([
@@ -91,7 +93,7 @@ export default {
 
           that.processDefinitions = pd.data;
 
-          that.processDefinitions.forEach(pp => {
+          that.processDefinitions.forEach((pp: any) => {
             axios
               .get(`${baseUrl}/process-instance/count`, {
                 params: {
@@ -103,20 +105,20 @@ export default {
                 that.$set(pp, "instances", res.data.count);
               })
               .catch(err => {
-                that.$Progress.fail();
+                this.$Progress.fail();
                 console.error(err);
               });
           });
 
-          that.$Progress.finish();
+          this.$Progress.finish();
         })
       )
       .catch(err => {
-        that.$Progress.fail();
+        this.$Progress.fail();
         console.error(err);
       });
   }
-};
+});
 </script>
 
 <style>

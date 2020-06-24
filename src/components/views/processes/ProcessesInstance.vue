@@ -79,7 +79,7 @@
       <b-col>
         <b-tabs>
           <b-tab :title="$t('process.auditLog')">
-            <b-table hover striped :items="auditlog" :fields="auditfields" show-empty>
+            <b-table hover striped :items="auditLog" :fields="auditFields" show-empty>
               <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
               <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
               <template v-slot:head(endTime)>{{ $t('process.endTime') }}</template>
@@ -124,12 +124,14 @@
   </b-container>
 </template>
 
-<script>
-import BpmnDisplay from "./BpmnDisplay";
+<script lang="ts">
+import Vue from 'vue';
+import BpmnDisplay from "@/components/views/processes/BpmnDisplay.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IProcessesInstance";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "ProcessesInstance",
   components: {
     BpmnDisplay
@@ -157,14 +159,14 @@ export default {
         }
       ],
       updateInterval: 500,
-      intervalRef: null,
+      intervalRef: 0,
       overlaysArr: [],
       processInstance: {},
       processDefinition: {},
       processDefinitionXML: "",
       showLeftDetails: true,
-      auditlog: [],
-      auditfields: [
+      auditLog: [],
+      auditFields: [
         "activityName",
         "startTime",
         "endTime",
@@ -210,7 +212,7 @@ export default {
           })
         )
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -223,13 +225,13 @@ export default {
           that.processDefinitionXML = res.data.bpmn20Xml;
 
           clearInterval(that.intervalRef);
-          that.intervalRef = setInterval(() => {
+          that.intervalRef = window.setInterval(() => {
             that.updateDiagram();
           }, that.updateInterval);
           callback();
         })
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -255,14 +257,14 @@ export default {
         ])
         .then(
           axios.spread((ais, incidents) => {
-            let overlays = that.$refs.bpmn.getOverlays();
+            let overlays = (that.$refs.bpmn as any).getOverlays();
 
-            that.overlaysArr.forEach(o => {
+            that.overlaysArr.forEach((o: any) => {
               overlays.remove(o);
             });
 
             //ais
-            ais.data.forEach(val => {
+            ais.data.forEach((val: any) => {
               let oID = overlays.add(val.activityId, {
                 position: {
                   bottom: 0,
@@ -274,7 +276,7 @@ export default {
             });
 
             //incidents
-            incidents.data.forEach(val => {
+            incidents.data.forEach((val: any) => {
               let oID = overlays.add(val.activityId, {
                 position: {
                   bottom: 0,
@@ -287,7 +289,7 @@ export default {
           })
         )
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -319,11 +321,11 @@ export default {
         ])
         .then(
           axios.spread((ai, incidents, vi) => {
-            that.auditlog = ai.data;
+            that.auditLog = ai.data;
             that.incidents = incidents ? incidents.data : [];
             that.variables = vi.data;
 
-            that.auditlog.forEach(_a => {
+            that.auditLog.forEach((_a: any) => {
               axios
                 .get(`${that.baseUrl}/history/variable-instance`, {
                   params: {
@@ -332,11 +334,11 @@ export default {
                   }
                 })
                 .then(res => {
-                  let v = res.data.find(v => v.name == "referenceTime");
+                  let v = res.data.find((v: any) => v.name == "referenceTime");
                   that.$set(_a, "referenceTime", v ? v.value : null);
                 })
                 .catch(err => {
-                  that.$Progress.fail();
+                  this.$Progress.fail();
                   console.error(err);
                 });
             });
@@ -344,7 +346,7 @@ export default {
           })
         )
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     }
@@ -352,7 +354,7 @@ export default {
   created() {
     let that = this;
     that.cbCount = 0;
-    that.$Progress.start();
+    this.$Progress.start();
 
     that.fetchLeftDetails(
       that.$route.params.iid,
@@ -371,7 +373,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.intervalRef);
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

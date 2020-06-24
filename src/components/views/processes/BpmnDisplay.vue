@@ -2,37 +2,36 @@
   <div ref="container" class="vue-bpmn-diagram-container"></div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import BpmnJS from "bpmn-js/dist/bpmn-navigated-viewer.production.min.js";
+import { Data, Methods, Computed, Props } from "@/interfaces/IBpmnDisplay";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "bpmn-display",
   props: {
-    url: {
-      type: String
-    },
-    xml: {
-      type: String
-    }
+    url: String,
+    xml: String
   },
   data: function() {
     return {
-      diagramXML: null,
-      elementOverlays: []
+      diagramXML: "",
+      elementOverlays: [],
+      bpmnViewer: {}
     };
   },
   mounted: function() {
-    var container = this.$refs.container;
+    let container = this.$refs.container;
 
-    var self = this;
+    let self = this;
 
     this.bpmnViewer = new BpmnJS({
       container: container
     });
 
-    this.bpmnViewer.on("import.done", function(event) {
-      var error = event.error;
-      var warnings = event.warnings;
+    this.bpmnViewer.on("import.done", function(event: any) {
+      let error = event.error;
+      let warnings = event.warnings;
 
       if (error) {
         self.$emit("error", error);
@@ -43,7 +42,7 @@ export default {
       self.bpmnViewer.get("canvas").zoom("fit-viewport");
     });
 
-    this.bpmnViewer.on("shape.added", function(event) {
+    this.bpmnViewer.on("shape.added", function(event: any) {
       self.addBaSysLogo(event.element);
     });
 
@@ -60,7 +59,7 @@ export default {
   watch: {
     url: function(val) {
       this.$emit("loading");
-      this.fetchDiagram(url);
+      this.fetchDiagram(val);
     },
     xml: function(val) {
       this.$emit("loading");
@@ -72,7 +71,7 @@ export default {
   },
   methods: {
     fetchDiagram: function(url) {
-      var self = this;
+      let self = this;
 
       fetch(url)
         .then(function(response) {
@@ -120,7 +119,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 
 <style lang="scss">

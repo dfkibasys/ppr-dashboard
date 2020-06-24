@@ -51,13 +51,15 @@
   </div>
 </template>
 
-<script>
-import PackML from "../modals/PackML";
-import CapabilityOverview from "../modals/CapabilityOverview";
+<script lang="ts">
+import Vue from 'vue';
+import PackML from "@/components/modals/PackML.vue";
+import CapabilityOverview from "@/components/modals/CapabilityOverview.vue";
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IDevices";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Devices",
   components: {
     PackML,
@@ -75,24 +77,24 @@ export default {
       this.openedIndex = index;
       this.$bvModal.show("modal-pack");
     },
-    openCapabilityOverview: function(index) {
+    openCapabilityOverview: function(index: number) {
       this.openedIndex = index;
       this.$bvModal.show("modal-cap");
     }
   },
   created() {
     let that = this;
-    this.fetchDevices();
+    this.fetchDevices({vm: this});
 
     this.$mqtt.subscribe("hybrit/devices");
 
-    this.$mqtt.on((topic, message) => {
+    this.$mqtt.on((topic: string, message: string) => {
       let msg = JSON.parse(message.toString());
       console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
       this.$store.commit("updateDevices", msg);
     });
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

@@ -27,10 +27,13 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import * as mxgraph from "mxgraph";
 import axios from "axios";
 import {mapGetters} from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IPackML"
+import { DevicesState } from '@/interfaces/DevicesState';
 
 const {
   mxClient,
@@ -44,13 +47,13 @@ const {
   mxGeometry
 } = mxgraph();
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "PackML",
   data() {
     return {
-      graph: Object,
-      oldBorderColor: String,
-      currentCell: Object,
+      graph: {},
+      oldBorderColor: "",
+      currentCell: {},
       xmlLoaded: false,
       selected: "PRODUCTION",
       options: [
@@ -72,13 +75,13 @@ export default {
         axios.get("data/PackML.XML").then(resp => {
           let xml = resp.data;
 
-          (container => {
-            //let xml = mxUtils.getTextContent(container);
+          ((container: any) => {
+
             let xmlDocument = mxUtils.parseXml(xml);
 
             //decode method needs access to the following window params (VueJS hack)
-            window["mxGraphModel"] = mxGraphModel;
-            window["mxGeometry"] = mxGeometry;
+            (<any>window)["mxGraphModel"] = mxGraphModel;
+            (<any>window)["mxGeometry"] = mxGeometry;
 
             if (
               xmlDocument.documentElement != null &&
@@ -136,7 +139,7 @@ export default {
         ]);
       } else {
         console.error(`Current state ${state} not found.`);
-        that.oldBorderColor = null;
+        that.oldBorderColor = "";
       }
     },
     clear: function() {
@@ -204,7 +207,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 
 <style scoped>

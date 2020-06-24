@@ -1,8 +1,8 @@
-import store from "./store";
-
-let mqtt = require('mqtt'),
-    uuid = require('uuid'),
-    client = {};
+import store from "@/store/index";
+import mqtt, { Client } from 'mqtt';
+import * as uuid from 'uuid';
+    
+let client: Client;
 
 export default {
     connect() {
@@ -12,22 +12,22 @@ export default {
             console.log(`Connected to ${store.getters.mqttUrl}`);
         })
     },
-    on(callback) {
-        client.on('message', (topic, message) => {
+    on(callback: any) {
+        client.on('message', (topic: string, message: string) => {
             callback(topic, message)
         })
     },
     end() {
         client.end()
     },
-    subscribe(topic) {
-        client.subscribe(topic, function (err) {
+    subscribe(topic: string) {
+        client.subscribe(topic, function (err: Error) {
             if (!err) {
                 console.log(`Subscribed to topic ${topic}`);
             }
         });
     },
-    publish(topic, message) {
+    publish(topic: string, message: string) {
         client.publish(topic, JSON.stringify(message), {qos: 1})
     }
 }
