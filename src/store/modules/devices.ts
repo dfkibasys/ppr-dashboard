@@ -1,17 +1,19 @@
-import Vue from "vue";
+import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
+import { RootState } from "@/interfaces/RootState";
+import { Device, DevicesState, Capability } from "@/interfaces/DevicesState";
 import axios from 'axios';
-import store from "../../store";
+import store from "..";
 
-const state = {
+const state: DevicesState = {
     devices: []
 };
 
-const getters = {
+const getters: GetterTree<DevicesState, RootState> = {
     allDevices: (state) => state.devices
 };
 
-const actions = {
-    async fetchDevices({commit}) {
+const actions: ActionTree<DevicesState,RootState> = {
+    async fetchDevices({ commit }, { vm }) {
         let mockData = store.getters.mockDataEnabled;
         let basysUrl = store.getters.basysUrl;
 
@@ -20,24 +22,24 @@ const actions = {
             `${basysUrl}/services/registry/DEVICE_COMPONENT`,
 
             inst_url = mockData ?
-            "/data/resource_instances.json" :
-            `${basysUrl}/services/resourceinstance/`,
+                "/data/resource_instances.json" :
+                `${basysUrl}/services/resourceinstance/`,
 
             typ_url = mockData ?
-            "/data/resource_types.json" :
-            `${basysUrl}/services/resourcetype/`;
+                "/data/resource_types.json" :
+                `${basysUrl}/services/resourcetype/`;
 
         let devCount = 0,
-            devices = [];
+            devices: Device[] = [];
 
-        Vue.prototype.$Progress.start();
+        vm.$Progress.start();
 
         axios
             .all([axios.get(dev_url), axios.get(inst_url), axios.get(typ_url)])
             .then(
                 axios.spread((dev, inst, typ) => {
-                    
-                    function addTeachCapability(index, id) {
+
+                    function addTeachCapability(index: number, id: string) {
                         axios
                             .get(`${basysUrl}/services/entity/${id}`)
                             .then(ent => {
@@ -50,7 +52,7 @@ const actions = {
                             });
                     }
 
-                    function addDevice(obj) {
+                    function addDevice(obj: Device) {
                         let index = devices.push(obj);
 
                         if (!mockData) {
@@ -66,7 +68,19 @@ const actions = {
                     let devs = dev.data;
 
                     for (let i = 0; i < devs.length; i++) {
-                        let obj = {};
+                        let obj: Device = {
+                            componentId: "",
+                            componentName: "",
+                            currentMode: "",
+                            currentState: "",
+                            serial: "",
+                            capabilityAssertionId: "",
+                            capability: [],
+                            type: "",
+                            docuLink: "",
+                            location: ""
+                        }
+
                         obj.componentId = devs[i].componentId;
                         obj.componentName = devs[i].componentName;
                         obj.currentMode = devs[i].currentMode;
@@ -74,12 +88,12 @@ const actions = {
 
                         //get instance of device
                         let instance = inst.data.resourceInstances.filter(
-                            val2 => val2.id === devs[i].componentId
+                            (val2: any) => val2.id === devs[i].componentId
                         );
                         obj.serial = instance[0].serialNumber;
 
                         //get capability
-                        let capability = [];
+                        let capability = [] as Capability[];
                         obj.capabilityAssertionId = instance[0].capabilityApplications[0].capabilityAssertion.$ref.substr(
                             instance[0].capabilityApplications[0].capabilityAssertion.$ref.lastIndexOf(
                                 "/"
@@ -88,12 +102,12 @@ const actions = {
 
                         if (
                             typeof instance[0].capabilityApplications[0]
-                            .capabilityVariants !== "undefined"
+                                .capabilityVariants !== "undefined"
                         ) {
                             for (
                                 let i = 0; i <
                                 instance[0].capabilityApplications[0].capabilityVariants
-                                .length; i++
+                                    .length; i++
                             ) {
                                 capability.push({
                                     id: instance[0].capabilityApplications[0].capabilityVariants[
@@ -115,11 +129,11 @@ const actions = {
                         );
 
                         //loop over manufactures
-                        let type = "";
+                        let type = [] as any;
                         for (let i = 0; i < typ.data.catalogues.length; i++) {
                             //loop over resourceTypes
                             type = typ.data.catalogues[i].resourceTypes.filter(
-                                val2 => val2.id === typeId
+                                (val2: any) => val2.id === typeId
                             );
                             if (type.length > 0) break; //resource found! Stop searching and overriding type
                         }
@@ -134,9 +148,12 @@ const actions = {
                             if (!mockData) {
                                 axios
                                     .get(`${basysUrl}/services/topology/parent/${topId}`) //+ "?callback=?" treat request as JSONP to avoid cross-domain call issues
-                                    .then(top => {
-                                        obj.location = top.name;
+                                    .then(response => {
+
+                                        const { data } = response;
+                                        obj.location = data.name;
                                         addDevice(obj);
+
                                     })
                                     .catch(err => {
                                         console.log(err);
@@ -165,7 +182,7 @@ const actions = {
                             devCount === devs.length &&
                             capabilityCounter === devs.length
                         ) {
-                            Vue.prototype.$Progress.finish();
+                            vm.$Progress.finish();
                             //update new requested files
                             commit('setDevices', devices);
                         }
@@ -173,41 +190,42 @@ const actions = {
                 })
             )
             .catch(err => {
-                Vue.prototype.$Progress.fail();
+                vm.$Progress.fail();
                 commit('setDevices', []);
                 console.error(err);
             })
     }
 };
 
-const mutations = {
+const mutations: MutationTree<DevicesState> = {
     setDevices: (state, devices) => (state.devices = devices),
 
     updateDevices: (state, device) => {
-        state.devices = state.devices.map((val, index, arr) => {
+        state.devices = state.devices.map((val, index, arr): Device => {
             if (val.componentId === device.componentId) {
-              //update currentMode and currentState
-              return {
-                componentId: val.componentId,
-                type: val.type,
-                componentName: val.componentName,
-                location: val.location,
-                serial: val.serial,
-                capability: val.capability,
-                currentMode: device.currentMode, //update
-                currentState: device.currentState, //update
-                docuLink: val.docuLink
-              };
+                //update currentMode and currentState
+                return {
+                    componentId: val.componentId,
+                    type: val.type,
+                    componentName: val.componentName,
+                    location: val.location,
+                    serial: val.serial,
+                    capability: val.capability,
+                    currentMode: device.currentMode, //update
+                    currentState: device.currentState, //update
+                    docuLink: val.docuLink,
+                    capabilityAssertionId: val.capabilityAssertionId
+                };
             } else {
-              //don't change properties
-              return val;
+                //don't change properties
+                return val;
             }
-          });
+        });
     }
 };
 
 
-export default {
+export const devices: Module<DevicesState, RootState> = {
     state,
     getters,
     mutations,

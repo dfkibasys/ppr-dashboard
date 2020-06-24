@@ -135,13 +135,15 @@
   </b-container>
 </template>
 
-<script>
-import BpmnDisplay from "./BpmnDisplay";
-import CreateProcessInstance from "../../modals/CreateProcessInstance";
+<script lang="ts">
+import Vue from 'vue';
+import BpmnDisplay from "@/components/views/processes/BpmnDisplay.vue";
+import CreateProcessInstance from "@/components/modals/CreateProcessInstance.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IProcessesDetails";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "ProcessesDetails",
   components: {
     BpmnDisplay,
@@ -166,7 +168,7 @@ export default {
         }
       ],
       updateInterval: 500,
-      intervalRef: null,
+      intervalRef: 0,
       instanceFields: ["id", "startTime", "businessKey", "action"],
       auditFields: [
         "state",
@@ -177,8 +179,8 @@ export default {
         "activityId"
       ],
       showLeftDetails: true,
-      currentVersionID: null,
-      versions: {},
+      currentVersionID: "",
+      versions: [],
       processInstances: [],
       processDefinition: {},
       processDefinitionXML: "",
@@ -188,7 +190,7 @@ export default {
     };
   },
   watch: {
-    cbCount: function(val) {
+    cbCount: function(val: number) {
       if (val == 3) {
         this.$Progress.finish();
       }
@@ -225,7 +227,7 @@ export default {
           delete this.versions[version];
           if (Object.values(this.versions).length > 0) {
             // another deployment version available, switch to it
-            let otherVersionId = Object.values(this.versions)[0].value;
+            let otherVersionId = (Object.values(this.versions)[0] as any).value;
             this.currentVersionID = otherVersionId;
             this.versionChange();
           } else {
@@ -242,7 +244,7 @@ export default {
     fetchAllData() {
       let that = this;
       that.cbCount = 0;
-      that.$Progress.start();
+      this.$Progress.start();
 
       that.fetchLeftDetails(that.$route.params.pid, function() {
         that.cbCount++;
@@ -276,7 +278,7 @@ export default {
               axios.spread((pds, pic) => {
                 //pds
                 that.versions = {};
-                pds.data.forEach(v => {
+                pds.data.forEach((v: any) => {
                   //formatting for b-form-select component 1: { text: '1', value: 'ID' },
                   that.versions[v.version] = {
                     value: v.id,
@@ -291,12 +293,12 @@ export default {
               })
             )
             .catch(err => {
-              that.$Progress.fail();
+              this.$Progress.fail();
               console.error(err);
             });
         })
         .catch(err => {
-          that.$Progress.fail();
+           this.$Progress.fail();
           console.error(err);
         });
     },
@@ -309,13 +311,13 @@ export default {
           that.processDefinitionXML = res.data.bpmn20Xml;
 
           clearInterval(that.intervalRef);
-          that.intervalRef = setInterval(() => {
+          that.intervalRef = window.setInterval(() => {
             that.updateDiagram();
           }, that.updateInterval);
           callback();
         })
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -344,7 +346,7 @@ export default {
           })
         )
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -368,16 +370,16 @@ export default {
         ])
         .then(
           axios.spread((ais, incidents) => {
-            let overlays = that.$refs.bpmn.getOverlays();
+            let overlays = (that.$refs.bpmn as any).getOverlays();
 
-            that.overlaysArr.forEach(o => {
+            that.overlaysArr.forEach((o: any) => {
               overlays.remove(o);
             });
 
             //ais
-            let activityIdsCount = {};
+            let activityIdsCount = {} as any;
 
-            ais.data.forEach(val => {
+            ais.data.forEach((val: any) => {
               if (activityIdsCount[val.activityId] === undefined) {
                 activityIdsCount[val.activityId] = 0;
               }
@@ -396,9 +398,9 @@ export default {
             }
 
             //incidents
-            var incidentIdsCount = {};
+            let incidentIdsCount = {} as any;
 
-            incidents.data.forEach(val => {
+            incidents.data.forEach((val: any) => {
               if (incidentIdsCount[val.activityId] === undefined) {
                 incidentIdsCount[val.activityId] = 0;
               }
@@ -418,7 +420,7 @@ export default {
           })
         )
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -432,12 +434,12 @@ export default {
         .delete(`${that.baseUrl}/process-instance/${id}`)
         .then(res => {
           that.processInstances = that.processInstances.filter(
-            pi => pi.id !== id
+            (pi: any) => pi.id !== id
           );
           that.processDefinition.instances--;
         })
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     }
@@ -448,7 +450,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.intervalRef);
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

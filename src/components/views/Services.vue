@@ -29,11 +29,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IServices";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Services",
   data() {
     return {
@@ -49,14 +51,14 @@ export default {
         : `${that.basysUrl}/services/registry/SERVICE_COMPONENT`;
       let services = [];
 
-      that.$Progress.start();
+      this.$Progress.start();
 
       axios
         .get(serv_url)
         .then(serv => {
-          that.$Progress.finish();
+          this.$Progress.finish();
           //services
-          services = serv.data.map((val, index, arr) => {
+          services = serv.data.map((val: any) => {
             // return element to new Array
             return {
               componentId: val.componentId,
@@ -69,15 +71,15 @@ export default {
           that.services = services;
         })
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     }
   },
   mounted() {
-    this.loadInitialData(this.mockDataEnabled, function() {});
+    this.loadInitialData(this.mockDataEnabled);
   }
-};
+});
 </script>
 
 <style lang="scss">

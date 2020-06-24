@@ -29,11 +29,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/IManagement";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Management",
   data() {
     return {
@@ -49,14 +51,14 @@ export default {
         : `${that.basysUrl}/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
-      that.$Progress.start();
+      this.$Progress.start();
 
       axios
         .get(man_url)
         .then(man => {
-          that.$Progress.finish();
+          this.$Progress.finish();
           //management
-          management = man.data.map((val, index, arr) => {
+          management = man.data.map((val: any) => {
             // return element to new Array
             return {
               componentId: val.componentId,
@@ -69,15 +71,15 @@ export default {
           that.managements = management;
         })
         .catch(err => {
-          that.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     }
   },
   mounted() {
-    this.loadInitialData(this.mockDataEnabled, function() {});
+    this.loadInitialData(this.mockDataEnabled);
   }
-};
+});
 </script>
 
 <style scoped>

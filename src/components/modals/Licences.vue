@@ -14,10 +14,12 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import axios from "axios";
+import { Data, Methods, Computed, Props } from "@/interfaces/ILicences"
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Licences",
   data() {
     return {
@@ -30,7 +32,7 @@ export default {
       this.licences = res.data;
     });
   }
-};
+});
 </script>
 
 <style>

@@ -67,11 +67,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import { mapActions } from "vuex";
-import Licences from "./modals/Licences";
+import Licences from "@/components/modals/Licences.vue";
+import { Data, Methods, Computed, Props } from "@/interfaces/INavbar";
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "Navbar",
   components: {
     Licences
@@ -116,7 +118,7 @@ export default {
       },
       set(value) {
         this.$store.commit("switchMockDataState", value);
-        this.fetchDevices();
+        this.fetchDevices({vm: this});
       }
     }
   },
@@ -127,10 +129,10 @@ export default {
       this.$mqtt.connect();
     },
     changeBASYSdata() {
-      this.fetchDevices();
+      this.fetchDevices({vm: this});
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

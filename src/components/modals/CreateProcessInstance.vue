@@ -32,19 +32,19 @@
         </b-col>
         <b-col>
           <b-form-input
-            v-if="variable.type === 'String'"
+            v-if="variable.type === VarType.String"
             v-model="variable.value"
             :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
             :type="'text'"
           ></b-form-input>
           <b-form-input
-            v-else-if="variable.type === 'Long'"
+            v-else-if="variable.type === VarType.Long"
             v-model="variable.value"
             :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
             :type="'number'"
           ></b-form-input>
           <b-form-select
-            v-else-if="variable.type === 'boolean'"
+            v-else-if="variable.type === VarType.Boolean"
             v-model="variable.value"
             :options="boolOptions"
           ></b-form-select>
@@ -73,21 +73,26 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from "axios";
+import { Data, Methods, Computed, Props, VarType, ProcessVariable } from "@/interfaces/ICreateProcessInstance"
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "CreateProcessInstance",
   data() {
     return {
       businessKey: "",
       processVariables: [],
       processVariableID: 0,
-      typeOptions: ["Type", "boolean", "String", "Long"],
+      typeOptions: [VarType.Placeholder, VarType.Boolean, VarType.String, VarType.Long],
       boolOptions: ["true", "false"]
     };
   },
   computed: {
+    VarType() {
+      return VarType;
+    },
     keyState() {
       return this.businessKey.length > 0 ? true : false;
     }
@@ -97,17 +102,17 @@ export default {
       this.processVariables.push({
         id: this.processVariableID++,
         name: "",
-        type: "Type",
+        type: VarType.Placeholder,
         value: ""
       });
     },
     deleteVariable(id) {
-      this.processVariables = this.processVariables.filter(pv => pv.id !== id);
+      this.processVariables = this.processVariables.filter((pv: ProcessVariable) => pv.id !== id);
     },
     createInstance() {
       //format processVariables
-      let variables = {};
-      this.processVariables.forEach(v => {
+      let variables = {} as any;
+      this.processVariables.forEach((v: ProcessVariable) => {
         variables[v.name] = {
           value: v.value,
           type: v.type,
@@ -149,7 +154,7 @@ export default {
   created() {
     this.checkFormVariables();
   }
-};
+});
 </script>
 
 <style>

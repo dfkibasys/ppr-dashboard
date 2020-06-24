@@ -20,7 +20,6 @@
               <td>
                 <button
                   type="button"
-                  id="remove-btn"
                   class="btn btn-danger"
                   v-if="capability.taught"
                   :disabled="true"
@@ -28,7 +27,6 @@
                 >{{$t('modal.capabilityOverview.remove')}}</button>
                 <button
                   type="button"
-                  id="teach-btn"
                   class="btn btn-info"
                   v-else
                   :disabled="false"
@@ -46,11 +44,13 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { Data, Methods, Computed, Props } from "@/interfaces/ICapabilityOverview"
 
-export default {
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "CapabilityOverview",
   props: {
     openedDeviceIndex: Number
@@ -58,7 +58,7 @@ export default {
   computed: mapGetters(["basysUrl", "camundaUrl", "allDevices"]),
   methods: {
     removeCapability(capability) {
-      let url = `${this.basysUrl}/services/resourceinstance/${
+      const url = `${this.basysUrl}/services/resourceinstance/${
         this.allDevices[this.openedDeviceIndex].componentId
       }/capability/${
         this.allDevices[this.openedDeviceIndex].capabilityAssertionId
@@ -70,7 +70,7 @@ export default {
       });
     },
     startTeaching() {
-      let url = this.camundaUrl + "/engine-rest/message";
+      const url = this.camundaUrl + "/engine-rest/message";
       const data = {
         messageName: "Process.TeachIn.Prepare",
         businessKey: "cebit2018"
@@ -81,7 +81,7 @@ export default {
       });
     }
   }
-};
+});
 </script>
 
 <style scoped>
