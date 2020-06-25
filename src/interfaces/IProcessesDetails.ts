@@ -5,8 +5,6 @@ interface breadcrumbItem {
     to: string
 }
 
-type Callback = () => void;
-
 export interface Data {
     bcItems: breadcrumbItem[],
     updateInterval: number,
@@ -20,8 +18,7 @@ export interface Data {
     processDefinition: any, //since there is no Camunda typescript support
     processDefinitionXML: string,
     auditLog: any, //since there is no Camunda typescript support
-    overlaysArr: any, //since there is no BpmnJS typescript support
-    cbCount: number
+    overlaysArr: any //since there is no BpmnJS typescript support
 }
 export interface Methods {
   goToProcessInstance(item: any): void,
@@ -30,9 +27,9 @@ export interface Methods {
   versionChange(): void,
   deleteDeployment(): void,
   fetchAllData(): void,
-  fetchLeftDetails(id: string, callback: Callback): void,
-  fetchBPMN(id: string, callback: Callback): void,
-  fetchTabContent(id: string, callback: Callback): void,
+  fetchLeftDetails(id: string): Promise<any>,
+  fetchBPMN(id: string): Promise<any>,
+  fetchTabContent(id: string): Promise<any>,
   updateDiagram(): void,
   createProcessInstance(): void,
   deleteProcessInstance(id: string): void

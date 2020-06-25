@@ -5,8 +5,6 @@ interface breadcrumbItem {
     to: string
 }
 
-type Callback = () => void;
-
 export interface Data {
     bcItems: breadcrumbItem[],
     updateInterval: number,
@@ -21,16 +19,15 @@ export interface Data {
     variables: any, //since there is no Camunda typescript support
     variablesFields: string[],
     incidents: any, //since there is no Camunda typescript support
-    incidentsFields: string[],
-    cbCount: number
+    incidentsFields: string[]
 }
 export interface Methods {
     handleError(err: any): void,
     handleShown(): void,
-    fetchLeftDetails(piid: string, pdid: string, callback: Callback): void,
-    fetchBPMN(id: string, callback: Callback): void,
+    fetchLeftDetails(piid: string, pdid: string): Promise<any>,
+    fetchBPMN(id: string): Promise<any>,
     updateDiagram(): void,
-    fetchTabContent(callback: Callback): void
+    fetchTabContent(): Promise<any>
 }
 export interface Computed {
     camundaUrl: string,

@@ -185,16 +185,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       processDefinition: {},
       processDefinitionXML: "",
       auditLog: [],
-      overlaysArr: [],
-      cbCount: 0 //counts callbacks of api requests for progress bar
+      overlaysArr: []
     };
-  },
-  watch: {
-    cbCount: function(val: number) {
-      if (val == 3) {
-        this.$Progress.finish();
-      }
-    }
   },
   methods: {
     goToProcessInstance(item) {
@@ -242,68 +234,77 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
     },
     fetchAllData() {
-      let that = this;
-      that.cbCount = 0;
       this.$Progress.start();
 
-      that.fetchLeftDetails(that.$route.params.pid, function() {
-        that.cbCount++;
-      });
-      that.fetchTabContent(that.$route.params.pid, function() {
-        that.cbCount++;
-      });
-      that.fetchBPMN(that.$route.params.pid, function() {
-        that.cbCount++;
-      });
+      Promise.all([
+        this.fetchLeftDetails(this.$route.params.pid),
+        this.fetchTabContent(this.$route.params.pid),
+        this.fetchBPMN(this.$route.params.pid)
+      ])
+      .then(() => {
+        this.$Progress.finish();
+      })
+      .catch((err) => {
+        console.error(err);
+        this.$Progress.fail();
+      })
+
     },
-    fetchLeftDetails(id, callback) {
+    fetchLeftDetails(id) {
       let that = this;
 
-      axios
-        .get(`${that.baseUrl}/process-definition/${id}`)
-        .then(res => {
-          that.currentVersionID = res.data.id;
-          that.processDefinition = res.data;
+      const fetchedDetails = function(resolve, reject) {
 
-          axios
-            .all([
-              axios.get(
-                `${that.baseUrl}/process-definition?key=${res.data.key}`
-              ),
-              axios.get(
-                `${that.baseUrl}/process-instance/count?processDefinitionId=${id}`
+        axios
+          .get(`${that.baseUrl}/process-definition/${id}`)
+          .then(res => {
+            that.currentVersionID = res.data.id;
+            that.processDefinition = res.data;
+
+            axios
+              .all([
+                axios.get(
+                  `${that.baseUrl}/process-definition?key=${res.data.key}`
+                ),
+                axios.get(
+                  `${that.baseUrl}/process-instance/count?processDefinitionId=${id}`
+                )
+              ])
+              .then(
+                axios.spread((pds, pic) => {
+                  //pds
+                  that.versions = {};
+                  pds.data.forEach((v: any) => {
+                    //formatting for b-form-select component 1: { text: '1', value: 'ID' },
+                    that.versions[v.version] = {
+                      value: v.id,
+                      text: v.version
+                    };
+                  });
+
+                  //pic
+                  that.$set(that.processDefinition, "instances", pic.data.count);
+
+                  resolve();
+        
+                })
               )
-            ])
-            .then(
-              axios.spread((pds, pic) => {
-                //pds
-                that.versions = {};
-                pds.data.forEach((v: any) => {
-                  //formatting for b-form-select component 1: { text: '1', value: 'ID' },
-                  that.versions[v.version] = {
-                    value: v.id,
-                    text: v.version
-                  };
-                });
+              .catch(err => {
+                reject(err)
+              });
+          })
+          .catch(err => {
+            reject(err);
+          });
+      }
 
-                //pic
-                that.$set(that.processDefinition, "instances", pic.data.count);
+      return new Promise(fetchedDetails);
 
-                callback();
-              })
-            )
-            .catch(err => {
-              this.$Progress.fail();
-              console.error(err);
-            });
-        })
-        .catch(err => {
-           this.$Progress.fail();
-          console.error(err);
-        });
     },
-    fetchBPMN(id, callback) {
+    fetchBPMN(id) {
       let that = this;
+
+      const fetchedBPMN = function(resolve, reject) {
 
       axios
         .get(`${that.baseUrl}/process-definition/${id}/xml`)
@@ -314,41 +315,47 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           that.intervalRef = window.setInterval(() => {
             that.updateDiagram();
           }, that.updateInterval);
-          callback();
+          resolve();
         })
         .catch(err => {
-          this.$Progress.fail();
-          console.error(err);
+          reject(err);
         });
+      }
+
+      return new Promise(fetchedBPMN);
     },
-    fetchTabContent(id, callback) {
+    fetchTabContent(id) {
       let that = this;
 
-      axios
-        .all([
-          axios.get(
-            `${that.baseUrl}/history/process-instance?processDefinitionId=${id}&unfinished=true`
-          ),
-          axios.get(`${that.baseUrl}/history/activity-instance`, {
-            params: {
-              processDefinitionId: id,
-              sortBy: "startTime",
-              sortOrder: "asc"
-            }
-          })
-        ])
-        .then(
-          axios.spread((pi, ai) => {
-            that.auditLog = ai.data;
-            that.processInstances = pi.data;
+      const fetchedTabContent = function(resolve, reject){
+        axios
+          .all([
+            axios.get(
+              `${that.baseUrl}/history/process-instance?processDefinitionId=${id}&unfinished=true`
+            ),
+            axios.get(`${that.baseUrl}/history/activity-instance`, {
+              params: {
+                processDefinitionId: id,
+                sortBy: "startTime",
+                sortOrder: "asc"
+              }
+            })
+          ])
+          .then(
+            axios.spread((pi, ai) => {
+              that.auditLog = ai.data;
+              that.processInstances = pi.data;
 
-            callback();
-          })
-        )
-        .catch(err => {
-          this.$Progress.fail();
-          console.error(err);
-        });
+              resolve();
+            })
+          )
+          .catch(err => {
+            reject(err);
+          });
+      }
+
+      return new Promise(fetchedTabContent);
+
     },
     updateDiagram() {
       let that = this;
