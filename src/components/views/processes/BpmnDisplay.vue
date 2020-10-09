@@ -110,8 +110,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         self.elementOverlays[element.id].push(
           self.getOverlays().add(element, "badge", {
             position: {
-              top: 6,
-              right: 75
+              top: 2,
+              right: 22
             },
             html: '<div class="basys-logo"></div>'
           })
@@ -127,8 +127,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   height: 100%;
   width: 100%;
   .basys-logo {
-    width: 70px;
-    content: url("../../../assets/BaSys-Logo.png");
+    width: 20px;
+    content: url("../../../assets/BaSys-Logo-small.png");
   }
 }
 </style>
