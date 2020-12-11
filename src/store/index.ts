@@ -3,6 +3,7 @@ import Vuex, {StoreOptions} from "vuex";
 import {RootState} from "@/interfaces/RootState";
 import { endpoints } from "./modules/endpoints";
 import { devices } from "./modules/devices";
+import { assets } from "./modules/assets";
 
 Vue.use(Vuex);
 
@@ -12,7 +13,8 @@ const store: StoreOptions<RootState> = {
     },
     modules: {
         endpoints,
-        devices
+        devices,
+        assets,
     }
 }
 
