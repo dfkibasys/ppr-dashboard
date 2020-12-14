@@ -84,7 +84,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   created() {
     let that = this;
-    this.fetchDevices({vm: this});
+    //this.fetchDevices({vm: this});
     this.fetchAssets();
 
     this.$mqtt.subscribe("hybrit/devices");

@@ -1,8 +1,16 @@
 
-export interface Asset {
-    idShort: string,
-    idSubmodelEndpoint: string,
+export interface IDSubmodel {
+    Documentation?: string,
+    ManufacturerName?: string,
+    ManufacturerProductDesignation?: string,
+    SerialNumber?: string,
+    TypThumbnail?: string,
 }
 export interface AssetsState {
-    assets: Asset[]
+    assets: {
+        [idShort: string]: {
+            idSubmodelEndpoint: string,
+        }
+    },
+    assetsList: [],
 }
