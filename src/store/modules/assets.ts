@@ -18,7 +18,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         let assets:any = {};
         let assetsList:any = [];
 
-        axios.get("/api/v1/registry").then(res => {
+        axios.get(store.getters.registryUrl).then(res => {
 
             for (let i = 0; i < res.data.length; i++) {
                 assets[res.data[i].asset.idShort] = {
@@ -37,17 +37,12 @@ const actions: ActionTree<AssetsState, RootState> = {
     fetchIdSubmodels({commit}){
         for (let i = 0; i < state.assetsList.length; i++) {
 
-            //remove domain from endpoint
-            let urlSplit = state.assets[state.assetsList[i]].idSubmodelEndpoint.split('/');
-            let path = urlSplit.splice(3, 2).join('/');
-
             let id:IDSubmodel = {};
 
-            axios.get(`/aas/${path}`).then(res => {
+            axios.get(state.assets[state.assetsList[i]].idSubmodelEndpoint).then(res => {
                 for (let j = 0; j < res.data.submodelElements.length; j++) {
                     id[res.data.submodelElements[j].idShort] = res.data.submodelElements[j].value;
-                }
-               
+                }        
             })
             .catch(err => console.error(err.message))
             .finally(() => {
