@@ -6,10 +6,23 @@ export interface IDSubmodel {
     SerialNumber?: string,
     TypThumbnail?: string,
 }
+
+export interface CCISubmodel {
+    ERRMSG?: string,
+    EXST?: string,
+    EXMODE?: string,
+    ERRCODE?: number,
+    OPMODE?: string,
+    OCCST?: string,
+    WORKST?: string
+}
+
 export interface AssetsState {
     assets: {
         [idShort: string]: {
-            idSubmodelEndpoint: string,
+            IdentificationSubmodelEndpoint: string,
+            ControlComponentInterfaceSubmodelEndpoint?: string,
+            ControlComponentConfigurationSubmodelEndpoint?: string,
         }
     },
     assetsList: [],
