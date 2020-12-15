@@ -10,7 +10,8 @@ const state: AssetsState = {
 }
 
 const getters: GetterTree<AssetsState, RootState> = {
-    allAssets: (state) => state.assets
+    allAssets: (state) => state.assets,
+    assetsList: (state) => state.assetsList,
 }
 
 const actions: ActionTree<AssetsState, RootState> = {

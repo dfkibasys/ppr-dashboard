@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(device, index) in allDevices" :key="device.componentId">
+      <!-- <div class="card" v-for="(device, index) in allDevices" :key="device.componentId">
         <div class="card-header">
           <h5 class="card-title">{{device.componentName}}</h5>
           <b-button
@@ -43,6 +43,37 @@
             </div>
           </div>
         </div>
+      </div> -->
+
+      <div class="card" v-for="(idShort, index) in assetsList" :key="assetsList[index]">
+        <div class="card-header">
+          <h5 class="card-title">{{idShort}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-4 image">
+                <img :src="allAssets[idShort].TypThumbnail" />
+              </div>
+              <div class="col-3">
+                {{$t("card.type")}}:
+                <br />
+                {{$t("card.manufacturer")}}:
+                <br />
+                {{$t("card.serial")}}:
+                <br />
+              </div>
+              <div class="col-5 properties">
+                <a target="_blank" :href="allAssets[idShort].Documentation">{{allAssets[idShort].ManufacturerProductDesignation}}</a>
+                <br />
+                {{allAssets[idShort].ManufacturerName}}
+                <br />
+                {{allAssets[idShort].SerialNumber}}
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <br />
@@ -65,7 +96,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     PackML,
     CapabilityOverview
   },
-  computed: mapGetters(["allDevices"]),
+  computed: mapGetters(["allDevices", "allAssets", "assetsList"]),
   data() {
     return {
       openedIndex: 0

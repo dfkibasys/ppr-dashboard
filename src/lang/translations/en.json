@@ -48,7 +48,8 @@
       "location": "Location",
       "serial": "Serial",
       "capability": "Capability",
-      "show": "Show"
+      "show": "Show",
+      "manufacturer": "Producer"
     },
     "process": {
       "processDefinition": "Process Definition | Process Definitions",

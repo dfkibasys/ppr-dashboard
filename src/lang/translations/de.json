@@ -34,7 +34,8 @@
       "location": "Ort",
       "serial": "Seriennr.",
       "capability": "Fähigkeit",
-      "show": "Anzeigen"
+      "show": "Anzeigen",
+      "manufacturer": "Hersteller"
     },
     "process": {
     }
