@@ -33,7 +33,6 @@ import * as mxgraph from "mxgraph";
 import axios from "axios";
 import {mapGetters} from "vuex";
 import { Data, Methods, Computed, Props } from "@/interfaces/IPackML"
-import { DevicesState } from '@/interfaces/DevicesState';
 
 const {
   mxClient,
@@ -64,9 +63,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   props: {
-    openedDeviceIndex: Number
+    openedIdShort: String
   },
-  computed: mapGetters(["allDevices"]),
+  computed: mapGetters(["allAssets"]),
   methods: {
     initGraph: function() {
       let that = this;
@@ -108,10 +107,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             }
           })(div);
 
-          this.markCurrentState(this.allDevices[this.openedDeviceIndex].currentState);
+          this.markCurrentState(this.allAssets[this.openedIdShort].EXST);
           this.xmlLoaded = true;
         });
       }
+      this.setModeButton(this.allAssets);
     },
     markCurrentState: function(state) {
       let that = this;
@@ -145,66 +145,62 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     clear: function() {
       this.xmlLoaded = false;
     },
-    stopButton: function() {
-      let msg = {
-        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        controlCommand: "STOP"
-      };
+    setModeButton: function(allAssets){
+        //set mode toggle button
+        this.selected = allAssets[this.openedIdShort].EXMODE;
 
-      this.$mqtt.publish("basys/components/command", msg);
+        //avoid mode switching when not in stopped state
+        if (allAssets[this.openedIdShort].EXST !== "STOPPED") {
+          this.options.map(val => {
+            if (val.value !== this.selected) {
+              val.disabled = true;
+            } else {
+              val.disabled = false;
+            }
+          });
+        } else {
+          this.options.map(val => {
+            val.disabled = false;
+          });
+        }
+    },
+    stopButton: function() {
+      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/Stop`);
     },
     resetButton: function() {
-      let msg = {
-        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        controlCommand: "RESET"
-      };
-      
-      this.$mqtt.publish("basys/components/command", msg);
+      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/Reset`);
     },
     modeButton: function(value) {
-      let msg = {
-        eClass:
-          "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        mode: value
-      };
+      // let msg = {
+      //   eClass:
+      //     "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
+      //   componentId: this.allDevices[this.openedDeviceIndex].componentId,
+      //   mode: value
+      // };
 
-      this.$mqtt.publish("basys/components/command", msg);
+      // this.$mqtt.publish("basys/components/command", msg);
     }
   },
   watch: {
-    allDevices: function(val) {
-      //set mode toggle button
-      this.selected = val[this.openedDeviceIndex].currentMode;
+    allAssets: 
+    {
+      deep: true,
+      handler(val) {
+        if (this.xmlLoaded) {
 
-      //avoid mode switching when not in stopped state
-      if (val[this.openedDeviceIndex].currentState !== "STOPPED") {
-        this.options.map(val => {
-          if (val.value !== this.selected) {
-            val.disabled = true;
-          } else {
-            val.disabled = false;
-          }
-        });
-      } else {
-        this.options.map(val => {
-          val.disabled = false;
-        });
-      }
+          this.setModeButton(val);
 
-      //set state cell
-      if (this.xmlLoaded) {
-        //set old cell border to previous color
-        this.graph.setCellStyles(
-          mxConstants.STYLE_STROKECOLOR,
-          this.oldBorderColor,
-          [this.currentCell]
-        );
-        //set new cell border to red
-        this.markCurrentState(val[this.openedDeviceIndex].currentState);
-      }
+          //set state cell
+          //set old cell border to previous color
+          this.graph.setCellStyles(
+            mxConstants.STYLE_STROKECOLOR,
+            this.oldBorderColor,
+            [this.currentCell]
+          );
+          //set new cell border to red
+          this.markCurrentState(val[this.openedIdShort].EXST);
+        }
+    }
     }
   }
 });

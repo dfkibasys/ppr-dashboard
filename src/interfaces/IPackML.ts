@@ -1,5 +1,6 @@
 import { Device } from "@/interfaces/DevicesState"
 
+
 interface options {
     text: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
     value: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
@@ -19,15 +20,16 @@ export interface Methods {
     initGraph(): void,
     markCurrentState(state: string): void,
     clear(): void,
+    setModeButton(allAssets: object): void,
     stopButton(): void,
     resetButton(): void,
     modeButton(value: string): void
 }
 
 export interface Computed {
-    allDevices(val: Device[]): Device[]
+    allAssets(val: any): any, //TODO
 }
 
 export interface Props {
-    openedDeviceIndex: number
+    openedIdShort: string
 }
