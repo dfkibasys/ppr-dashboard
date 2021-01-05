@@ -2,7 +2,7 @@
     "navbar": {
       "language": "Sprache",
       "change": "Ändern",
-      "devices": "Geräte",
+      "devices": "Führungskomponenten",
       "services": "Services",
       "management": "Management",
       "processes": "Prozesse",
@@ -12,7 +12,7 @@
     "modal": {
       "close": "Schließen",
       "packML": {
-        "title": "PackML Automat"
+        "title": "Führungskomponente"
       },
       "capabilityOverview": {
         "title": "Fähigkeiten Übersicht",

@@ -2,7 +2,7 @@
     "navbar": {
       "language": "Language",
       "change": "Change",
-      "devices": "Devices",
+      "devices": "Control Components",
       "services": "Services",
       "management": "Management",
       "processes": "Processes",
@@ -12,7 +12,7 @@
     "modal": {
       "close": "Close",
       "packML": {
-        "title": "PackML Automaton"
+        "title": "Control Component"
       },
       "capabilityOverview": {
         "title": "Capability Overview",

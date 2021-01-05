@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(idShort, index) in assetsList" :key="assetsList[index]">
+      <div class="card" v-for="(idShort, index) in sortedAssetsList" :key="assetsList[index]">
         <div class="card-header">
           <h5 class="card-title">{{idShort}}</h5>
           <b-button
@@ -57,7 +57,24 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     PackML,
     CapabilityOverview
   },
-  computed: mapGetters(["allAssets", "assetsList"]),
+  computed: {
+    ...mapGetters(["allAssets", "assetsList"]),
+    sortedAssetsList: function(){
+      let that = this;
+
+      function compare(a, b) {
+        if (that.allAssets[a].EXST !== undefined){
+          return -1;
+        }
+        if (that.allAssets[b].EXST !== undefined){
+          return 1;
+        }
+        return 0;
+      }
+
+      return this.assetsList.sort(compare);
+    }
+  },
   data() {
     return {
       openedIndex: 0,

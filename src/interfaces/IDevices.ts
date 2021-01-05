@@ -1,6 +1,8 @@
 export interface Data {
     openedIndex: number,
     openedIdShort: string,
+    allAssets?: any, //TODO
+    assetsList?: any //TODO
 }
 export interface Methods {
     fetchDevices(vm: any): void,
