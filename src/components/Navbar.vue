@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light bg-light">
       <b-navbar-brand href="#">
         <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt />
-        <img src="@/assets/BaSys-Logo.png" width="150" alt />
+        <img src="@/assets/Logo_BaSys4_1024px-300x79.png" width="150" alt />
       </b-navbar-brand>
 
       <b-navbar-nav is-nav class="flex-row">
