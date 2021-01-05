@@ -65,13 +65,10 @@ const actions: ActionTree<AssetsState, RootState> = {
 
             let cci:CCISubmodel = {};
 
-             //remove domain from endpoint (temp. solution until CORS header are set in cc-server)
-             let urlSplit = state.assets[idShort].ControlComponentInterfaceSubmodelEndpoint?.split('/');
-             if(urlSplit == undefined) return;
+            let url = state.assets[idShort].ControlComponentInterfaceSubmodelEndpoint;
+            if (url == undefined) return;
 
-             let path = urlSplit?.splice(3, 2).join('/'); 
-
-            axios.get(`/cc/${path}/properties`).then(res => {
+            axios.get(`${url}/properties`).then(res => {
                 res.data.forEach( prop => {
                     cci[prop.idShort] = prop.value;
                 })

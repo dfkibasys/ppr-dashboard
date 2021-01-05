@@ -5,11 +5,6 @@ module.exports = {
             "^/engine-rest": {
                 target: process.env.VUE_APP_CAMUNDA_REST_URL,
             },
-            "^/cc": {
-                target: "http://127.0.0.1:5082",
-                pathRewrite: {"^/cc": ""}
-            }
-
         }          
     },
   }
