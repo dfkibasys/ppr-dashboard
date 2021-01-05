@@ -1,9 +1,6 @@
-import { Device } from "@/interfaces/DevicesState"
-
-
 interface options {
-    text: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
-    value: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
+    text: "AUTOMATIC" | "SEMI-AUTOMATIC" | "SIMULATE",
+    value: "AUTO" | "SEMIAUTO" | "SIMULATION",
     disabled: boolean
 }
 
@@ -12,7 +9,7 @@ export interface Data {
     oldBorderColor: string,
     currentCell: object,
     xmlLoaded: boolean,
-    selected: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
+    selected: "AUTO" | "SEMIAUTO" | "SIMULATION",
     options: options[]
 }
 

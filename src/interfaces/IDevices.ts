@@ -1,8 +1,6 @@
 export interface Data {
     openedIndex: number,
     openedIdShort: string,
-    allAssets?: any, //TODO
-    assetsList?: any //TODO
 }
 export interface Methods {
     fetchDevices(vm: any): void,
@@ -10,5 +8,9 @@ export interface Methods {
     openPackML(idShort: string): void,
     openCapabilityOverview(index: number): void
 }
-export interface Computed {}
+export interface Computed {
+    allAssets: any, //TODO
+    assetsList: [],
+    sortedAssetsList: [],
+}
 export interface Props {}

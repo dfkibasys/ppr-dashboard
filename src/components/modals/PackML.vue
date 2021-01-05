@@ -54,11 +54,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       oldBorderColor: "",
       currentCell: {},
       xmlLoaded: false,
-      selected: "PRODUCTION",
+      selected: "SIMULATION",
       options: [
-        { text: "PRODUCTION", value: "PRODUCTION", disabled: false },
-        { text: "CHANGEOVER", value: "CHANGEOVER", disabled: false },
-        { text: "SIMULATION", value: "SIMULATION", disabled: false }
+        { text: "AUTOMATIC", value: "AUTO", disabled: false },
+        { text: "SEMI-AUTOMATIC", value: "SEMIAUTO", disabled: false },
+        { text: "SIMULATE", value: "SIMULATION", disabled: false }
       ]
     };
   },
@@ -165,20 +165,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         }
     },
     stopButton: function() {
-      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/Stop`);
+      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/STOP`);
     },
     resetButton: function() {
-      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/Reset`);
+      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/RESET`);
     },
     modeButton: function(value) {
-      // let msg = {
-      //   eClass:
-      //     "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
-      //   componentId: this.allDevices[this.openedDeviceIndex].componentId,
-      //   mode: value
-      // };
-
-      // this.$mqtt.publish("basys/components/command", msg);
+      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/${value}`);
     }
   },
   watch: {
