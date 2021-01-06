@@ -23,6 +23,16 @@
               <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
             </b-col>
             <div class="w-100"></div>
+            <b-col>Registry URL:</b-col>
+            <b-col class="rest" cols="9">
+              <input class="form-control" v-model="registryUrl" />
+              <button
+                type="button"
+                class="btn btn-success"
+                @click="changeREGISTRYdata"
+              >{{$t('navbar.change')}}</button>
+            </b-col>
+            <div class="w-100"></div>
             <b-col>Broker URL:</b-col>
             <b-col class="rest" cols="9">
               <input class="form-control" v-model="mqttUrl" />
@@ -88,6 +98,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     //using a two-way computed property with a setter to mutate vuex states
+    registryUrl: {
+      get() {
+        return this.$store.getters.registryUrl;
+      },
+      set(value) {
+        this.$store.commit("setRegistryUrl", value);
+      }
+    },
     basysUrl: {
       get() {
         return this.$store.getters.basysUrl;
@@ -123,10 +141,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     }
   },
   methods: {
-    ...mapActions(["fetchDevices"]),
+    ...mapActions(["fetchDevices", "fetchAssets"]),
     changeMQTTdata() {
       this.$mqtt.end();
       this.$mqtt.connect();
+    },
+    changeREGISTRYdata(){
+      this.fetchAssets();
     },
     changeBASYSdata() {
       this.fetchDevices({vm: this});

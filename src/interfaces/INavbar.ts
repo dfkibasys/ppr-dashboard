@@ -7,10 +7,13 @@ export interface Data {
 }
 export interface Methods {
     fetchDevices(vm: any): void,
+    fetchAssets(): void,
     changeMQTTdata(): void,
-    changeBASYSdata(): void
+    changeBASYSdata(): void,
+    changeREGISTRYdata(): void,
 }
 export interface Computed {
+    registryUrl: string,
     basysUrl: string,
     mqttUrl: string,
     camundaUrl: string,
