@@ -7,7 +7,7 @@ export interface Data {
 }
 export interface Methods {
     fetchDevices(vm: any): void,
-    fetchAssets(): void,
+    fetchAssets(vm: any): void,
     changeMQTTdata(): void,
     changeBASYSdata(): void,
     changeREGISTRYdata(): void,

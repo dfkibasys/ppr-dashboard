@@ -4,7 +4,7 @@ export interface Data {
 }
 export interface Methods {
     fetchDevices(vm: any): void,
-    fetchAssets(): void,
+    fetchAssets(vm: any): void,
     openPackML(idShort: string): void,
     openCapabilityOverview(index: number): void
 }

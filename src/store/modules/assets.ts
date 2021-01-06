@@ -15,9 +15,11 @@ const getters: GetterTree<AssetsState, RootState> = {
 }
 
 const actions: ActionTree<AssetsState, RootState> = {
-    fetchAssets({commit, dispatch}){
+    fetchAssets({commit, dispatch}, { vm }){
         let assets:any = {};
         let assetsList:any = [];
+
+        vm.$Progress.start();
 
         axios.get(store.getters.registryUrl).then(res => {
 
@@ -35,15 +37,18 @@ const actions: ActionTree<AssetsState, RootState> = {
                 assetsList.push(idShort)
             }
         })
-        .catch(err => console.error(err.message))
+        .catch(err => {
+            console.error(err.message)
+            vm.$Progress.fail();
+        })
         .finally(() => {
             commit('setAssets', assets)
             commit('setAssetsList', assetsList)
-            dispatch('fetchIdSubmodels');
-            dispatch('fetchCCISubmodels');
+            dispatch('fetchIdSubmodels', { vm });
+            dispatch('fetchCCISubmodels', { vm });
         })
     },
-    fetchIdSubmodels({commit}){
+    fetchIdSubmodels({commit}, {vm}){
        state.assetsList.forEach(idShort => {
 
         let id:IDSubmodel = {};
@@ -53,14 +58,18 @@ const actions: ActionTree<AssetsState, RootState> = {
                 id[res.data.submodelElements[i].idShort] = res.data.submodelElements[i].value;
             }        
         })
-        .catch(err => console.error(err.message))
+        .catch(err => {
+            console.error(err.message)
+            vm.$Progress.fail();
+        })
         .finally(() => {
+            vm.$Progress.finish(); //TODO: finish only when fetchCCISubmodels's finally was triggered too
             commit('addSubmodel', {assetID: idShort, content: id});
         })
        })
     
     },
-    fetchCCISubmodels({commit}){
+    fetchCCISubmodels({commit}, {vm}){
         state.assetsList.forEach(idShort => {
 
             let cci:CCISubmodel = {};
@@ -73,7 +82,10 @@ const actions: ActionTree<AssetsState, RootState> = {
                     cci[prop.idShort] = prop.value;
                 })
             })
-            .catch(err => console.error(err.message))
+            .catch(err => {
+                console.error(err.message)
+                vm.$Progress.fail();
+            })
             .finally(() => {
                 commit('addSubmodel', {assetID: idShort, content: cci});
             })
