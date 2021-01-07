@@ -1,32 +1,32 @@
 export enum VarType {
-    Placeholder = "Type",
-    Boolean = "boolean",
-    String = "String",
-    Long = "Long"
+  Placeholder = 'Type',
+  Boolean = 'boolean',
+  String = 'String',
+  Long = 'Long',
 }
 
 export interface ProcessVariable {
-    id: number,
-    name: string,
-    type: VarType,
-    value: string
+  id: number;
+  name: string;
+  type: VarType;
+  value: string;
 }
 
 export interface Data {
-    businessKey: string,
-    processVariables: ProcessVariable[],
-    processVariableID: number,
-    typeOptions: VarType[],
-    boolOptions: string[]
+  businessKey: string;
+  processVariables: ProcessVariable[];
+  processVariableID: number;
+  typeOptions: VarType[];
+  boolOptions: string[];
 }
 export interface Methods {
-    addVariable(): void,
-    deleteVariable(id: number): void,
-    createInstance(): void,
-    checkFormVariables(): void
+  addVariable(): void;
+  deleteVariable(id: number): void;
+  createInstance(): void;
+  checkFormVariables(): void;
 }
 export interface Computed {
-    VarType: typeof VarType,
-    keyState: boolean
+  VarType: typeof VarType;
+  keyState: boolean;
 }
 export interface Props {}

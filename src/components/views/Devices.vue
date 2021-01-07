@@ -3,12 +3,13 @@
     <div class="cardContainer" id="deviceContainer">
       <div class="card" v-for="(idShort, index) in sortedAssetsList" :key="assetsList[index]">
         <div class="card-header">
-          <h5 class="card-title">{{idShort}}</h5>
+          <h5 class="card-title">{{ idShort }}</h5>
           <b-button
             v-if="allAssets[idShort].EXMODE"
             @click="openPackML(idShort)"
             class="btn btn-info float-right"
-          >{{allAssets[idShort].EXMODE}} - {{allAssets[idShort].EXST}}</b-button>
+            >{{ allAssets[idShort].EXMODE }} - {{ allAssets[idShort].EXST }}</b-button
+          >
         </div>
         <div class="card-body">
           <div class="container">
@@ -17,19 +18,21 @@
                 <img :src="allAssets[idShort].TypThumbnail" />
               </div>
               <div class="col-3">
-                {{$t("card.type")}}:
+                {{ $t('card.type') }}:
                 <br />
-                {{$t("card.manufacturer")}}:
+                {{ $t('card.manufacturer') }}:
                 <br />
-                {{$t("card.serial")}}:
+                {{ $t('card.serial') }}:
                 <br />
               </div>
               <div class="col-5 properties">
-                <a target="_blank" :href="allAssets[idShort].Documentation">{{allAssets[idShort].ManufacturerProductDesignation}}</a>
+                <a target="_blank" :href="allAssets[idShort].Documentation">{{
+                  allAssets[idShort].ManufacturerProductDesignation
+                }}</a>
                 <br />
-                {{allAssets[idShort].ManufacturerName}}
+                {{ allAssets[idShort].ManufacturerName }}
                 <br />
-                {{allAssets[idShort].SerialNumber}}
+                {{ allAssets[idShort].SerialNumber }}
                 <br />
               </div>
             </div>
@@ -45,65 +48,65 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import PackML from "@/components/modals/PackML.vue";
-import CapabilityOverview from "@/components/modals/CapabilityOverview.vue";
-import axios from "axios";
-import { mapGetters, mapActions } from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IDevices";
+import PackML from '@/components/modals/PackML.vue';
+import CapabilityOverview from '@/components/modals/CapabilityOverview.vue';
+import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IDevices';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "Devices",
+  name: 'Devices',
   components: {
     PackML,
-    CapabilityOverview
+    CapabilityOverview,
   },
   computed: {
-    ...mapGetters(["allAssets", "assetsList"]),
-    sortedAssetsList: function(){
+    ...mapGetters(['allAssets', 'assetsList']),
+    sortedAssetsList: function () {
       let that = this;
 
       function compare(a, b) {
-        if (that.allAssets[a].EXST !== undefined){
+        if (that.allAssets[a].EXST !== undefined) {
           return -1;
         }
-        if (that.allAssets[b].EXST !== undefined){
+        if (that.allAssets[b].EXST !== undefined) {
           return 1;
         }
         return 0;
       }
 
       return this.assetsList.sort(compare);
-    }
+    },
   },
   data() {
     return {
       openedIndex: 0,
-      openedIdShort: "",
+      openedIdShort: '',
     };
   },
   methods: {
-    ...mapActions(["fetchDevices", "fetchAssets"]),
-    openPackML: function(idShort) {
+    ...mapActions(['fetchDevices', 'fetchAssets']),
+    openPackML: function (idShort) {
       this.openedIdShort = idShort;
-      this.$bvModal.show("modal-pack");
+      this.$bvModal.show('modal-pack');
     },
-    openCapabilityOverview: function(index) {
+    openCapabilityOverview: function (index) {
       this.openedIndex = index;
-      this.$bvModal.show("modal-cap");
-    }
+      this.$bvModal.show('modal-cap');
+    },
   },
   created() {
     let that = this;
-    this.fetchAssets({vm: this});
+    this.fetchAssets({ vm: this });
 
-    this.$mqtt.subscribe("hybrit/devices");
+    this.$mqtt.subscribe('hybrit/devices');
 
     this.$mqtt.on((topic: string, message: string) => {
       let msg = JSON.parse(message.toString());
       console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
-      this.$store.commit("updateDevices", msg);
+      this.$store.commit('updateDevices', msg);
     });
-  }
+  },
 });
 </script>
 

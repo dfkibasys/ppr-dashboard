@@ -1,7 +1,7 @@
 <template>
   <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
     <template v-slot:modal-header>
-      <h5 class="modal-title">{{$t("modal.packML.title")}}</h5>
+      <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
 
       <b-button variant="danger" @click="stopButton">Stop</b-button>
       <b-button variant="warning" @click="resetButton">Reset</b-button>
@@ -19,20 +19,20 @@
       </b-form-group>
     </template>
 
-    <div class="mxgraph" ref="graphy" style="position:relative;overflow:auto;"></div>
+    <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
 
-    <template v-slot:modal-footer="{cancel}">
-      <b-button @click="cancel" variant="secondary">{{$t("modal.close")}}</b-button>
+    <template v-slot:modal-footer="{ cancel }">
+      <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
   </b-modal>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import * as mxgraph from "mxgraph";
-import axios from "axios";
-import {mapGetters} from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IPackML"
+import * as mxgraph from 'mxgraph';
+import axios from 'axios';
+import { mapGetters } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
 
 const {
   mxClient,
@@ -43,53 +43,52 @@ const {
   mxCodec,
   mxConstants,
   mxGraphModel,
-  mxGeometry
+  mxGeometry,
 } = mxgraph();
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "PackML",
+  name: 'PackML',
   data() {
     return {
       graph: {},
-      oldBorderColor: "",
+      oldBorderColor: '',
       currentCell: {},
       xmlLoaded: false,
-      selected: "SIMULATION",
+      selected: 'SIMULATION',
       options: [
-        { text: "AUTOMATIC", value: "AUTO", disabled: false },
-        { text: "SEMI-AUTOMATIC", value: "SEMIAUTO", disabled: false },
-        { text: "SIMULATE", value: "SIMULATION", disabled: false }
-      ]
+        { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
+        { text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
+        { text: 'SIMULATE', value: 'SIMULATION', disabled: false },
+      ],
     };
   },
   props: {
-    openedIdShort: String
+    openedIdShort: String,
   },
-  computed: mapGetters(["allAssets"]),
+  computed: mapGetters(['allAssets']),
   methods: {
-    initGraph: function() {
+    initGraph: function () {
       let that = this;
       if (mxClient.isBrowserSupported()) {
         let div = this.$refs.graphy;
-        axios.get("data/PackML.XML").then(resp => {
+        axios.get('data/PackML.XML').then((resp) => {
           let xml = resp.data;
 
           ((container: any) => {
-
             let xmlDocument = mxUtils.parseXml(xml);
 
             //decode method needs access to the following window params (VueJS hack)
-            (<any>window)["mxGraphModel"] = mxGraphModel;
-            (<any>window)["mxGeometry"] = mxGeometry;
+            (<any>window)['mxGraphModel'] = mxGraphModel;
+            (<any>window)['mxGeometry'] = mxGeometry;
 
             if (
               xmlDocument.documentElement != null &&
-              xmlDocument.documentElement.nodeName == "mxGraphModel"
+              xmlDocument.documentElement.nodeName == 'mxGraphModel'
             ) {
               let codec = new mxCodec(xmlDocument);
               let node = xmlDocument.documentElement;
 
-              container.innerHTML = "";
+              container.innerHTML = '';
 
               that.graph = new mxGraph(container);
               that.graph.setTooltips(true);
@@ -113,14 +112,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
       this.setModeButton(this.allAssets);
     },
-    markCurrentState: function(state) {
+    markCurrentState: function (state) {
       let that = this;
 
-      let vertices = that.graph.getChildCells(
-        that.graph.getDefaultParent(),
-        true,
-        false
-      );
+      let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
 
       for (let i = 0; i < vertices.length; i++) {
         if (vertices[i].value === state) {
@@ -134,70 +129,75 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           mxConstants.STYLE_STROKECOLOR
         ];
 
-        that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, "#F00", [
-          that.currentCell
-        ]);
+        that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, '#F00', [that.currentCell]);
       } else {
         console.error(`Current state ${state} not found.`);
-        that.oldBorderColor = "";
+        that.oldBorderColor = '';
       }
     },
-    clear: function() {
+    clear: function () {
       this.xmlLoaded = false;
     },
-    setModeButton: function(allAssets){
-        //set mode toggle button
-        this.selected = allAssets[this.openedIdShort].EXMODE;
+    setModeButton: function (allAssets) {
+      //set mode toggle button
+      this.selected = allAssets[this.openedIdShort].EXMODE;
 
-        //avoid mode switching when not in stopped state
-        if (allAssets[this.openedIdShort].EXST !== "STOPPED") {
-          this.options.map(val => {
-            if (val.value !== this.selected) {
-              val.disabled = true;
-            } else {
-              val.disabled = false;
-            }
-          });
-        } else {
-          this.options.map(val => {
+      //avoid mode switching when not in stopped state
+      if (allAssets[this.openedIdShort].EXST !== 'STOPPED') {
+        this.options.map((val) => {
+          if (val.value !== this.selected) {
+            val.disabled = true;
+          } else {
             val.disabled = false;
-          });
-        }
+          }
+        });
+      } else {
+        this.options.map((val) => {
+          val.disabled = false;
+        });
+      }
     },
-    stopButton: function() {
-      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/STOP`);
+    stopButton: function () {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/STOP`
+      );
     },
-    resetButton: function() {
-      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/RESET`);
+    resetButton: function () {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/RESET`
+      );
     },
-    modeButton: function(value) {
-      axios.get(`${this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint}/operations/${value}`);
-    }
+    modeButton: function (value) {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/${value}`
+      );
+    },
   },
   watch: {
-    allAssets: 
-    {
+    allAssets: {
       deep: true,
       handler(val) {
         if (this.xmlLoaded) {
-
           this.setModeButton(val);
 
           //set state cell
           //set old cell border to previous color
-          this.graph.setCellStyles(
-            mxConstants.STYLE_STROKECOLOR,
-            this.oldBorderColor,
-            [this.currentCell]
-          );
+          this.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, this.oldBorderColor, [
+            this.currentCell,
+          ]);
           //set new cell border to red
           this.markCurrentState(val[this.openedIdShort].EXST);
         }
-    }
-    }
-  }
+      },
+    },
+  },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

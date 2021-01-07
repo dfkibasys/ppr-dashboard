@@ -2,7 +2,7 @@
   <div class="cardContainer" id="managementContainer">
     <div class="card" v-for="management in managements" :key="management.componentId">
       <div class="card-header">
-        <h5 class="card-title">{{management.componentName}}</h5>
+        <h5 class="card-title">{{ management.componentName }}</h5>
       </div>
       <div class="card-body">
         <div class="container">
@@ -11,15 +11,15 @@
               <b-icon-gear-fill font-scale="7.5"></b-icon-gear-fill>
             </div>
             <div class="col-3">
-              {{$t("card.type")}}:
+              {{ $t('card.type') }}:
               <br />
-              {{$t("card.location")}}:
+              {{ $t('card.location') }}:
               <br />
             </div>
             <div class="col-5">
-              {{management.type}}
+              {{ management.type }}
               <br />
-              {{management.location}}
+              {{ management.location }}
               <br />
             </div>
           </div>
@@ -31,23 +31,23 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from "axios";
-import { mapGetters } from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IManagement";
+import axios from 'axios';
+import { mapGetters } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IManagement';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "Management",
+  name: 'Management',
   data() {
     return {
-      managements: []
+      managements: [],
     };
   },
-  computed: mapGetters(["basysUrl", "mockDataEnabled"]),
+  computed: mapGetters(['basysUrl', 'mockDataEnabled']),
   methods: {
-    loadInitialData: function(mockData, callback) {
+    loadInitialData: function (mockData, callback) {
       let that = this;
       let man_url = mockData
-        ? "/data/management_components.json"
+        ? '/data/management_components.json'
         : `${that.basysUrl}/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
@@ -55,32 +55,31 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .get(man_url)
-        .then(man => {
+        .then((man) => {
           this.$Progress.finish();
           //management
           management = man.data.map((val: any) => {
             // return element to new Array
             return {
               componentId: val.componentId,
-              type: "Management",
+              type: 'Management',
               componentName: val.componentName,
-              location: val.hostName
+              location: val.hostName,
             };
           });
 
           that.managements = management;
         })
-        .catch(err => {
+        .catch((err) => {
           this.$Progress.fail();
           console.error(err);
         });
-    }
+    },
   },
   mounted() {
     this.loadInitialData(this.mockDataEnabled);
-  }
+  },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
