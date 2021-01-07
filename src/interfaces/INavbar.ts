@@ -4,7 +4,6 @@ interface languages {
 }
 export interface Data {
   langs: languages[];
-  user: string;
 }
 export interface Methods {
   fetchDevices(vm: any): void;
@@ -20,5 +19,7 @@ export interface Computed {
   mqttUrl: string;
   camundaUrl: string;
   mockDataEnabled: boolean;
+  user: string;
+  authorized: boolean;
 }
 export interface Props {}

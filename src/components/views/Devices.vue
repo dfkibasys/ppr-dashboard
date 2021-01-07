@@ -62,7 +62,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     ...mapGetters(['allAssets', 'assetsList']),
-    sortedAssetsList: function () {
+    sortedAssetsList: function() {
       let that = this;
 
       function compare(a, b) {
@@ -86,11 +86,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   methods: {
     ...mapActions(['fetchDevices', 'fetchAssets']),
-    openPackML: function (idShort) {
+    openPackML: function(idShort) {
       this.openedIdShort = idShort;
       this.$bvModal.show('modal-pack');
     },
-    openCapabilityOverview: function (index) {
+    openCapabilityOverview: function(index) {
       this.openedIndex = index;
       this.$bvModal.show('modal-cap');
     },
@@ -104,6 +104,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     this.$mqtt.on((topic: string, message: string) => {
       let msg = JSON.parse(message.toString());
       console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
+      //TODO: replace commit with dispatch
       this.$store.commit('updateDevices', msg);
     });
   },

@@ -35,7 +35,15 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   methods: {
     login() {
-      console.log(`${this.user}:${this.password}`);
+      this.$store
+        .dispatch('loginUser', { user: this.user, password: this.password })
+        .then(() => {
+          console.log(`Login accepted`);
+          this.$bvModal.hide('modal-login');
+        })
+        .catch(() => {
+          console.log(`Login denied`);
+        });
     },
   },
 });

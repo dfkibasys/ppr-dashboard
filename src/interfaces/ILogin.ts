@@ -5,5 +5,8 @@ export interface Data {
 export interface Methods {
   login(): void;
 }
-export interface Computed {}
+export interface Computed {
+  hash(password: string): string;
+  verify(password: string, hash: string): boolean;
+}
 export interface Props {}

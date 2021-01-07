@@ -4,6 +4,7 @@ import { RootState } from '@/interfaces/RootState';
 import { endpoints } from './modules/endpoints';
 import { devices } from './modules/devices';
 import { assets } from './modules/assets';
+import { users } from './modules/users';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const store: StoreOptions<RootState> = {
     endpoints,
     devices,
     assets,
+    users,
   },
 };
 
