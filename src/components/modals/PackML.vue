@@ -22,6 +22,38 @@
     <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
 
     <template v-slot:modal-footer="{ cancel }">
+      <div class="mr-auto">
+        <span class="mr-1">{{ allAssets[openedIdShort].OCCST }}</span>
+        <span v-if="allAssets[openedIdShort].OCCST !== 'FREE'" class="mr-2"
+          >({{ allAssets[openedIdShort].OCCUPIER }})</span
+        >
+        <span v-if="isAuthorized">
+          <b-button
+            v-if="allAssets[openedIdShort].OCCST === 'FREE'"
+            variant="info"
+            @click="occupyButton"
+            >Occupy ({{ currentUser }})</b-button
+          >
+          <b-button
+            v-if="
+              allAssets[openedIdShort].OCCST === 'OCCUPIED' &&
+                allAssets[openedIdShort].OCCUPIER === currentUser
+            "
+            variant="info"
+            @click="freeButton"
+            >Free ({{ currentUser }})</b-button
+          >
+          <b-button
+            v-if="
+              allAssets[openedIdShort].OCCST === 'OCCUPIED' &&
+                allAssets[openedIdShort].OCCUPIER !== currentUser
+            "
+            variant="info"
+            @click="prioButton"
+            >Prio ({{ currentUser }})</b-button
+          >
+        </span>
+      </div>
       <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
   </b-modal>
@@ -65,9 +97,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   props: {
     openedIdShort: String,
   },
-  computed: mapGetters(['allAssets']),
+  computed: mapGetters(['allAssets', 'currentUser', 'isAuthorized']),
   methods: {
-    initGraph: function () {
+    initGraph: function() {
       let that = this;
       if (mxClient.isBrowserSupported()) {
         let div = this.$refs.graphy;
@@ -112,7 +144,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
       this.setModeButton(this.allAssets);
     },
-    markCurrentState: function (state) {
+    markCurrentState: function(state) {
       let that = this;
 
       let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
@@ -135,10 +167,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         that.oldBorderColor = '';
       }
     },
-    clear: function () {
+    clear: function() {
       this.xmlLoaded = false;
     },
-    setModeButton: function (allAssets) {
+    setModeButton: function(allAssets) {
       //set mode toggle button
       this.selected = allAssets[this.openedIdShort].EXMODE;
 
@@ -157,25 +189,46 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
       }
     },
-    stopButton: function () {
+    stopButton: function() {
       axios.get(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
         }/operations/STOP`
       );
     },
-    resetButton: function () {
+    resetButton: function() {
       axios.get(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
         }/operations/RESET`
       );
     },
-    modeButton: function (value) {
+    modeButton: function(value) {
       axios.get(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
         }/operations/${value}`
+      );
+    },
+    freeButton: function() {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/FREE`
+      );
+    },
+    occupyButton: function() {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/OCCUPY`
+      );
+    },
+    prioButton: function() {
+      axios.get(
+        `${
+          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+        }/operations/PRIO`
       );
     },
   },

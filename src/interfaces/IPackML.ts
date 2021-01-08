@@ -21,10 +21,14 @@ export interface Methods {
   stopButton(): void;
   resetButton(): void;
   modeButton(value: string): void;
+  freeButton(): void;
+  occupyButton(): void;
+  prioButton(): void;
 }
 
 export interface Computed {
   allAssets(val: any): any; //TODO
+  currentUser: string;
 }
 
 export interface Props {
