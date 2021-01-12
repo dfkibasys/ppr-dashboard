@@ -1,6 +1,6 @@
 interface options {
   text: 'AUTOMATIC' | 'SEMI-AUTOMATIC' | 'SIMULATE';
-  value: 'AUTO' | 'SEMIAUTO' | 'SIMULATION';
+  value: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
   disabled: boolean;
 }
 
@@ -9,7 +9,7 @@ export interface Data {
   oldBorderColor: string;
   currentCell: object;
   xmlLoaded: boolean;
-  selected: 'AUTO' | 'SEMIAUTO' | 'SIMULATION';
+  selected: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
   options: options[];
 }
 

@@ -88,11 +88,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       oldBorderColor: '',
       currentCell: {},
       xmlLoaded: false,
-      selected: 'SIMULATION',
+      selected: 'SIMULATE',
       options: [
         { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
         { text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
-        { text: 'SIMULATE', value: 'SIMULATION', disabled: false },
+        { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
       ],
     };
   },
@@ -173,8 +173,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.xmlLoaded = false;
     },
     setModeButton: function(allAssets) {
-      //set mode toggle button
-      this.selected = allAssets[this.openedIdShort].EXMODE;
+      //set mode toggle button (SIMULATION must be mapped to SIMULATE)
+      this.selected =
+        allAssets[this.openedIdShort].EXMODE == 'SIMULATION'
+          ? 'SIMULATE'
+          : allAssets[this.openedIdShort].EXMODE;
 
       //avoid mode switching when not in stopped state
       if (allAssets[this.openedIdShort].EXST !== 'STOPPED') {
@@ -192,52 +195,97 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
     },
     stopButton: function() {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/STOP`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/STOP`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
     },
     resetButton: function() {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/RESET`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/RESET`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
     },
     modeButton: function(value) {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/${value}`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/${value}`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
     },
     freeButton: function() {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/FREE`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/FREE`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedIdShort].OCCST = 'FREE';
+            this.allAssets[this.openedIdShort].OCCUPIER = 'INIT';
+          }
+        });
     },
     occupyButton: function() {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/OCCUPY`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/OCCUPY`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedIdShort].OCCST = 'OCCUPIED';
+            this.allAssets[this.openedIdShort].OCCUPIER = this.currentUser;
+          }
+        });
     },
     prioButton: function() {
-      axios.post(
-        `${
-          this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/PRIO`,
-        [this.currentUser]
-      );
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+          }/operations/PRIO`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedIdShort].OCCST = 'PRIORITY';
+            this.allAssets[this.openedIdShort].OCCUPIER = this.currentUser;
+          }
+        });
     },
   },
   watch: {
