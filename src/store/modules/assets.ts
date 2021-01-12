@@ -19,10 +19,14 @@ const actions: ActionTree<AssetsState, RootState> = {
     let assets: any = {};
     let assetsList: any = [];
 
+    let registry_url = store.getters.mockDataEnabled
+      ? '/data/registry.json'
+      : store.getters.registryUrl;
+
     vm.$Progress.start();
 
     axios
-      .get(store.getters.registryUrl)
+      .get(registry_url)
       .then((res) => {
         //asset loop
         for (let i = 0; i < res.data.length; i++) {
@@ -76,9 +80,10 @@ const actions: ActionTree<AssetsState, RootState> = {
 
       let url = state.assets[idShort].ControlComponentInterfaceSubmodelEndpoint;
       if (url == undefined) return;
+      let properties_url = store.getters.mockDataEnabled ? url : url + '/properties';
 
       axios
-        .get(`${url}/properties`)
+        .get(properties_url)
         .then((res) => {
           res.data.forEach((prop) => {
             cci[prop.idShort] = prop.value;

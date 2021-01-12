@@ -1,0 +1,194 @@
+[
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "WORKST",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "OCCST",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "PRIORITY",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "OCCUPIER",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "admin",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "ERRCODE",
+    "valueType": { "dataObjectType": { "name": "int" } },
+    "category": "",
+    "value": 0,
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "EXMODE",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "SIMULATION",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "ERRMSG",
+    "valueType": { "dataObjectType": { "name": "int" } },
+    "category": "",
+    "value": "OK",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "EXST",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "STOPPED",
+    "embeddedDataSpecifications": []
+  },
+  {
+    "parent": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Submodel",
+          "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1",
+          "local": true
+        }
+      ]
+    },
+    "semanticId": null,
+    "valueId": null,
+    "kind": null,
+    "dataSpecification": [],
+    "description": [],
+    "modelType": { "name": "Property" },
+    "constraints": null,
+    "idShort": "OPMODE",
+    "valueType": { "dataObjectType": { "name": "string" } },
+    "category": "",
+    "value": "BSTATE",
+    "embeddedDataSpecifications": []
+  }
+]

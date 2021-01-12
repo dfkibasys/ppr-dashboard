@@ -159,7 +159,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       },
       set(value) {
         this.$store.commit('switchMockDataState', value);
-        this.fetchDevices({ vm: this });
+        this.fetchAssets({ vm: this });
       },
     },
   },
