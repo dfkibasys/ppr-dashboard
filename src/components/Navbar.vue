@@ -14,9 +14,11 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto pr-3">
-        <b-button v-if="!authorized" size="sm" type="button" v-b-modal.modal-login>Login</b-button>
+        <b-button v-if="!authorized" size="sm" type="button" v-b-modal.modal-login>{{
+          $t('navbar.login')
+        }}</b-button>
         <b-nav-item-dropdown v-if="authorized" :text="user" right>
-          <b-dropdown-item @click="signout" href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="signout" href="#">{{ $t('navbar.logout') }}</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 

@@ -7,10 +7,13 @@
       "management": "Management",
       "processes": "Processes",
       "mockObjects": "Mock objects",
-      "info": "Only available for components"
+      "info": "Only available for components",
+      "login": "Login",
+      "logout": "Logout"
     },
     "modal": {
       "close": "Close",
+      "cancel": "Cancel",
       "packML": {
         "title": "Control Component"
       },
@@ -41,6 +44,12 @@
           },
           "create": "Create",
           "dontCreate": "Don't create"   
+      },
+      "login": {
+        "title": "Login",
+        "login": "Login",
+        "username": "Username",
+        "password": "Password"
       }
     },
     "card": {

@@ -7,10 +7,13 @@
       "management": "Management",
       "processes": "Prozesse",
       "mockObjects": "Mock-Objekte",
-      "info": "Nur für Komponenten verfügbar"
+      "info": "Nur für Komponenten verfügbar",
+      "login": "Anmelden",
+      "logout": "Abmelden"
     },
     "modal": {
       "close": "Schließen",
+      "cancel": "Abbrechen",
       "packML": {
         "title": "Führungskomponente"
       },
@@ -27,7 +30,13 @@
         "version": "Version",
         "summary": "Zusammenfassung"
       },
-      "createProcessInstance": {}
+      "createProcessInstance": {},
+      "login": {
+        "title": "Anmelden",
+        "login": "Anmelden",
+        "username": "Nutzername",
+        "password": "Passwort"
+      }
     },
     "card": {
       "type": "Typ",

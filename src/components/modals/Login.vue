@@ -1,22 +1,27 @@
 <template>
-  <b-modal id="modal-login" ref="modal" size="sm" title="Login">
+  <b-modal id="modal-login" ref="modal" size="sm" :title="$t('modal.login.title')">
     <b-input-group class="mb-2">
       <b-input-group-prepend>
         <b-icon-person font-scale="2" />
       </b-input-group-prepend>
-      <b-form-input placeholder="Username" v-model="user" required />
+      <b-form-input :placeholder="$t('modal.login.username')" v-model="user" required />
     </b-input-group>
 
     <b-input-group>
       <b-input-group-prepend>
         <b-icon-lock font-scale="2" />
       </b-input-group-prepend>
-      <b-form-input placeholder="Password" type="password" v-model="password" required />
+      <b-form-input
+        :placeholder="$t('modal.login.password')"
+        type="password"
+        v-model="password"
+        required
+      />
     </b-input-group>
 
     <template #modal-footer="{ cancel }">
-      <b-button @click="cancel">Cancel</b-button>
-      <b-button variant="primary" @click="login">Login</b-button>
+      <b-button @click="cancel">{{ $t('modal.cancel') }}</b-button>
+      <b-button variant="primary" @click="login">{{ $t('modal.login.login') }}</b-button>
     </template>
   </b-modal>
 </template>
