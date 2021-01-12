@@ -3,8 +3,8 @@
     <template v-slot:modal-header>
       <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
 
-      <b-button variant="danger" @click="stopButton">Stop</b-button>
-      <b-button variant="warning" @click="resetButton">Reset</b-button>
+      <b-button variant="danger" @click="stopButton" :disabled="!isAuthorized">Stop</b-button>
+      <b-button variant="warning" @click="resetButton" :disabled="!isAuthorized">Reset</b-button>
 
       <b-form-group>
         <b-form-radio-group
@@ -15,6 +15,7 @@
           buttons
           name="radios-btn-default"
           @change="modeButton"
+          :disabled="!isAuthorized"
         ></b-form-radio-group>
       </b-form-group>
     </template>
@@ -36,7 +37,8 @@
           >
           <b-button
             v-if="
-              allAssets[openedIdShort].OCCST === 'OCCUPIED' &&
+              (allAssets[openedIdShort].OCCST === 'PRIORITY' ||
+                allAssets[openedIdShort].OCCST === 'OCCUPIED') &&
                 allAssets[openedIdShort].OCCUPIER === currentUser
             "
             variant="info"
@@ -190,45 +192,51 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
     },
     stopButton: function() {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/STOP`
+        }/operations/STOP`,
+        [this.currentUser]
       );
     },
     resetButton: function() {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/RESET`
+        }/operations/RESET`,
+        [this.currentUser]
       );
     },
     modeButton: function(value) {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/${value}`
+        }/operations/${value}`,
+        [this.currentUser]
       );
     },
     freeButton: function() {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/FREE`
+        }/operations/FREE`,
+        [this.currentUser]
       );
     },
     occupyButton: function() {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/OCCUPY`
+        }/operations/OCCUPY`,
+        [this.currentUser]
       );
     },
     prioButton: function() {
-      axios.get(
+      axios.post(
         `${
           this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-        }/operations/PRIO`
+        }/operations/PRIO`,
+        [this.currentUser]
       );
     },
   },

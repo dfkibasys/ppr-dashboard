@@ -4,8 +4,8 @@ import { RootState } from '@/interfaces/RootState';
 import bcrypt from 'bcryptjs';
 
 const state: UsersState = {
-  loggedInUser: '',
-  authorized: false,
+  loggedInUser: 'admin',
+  authorized: true,
   hash: '$2a$10$V8BJ.Dhiw9t310rmSiGRgu7AXqsVEbsauGdWS6Y7xGSbX3.u6Hgo2',
 };
 
