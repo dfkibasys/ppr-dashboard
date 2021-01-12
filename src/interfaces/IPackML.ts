@@ -29,6 +29,7 @@ export interface Methods {
 export interface Computed {
   allAssets(val: any): any; //TODO
   currentUser: string;
+  isAuthorized: boolean;
 }
 
 export interface Props {

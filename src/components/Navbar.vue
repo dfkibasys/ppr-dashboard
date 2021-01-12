@@ -2,11 +2,11 @@
   <div>
     <nav class="navbar navbar-light bg-light">
       <b-navbar-brand href="#">
-        <img src="@/assets/logo_190_52_30jahre.png" class="mr-3" width="150" alt />
-        <img src="@/assets/Logo_BaSys4_1024px-300x79.png" width="150" alt />
+        <img src="@/assets/DFKI_Logo.png" class="mr-3" height="40" alt />
+        <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" alt />
       </b-navbar-brand>
 
-      <b-navbar-nav is-nav class="flex-row">
+      <b-navbar-nav is-nav class="flex-row ml-auto">
         <b-link class="pr-3" to="/devices">{{ $t('navbar.devices') }}</b-link>
         <b-link class="pr-3" to="/services">{{ $t('navbar.services') }}</b-link>
         <b-link class="pr-3" to="/management">{{ $t('navbar.management') }}</b-link>
