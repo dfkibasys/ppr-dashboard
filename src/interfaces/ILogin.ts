@@ -1,6 +1,8 @@
 export interface Data {
   user: string;
   password: string;
+  userState: boolean | null;
+  passwordState: boolean | null;
 }
 export interface Methods {
   login(): void;

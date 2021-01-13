@@ -4,7 +4,13 @@
       <b-input-group-prepend>
         <b-icon-person font-scale="2" />
       </b-input-group-prepend>
-      <b-form-input :placeholder="$t('modal.login.username')" v-model="user" required />
+      <b-form-input
+        id="input-username"
+        :placeholder="$t('modal.login.username')"
+        v-model="user"
+        :state="userState"
+        required
+      />
     </b-input-group>
 
     <b-input-group>
@@ -12,11 +18,16 @@
         <b-icon-lock font-scale="2" />
       </b-input-group-prepend>
       <b-form-input
+        id="input-password"
         :placeholder="$t('modal.login.password')"
         type="password"
         v-model="password"
+        :state="passwordState"
         required
       />
+      <b-form-invalid-feedback id="input-password-feedback">
+        {{ $t('modal.login.feedback') }}
+      </b-form-invalid-feedback>
     </b-input-group>
 
     <template #modal-footer="{ cancel }">
@@ -36,6 +47,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     return {
       user: '',
       password: '',
+      userState: null,
+      passwordState: null,
     };
   },
   methods: {
@@ -43,10 +56,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.$store
         .dispatch('loginUser', { user: this.user, password: this.password })
         .then(() => {
+          this.userState = null;
+          this.passwordState = null;
           console.log(`Login accepted`);
           this.$bvModal.hide('modal-login');
         })
         .catch(() => {
+          this.userState = false;
+          this.passwordState = false;
           console.log(`Login denied`);
         });
     },

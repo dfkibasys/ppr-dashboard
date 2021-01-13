@@ -1,51 +1,51 @@
 {
-    "navbar": {
-      "language": "Sprache",
-      "change": "Ändern",
-      "devices": "Führungskomponenten",
-      "services": "Services",
-      "management": "Management",
-      "processes": "Prozesse",
-      "mockObjects": "Mock-Objekte",
-      "info": "Nur für Komponenten verfügbar",
+  "navbar": {
+    "language": "Sprache",
+    "change": "Ändern",
+    "devices": "Führungskomponenten",
+    "services": "Services",
+    "management": "Management",
+    "processes": "Prozesse",
+    "mockObjects": "Mock-Objekte",
+    "info": "Nur für Komponenten verfügbar",
+    "login": "Anmelden",
+    "logout": "Abmelden"
+  },
+  "modal": {
+    "close": "Schließen",
+    "cancel": "Abbrechen",
+    "packML": {
+      "title": "Führungskomponente"
+    },
+    "capabilityOverview": {
+      "title": "Fähigkeiten Übersicht",
+      "name": "Name",
+      "status": "Status",
+      "remove": "Entfernen",
+      "teach": "Lernen"
+    },
+    "licences": {
+      "title": "Lizenzen",
+      "name": "Name",
+      "version": "Version",
+      "summary": "Zusammenfassung"
+    },
+    "createProcessInstance": {},
+    "login": {
+      "title": "Anmelden",
       "login": "Anmelden",
-      "logout": "Abmelden"
-    },
-    "modal": {
-      "close": "Schließen",
-      "cancel": "Abbrechen",
-      "packML": {
-        "title": "Führungskomponente"
-      },
-      "capabilityOverview": {
-        "title": "Fähigkeiten Übersicht",
-        "name": "Name",
-        "status": "Status",
-        "remove": "Entfernen",
-        "teach": "Lernen"
-      },
-      "licences": {
-        "title": "Lizenzen",
-        "name": "Name",
-        "version": "Version",
-        "summary": "Zusammenfassung"
-      },
-      "createProcessInstance": {},
-      "login": {
-        "title": "Anmelden",
-        "login": "Anmelden",
-        "username": "Nutzername",
-        "password": "Passwort"
-      }
-    },
-    "card": {
-      "type": "Typ",
-      "location": "Ort",
-      "serial": "Seriennr.",
-      "capability": "Fähigkeit",
-      "show": "Anzeigen",
-      "manufacturer": "Hersteller"
-    },
-    "process": {
+      "username": "Nutzername",
+      "password": "Passwort",
+      "feedback": "Nutzername/Passwort inkorrekt"
     }
+  },
+  "card": {
+    "type": "Typ",
+    "location": "Ort",
+    "serial": "Seriennr.",
+    "capability": "Fähigkeit",
+    "show": "Anzeigen",
+    "manufacturer": "Hersteller"
+  },
+  "process": {}
 }
