@@ -6,6 +6,7 @@ import Management from '@/components/views/Management.vue';
 import Processes from '@/components/views/Processes.vue';
 import ProcessesDetails from '@/components/views/processes/ProcessesDetails.vue';
 import ProcessesInstance from '@/components/views/processes/ProcessesInstance.vue';
+import Registry from '@/components/views/Registry.vue';
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/processes/:pid/instance/:iid',
       name: 'ProcessesInstance',
       component: ProcessesInstance,
+    },
+    {
+      path: '/registry',
+      name: 'Registry',
+      component: Registry,
     },
     { path: '*', redirect: '/devices' },
   ],
