@@ -6,7 +6,6 @@ export interface Data {
   langs: languages[];
 }
 export interface Methods {
-  fetchDevices(vm: any): void;
   fetchAssets(vm: any): void;
   changeMQTTdata(): void;
   changeBASYSdata(): void;

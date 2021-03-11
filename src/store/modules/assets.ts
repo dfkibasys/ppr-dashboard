@@ -117,6 +117,12 @@ const mutations: MutationTree<AssetsState> = {
     let data = JSON.parse(asset);
     console.log(data, state.assets[data.assetId]);
     state.assets[data.assetId].EXST = data.executionState;
+    state.assets[data.assetId].EXMODE = data.executionMode;
+    state.assets[data.assetId].ERRCODE = data.errorCode;
+    state.assets[data.assetId].ERRMSG = data.errorMessage;
+    state.assets[data.assetId].OCCST = data.occupationLevel;
+    state.assets[data.assetId].OPMODE = data.operationMode;
+    state.assets[data.assetId].WORKST = data.workState;
   },
 };
 

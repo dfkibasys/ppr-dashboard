@@ -42,22 +42,19 @@
     </div>
     <br />
     <PackML :opened-asset-id="openedAssetId"></PackML>
-    <!-- <CapabilityOverview :opened-device-index="openedIndex"></CapabilityOverview> -->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import PackML from '@/components/modals/PackML.vue';
-import CapabilityOverview from '@/components/modals/CapabilityOverview.vue';
 import { mapGetters, mapActions } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IDevices';
+import { Data, Methods, Computed, Props } from '@/interfaces/IAssets';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: 'Devices',
+  name: 'Assets',
   components: {
     PackML,
-    CapabilityOverview,
   },
   computed: {
     ...mapGetters(['allAssets', 'assetsList']),
@@ -84,14 +81,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   methods: {
-    ...mapActions(['fetchDevices', 'fetchAssets']),
+    ...mapActions(['fetchAssets']),
     openPackML: function(assetId) {
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
-    },
-    openCapabilityOverview: function(index) {
-      this.openedIndex = index;
-      this.$bvModal.show('modal-cap');
     },
   },
   created() {

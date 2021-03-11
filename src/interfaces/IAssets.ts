@@ -3,10 +3,8 @@ export interface Data {
   openedAssetId: string;
 }
 export interface Methods {
-  fetchDevices(vm: any): void;
   fetchAssets(vm: any): void;
-  openPackML(idShort: string): void;
-  openCapabilityOverview(index: number): void;
+  openPackML(assetId: string): void;
 }
 export interface Computed {
   allAssets: any; //TODO

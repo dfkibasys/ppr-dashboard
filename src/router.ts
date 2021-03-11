@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Devices from '@/components/views/Devices.vue';
+import Assets from '@/components/views/Assets.vue';
 import Services from '@/components/views/Services.vue';
 import Management from '@/components/views/Management.vue';
 import Processes from '@/components/views/Processes.vue';
@@ -12,9 +12,9 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/devices',
-      name: 'Devices',
-      component: Devices,
+      path: '/assets',
+      name: 'Assets',
+      component: Assets,
     },
     {
       path: '/services',
@@ -41,6 +41,6 @@ export default new Router({
       name: 'ProcessesInstance',
       component: ProcessesInstance,
     },
-    { path: '*', redirect: '/devices' },
+    { path: '*', redirect: '/assets' },
   ],
 });

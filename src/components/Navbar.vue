@@ -7,7 +7,7 @@
       </b-navbar-brand>
 
       <b-navbar-nav is-nav class="flex-row ml-auto">
-        <b-link class="pr-3" to="/devices">{{ $t('navbar.devices') }}</b-link>
+        <b-link class="pr-3" to="/assets">{{ $t('navbar.assets') }}</b-link>
         <b-link class="pr-3" to="/services">{{ $t('navbar.services') }}</b-link>
         <b-link class="pr-3" to="/management">{{ $t('navbar.management') }}</b-link>
         <b-link class="pr-3" to="/processes">{{ $t('navbar.processes') }}</b-link>
@@ -164,7 +164,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   methods: {
-    ...mapActions(['fetchDevices', 'fetchAssets']),
+    ...mapActions(['fetchAssets']),
     changeMQTTdata() {
       this.$mqtt.end();
       this.$mqtt.connect();
@@ -172,9 +172,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     changeREGISTRYdata() {
       this.fetchAssets({ vm: this });
     },
-    changeBASYSdata() {
-      this.fetchDevices({ vm: this });
-    },
+    changeBASYSdata() {},
     signout() {
       this.$store.dispatch('logoutUser');
     },

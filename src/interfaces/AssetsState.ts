@@ -22,7 +22,13 @@ export interface AssetsState {
       IdentificationSubmodelEndpoint: string;
       ControlComponentInterfaceSubmodelEndpoint?: string;
       ControlComponentConfigurationSubmodelEndpoint?: string;
+      ERRMSG?: string;
       EXST?: string;
+      EXMODE?: string;
+      ERRCODE?: number;
+      OPMODE?: string;
+      OCCST?: string;
+      WORKST?: string;
     };
   };
   assetsList: [];
