@@ -80,14 +80,15 @@ const actions: ActionTree<AssetsState, RootState> = {
 
       let url = state.assets[idShort].ControlComponentInterfaceSubmodelEndpoint;
       if (url == undefined) return;
-      let properties_url = store.getters.mockDataEnabled ? url : url + '/properties';
+      let properties_url = store.getters.mockDataEnabled ? url : url + '/values';
 
       axios
         .get(properties_url)
         .then((res) => {
-          res.data.forEach((prop) => {
-            cci[prop.idShort] = prop.value;
-          });
+          let status = res.data.Status;
+          for (const attr in status) {
+            cci[attr] = status[attr];
+          }
         })
         .catch((err) => {
           console.error(err.message);

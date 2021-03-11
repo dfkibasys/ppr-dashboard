@@ -199,7 +199,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/STOP`,
+          }/submodelElements/Operations/STOP/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -215,7 +215,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/RESET`,
+          }/submodelElements/Operations/RESET/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -231,7 +231,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/${value}`,
+          }/submodelElements/Operations/${value}/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -247,7 +247,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/FREE`,
+          }/submodelElements/Operations/FREE/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -262,7 +262,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/OCCUPY`,
+          }/submodelElements/Operations/OCCUPY/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -277,7 +277,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .post(
           `${
             this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
-          }/operations/PRIO`,
+          }/submodelElements/Operations/PRIO/invoke`,
           [this.currentUser]
         )
         .then((res) => {
