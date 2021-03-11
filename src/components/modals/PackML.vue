@@ -24,22 +24,22 @@
 
     <template v-slot:modal-footer="{ cancel }">
       <div class="mr-auto">
-        <span class="mr-1">{{ allAssets[openedIdShort].OCCST }}</span>
-        <span v-if="allAssets[openedIdShort].OCCST !== 'FREE'" class="mr-2"
-          >({{ allAssets[openedIdShort].OCCUPIER }})</span
+        <span class="mr-1">{{ allAssets[openedAssetId].OCCST }}</span>
+        <span v-if="allAssets[openedAssetId].OCCST !== 'FREE'" class="mr-2"
+          >({{ allAssets[openedAssetId].OCCUPIER }})</span
         >
         <span v-if="isAuthorized">
           <b-button
-            v-if="allAssets[openedIdShort].OCCST === 'FREE'"
+            v-if="allAssets[openedAssetId].OCCST === 'FREE'"
             variant="info"
             @click="occupyButton"
             >Occupy ({{ currentUser }})</b-button
           >
           <b-button
             v-if="
-              (allAssets[openedIdShort].OCCST === 'PRIORITY' ||
-                allAssets[openedIdShort].OCCST === 'OCCUPIED') &&
-                allAssets[openedIdShort].OCCUPIER === currentUser
+              (allAssets[openedAssetId].OCCST === 'PRIORITY' ||
+                allAssets[openedAssetId].OCCST === 'OCCUPIED') &&
+                allAssets[openedAssetId].OCCUPIER === currentUser
             "
             variant="info"
             @click="freeButton"
@@ -47,8 +47,8 @@
           >
           <b-button
             v-if="
-              allAssets[openedIdShort].OCCST === 'OCCUPIED' &&
-                allAssets[openedIdShort].OCCUPIER !== currentUser
+              allAssets[openedAssetId].OCCST === 'OCCUPIED' &&
+                allAssets[openedAssetId].OCCUPIER !== currentUser
             "
             variant="info"
             @click="prioButton"
@@ -97,7 +97,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   props: {
-    openedIdShort: String,
+    openedAssetId: String,
   },
   computed: mapGetters(['allAssets', 'currentUser', 'isAuthorized']),
   methods: {
@@ -140,7 +140,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             }
           })(div);
 
-          this.markCurrentState(this.allAssets[this.openedIdShort].EXST);
+          this.markCurrentState(this.allAssets[this.openedAssetId].EXST);
           this.xmlLoaded = true;
         });
       }
@@ -175,12 +175,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     setModeButton: function(allAssets) {
       //set mode toggle button (SIMULATION must be mapped to SIMULATE)
       this.selected =
-        allAssets[this.openedIdShort].EXMODE == 'SIMULATION'
+        allAssets[this.openedAssetId].EXMODE == 'SIMULATION'
           ? 'SIMULATE'
-          : allAssets[this.openedIdShort].EXMODE;
+          : allAssets[this.openedAssetId].EXMODE;
 
       //avoid mode switching when not in stopped state
-      if (allAssets[this.openedIdShort].EXST !== 'STOPPED') {
+      if (allAssets[this.openedAssetId].EXST !== 'STOPPED') {
         this.options.map((val) => {
           if (val.value !== this.selected) {
             val.disabled = true;
@@ -198,7 +198,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/STOP/invoke`,
           [this.currentUser]
         )
@@ -214,7 +214,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/RESET/invoke`,
           [this.currentUser]
         )
@@ -230,7 +230,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/${value}/invoke`,
           [this.currentUser]
         )
@@ -246,14 +246,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/FREE/invoke`,
           [this.currentUser]
         )
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedIdShort].OCCST = 'FREE';
-            this.allAssets[this.openedIdShort].OCCUPIER = 'INIT';
+            this.allAssets[this.openedAssetId].OCCST = 'FREE';
+            this.allAssets[this.openedAssetId].OCCUPIER = 'INIT';
           }
         });
     },
@@ -261,14 +261,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/OCCUPY/invoke`,
           [this.currentUser]
         )
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedIdShort].OCCST = 'OCCUPIED';
-            this.allAssets[this.openedIdShort].OCCUPIER = this.currentUser;
+            this.allAssets[this.openedAssetId].OCCST = 'OCCUPIED';
+            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
           }
         });
     },
@@ -276,14 +276,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedIdShort].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
           }/submodelElements/Operations/PRIO/invoke`,
           [this.currentUser]
         )
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedIdShort].OCCST = 'PRIORITY';
-            this.allAssets[this.openedIdShort].OCCUPIER = this.currentUser;
+            this.allAssets[this.openedAssetId].OCCST = 'PRIORITY';
+            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
           }
         });
     },
@@ -301,7 +301,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             this.currentCell,
           ]);
           //set new cell border to red
-          this.markCurrentState(val[this.openedIdShort].EXST);
+          this.markCurrentState(val[this.openedAssetId].EXST);
         }
       },
     },

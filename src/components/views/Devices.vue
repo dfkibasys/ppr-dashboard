@@ -1,21 +1,21 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(idShort, index) in sortedAssetsList" :key="assetsList[index]">
+      <div class="card" v-for="(assetId, index) in sortedAssetsList" :key="assetsList[index]">
         <div class="card-header">
-          <h5 class="card-title">{{ idShort }}</h5>
+          <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
           <b-button
-            v-if="allAssets[idShort].EXMODE"
-            @click="openPackML(idShort)"
+            v-if="allAssets[assetId].EXMODE"
+            @click="openPackML(assetId)"
             class="btn btn-info float-right"
-            >{{ allAssets[idShort].EXMODE }} - {{ allAssets[idShort].EXST }}</b-button
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].EXST }}</b-button
           >
         </div>
         <div class="card-body">
           <div class="container">
             <div class="row">
               <div class="col-4 image">
-                <img :src="allAssets[idShort].TypThumbnail" />
+                <img :src="allAssets[assetId].TypThumbnail" />
               </div>
               <div class="col-3">
                 {{ $t('card.type') }}:
@@ -26,13 +26,13 @@
                 <br />
               </div>
               <div class="col-5 properties">
-                <a target="_blank" :href="allAssets[idShort].Documentation">{{
-                  allAssets[idShort].ManufacturerProductDesignation
+                <a target="_blank" :href="allAssets[assetId].Documentation">{{
+                  allAssets[assetId].ManufacturerProductDesignation
                 }}</a>
                 <br />
-                {{ allAssets[idShort].ManufacturerName }}
+                {{ allAssets[assetId].ManufacturerName }}
                 <br />
-                {{ allAssets[idShort].SerialNumber }}
+                {{ allAssets[assetId].SerialNumber }}
                 <br />
               </div>
             </div>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <br />
-    <PackML :opened-id-short="openedIdShort"></PackML>
+    <PackML :opened-asset-id="openedAssetId"></PackML>
     <!-- <CapabilityOverview :opened-device-index="openedIndex"></CapabilityOverview> -->
   </div>
 </template>
@@ -50,7 +50,6 @@
 import Vue from 'vue';
 import PackML from '@/components/modals/PackML.vue';
 import CapabilityOverview from '@/components/modals/CapabilityOverview.vue';
-import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IDevices';
 
@@ -81,13 +80,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return {
       openedIndex: 0,
-      openedIdShort: '',
+      openedAssetId: '',
     };
   },
   methods: {
     ...mapActions(['fetchDevices', 'fetchAssets']),
-    openPackML: function(idShort) {
-      this.openedIdShort = idShort;
+    openPackML: function(assetId) {
+      this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
     },
     openCapabilityOverview: function(index) {
@@ -99,13 +98,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     let that = this;
     this.fetchAssets({ vm: this });
 
-    this.$mqtt.subscribe('hybrit/devices');
-
     this.$mqtt.on((topic: string, message: string) => {
       let msg = JSON.parse(message.toString());
       console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
       //TODO: replace commit with dispatch
-      this.$store.commit('updateDevices', msg);
+      this.$store.commit('updateAsset', msg.payload);
     });
   },
 });

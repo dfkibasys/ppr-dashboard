@@ -33,5 +33,5 @@ export interface Computed {
 }
 
 export interface Props {
-  openedIdShort: string;
+  openedAssetId: string;
 }

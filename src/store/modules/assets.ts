@@ -30,16 +30,17 @@ const actions: ActionTree<AssetsState, RootState> = {
       .then((res) => {
         //asset loop
         for (let i = 0; i < res.data.length; i++) {
+          let assetId = res.data[i].asset.identification.id;
           let idShort = res.data[i].asset.idShort;
-          assets[idShort] = {};
+          assets[assetId] = { idShort };
 
           //submodel loop
           for (let j = 0; j < res.data[i].submodels.length; j++) {
             let submodel = res.data[i].submodels[j].semanticId.keys[0].value + 'SubmodelEndpoint'; // Identification or ControlComponentInterface/Configuration
-            assets[idShort][submodel] = res.data[i].submodels[j].endpoints[0].address;
+            assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
           }
 
-          assetsList.push(idShort);
+          assetsList.push(assetId);
         }
       })
       .catch((err) => {
@@ -54,11 +55,11 @@ const actions: ActionTree<AssetsState, RootState> = {
       });
   },
   fetchIdSubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((idShort) => {
+    state.assetsList.forEach((assetId) => {
       let id: IDSubmodel = {};
 
       axios
-        .get(state.assets[idShort].IdentificationSubmodelEndpoint)
+        .get(state.assets[assetId].IdentificationSubmodelEndpoint)
         .then((res) => {
           for (let i = 0; i < res.data.submodelElements.length; i++) {
             id[res.data.submodelElements[i].idShort] = res.data.submodelElements[i].value;
@@ -70,15 +71,15 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .finally(() => {
           vm.$Progress.finish(); //TODO: finish only when fetchCCISubmodels's finally was triggered too
-          commit('addSubmodel', { assetID: idShort, content: id });
+          commit('addSubmodel', { assetID: assetId, content: id });
         });
     });
   },
   fetchCCISubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((idShort) => {
+    state.assetsList.forEach((assetId) => {
       let cci: CCISubmodel = {};
 
-      let url = state.assets[idShort].ControlComponentInterfaceSubmodelEndpoint;
+      let url = state.assets[assetId].ControlComponentInterfaceSubmodelEndpoint;
       if (url == undefined) return;
       let properties_url = store.getters.mockDataEnabled ? url : url + '/values';
 
@@ -89,13 +90,16 @@ const actions: ActionTree<AssetsState, RootState> = {
           for (const attr in status) {
             cci[attr] = status[attr];
           }
+
+          let topic = res.data.updateEvent.keys[0].value;
+          vm.$mqtt.subscribe(`${topic}/update`);
         })
         .catch((err) => {
           console.error(err.message);
           vm.$Progress.fail();
         })
         .finally(() => {
-          commit('addSubmodel', { assetID: idShort, content: cci });
+          commit('addSubmodel', { assetID: assetId, content: cci });
         });
     });
   },
@@ -109,6 +113,11 @@ const mutations: MutationTree<AssetsState> = {
       ...state.assets[newSubmodel.assetID],
       ...newSubmodel.content,
     }),
+  updateAsset: (state, asset) => {
+    let data = JSON.parse(asset);
+    console.log(data, state.assets[data.assetId]);
+    state.assets[data.assetId].EXST = data.executionState;
+  },
 };
 
 export const assets: Module<AssetsState, RootState> = {

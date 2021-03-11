@@ -18,10 +18,11 @@ export interface CCISubmodel {
 
 export interface AssetsState {
   assets: {
-    [idShort: string]: {
+    [assetId: string]: {
       IdentificationSubmodelEndpoint: string;
       ControlComponentInterfaceSubmodelEndpoint?: string;
       ControlComponentConfigurationSubmodelEndpoint?: string;
+      EXST?: string;
     };
   };
   assetsList: [];
