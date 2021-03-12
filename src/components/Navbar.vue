@@ -62,14 +62,14 @@
                 switch
               ></b-form-checkbox>
             </b-col>
-            <div class="w-100"></div>
+            <!-- <div class="w-100"></div>
             <b-col>BaSys URL:</b-col>
             <b-col class="rest" cols="9">
               <input class="form-control" v-model="basysUrl" />
               <button type="button" class="btn btn-success" @click="changeBASYSdata">{{
                 $t('navbar.change')
               }}</button>
-            </b-col>
+            </b-col> -->
             <div class="w-100"></div>
             <b-col>Camunda URL:</b-col>
             <b-col class="rest" cols="9">
