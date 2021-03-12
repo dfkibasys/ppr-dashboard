@@ -115,14 +115,14 @@ const mutations: MutationTree<AssetsState> = {
     }),
   updateAsset: (state, asset) => {
     let data = JSON.parse(asset);
-    console.log(data, state.assets[data.assetId]);
-    state.assets[data.assetId].EXST = data.executionState;
-    state.assets[data.assetId].EXMODE = data.executionMode;
-    state.assets[data.assetId].ERRCODE = data.errorCode;
-    state.assets[data.assetId].ERRMSG = data.errorMessage;
-    state.assets[data.assetId].OCCST = data.occupationLevel;
-    state.assets[data.assetId].OPMODE = data.operationMode;
-    state.assets[data.assetId].WORKST = data.workState;
+    let keyNames = Object.keys(data);
+
+    // if state property is part of update payload -> update state property
+    for (let attr in state.assets[data.assetId]) {
+      if (keyNames.includes(attr)) {
+        state.assets[data.assetId][attr] = data[attr];
+      }
+    }
   },
 };
 
