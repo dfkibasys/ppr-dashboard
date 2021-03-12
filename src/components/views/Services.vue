@@ -2,7 +2,7 @@
   <div class="cardContainer" id="serviceContainer">
     <div class="card" v-for="service in services" :key="service.componentId">
       <div class="card-header">
-        <h5 class="card-title">{{service.componentName}}</h5>
+        <h5 class="card-title">{{ service.componentName }}</h5>
       </div>
       <div class="card-body">
         <div class="container">
@@ -11,15 +11,15 @@
               <b-icon-gear-fill font-scale="7.5"></b-icon-gear-fill>
             </div>
             <div class="col-3">
-              {{$t("card.type")}}:
+              {{ $t('card.type') }}:
               <br />
-              {{$t("card.location")}}:
+              {{ $t('card.location') }}:
               <br />
             </div>
             <div class="col-5">
-              {{service.type}}
+              {{ service.type }}
               <br />
-              {{service.location}}
+              {{ service.location }}
               <br />
             </div>
           </div>
@@ -31,23 +31,23 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from "axios";
-import { mapGetters } from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IServices";
+import axios from 'axios';
+import { mapGetters } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IServices';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "Services",
+  name: 'Services',
   data() {
     return {
-      services: []
+      services: [],
     };
   },
-  computed: mapGetters(["basysUrl", "mockDataEnabled"]),
+  computed: mapGetters(['basysUrl', 'mockDataEnabled']),
   methods: {
-    loadInitialData: function(mockData, callback) {
+    loadInitialData: function (mockData, callback) {
       let that = this;
       let serv_url = mockData
-        ? "/data/service_components.json"
+        ? '/data/service_components.json'
         : `${that.basysUrl}/services/registry/SERVICE_COMPONENT`;
       let services = [];
 
@@ -55,32 +55,31 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .get(serv_url)
-        .then(serv => {
+        .then((serv) => {
           this.$Progress.finish();
           //services
           services = serv.data.map((val: any) => {
             // return element to new Array
             return {
               componentId: val.componentId,
-              type: "Service",
+              type: 'Service',
               componentName: val.componentName,
-              location: val.hostName
+              location: val.hostName,
             };
           });
 
           that.services = services;
         })
-        .catch(err => {
+        .catch((err) => {
           this.$Progress.fail();
           console.error(err);
         });
-    }
+    },
   },
   mounted() {
     this.loadInitialData(this.mockDataEnabled);
-  }
+  },
 });
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

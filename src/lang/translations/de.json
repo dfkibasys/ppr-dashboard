@@ -1,41 +1,51 @@
 {
-    "navbar": {
-      "language": "Sprache",
-      "change": "Ändern",
-      "devices": "Geräte",
-      "services": "Services",
-      "management": "Management",
-      "processes": "Prozesse",
-      "mockObjects": "Mock-Objekte",
-      "info": "Nur für Komponenten verfügbar"
+  "navbar": {
+    "language": "Sprache",
+    "change": "Ändern",
+    "assets": "Führungskomponenten",
+    "services": "Services",
+    "management": "Management",
+    "processes": "Prozesse",
+    "mockObjects": "Mock-Objekte",
+    "info": "Nur für Komponenten verfügbar",
+    "login": "Anmelden",
+    "logout": "Abmelden"
+  },
+  "modal": {
+    "close": "Schließen",
+    "cancel": "Abbrechen",
+    "packML": {
+      "title": "Führungskomponente"
     },
-    "modal": {
-      "close": "Schließen",
-      "packML": {
-        "title": "PackML Automat"
-      },
-      "capabilityOverview": {
-        "title": "Fähigkeiten Übersicht",
-        "name": "Name",
-        "status": "Status",
-        "remove": "Entfernen",
-        "teach": "Lernen"
-      },
-      "licences": {
-        "title": "Lizenzen",
-        "name": "Name",
-        "version": "Version",
-        "summary": "Zusammenfassung"
-      },
-      "createProcessInstance": {}
+    "capabilityOverview": {
+      "title": "Fähigkeiten Übersicht",
+      "name": "Name",
+      "status": "Status",
+      "remove": "Entfernen",
+      "teach": "Lernen"
     },
-    "card": {
-      "type": "Typ",
-      "location": "Ort",
-      "serial": "Seriennr.",
-      "capability": "Fähigkeit",
-      "show": "Anzeigen"
+    "licences": {
+      "title": "Lizenzen",
+      "name": "Name",
+      "version": "Version",
+      "summary": "Zusammenfassung"
     },
-    "process": {
+    "createProcessInstance": {},
+    "login": {
+      "title": "Anmelden",
+      "login": "Anmelden",
+      "username": "Nutzername",
+      "password": "Passwort",
+      "feedback": "Nutzername/Passwort inkorrekt"
     }
+  },
+  "card": {
+    "type": "Typ",
+    "location": "Ort",
+    "serial": "Seriennr.",
+    "capability": "Fähigkeit",
+    "show": "Anzeigen",
+    "manufacturer": "Hersteller"
+  },
+  "process": {}
 }

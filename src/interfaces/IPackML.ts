@@ -1,33 +1,37 @@
-import { Device } from "@/interfaces/DevicesState"
-
 interface options {
-    text: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
-    value: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
-    disabled: boolean
+  text: 'AUTOMATIC' | 'SEMI-AUTOMATIC' | 'SIMULATE';
+  value: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
+  disabled: boolean;
 }
 
 export interface Data {
-    graph: any, //since there is no mxgraph typescript support
-    oldBorderColor: string,
-    currentCell: object,
-    xmlLoaded: boolean,
-    selected: "PRODUCTION" | "CHANGEOVER" | "SIMULATION",
-    options: options[]
+  graph: any; //since there is no mxgraph typescript support
+  oldBorderColor: string;
+  currentCell: object;
+  xmlLoaded: boolean;
+  selected: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
+  options: options[];
 }
 
 export interface Methods {
-    initGraph(): void,
-    markCurrentState(state: string): void,
-    clear(): void,
-    stopButton(): void,
-    resetButton(): void,
-    modeButton(value: string): void
+  initGraph(): void;
+  markCurrentState(state: string): void;
+  clear(): void;
+  setModeButton(allAssets: object): void;
+  stopButton(): void;
+  resetButton(): void;
+  modeButton(value: string): void;
+  freeButton(): void;
+  occupyButton(): void;
+  prioButton(): void;
 }
 
 export interface Computed {
-    allDevices(val: Device[]): Device[]
+  allAssets(val: any): any; //TODO
+  currentUser: string;
+  isAuthorized: boolean;
 }
 
 export interface Props {
-    openedDeviceIndex: number
+  openedAssetId: string;
 }

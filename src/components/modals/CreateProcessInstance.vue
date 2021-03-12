@@ -5,7 +5,7 @@
     size="md"
     :title="$t('modal.createProcessInstance.title')"
   >
-    <label for="businessKeyInput">{{$t('modal.createProcessInstance.businessKey.label')}}</label>
+    <label for="businessKeyInput">{{ $t('modal.createProcessInstance.businessKey.label') }}</label>
     <b-form-input
       id="businessKeyInput"
       :state="keyState"
@@ -14,10 +14,9 @@
       :placeholder="$t('modal.createProcessInstance.businessKey.placeholder')"
       class="mb-2"
     ></b-form-input>
-    <b-form-invalid-feedback
-      id="input-live-feedback"
-      class="mb-2"
-    >{{$t('modal.createProcessInstance.businessKey.feedback')}}</b-form-invalid-feedback>
+    <b-form-invalid-feedback id="input-live-feedback" class="mb-2">{{
+      $t('modal.createProcessInstance.businessKey.feedback')
+    }}</b-form-invalid-feedback>
 
     <b-container class="p-0">
       <b-form-row class="mb-2" v-for="variable in processVariables" :key="variable.id">
@@ -28,7 +27,11 @@
           ></b-form-input>
         </b-col>
         <b-col>
-          <b-form-select v-model="variable.type" :options="typeOptions" placeholder="Type"></b-form-select>
+          <b-form-select
+            v-model="variable.type"
+            :options="typeOptions"
+            placeholder="Type"
+          ></b-form-select>
         </b-col>
         <b-col>
           <b-form-input
@@ -60,33 +63,40 @@
       </b-form-row>
     </b-container>
 
-    <b-button @click="addVariable">{{$t("modal.createProcessInstance.variable.button")}}</b-button>
+    <b-button @click="addVariable">{{
+      $t('modal.createProcessInstance.variable.button')
+    }}</b-button>
 
-    <template v-slot:modal-footer="{ok, cancel}">
-      <b-button @click="cancel">{{$t("modal.createProcessInstance.dontCreate")}}</b-button>
-      <b-button
-        :disabled="!keyState"
-        variant="success"
-        @click="ok"
-      >{{$t("modal.createProcessInstance.create")}}</b-button>
+    <template v-slot:modal-footer="{ ok, cancel }">
+      <b-button @click="cancel">{{ $t('modal.createProcessInstance.dontCreate') }}</b-button>
+      <b-button :disabled="!keyState" variant="success" @click="ok">{{
+        $t('modal.createProcessInstance.create')
+      }}</b-button>
     </template>
   </b-modal>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from "axios";
-import { Data, Methods, Computed, Props, VarType, ProcessVariable } from "@/interfaces/ICreateProcessInstance"
+import axios from 'axios';
+import {
+  Data,
+  Methods,
+  Computed,
+  Props,
+  VarType,
+  ProcessVariable,
+} from '@/interfaces/ICreateProcessInstance';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "CreateProcessInstance",
+  name: 'CreateProcessInstance',
   data() {
     return {
-      businessKey: "",
+      businessKey: '',
       processVariables: [],
       processVariableID: 0,
       typeOptions: [VarType.Placeholder, VarType.Boolean, VarType.String, VarType.Long],
-      boolOptions: ["true", "false"]
+      boolOptions: ['true', 'false'],
     };
   },
   computed: {
@@ -95,15 +105,15 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     keyState() {
       return this.businessKey.length > 0 ? true : false;
-    }
+    },
   },
   methods: {
     addVariable() {
       this.processVariables.push({
         id: this.processVariableID++,
-        name: "",
+        name: '',
         type: VarType.Placeholder,
-        value: ""
+        value: '',
       });
     },
     deleteVariable(id) {
@@ -116,7 +126,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         variables[v.name] = {
           value: v.value,
           type: v.type,
-          valueInfo: {}
+          valueInfo: {},
         };
       });
 
@@ -125,11 +135,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/start`,
           {
             businessKey: this.businessKey,
-            variables: variables
+            variables: variables,
           }
         )
-        .then(res => {
-          this.$emit("process-started");
+        .then((res) => {
+          this.$emit('process-started');
         });
     },
     checkFormVariables() {
@@ -138,24 +148,23 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         .get(
           `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/form-variables`
         )
-        .then(res => {
+        .then((res) => {
           let keys = Object.keys(res.data);
-          keys.forEach(key => {
+          keys.forEach((key) => {
             that.processVariables.push({
               id: that.processVariableID++,
               name: key,
               type: res.data[key].type,
-              value: res.data[key].value
+              value: res.data[key].value,
             });
           });
         });
-    }
+    },
   },
   created() {
     this.checkFormVariables();
-  }
+  },
 });
 </script>
 
-<style>
-</style>
+<style></style>

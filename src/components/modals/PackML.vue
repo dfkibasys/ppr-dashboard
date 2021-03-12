@@ -1,10 +1,10 @@
 <template>
   <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
     <template v-slot:modal-header>
-      <h5 class="modal-title">{{$t("modal.packML.title")}}</h5>
+      <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
 
-      <b-button variant="danger" @click="stopButton">Stop</b-button>
-      <b-button variant="warning" @click="resetButton">Reset</b-button>
+      <b-button variant="danger" @click="stopButton" :disabled="!isAuthorized">Stop</b-button>
+      <b-button variant="warning" @click="resetButton" :disabled="!isAuthorized">Reset</b-button>
 
       <b-form-group>
         <b-form-radio-group
@@ -15,25 +15,58 @@
           buttons
           name="radios-btn-default"
           @change="modeButton"
+          :disabled="!isAuthorized"
         ></b-form-radio-group>
       </b-form-group>
     </template>
 
-    <div class="mxgraph" ref="graphy" style="position:relative;overflow:auto;"></div>
+    <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
 
-    <template v-slot:modal-footer="{cancel}">
-      <b-button @click="cancel" variant="secondary">{{$t("modal.close")}}</b-button>
+    <template v-slot:modal-footer="{ cancel }">
+      <div class="mr-auto">
+        <span class="mr-1">{{ allAssets[openedAssetId].OCCST }}</span>
+        <span v-if="allAssets[openedAssetId].OCCST !== 'FREE'" class="mr-2"
+          >({{ allAssets[openedAssetId].OCCUPIER }})</span
+        >
+        <span v-if="isAuthorized">
+          <b-button
+            v-if="allAssets[openedAssetId].OCCST === 'FREE'"
+            variant="info"
+            @click="occupyButton"
+            >Occupy ({{ currentUser }})</b-button
+          >
+          <b-button
+            v-if="
+              (allAssets[openedAssetId].OCCST === 'PRIORITY' ||
+                allAssets[openedAssetId].OCCST === 'OCCUPIED') &&
+                allAssets[openedAssetId].OCCUPIER === currentUser
+            "
+            variant="info"
+            @click="freeButton"
+            >Free ({{ currentUser }})</b-button
+          >
+          <b-button
+            v-if="
+              allAssets[openedAssetId].OCCST === 'OCCUPIED' &&
+                allAssets[openedAssetId].OCCUPIER !== currentUser
+            "
+            variant="info"
+            @click="prioButton"
+            >Prio ({{ currentUser }})</b-button
+          >
+        </span>
+      </div>
+      <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
   </b-modal>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import * as mxgraph from "mxgraph";
-import axios from "axios";
-import {mapGetters} from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IPackML"
-import { DevicesState } from '@/interfaces/DevicesState';
+import * as mxgraph from 'mxgraph';
+import axios from 'axios';
+import { mapGetters } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
 
 const {
   mxClient,
@@ -44,53 +77,52 @@ const {
   mxCodec,
   mxConstants,
   mxGraphModel,
-  mxGeometry
+  mxGeometry,
 } = mxgraph();
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "PackML",
+  name: 'PackML',
   data() {
     return {
       graph: {},
-      oldBorderColor: "",
+      oldBorderColor: '',
       currentCell: {},
       xmlLoaded: false,
-      selected: "PRODUCTION",
+      selected: 'SIMULATE',
       options: [
-        { text: "PRODUCTION", value: "PRODUCTION", disabled: false },
-        { text: "CHANGEOVER", value: "CHANGEOVER", disabled: false },
-        { text: "SIMULATION", value: "SIMULATION", disabled: false }
-      ]
+        { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
+        { text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
+        { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
+      ],
     };
   },
   props: {
-    openedDeviceIndex: Number
+    openedAssetId: String,
   },
-  computed: mapGetters(["allDevices"]),
+  computed: mapGetters(['allAssets', 'currentUser', 'isAuthorized']),
   methods: {
     initGraph: function() {
       let that = this;
       if (mxClient.isBrowserSupported()) {
         let div = this.$refs.graphy;
-        axios.get("data/PackML.XML").then(resp => {
+        axios.get('data/PackML.XML').then((resp) => {
           let xml = resp.data;
 
           ((container: any) => {
-
             let xmlDocument = mxUtils.parseXml(xml);
 
             //decode method needs access to the following window params (VueJS hack)
-            (<any>window)["mxGraphModel"] = mxGraphModel;
-            (<any>window)["mxGeometry"] = mxGeometry;
+            (<any>window)['mxGraphModel'] = mxGraphModel;
+            (<any>window)['mxGeometry'] = mxGeometry;
 
             if (
               xmlDocument.documentElement != null &&
-              xmlDocument.documentElement.nodeName == "mxGraphModel"
+              xmlDocument.documentElement.nodeName == 'mxGraphModel'
             ) {
               let codec = new mxCodec(xmlDocument);
               let node = xmlDocument.documentElement;
 
-              container.innerHTML = "";
+              container.innerHTML = '';
 
               that.graph = new mxGraph(container);
               that.graph.setTooltips(true);
@@ -108,19 +140,16 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             }
           })(div);
 
-          this.markCurrentState(this.allDevices[this.openedDeviceIndex].currentState);
+          this.markCurrentState(this.allAssets[this.openedAssetId].EXST);
           this.xmlLoaded = true;
         });
       }
+      this.setModeButton(this.allAssets);
     },
     markCurrentState: function(state) {
       let that = this;
 
-      let vertices = that.graph.getChildCells(
-        that.graph.getDefaultParent(),
-        true,
-        false
-      );
+      let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
 
       for (let i = 0; i < vertices.length; i++) {
         if (vertices[i].value === state) {
@@ -134,54 +163,25 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           mxConstants.STYLE_STROKECOLOR
         ];
 
-        that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, "#F00", [
-          that.currentCell
-        ]);
+        that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, '#F00', [that.currentCell]);
       } else {
         console.error(`Current state ${state} not found.`);
-        that.oldBorderColor = "";
+        that.oldBorderColor = '';
       }
     },
     clear: function() {
       this.xmlLoaded = false;
     },
-    stopButton: function() {
-      let msg = {
-        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        controlCommand: "STOP"
-      };
-
-      this.$mqtt.publish("basys/components/command", msg);
-    },
-    resetButton: function() {
-      let msg = {
-        eClass: "http://www.dfki.de/iui/basys/model/component#//CommandRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        controlCommand: "RESET"
-      };
-      
-      this.$mqtt.publish("basys/components/command", msg);
-    },
-    modeButton: function(value) {
-      let msg = {
-        eClass:
-          "http://www.dfki.de/iui/basys/model/component#//ChangeModeRequest",
-        componentId: this.allDevices[this.openedDeviceIndex].componentId,
-        mode: value
-      };
-
-      this.$mqtt.publish("basys/components/command", msg);
-    }
-  },
-  watch: {
-    allDevices: function(val) {
-      //set mode toggle button
-      this.selected = val[this.openedDeviceIndex].currentMode;
+    setModeButton: function(allAssets) {
+      //set mode toggle button (SIMULATION must be mapped to SIMULATE)
+      this.selected =
+        allAssets[this.openedAssetId].EXMODE == 'SIMULATION'
+          ? 'SIMULATE'
+          : allAssets[this.openedAssetId].EXMODE;
 
       //avoid mode switching when not in stopped state
-      if (val[this.openedDeviceIndex].currentState !== "STOPPED") {
-        this.options.map(val => {
+      if (allAssets[this.openedAssetId].EXST !== 'STOPPED') {
+        this.options.map((val) => {
           if (val.value !== this.selected) {
             val.disabled = true;
           } else {
@@ -189,26 +189,124 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
       } else {
-        this.options.map(val => {
+        this.options.map((val) => {
           val.disabled = false;
         });
       }
+    },
+    stopButton: function() {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/STOP/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
+    },
+    resetButton: function() {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/RESET/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
+    },
+    modeButton: function(value) {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/${value}/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'ACCEPTED') {
+            console.log('Accepted');
+          } else if (res.data === 'REJECTED') {
+            console.log('Rejected');
+          }
+        });
+    },
+    freeButton: function() {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/FREE/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedAssetId].OCCST = 'FREE';
+            this.allAssets[this.openedAssetId].OCCUPIER = 'INIT';
+          }
+        });
+    },
+    occupyButton: function() {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/OCCUPY/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedAssetId].OCCST = 'OCCUPIED';
+            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
+          }
+        });
+    },
+    prioButton: function() {
+      axios
+        .post(
+          `${
+            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+          }/submodelElements/Operations/PRIO/invoke`,
+          [this.currentUser]
+        )
+        .then((res) => {
+          if (res.data === 'DONE') {
+            this.allAssets[this.openedAssetId].OCCST = 'PRIORITY';
+            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
+          }
+        });
+    },
+  },
+  watch: {
+    allAssets: {
+      deep: true,
+      handler(val) {
+        if (this.xmlLoaded) {
+          this.setModeButton(val);
 
-      //set state cell
-      if (this.xmlLoaded) {
-        //set old cell border to previous color
-        this.graph.setCellStyles(
-          mxConstants.STYLE_STROKECOLOR,
-          this.oldBorderColor,
-          [this.currentCell]
-        );
-        //set new cell border to red
-        this.markCurrentState(val[this.openedDeviceIndex].currentState);
-      }
-    }
-  }
+          //set state cell
+          //set old cell border to previous color
+          this.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, this.oldBorderColor, [
+            this.currentCell,
+          ]);
+          //set new cell border to red
+          this.markCurrentState(val[this.openedAssetId].EXST);
+        }
+      },
+    },
+  },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

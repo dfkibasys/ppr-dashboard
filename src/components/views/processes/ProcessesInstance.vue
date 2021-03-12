@@ -10,50 +10,53 @@
         </div>
         <b-list-group>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.instanceId')}}:</h5>
+            <h5 class="mb-0">{{ $t('process.instanceId') }}:</h5>
             <p class="mb-0">
               <b-link
                 :href="`${camundaUrl}/engine-rest/process-instance/${processInstance.id}`"
                 target="_blank"
-              >{{processInstance.id || "-"}}</b-link>
+                >{{ processInstance.id || '-' }}</b-link
+              >
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.businessKey')}}:</h5>
-            <p class="mb-0">{{processInstance.businessKey || "null"}}</p>
+            <h5 class="mb-0">{{ $t('process.businessKey') }}:</h5>
+            <p class="mb-0">{{ processInstance.businessKey || 'null' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.definitionVersion')}}:</h5>
-            <p class="mb-0">{{processDefinition.version || "null"}}</p>
+            <h5 class="mb-0">{{ $t('process.definitionVersion') }}:</h5>
+            <p class="mb-0">{{ processDefinition.version || 'null' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.definitionId')}}:</h5>
+            <h5 class="mb-0">{{ $t('process.definitionId') }}:</h5>
             <p class="mb-0">
               <b-link
                 :href="`${camundaUrl}/engine-rest/process-definition/${processInstance.processDefinitionId}`"
                 target="_blank"
-              >{{processInstance.processDefinitionId || "-"}}</b-link>
+                >{{ processInstance.processDefinitionId || '-' }}</b-link
+              >
             </p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.definitionKey')}}:</h5>
-            <p class="mb-0">{{processInstance.processDefinitionKey || "-"}}</p>
+            <h5 class="mb-0">{{ $t('process.definitionKey') }}:</h5>
+            <p class="mb-0">{{ processInstance.processDefinitionKey || '-' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.definitionName')}}:</h5>
-            <p class="mb-0">{{processInstance.processDefinitionName || "null"}}</p>
+            <h5 class="mb-0">{{ $t('process.definitionName') }}:</h5>
+            <p class="mb-0">{{ processInstance.processDefinitionName || 'null' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.tenantId')}}:</h5>
-            <p class="mb-0">{{processInstance.tenantId || "-"}}</p>
+            <h5 class="mb-0">{{ $t('process.tenantId') }}:</h5>
+            <p class="mb-0">{{ processInstance.tenantId || '-' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <h5 class="mb-0">{{$t('process.deploymentId')}}:</h5>
+            <h5 class="mb-0">{{ $t('process.deploymentId') }}:</h5>
             <p class="mb-0">
               <b-link
                 :href="`${camundaUrl}/engine-rest/deployment/${processDefinition.deploymentId}`"
                 target="_blank"
-              >{{processDefinition.deploymentId || "-"}}</b-link>
+                >{{ processDefinition.deploymentId || '-' }}</b-link
+              >
             </p>
           </b-list-group-item>
         </b-list-group>
@@ -86,22 +89,24 @@
               <template v-slot:head(durationInMillis)>{{ $t('process.duration') }}</template>
               <template v-slot:head(referenceTime)>{{ $t('process.referenceTime') }}</template>
               <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
-              <template
-                v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
-              <template
-                v-slot:cell(endTime)="value"
-              >{{value.item.endTime | moment($t('process.timeFormat'))}}</template>
-              <template
-                v-slot:cell(durationInMillis)="value"
-              >{{value.item.durationInMillis | duration('humanize')}}</template>
-              <template v-slot:cell(referenceTime)="value">{{value.item.referenceTime || "-"}}</template>
-              <template v-slot:empty>{{$t('process.emptyLogDataMessage')}}</template>
+              <template v-slot:cell(startTime)="value">{{
+                value.item.startTime | moment($t('process.timeFormat'))
+              }}</template>
+              <template v-slot:cell(endTime)="value">{{
+                value.item.endTime | moment($t('process.timeFormat'))
+              }}</template>
+              <template v-slot:cell(durationInMillis)="value">{{
+                value.item.durationInMillis | duration('humanize')
+              }}</template>
+              <template v-slot:cell(referenceTime)="value">{{
+                value.item.referenceTime || '-'
+              }}</template>
+              <template v-slot:empty>{{ $t('process.emptyLogDataMessage') }}</template>
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.variables')">
             <b-table hover striped :items="variables" :fields="variablesFields" show-empty>
-              <template v-slot:empty>{{$t('process.emptyVariablesMessage')}}</template>
+              <template v-slot:empty>{{ $t('process.emptyVariablesMessage') }}</template>
               <template v-slot:head(name)>{{ $t('process.name') }}</template>
               <template v-slot:head(value)>{{ $t('process.value') }}</template>
               <template v-slot:head(type)>{{ $t('process.type') }}</template>
@@ -112,10 +117,10 @@
               <template v-slot:head(message)>{{ $t('process.message') }}</template>
               <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
               <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
-              <template
-                v-slot:cell(startTime)="value"
-              >{{value.item.startTime | moment($t('process.timeFormat'))}}</template>
-              <template v-slot:empty>{{$t('process.emptyIncidentsMessage')}}</template>
+              <template v-slot:cell(startTime)="value">{{
+                value.item.startTime | moment($t('process.timeFormat'))
+              }}</template>
+              <template v-slot:empty>{{ $t('process.emptyIncidentsMessage') }}</template>
             </b-table>
           </b-tab>
         </b-tabs>
@@ -126,75 +131,75 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import BpmnDisplay from "@/components/views/processes/BpmnDisplay.vue";
-import axios from "axios";
-import { mapGetters } from "vuex";
-import { Data, Methods, Computed, Props } from "@/interfaces/IProcessesInstance";
+import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
+import axios from 'axios';
+import { mapGetters } from 'vuex';
+import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
-  name: "ProcessesInstance",
+  name: 'ProcessesInstance',
   components: {
-    BpmnDisplay
+    BpmnDisplay,
   },
   computed: {
-    ...mapGetters(["camundaUrl"]),
-    baseUrl: function() {
+    ...mapGetters(['camundaUrl']),
+    baseUrl: function () {
       return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
-    }
+    },
   },
   data() {
     return {
       bcItems: [
         {
-          text: this.$t("process.breadcrumb.overview"),
-          to: "/processes"
+          text: this.$t('process.breadcrumb.overview'),
+          to: '/processes',
         },
         {
-          text: this.$t("process.breadcrumb.definition"),
-          to: `/processes/${this.$route.params.pid}`
+          text: this.$t('process.breadcrumb.definition'),
+          to: `/processes/${this.$route.params.pid}`,
         },
         {
-          text: this.$t("process.breadcrumb.instance"),
-          to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`
-        }
+          text: this.$t('process.breadcrumb.instance'),
+          to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`,
+        },
       ],
       updateInterval: 500,
       intervalRef: 0,
       overlaysArr: [],
       processInstance: {},
       processDefinition: {},
-      processDefinitionXML: "",
+      processDefinitionXML: '',
       showLeftDetails: true,
       auditLog: [],
       auditFields: [
-        "activityName",
-        "startTime",
-        "endTime",
-        "durationInMillis",
-        "referenceTime",
-        "activityId"
+        'activityName',
+        'startTime',
+        'endTime',
+        'durationInMillis',
+        'referenceTime',
+        'activityId',
       ],
       variables: [],
-      variablesFields: ["name", "value", "type"],
+      variablesFields: ['name', 'value', 'type'],
       incidents: [],
-      incidentsFields: ["message", "startTime", "activityName"]
+      incidentsFields: ['message', 'startTime', 'activityName'],
     };
   },
   methods: {
-    handleError: function(err) {
-      console.error("failed to show diagram", err);
+    handleError: function (err) {
+      console.error('failed to show diagram', err);
     },
-    handleShown: function() {
-      console.log("diagram shown");
+    handleShown: function () {
+      console.log('diagram shown');
     },
     fetchLeftDetails(piid, pdid) {
       let that = this;
 
-      const fetchedDetails = function(resolve, reject){
+      const fetchedDetails = function (resolve, reject) {
         axios
           .all([
             axios.get(`${that.baseUrl}/history/process-instance/${piid}`),
-            axios.get(`${that.baseUrl}/process-definition/${pdid}`)
+            axios.get(`${that.baseUrl}/process-definition/${pdid}`),
           ])
           .then(
             axios.spread((pi, pd) => {
@@ -204,19 +209,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               resolve();
             })
           )
-          .catch(err => {
-           reject(err);
+          .catch((err) => {
+            reject(err);
           });
-      }
+      };
       return new Promise(fetchedDetails);
     },
     fetchBPMN(id) {
       let that = this;
 
-      const fetchedBPMN = function(resolve, reject){
+      const fetchedBPMN = function (resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}/xml`)
-          .then(res => {
+          .then((res) => {
             that.processDefinitionXML = res.data.bpmn20Xml;
 
             clearInterval(that.intervalRef);
@@ -225,12 +230,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             }, that.updateInterval);
             resolve();
           })
-          .catch(err => {
+          .catch((err) => {
             reject(err);
           });
-      }
+      };
       return new Promise(fetchedBPMN);
-
     },
     updateDiagram() {
       let that = this;
@@ -241,16 +245,16 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             params: {
               processDefinitionId: that.$route.params.pid,
               processInstanceId: that.$route.params.iid,
-              unfinished: true
-            }
+              unfinished: true,
+            },
           }),
           axios.get(`${that.baseUrl}/history/incident`, {
             params: {
               processDefinitionId: that.$route.params.pid,
               processInstanceId: that.$route.params.iid,
-              open: true
-            }
-          })
+              open: true,
+            },
+          }),
         ])
         .then(
           axios.spread((ais, incidents) => {
@@ -265,9 +269,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               let oID = overlays.add(val.activityId, {
                 position: {
                   bottom: 0,
-                  left: 0
+                  left: 0,
                 },
-                html: '<span class="badge badge-pill badge-primary">1</span>'
+                html: '<span class="badge badge-pill badge-primary">1</span>',
               });
               that.overlaysArr.push(oID);
             });
@@ -277,15 +281,15 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               let oID = overlays.add(val.activityId, {
                 position: {
                   bottom: 0,
-                  left: 30
+                  left: 30,
                 },
-                html: '<span class="badge badge-pill badge-danger">1</span>'
+                html: '<span class="badge badge-pill badge-danger">1</span>',
               });
               that.overlaysArr.push(oID);
             });
           })
         )
-        .catch(err => {
+        .catch((err) => {
           this.$Progress.fail();
           console.error(err);
         });
@@ -293,29 +297,29 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchTabContent() {
       let that = this;
 
-      const fetchedTabContent = function(resolve, reject){
+      const fetchedTabContent = function (resolve, reject) {
         axios
           .all([
             axios.get(`${that.baseUrl}/history/activity-instance`, {
               params: {
                 processDefinitionId: that.$route.params.pid,
                 processInstanceId: that.$route.params.iid,
-                sortBy: "startTime",
-                sortOrder: "asc"
-              }
+                sortBy: 'startTime',
+                sortOrder: 'asc',
+              },
             }),
             axios.get(`${that.baseUrl}/history/incident`, {
               params: {
                 processDefinitionId: that.$route.params.pid,
                 processInstanceId: that.$route.params.iid,
-                open: true
-              }
+                open: true,
+              },
             }),
             axios.get(`${that.baseUrl}/history/variable-instance`, {
               params: {
-                processInstanceId: that.$route.params.iid
-              }
-            })
+                processInstanceId: that.$route.params.iid,
+              },
+            }),
           ])
           .then(
             axios.spread((ai, incidents, vi) => {
@@ -328,27 +332,26 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   .get(`${that.baseUrl}/history/variable-instance`, {
                     params: {
                       processInstanceIdIn: that.$route.params.iid,
-                      activityInstanceIdIn: _a.id
-                    }
+                      activityInstanceIdIn: _a.id,
+                    },
                   })
-                  .then(res => {
-                    let v = res.data.find((v: any) => v.name == "referenceTime");
-                    that.$set(_a, "referenceTime", v ? v.value : null);
+                  .then((res) => {
+                    let v = res.data.find((v: any) => v.name == 'referenceTime');
+                    that.$set(_a, 'referenceTime', v ? v.value : null);
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     reject(err);
                   });
               });
-             resolve();
+              resolve();
             })
           )
-          .catch(err => {
+          .catch((err) => {
             reject(err);
           });
-      }
+      };
       return new Promise(fetchedTabContent);
-
-    }
+    },
   },
   created() {
     this.$Progress.start();
@@ -356,20 +359,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     Promise.all([
       this.fetchLeftDetails(this.$route.params.iid, this.$route.params.pid),
       this.fetchBPMN(this.$route.params.pid),
-      this.fetchTabContent()
+      this.fetchTabContent(),
     ])
-    .then(() => {
-      this.$Progress.finish();
-    })
-    .catch((err) => {
-      console.error(err);
-      this.$Progress.fail();
-    })
-
+      .then(() => {
+        this.$Progress.finish();
+      })
+      .catch((err) => {
+        console.error(err);
+        this.$Progress.fail();
+      });
   },
   beforeDestroy() {
     clearInterval(this.intervalRef);
-  }
+  },
 });
 </script>
 
