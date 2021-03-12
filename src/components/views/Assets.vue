@@ -76,7 +76,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   data() {
     return {
-      openedIndex: 0,
       openedAssetId: '',
     };
   },

@@ -1,5 +1,4 @@
 export interface Data {
-  openedIndex: number;
   openedAssetId: string;
 }
 export interface Methods {
