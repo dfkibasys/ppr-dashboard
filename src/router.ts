@@ -8,8 +8,9 @@ import ProcessesDetails from '@/components/views/processes/ProcessesDetails.vue'
 import ProcessesInstance from '@/components/views/processes/ProcessesInstance.vue';
 
 Vue.use(Router);
+const DEFAULT_TITLE = 'PPR Dashboard';
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/assets',
@@ -44,3 +45,11 @@ export default new Router({
     { path: '*', redirect: '/assets' },
   ],
 });
+
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+    document.title = to.meta.title || DEFAULT_TITLE;
+  });
+});
+
+export default router;
