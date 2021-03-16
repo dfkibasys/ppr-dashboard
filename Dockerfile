@@ -20,8 +20,10 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf
+#RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY --from=build-stage /app/docker-entrypoint.sh /
 
 EXPOSE 80
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
