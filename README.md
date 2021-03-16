@@ -70,7 +70,7 @@ Since the Docker production version uses nginx, relevant headers have been set a
 ```
 location /engine-rest/
 {
-    proxy_pass ${VUE_APP_AJAX_REQUEST_DOMAIN};
+    proxy_pass ${NGINX_PROXY};
 }
 ```
 

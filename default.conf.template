@@ -9,7 +9,7 @@ server {
 
    location /engine-rest/
    {
-      proxy_pass ${VUE_APP_AJAX_REQUEST_DOMAIN};
+      proxy_pass ${NGINX_PROXY};
 
       if ($request_method = 'OPTIONS') {
          add_header 'Access-Control-Allow-Origin' '*';
