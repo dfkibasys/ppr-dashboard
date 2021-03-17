@@ -17,13 +17,6 @@
     "packML": {
       "title": "Control Component"
     },
-    "capabilityOverview": {
-      "title": "Capability Overview",
-      "name": "Name",
-      "status": "Status",
-      "remove": "Remove",
-      "teach": "Teach"
-    },
     "licences": {
       "title": "Licences",
       "name": "Name",
