@@ -20,7 +20,7 @@ npm run build
 
 ## Docker
 
-Set the needed Registry/MQTT/Camunda URLS in .env file
+Set the needed Registry/MQTT/Camunda URLS in `.env` file
 
 ```
 VUE_APP_AAS_REGISTRY_URL=http://10.2.10.4:4999/api/v1/registry
