@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(assetId, index) in sortedAssetsList" :key="assetsList[index]">
+      <div class="card" v-for="(assetId, index) in assetsList" :key="assetsList[index]">
         <div class="card-header">
           <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
           <b-button
