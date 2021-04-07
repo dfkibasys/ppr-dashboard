@@ -5,10 +5,28 @@
         <div class="card-header">
           <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
           <b-button
-            v-if="allAssets[assetId].EXMODE"
+            v-if="allAssets[assetId].EXMODE === 'SIMULATE' && allAssets[assetId].ERRCODE == 0"
+            @click="openPackML(assetId)"
+            class="btn btn-secondary float-right"
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
+          >
+          <b-button
+            v-else-if="allAssets[assetId].EXMODE === 'SIMULATE' && allAssets[assetId].ERRCODE > 0"
+            @click="openPackML(assetId)"
+            class="btn btn-secondary float-right"
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
+          >
+          <b-button
+            v-else-if="allAssets[assetId].EXMODE === 'AUTO' && allAssets[assetId].ERRCODE == 0"
             @click="openPackML(assetId)"
             class="btn btn-info float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].EXST }}</b-button
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
+          >
+           <b-button
+            v-else-if="allAssets[assetId].EXMODE === 'AUTO' && allAssets[assetId].ERRCODE > 0"
+            @click="openPackML(assetId)"
+            class="btn btn-warning float-right"
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
           >
         </div>
         <div class="card-body">
@@ -102,7 +120,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 <style lang="scss" scoped>
 h5 {
-  width: 40%;
+  width: 30%;
   float: left;
 }
 </style>
