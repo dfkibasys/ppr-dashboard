@@ -5,28 +5,12 @@
         <div class="card-header">
           <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
           <b-button
-            v-if="allAssets[assetId].EXMODE === 'SIMULATE' && allAssets[assetId].ERRCODE == 0"
+            v-if="allAssets[assetId].EXMODE"
             @click="openPackML(assetId)"
-            class="btn btn-secondary float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
-          >
-          <b-button
-            v-else-if="allAssets[assetId].EXMODE === 'SIMULATE' && allAssets[assetId].ERRCODE > 0"
-            @click="openPackML(assetId)"
-            class="btn btn-secondary float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
-          >
-          <b-button
-            v-else-if="allAssets[assetId].EXMODE === 'AUTO' && allAssets[assetId].ERRCODE == 0"
-            @click="openPackML(assetId)"
-            class="btn btn-info float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
-          >
-           <b-button
-            v-else-if="allAssets[assetId].EXMODE === 'AUTO' && allAssets[assetId].ERRCODE > 0"
-            @click="openPackML(assetId)"
-            class="btn btn-warning float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{ allAssets[assetId].EXST }})</b-button
+            :class="buttonClass(assetId)"
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{
+              allAssets[assetId].EXST
+            }})</b-button
           >
         </div>
         <div class="card-body">
@@ -102,6 +86,18 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     openPackML: function(assetId) {
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
+    },
+    buttonClass: function(assetId) {
+      return {
+        btn: true,
+        'float-right': true,
+        'btn-secondary':
+          this.allAssets[assetId].EXMODE === 'SIMULATE' && this.allAssets[assetId].ERRCODE >= 0,
+        'btn-info':
+          this.allAssets[assetId].EXMODE === 'AUTO' && this.allAssets[assetId].ERRCODE === 0,
+        'btn-warning':
+          this.allAssets[assetId].EXMODE === 'AUTO' && this.allAssets[assetId].ERRCODE > 0,
+      };
     },
   },
   created() {
