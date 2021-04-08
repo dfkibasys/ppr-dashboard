@@ -7,7 +7,8 @@
           <b-button
             v-if="allAssets[assetId].EXMODE"
             @click="openPackML(assetId)"
-            :class="buttonClass(assetId)"
+            class="float-right"
+            :variant="buttonVariant(assetId)"
             >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{
               allAssets[assetId].EXST
             }})</b-button
@@ -87,17 +88,18 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
     },
-    buttonClass: function(assetId) {
-      return {
-        btn: true,
-        'float-right': true,
-        'btn-secondary':
-          this.allAssets[assetId].EXMODE === 'SIMULATE' && this.allAssets[assetId].ERRCODE >= 0,
-        'btn-info':
-          this.allAssets[assetId].EXMODE === 'AUTO' && this.allAssets[assetId].ERRCODE === 0,
-        'btn-warning':
-          this.allAssets[assetId].EXMODE === 'AUTO' && this.allAssets[assetId].ERRCODE > 0,
-      };
+    buttonVariant: function(assetId) {
+      if (this.allAssets[assetId].EXMODE === 'SIMULATE') {
+        return 'secondary';
+      } else if (this.allAssets[assetId].EXMODE === 'AUTO') {
+        if (this.allAssets[assetId].ERRCODE === 0) {
+          return 'info';
+        } else {
+          return 'warning';
+        }
+      }
+
+      return '';
     },
   },
   created() {
