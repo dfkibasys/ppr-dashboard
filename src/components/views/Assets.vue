@@ -7,8 +7,11 @@
           <b-button
             v-if="allAssets[assetId].EXMODE"
             @click="openPackML(assetId)"
-            class="btn btn-info float-right"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].EXST }}</b-button
+            class="float-right"
+            :variant="buttonVariant(assetId)"
+            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{
+              allAssets[assetId].EXST
+            }})</b-button
           >
         </div>
         <div class="card-body">
@@ -85,6 +88,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
     },
+    buttonVariant: function(assetId) {
+      if (this.allAssets[assetId].EXMODE === 'SIMULATE') {
+        return 'secondary';
+      } else if (this.allAssets[assetId].EXMODE === 'AUTO') {
+        if (this.allAssets[assetId].ERRCODE === 0) {
+          return 'info';
+        } else {
+          return 'warning';
+        }
+      }
+
+      return '';
+    },
   },
   created() {
     let that = this;
@@ -102,7 +118,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 <style lang="scss" scoped>
 h5 {
-  width: 40%;
+  width: 30%;
   float: left;
 }
 </style>

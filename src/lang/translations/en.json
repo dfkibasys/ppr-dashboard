@@ -15,7 +15,9 @@
     "close": "Close",
     "cancel": "Cancel",
     "packML": {
-      "title": "Control Component"
+      "title": "Control Component",
+      "occupationState": "Occupation State",
+      "operationMode": "Operation Mode"
     },
     "licences": {
       "title": "Licences",
