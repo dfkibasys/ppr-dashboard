@@ -24,7 +24,7 @@
 
     <template v-slot:modal-footer="{ cancel }">
       <div class="mr-auto">
-        <span class="mr-1">{{ allAssets[openedAssetId].OCCST }}</span>
+        <span class="mr-1">{{$t('modal.packML.occupationState')}}: {{ allAssets[openedAssetId].OCCST }}</span>
         <span v-if="allAssets[openedAssetId].OCCST !== 'FREE'" class="mr-2"
           >({{ allAssets[openedAssetId].OCCUPIER }})</span
         >
@@ -55,6 +55,9 @@
             >Prio ({{ currentUser }})</b-button
           >
         </span>
+      </div>
+      <div class="mr-auto">
+         <span class="mr-1">{{$t('modal.packML.operationMode')}}: {{ allAssets[openedAssetId].OPMODE }}</span>
       </div>
       <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>

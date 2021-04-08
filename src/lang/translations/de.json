@@ -15,7 +15,9 @@
     "close": "Schließen",
     "cancel": "Abbrechen",
     "packML": {
-      "title": "Führungskomponente"
+      "title": "Führungskomponente",
+      "occupationState": "Belegungszustand",
+      "operationMode": "Fahrweise"
     },
     "licences": {
       "title": "Lizenzen",
