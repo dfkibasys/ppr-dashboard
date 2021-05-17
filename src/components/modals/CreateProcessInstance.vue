@@ -1,7 +1,7 @@
 <template>
   <b-modal
     @ok="createInstance"
-    id="modal-instance"
+    :id="modalId"
     size="md"
     :title="$t('modal.createProcessInstance.title')"
   >
@@ -92,6 +92,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'CreateProcessInstance',
   data() {
     return {
+      modalId: 'modal-instance',
       businessKey: '',
       processVariables: [],
       processVariableID: 0,
@@ -144,6 +145,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     checkFormVariables() {
       let that = this;
+      that.processVariables = [];
+
       axios
         .get(
           `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/form-variables`
@@ -161,8 +164,17 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
     },
   },
-  created() {
-    this.checkFormVariables();
+  mounted() {
+    // update form variables (in case process definition version has changed)
+    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+      if (modalId === this.modalId) {
+        this.checkFormVariables();
+      }
+    });
+  },
+  beforeDestroy() {
+    // remove ALL listeners for that event
+    this.$root.$off('bv::modal::show');
   },
 });
 </script>
