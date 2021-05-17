@@ -13,6 +13,7 @@ export interface ProcessVariable {
 }
 
 export interface Data {
+  modalId: string;
   businessKey: string;
   processVariables: ProcessVariable[];
   processVariableID: number;
