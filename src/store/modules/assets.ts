@@ -36,7 +36,7 @@ const actions: ActionTree<AssetsState, RootState> = {
 
           //submodel loop
           for (let j = 0; j < res.data[i].submodels.length; j++) {
-            let submodel = res.data[i].submodels[j].semanticId.keys[0].value + 'SubmodelEndpoint'; // Identification or ControlComponentInterface/Configuration
+            let submodel = res.data[i].submodels[j].idShort + 'SubmodelEndpoint'; // Identification, Capability or ControlComponentInterface/Configuration
             assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
           }
 

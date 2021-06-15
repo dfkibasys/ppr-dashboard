@@ -18,7 +18,7 @@
           <div class="container">
             <div class="row">
               <div class="col-4 image">
-                <img :src="allAssets[assetId].TypThumbnail" />
+                <img :src="allAssets[assetId].TypeThumbnail" />
               </div>
               <div class="col-3">
                 {{ $t('card.type') }}:
@@ -35,7 +35,7 @@
                 <br />
                 {{ allAssets[assetId].ManufacturerName }}
                 <br />
-                {{ allAssets[assetId].SerialNumber }}
+                {{ allAssets[assetId].ProductNumber }}
                 <br />
               </div>
             </div>
