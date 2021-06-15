@@ -36,8 +36,15 @@ const actions: ActionTree<AssetsState, RootState> = {
 
           //submodel loop
           for (let j = 0; j < res.data[i].submodels.length; j++) {
-            let submodel = res.data[i].submodels[j].semanticId.keys[0].value + 'SubmodelEndpoint'; // Identification or ControlComponentInterface/Configuration
-            assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
+            let submodel = res.data[i].submodels[j].idShort + 'SubmodelEndpoint'; // Identification, Capability or ControlComponentInterface/Configuration
+
+            // emporary proxy workaround
+            let address = res.data[i].submodels[j].endpoints[0].address.replace(
+              /localhost:4001/i,
+              'localhost:8081'
+            );
+
+            assets[assetId][submodel] = address;
           }
 
           assetsList.push(assetId);
