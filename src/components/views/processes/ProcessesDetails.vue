@@ -158,6 +158,7 @@ import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
+import getEnv from '@/helpers/env';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesDetails',
@@ -167,8 +168,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     ...mapGetters(['camundaUrl']),
-    baseUrl: function () {
-      return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+    baseUrl: function() {
+      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
@@ -211,10 +212,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         params: { pid: this.$route.params.pid, iid: item.id },
       });
     },
-    handleError: function (err) {
+    handleError: function(err) {
       console.error('failed to show diagram', err);
     },
-    handleShown: function () {
+    handleShown: function() {
       console.log('diagram shown');
     },
     versionChange() {
@@ -266,7 +267,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchLeftDetails(id) {
       let that = this;
 
-      const fetchedDetails = function (resolve, reject) {
+      const fetchedDetails = function(resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}`)
           .then((res) => {
@@ -310,7 +311,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchBPMN(id) {
       let that = this;
 
-      const fetchedBPMN = function (resolve, reject) {
+      const fetchedBPMN = function(resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}/xml`)
           .then((res) => {
@@ -332,7 +333,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchTabContent(id) {
       let that = this;
 
-      const fetchedTabContent = function (resolve, reject) {
+      const fetchedTabContent = function(resolve, reject) {
         axios
           .all([
             axios.get(
