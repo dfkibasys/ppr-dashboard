@@ -31,7 +31,9 @@
             <h5 class="mb-0">{{ $t('process.definitionId') }}:</h5>
             <p class="mb-0">
               <b-link
-                :href="`${camundaUrl}/engine-rest/process-definition/${processInstance.processDefinitionId}`"
+                :href="
+                  `${camundaUrl}/engine-rest/process-definition/${processInstance.processDefinitionId}`
+                "
                 target="_blank"
                 >{{ processInstance.processDefinitionId || '-' }}</b-link
               >
@@ -135,6 +137,7 @@ import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
+import getEnv from '@/helpers/env';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesInstance',
@@ -143,8 +146,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     ...mapGetters(['camundaUrl']),
-    baseUrl: function () {
-      return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+    baseUrl: function() {
+      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
@@ -186,16 +189,16 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   methods: {
-    handleError: function (err) {
+    handleError: function(err) {
       console.error('failed to show diagram', err);
     },
-    handleShown: function () {
+    handleShown: function() {
       console.log('diagram shown');
     },
     fetchLeftDetails(piid, pdid) {
       let that = this;
 
-      const fetchedDetails = function (resolve, reject) {
+      const fetchedDetails = function(resolve, reject) {
         axios
           .all([
             axios.get(`${that.baseUrl}/history/process-instance/${piid}`),
@@ -218,7 +221,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchBPMN(id) {
       let that = this;
 
-      const fetchedBPMN = function (resolve, reject) {
+      const fetchedBPMN = function(resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}/xml`)
           .then((res) => {
@@ -297,7 +300,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchTabContent() {
       let that = this;
 
-      const fetchedTabContent = function (resolve, reject) {
+      const fetchedTabContent = function(resolve, reject) {
         axios
           .all([
             axios.get(`${that.baseUrl}/history/activity-instance`, {

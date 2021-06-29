@@ -48,7 +48,7 @@ const router = new Router({
 
 router.afterEach((to, from) => {
   Vue.nextTick(() => {
-    document.title = to.meta.title || DEFAULT_TITLE;
+    document.title = to?.meta?.title || DEFAULT_TITLE;
   });
 });
 

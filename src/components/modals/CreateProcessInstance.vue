@@ -79,6 +79,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
+import getEnv from '@/helpers/env';
+
 import {
   Data,
   Methods,
@@ -133,7 +135,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .post(
-          `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/start`,
+          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+            this.$route.params.pid
+          }/start`,
           {
             businessKey: this.businessKey,
             variables: variables,
@@ -149,7 +153,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .get(
-          `${process.env.VUE_APP_AJAX_REQUEST_DOMAIN}/process-definition/${this.$route.params.pid}/form-variables`
+          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+            this.$route.params.pid
+          }/form-variables`
         )
         .then((res) => {
           let keys = Object.keys(res.data);

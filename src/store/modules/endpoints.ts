@@ -1,12 +1,13 @@
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import EndpointsState from '@/interfaces/EndpointsState';
 import { RootState } from '@/interfaces/RootState';
+import getEnv from '@/helpers/env';
 
 const state: EndpointsState = {
-  BASYS_REST_URL: process.env.VUE_APP_BASYS_REST_URL,
-  MQTT_BROKER_URL: process.env.VUE_APP_MQTT_BROKER_URL,
-  CAMUNDA_REST_URL: process.env.VUE_APP_CAMUNDA_REST_URL,
-  REGISTRY_URL: process.env.VUE_APP_AAS_REGISTRY_URL,
+  BASYS_REST_URL: getEnv('VUE_APP_BASYS_REST_URL'),
+  MQTT_BROKER_URL: getEnv('VUE_APP_MQTT_BROKER_URL'),
+  CAMUNDA_REST_URL: getEnv('VUE_APP_CAMUNDA_REST_URL'),
+  REGISTRY_URL: getEnv('VUE_APP_AAS_REGISTRY_URL'),
   mockData: false,
 };
 const getters: GetterTree<EndpointsState, RootState> = {

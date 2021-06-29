@@ -51,7 +51,7 @@ In `vue.config.js` a proxy has been defined for the development server:
 
 ```
 devServer: {
-    proxy: process.env.VUE_APP_CAMUNDA_REST_URL
+    proxy: getEnv('VUE_APP_CAMUNDA_REST_URL')
 }
 ```
 
