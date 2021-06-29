@@ -21,7 +21,7 @@ FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 COPY --from=build-stage /app/default.conf.template /etc/nginx/conf.d/default.conf.template
-COPY --from=build-stage /app/docker-entrypoint.sh /usr/share/nginx/
+COPY --from=build-stage /app/entrypoint.sh /usr/share/nginx/
 
 EXPOSE 80
 ENTRYPOINT ["/usr/share/nginx/entrypoint.sh"]
