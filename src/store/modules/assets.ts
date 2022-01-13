@@ -36,7 +36,18 @@ const actions: ActionTree<AssetsState, RootState> = {
 
           //submodel loop
           for (let j = 0; j < res.data[i].submodels.length; j++) {
-            let submodel = res.data[i].submodels[j].idShort + 'SubmodelEndpoint'; // Identification, Capability or ControlComponentInterface/Configuration
+            let idShort = res.data[i].submodels[j].idShort;
+            let submodel = '';
+
+            if (idShort.includes('cc-instance')) {
+              submodel += 'CCInstance';
+            } else if (idShort.includes('cc-interface')) {
+              submodel += 'CCInterface';
+            } else {
+              submodel += idShort; // Identification or Capability
+            }
+            submodel += 'SubmodelEndpoint';
+
             assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
           }
 
@@ -51,7 +62,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         commit('setAssets', assets);
         commit('setAssetsList', assetsList);
         dispatch('fetchIdSubmodels', { vm });
-        dispatch('fetchCCISubmodels', { vm });
+        dispatch('fetchCCInterfaceSubmodels', { vm });
       });
   },
   fetchIdSubmodels({ commit }, { vm }) {
@@ -70,16 +81,16 @@ const actions: ActionTree<AssetsState, RootState> = {
           vm.$Progress.fail();
         })
         .finally(() => {
-          vm.$Progress.finish(); //TODO: finish only when fetchCCISubmodels's finally was triggered too
+          vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
           commit('addSubmodel', { assetID: assetId, content: id });
         });
     });
   },
-  fetchCCISubmodels({ commit }, { vm }) {
+  fetchCCInterfaceSubmodels({ commit }, { vm }) {
     state.assetsList.forEach((assetId) => {
       let cci: CCISubmodel = {};
 
-      let url = state.assets[assetId].ControlComponentInterfaceSubmodelEndpoint;
+      let url = state.assets[assetId].CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
       let properties_url = store.getters.mockDataEnabled ? url : url + '/values';
 
