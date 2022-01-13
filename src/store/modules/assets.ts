@@ -29,33 +29,33 @@ const actions: ActionTree<AssetsState, RootState> = {
       .get(registry_url)
       .then((res) => {
         //asset loop
-        for (let i = 0; i < res.data.length; i++) {
-          let assetId = res.data[i].asset.identification.id;
-          let idShort = res.data[i].asset.idShort;
+        res.data.forEach((item) => {
+          let assetId = item.asset.identification.id;
+          let idShort = item.asset.idShort;
           assets[assetId] = { idShort };
 
           //submodel loop
-          for (let j = 0; j < res.data[i].submodels.length; j++) {
-            let idShort = res.data[i].submodels[j].idShort;
-            let submodel = '';
+          item.submodels.forEach((submodel) => {
+            let idShort = submodel.idShort;
+            let key = '';
 
             if (idShort.includes('cc-instance')) {
-              submodel += 'CCInstance';
+              key += 'CCInstance';
             } else if (idShort.includes('cc-interface')) {
-              submodel += 'CCInterface';
+              key += 'CCInterface';
             } else {
-              submodel += idShort; // Identification or Capability
+              key += idShort; // Identification or Capability
             }
-            submodel += 'SubmodelEndpoint';
+            key += 'SubmodelEndpoint';
 
-            assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
-          }
+            assets[assetId][key] = submodel.endpoints[0].address;
+          });
 
           // don't add mrk lab to assetsList
-          if (res.data[i].asset.category != undefined && res.data[i].asset.category == 'CONSTANT')
-            continue;
+          if (item.asset.category != undefined && item.asset.category == 'CONSTANT') return;
+
           assetsList.push(assetId);
-        }
+        });
       })
       .catch((err) => {
         console.error(err.message);
@@ -75,9 +75,9 @@ const actions: ActionTree<AssetsState, RootState> = {
       axios
         .get(state.assets[assetId].IdentificationSubmodelEndpoint)
         .then((res) => {
-          for (let i = 0; i < res.data.submodelElements.length; i++) {
-            id[res.data.submodelElements[i].idShort] = res.data.submodelElements[i].value;
-          }
+          res.data.submodelElements.forEach((submodelElement) => {
+            id[submodelElement.idShort] = submodelElement.value;
+          });
         })
         .catch((err) => {
           console.error(err.message);
