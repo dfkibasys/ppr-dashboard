@@ -51,6 +51,9 @@ const actions: ActionTree<AssetsState, RootState> = {
             assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
           }
 
+          // don't add mrk lab to assetsList
+          if (res.data[i].asset.category != undefined && res.data[i].asset.category == 'CONSTANT')
+            continue;
           assetsList.push(assetId);
         }
       })
