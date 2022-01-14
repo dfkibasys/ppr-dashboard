@@ -7,11 +7,13 @@ import store from '..';
 const state: AssetsState = {
   assets: {},
   assetsList: [],
+  loadedAssets: 0,
 };
 
 const getters: GetterTree<AssetsState, RootState> = {
   allAssets: (state) => state.assets,
   assetsList: (state) => state.assetsList,
+  loadedAssets: (state) => state.loadedAssets,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
@@ -64,12 +66,15 @@ const actions: ActionTree<AssetsState, RootState> = {
       .finally(() => {
         commit('setAssets', assets);
         commit('setAssetsList', assetsList);
-        dispatch('fetchIdSubmodels', { vm });
+        dispatch('fetchIdSubmodels', {
+          vm,
+        });
         dispatch('fetchCCInterfaceSubmodels', { vm });
       });
   },
-  fetchIdSubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((assetId) => {
+  fetchIdSubmodels({ commit, state }, { vm }) {
+    let slicedAssetsList = state.assetsList.slice(state.loadedAssets, (state.loadedAssets += 8));
+    slicedAssetsList.forEach((assetId) => {
       let id: IDSubmodel = {};
 
       axios

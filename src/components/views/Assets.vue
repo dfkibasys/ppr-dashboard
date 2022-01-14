@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div class="card" v-for="(assetId, index) in assetsList" :key="assetsList[index]">
+      <div
+        class="card"
+        v-for="(assetId, index) in limitedAssetsList"
+        :key="limitedAssetsList[index]"
+      >
         <div class="card-header">
           <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
           <b-button
@@ -60,8 +64,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     PackML,
   },
   computed: {
-    ...mapGetters(['allAssets', 'assetsList']),
-    sortedAssetsList: function() {
+    ...mapGetters(['allAssets', 'assetsList', 'loadedAssets']),
+    sortedAssetsList: function () {
       let that = this;
 
       function compare(a, b) {
@@ -76,6 +80,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       return this.assetsList.sort(compare);
     },
+    limitedAssetsList: function () {
+      return this.assetsList.slice(0, this.loadedAssets);
+    },
   },
   data() {
     return {
@@ -84,11 +91,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   methods: {
     ...mapActions(['fetchAssets']),
-    openPackML: function(assetId) {
+    openPackML: function (assetId) {
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
     },
-    buttonVariant: function(assetId) {
+    buttonVariant: function (assetId) {
       if (this.allAssets[assetId].EXMODE === 'SIMULATE') {
         return 'secondary';
       } else if (this.allAssets[assetId].EXMODE === 'AUTO') {
@@ -101,6 +108,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       return '';
     },
+    scrollCallback: function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        this.$store.dispatch('fetchIdSubmodels', { vm: this });
+      }
+    },
   },
   created() {
     let that = this;
@@ -112,6 +124,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       //TODO: replace commit with dispatch
       this.$store.commit('updateAsset', msg.payload);
     });
+  },
+  mounted() {
+    window.addEventListener('scroll', this.scrollCallback);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.scrollCallback);
   },
 });
 </script>

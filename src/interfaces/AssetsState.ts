@@ -33,4 +33,5 @@ export interface AssetsState {
     };
   };
   assetsList: [];
+  loadedAssets: number;
 }
