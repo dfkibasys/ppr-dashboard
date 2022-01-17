@@ -8,12 +8,14 @@ const state: AssetsState = {
   assets: {},
   assetsList: [],
   loadedAssets: 0,
+  hasLoaded: false,
 };
 
 const getters: GetterTree<AssetsState, RootState> = {
   allAssets: (state) => state.assets,
   assetsList: (state) => state.assetsList,
   loadedAssets: (state) => state.loadedAssets,
+  hasLoaded: (state) => state.hasLoaded,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
@@ -66,9 +68,7 @@ const actions: ActionTree<AssetsState, RootState> = {
       .finally(() => {
         commit('setAssets', assets);
         commit('setAssetsList', assetsList);
-        dispatch('fetchIdSubmodels', {
-          vm,
-        });
+        dispatch('fetchIdSubmodels', { vm });
         dispatch('fetchCCInterfaceSubmodels', { vm });
       });
   },
@@ -125,7 +125,10 @@ const actions: ActionTree<AssetsState, RootState> = {
 };
 
 const mutations: MutationTree<AssetsState> = {
-  setAssets: (state, assets) => (state.assets = assets),
+  setAssets: (state, assets) => {
+    state.assets = assets;
+    state.hasLoaded = true;
+  },
   setAssetsList: (state, list) => (state.assetsList = list),
   addSubmodel: (state, newSubmodel) =>
     (state.assets[newSubmodel.assetID] = {

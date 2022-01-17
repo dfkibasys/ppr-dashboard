@@ -64,7 +64,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     PackML,
   },
   computed: {
-    ...mapGetters(['allAssets', 'assetsList', 'loadedAssets']),
+    ...mapGetters(['allAssets', 'assetsList', 'loadedAssets', 'hasLoaded']),
     sortedAssetsList: function () {
       let that = this;
 
@@ -116,7 +116,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   created() {
     let that = this;
-    this.fetchAssets({ vm: this });
+    if (!this.hasLoaded) {
+      this.fetchAssets({ vm: this });
+    }
 
     this.$mqtt.on((topic: string, message: string) => {
       let msg = JSON.parse(message.toString());
