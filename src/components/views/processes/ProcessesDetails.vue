@@ -167,8 +167,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     CreateProcessInstance,
   },
   computed: {
-    ...mapGetters(['camundaUrl']),
-    baseUrl: function() {
+    ...mapGetters('endpoints', {
+      camundaUrl: 'camundaUrl',
+    }),
+    baseUrl: function () {
       return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
     },
   },
@@ -212,10 +214,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         params: { pid: this.$route.params.pid, iid: item.id },
       });
     },
-    handleError: function(err) {
+    handleError: function (err) {
       console.error('failed to show diagram', err);
     },
-    handleShown: function() {
+    handleShown: function () {
       console.log('diagram shown');
     },
     versionChange() {
@@ -267,7 +269,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchLeftDetails(id) {
       let that = this;
 
-      const fetchedDetails = function(resolve, reject) {
+      const fetchedDetails = function (resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}`)
           .then((res) => {
@@ -311,7 +313,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchBPMN(id) {
       let that = this;
 
-      const fetchedBPMN = function(resolve, reject) {
+      const fetchedBPMN = function (resolve, reject) {
         axios
           .get(`${that.baseUrl}/process-definition/${id}/xml`)
           .then((res) => {
@@ -333,7 +335,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     fetchTabContent(id) {
       let that = this;
 
-      const fetchedTabContent = function(resolve, reject) {
+      const fetchedTabContent = function (resolve, reject) {
         axios
           .all([
             axios.get(

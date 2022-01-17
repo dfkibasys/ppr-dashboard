@@ -11,22 +11,90 @@ const state: EndpointsState = {
   mockData: false,
 };
 const getters: GetterTree<EndpointsState, RootState> = {
+  /**
+   * Get current BaSys url
+   * @param state
+   * @returns {String}
+   */
   basysUrl: (state) => state.BASYS_REST_URL,
+
+  /**
+   * Get current MQTT broker url
+   * @param state
+   * @returns {String}
+   */
   mqttUrl: (state) => state.MQTT_BROKER_URL,
+
+  /**
+   * Get current Camunda instance url
+   * @param state
+   * @returns {String}
+   */
   camundaUrl: (state) => state.CAMUNDA_REST_URL,
+
+  /**
+   * Get current registry url
+   * @param state
+   * @returns {String}
+   */
   registryUrl: (state) => state.REGISTRY_URL,
+
+  /**
+   * Get whether mock data or data from a live instance will be loaded
+   * @param state
+   * @returns {Boolean}
+   */
   mockDataEnabled: (state) => state.mockData,
 };
 const mutations: MutationTree<EndpointsState> = {
+  /**
+   * commit BaSys url to state
+   *
+   * @param state
+   * @param url
+   */
   setBasysUrl: (state, url: string) => (state.BASYS_REST_URL = url),
+
+  /**
+   * commit MQTT broker to state
+   *
+   * @param state
+   * @param url
+   * @returns
+   */
   setMqttUrl: (state, url: string) => (state.MQTT_BROKER_URL = url),
+
+  /**
+   * commit Camunda url to state
+   *
+   * @param state
+   * @param url
+   * @returns
+   */
   setCamundaUrl: (state, url: string) => (state.CAMUNDA_REST_URL = url),
+
+  /**
+   * commit registry url to state
+   *
+   * @param state
+   * @param url
+   * @returns
+   */
   setRegistryUrl: (state, url: string) => (state.REGISTRY_URL = url),
+
+  /**
+   * commit mock data state to state
+   * @param state
+   * @param value
+   * @returns
+   */
   switchMockDataState: (state, value: boolean) => (state.mockData = value),
 };
+
 const actions: ActionTree<EndpointsState, RootState> = {};
 
 export const endpoints: Module<EndpointsState, RootState> = {
+  namespaced: true,
   state,
   getters,
   mutations,

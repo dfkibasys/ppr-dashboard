@@ -20,5 +20,6 @@ export interface Computed {
   mockDataEnabled: boolean;
   user: string;
   authorized: boolean;
+  fixedHeader: boolean;
 }
 export interface Props {}

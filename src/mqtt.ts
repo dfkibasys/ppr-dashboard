@@ -6,10 +6,10 @@ let client: Client;
 
 export default {
   connect() {
-    client = mqtt.connect(store.getters.mqttUrl, { clientId: uuid.v4(), clean: true });
+    client = mqtt.connect(store.getters['endpoints/mqttUrl'], { clientId: uuid.v4(), clean: true });
 
-    client.on('connect', function () {
-      console.log(`Connected to ${store.getters.mqttUrl}`);
+    client.on('connect', function() {
+      console.log(`Connected to ${store.getters['endpoints/mqttUrl']}`);
     });
   },
   on(callback: any) {
@@ -21,7 +21,7 @@ export default {
     client.end();
   },
   subscribe(topic: string) {
-    client.subscribe(topic, function (err: Error) {
+    client.subscribe(topic, function(err: Error) {
       if (!err) {
         console.log(`Subscribed to topic ${topic}`);
       }

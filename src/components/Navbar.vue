@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <nav class="navbar navbar-light bg-light">
+  <div :class="{ navpadding: fixedHeader }">
+    <b-navbar
+      type="light"
+      variant="light"
+      toggleable
+      :fixed="fixedHeader ? 'top' : ''"
+      :class="{ navshadow: fixedHeader }"
+    >
       <b-navbar-brand href="#">
         <img src="@/assets/DFKI_Logo.png" class="mr-3" height="40" alt />
         <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" alt />
@@ -85,7 +91,7 @@
           </b-row>
         </b-container>
       </b-collapse>
-    </nav>
+    </b-navbar>
     <Licences />
     <Login />
   </div>
@@ -113,58 +119,73 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   computed: {
-    user: function() {
-      return this.$store.getters.currentUser;
+    user: function () {
+      return this.$store.getters['users/currentUser'];
     },
-    authorized: function() {
-      return this.$store.getters.isAuthorized;
+    authorized: function () {
+      return this.$store.getters['users/isAuthorized'];
     },
-    //using a two-way computed property with a setter to mutate vuex states
-    //TODO: replace commit with dispatch
+
+    /**
+     * Fixed header only on Assets page since other pages fit into screen
+     */
+    fixedHeader: function () {
+      return this.$route.name === 'Assets';
+    },
+
+    /**
+     * Using a two-way computed property with a setter to mutate vuex states
+     */
     registryUrl: {
       get() {
-        return this.$store.getters.registryUrl;
+        return this.$store.getters['endpoints/registryUrl'];
       },
       set(value) {
-        this.$store.commit('setRegistryUrl', value);
+        this.$store.commit('endpoints/setRegistryUrl', value);
       },
     },
     basysUrl: {
       get() {
-        return this.$store.getters.basysUrl;
+        return this.$store.getters['endpoints/basysUrl'];
       },
       set(value) {
-        this.$store.commit('setBasysUrl', value);
+        this.$store.commit('endpoints/setBasysUrl', value);
       },
     },
     mqttUrl: {
       get() {
-        return this.$store.getters.mqttUrl;
+        return this.$store.getters['endpoints/mqttUrl'];
       },
       set(value) {
-        this.$store.commit('setMqttUrl', value);
+        this.$store.commit('endpoints/setMqttUrl', value);
       },
     },
     camundaUrl: {
       get() {
-        return this.$store.getters.camundaUrl;
+        return this.$store.getters['endpoints/camundaUrl'];
       },
       set(value) {
-        this.$store.commit('setCamundaUrl', value);
+        this.$store.commit('endpoints/setCamundaUrl', value);
       },
     },
     mockDataEnabled: {
       get() {
-        return this.$store.getters.mockDataEnabled;
+        return this.$store.getters['endpoints/mockDataEnabled'];
       },
       set(value) {
-        this.$store.commit('switchMockDataState', value);
-        this.fetchAssets({ vm: this });
+        this.$store.commit('endpoints/switchMockDataState', value);
       },
     },
   },
+  watch: {
+    mockDataEnabled() {
+      this.fetchAssets({ vm: this });
+    },
+  },
   methods: {
-    ...mapActions(['fetchAssets']),
+    ...mapActions('assets', {
+      fetchAssets: 'fetchAssets',
+    }),
     changeMQTTdata() {
       this.$mqtt.end();
       this.$mqtt.connect();
@@ -186,6 +207,22 @@ a {
 }
 .router-link-active {
   color: darken(gray, 50%);
+}
+
+#nav-container {
+  // height of navbar since it is fixed
+  padding-top: 66px;
+  #navbar {
+    box-shadow: 0px -3px 40px 6px rgba(0, 0, 0, 0.33);
+  }
+}
+
+.navpadding {
+  padding-top: 66px;
+}
+
+.navshadow {
+  box-shadow: 0px -3px 40px 6px rgba(0, 0, 0, 0.33);
 }
 
 .navbar-collapse {
