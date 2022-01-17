@@ -26,3 +26,12 @@ build:
     - docker push "$CI_REGISTRY_NAME:latest"
   only:
     - master
+
+build-dev:
+  stage: build
+  script:
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker build -t "$CI_REGISTRY_NAME:dev" .
+    - docker push "$CI_REGISTRY_NAME:dev"
+  only:
+    - develop
