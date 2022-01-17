@@ -54,7 +54,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   methods: {
     login() {
       this.$store
-        .dispatch('loginUser', { user: this.user, password: this.password })
+        .dispatch('users/loginUser', { user: this.user, password: this.password })
         .then(() => {
           this.userState = null;
           this.passwordState = null;
