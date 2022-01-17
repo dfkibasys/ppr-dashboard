@@ -7,11 +7,13 @@ import store from '..';
 const state: AssetsState = {
   assets: {},
   assetsList: [],
+  loadedAssets: 0,
 };
 
 const getters: GetterTree<AssetsState, RootState> = {
   allAssets: (state) => state.assets,
   assetsList: (state) => state.assetsList,
+  loadedAssets: (state) => state.loadedAssets,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
@@ -29,19 +31,33 @@ const actions: ActionTree<AssetsState, RootState> = {
       .get(registry_url)
       .then((res) => {
         //asset loop
-        for (let i = 0; i < res.data.length; i++) {
-          let assetId = res.data[i].asset.identification.id;
-          let idShort = res.data[i].asset.idShort;
+        res.data.forEach((item) => {
+          let assetId = item.asset.identification.id;
+          let idShort = item.asset.idShort;
           assets[assetId] = { idShort };
 
           //submodel loop
-          for (let j = 0; j < res.data[i].submodels.length; j++) {
-            let submodel = res.data[i].submodels[j].semanticId.keys[0].value + 'SubmodelEndpoint'; // Identification, Capability or ControlComponentInterface/Configuration
-            assets[assetId][submodel] = res.data[i].submodels[j].endpoints[0].address;
-          }
+          item.submodels.forEach((submodel) => {
+            let idShort = submodel.idShort;
+            let key = '';
+
+            if (idShort.includes('cc-instance')) {
+              key += 'CCInstance';
+            } else if (idShort.includes('cc-interface')) {
+              key += 'CCInterface';
+            } else {
+              key += idShort; // Identification or Capability
+            }
+            key += 'SubmodelEndpoint';
+
+            assets[assetId][key] = submodel.endpoints[0].address;
+          });
+
+          // don't add mrk lab to assetsList
+          if (item.asset.category != undefined && item.asset.category == 'CONSTANT') return;
 
           assetsList.push(assetId);
-        }
+        });
       })
       .catch((err) => {
         console.error(err.message);
@@ -50,36 +66,39 @@ const actions: ActionTree<AssetsState, RootState> = {
       .finally(() => {
         commit('setAssets', assets);
         commit('setAssetsList', assetsList);
-        dispatch('fetchIdSubmodels', { vm });
-        dispatch('fetchCCISubmodels', { vm });
+        dispatch('fetchIdSubmodels', {
+          vm,
+        });
+        dispatch('fetchCCInterfaceSubmodels', { vm });
       });
   },
-  fetchIdSubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((assetId) => {
+  fetchIdSubmodels({ commit, state }, { vm }) {
+    let slicedAssetsList = state.assetsList.slice(state.loadedAssets, (state.loadedAssets += 8));
+    slicedAssetsList.forEach((assetId) => {
       let id: IDSubmodel = {};
 
       axios
         .get(state.assets[assetId].IdentificationSubmodelEndpoint)
         .then((res) => {
-          for (let i = 0; i < res.data.submodelElements.length; i++) {
-            id[res.data.submodelElements[i].idShort] = res.data.submodelElements[i].value;
-          }
+          res.data.submodelElements.forEach((submodelElement) => {
+            id[submodelElement.idShort] = submodelElement.value;
+          });
         })
         .catch((err) => {
           console.error(err.message);
           vm.$Progress.fail();
         })
         .finally(() => {
-          vm.$Progress.finish(); //TODO: finish only when fetchCCISubmodels's finally was triggered too
+          vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
           commit('addSubmodel', { assetID: assetId, content: id });
         });
     });
   },
-  fetchCCISubmodels({ commit }, { vm }) {
+  fetchCCInterfaceSubmodels({ commit }, { vm }) {
     state.assetsList.forEach((assetId) => {
       let cci: CCISubmodel = {};
 
-      let url = state.assets[assetId].ControlComponentInterfaceSubmodelEndpoint;
+      let url = state.assets[assetId].CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
       let properties_url = store.getters.mockDataEnabled ? url : url + '/values';
 

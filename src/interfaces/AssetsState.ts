@@ -20,8 +20,9 @@ export interface AssetsState {
   assets: {
     [assetId: string]: {
       IdentificationSubmodelEndpoint: string;
-      ControlComponentInterfaceSubmodelEndpoint?: string;
-      ControlComponentConfigurationSubmodelEndpoint?: string;
+      CapabilitiesSubmodelEndpoint?: string;
+      CCInterfaceSubmodelEndpoint?: string;
+      CCInstanceSubmodelEndpoint?: string;
       ERRMSG?: string;
       EXST?: string;
       EXMODE?: string;
@@ -32,4 +33,5 @@ export interface AssetsState {
     };
   };
   assetsList: [];
+  loadedAssets: number;
 }

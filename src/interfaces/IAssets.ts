@@ -5,10 +5,13 @@ export interface Methods {
   fetchAssets(vm: any): void;
   openPackML(assetId: string): void;
   buttonVariant(assetId: string): string;
+  scrollCallback(): void;
 }
 export interface Computed {
   allAssets: any; //TODO
   assetsList: [];
   sortedAssetsList: [];
+  loadedAssets: number;
+  limitedAssetsList;
 }
 export interface Props {}
