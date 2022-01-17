@@ -1,4 +1,4 @@
-image: docker:19.03.13
+image: docker:20.10.12
 
 variables:
   DOCKER_HOST: tcp://docker:2376
@@ -13,7 +13,7 @@ variables:
   CI_REGISTRY_NAME: '$REGISTRY/dfkibasys/ppr-dashboard'
 
 services:
-  - docker:19.03.13-dind
+  - docker:20.10.12-dind
 
 before_script:
   - docker info
