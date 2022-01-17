@@ -34,4 +34,5 @@ export interface AssetsState {
   };
   assetsList: [];
   loadedAssets: number;
+  hasLoaded: boolean;
 }

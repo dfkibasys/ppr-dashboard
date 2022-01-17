@@ -13,5 +13,6 @@ export interface Computed {
   sortedAssetsList: [];
   loadedAssets: number;
   limitedAssetsList;
+  hasLoaded: boolean;
 }
 export interface Props {}
