@@ -1,15 +1,12 @@
 {
   "navbar": {
-    "language": "Language",
-    "change": "Change",
     "assets": "Control Components",
     "services": "Services",
     "management": "Management",
     "processes": "Processes",
-    "mockObjects": "Mock objects",
-    "info": "Only available for components",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "settings": "Settings"
   },
   "modal": {
     "close": "Close",
@@ -46,6 +43,13 @@
       "username": "Username",
       "password": "Password",
       "feedback": "Username/Password incorrect"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "change": "Change",
+      "mockObjects": "Mock objects",
+      "info": "Only available for components"
     }
   },
   "card": {

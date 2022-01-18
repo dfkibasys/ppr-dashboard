@@ -42,7 +42,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       services: [],
     };
   },
-  computed: mapGetters(['basysUrl', 'mockDataEnabled']),
+  computed: {
+    ...mapGetters('endpoints', {
+      basysUrl: 'basysUrl',
+      mockDataEnabled: 'mockDataEnabled',
+    }),
+  },
   methods: {
     loadInitialData: function (mockData, callback) {
       let that = this;

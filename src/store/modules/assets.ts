@@ -12,20 +12,54 @@ const state: AssetsState = {
 };
 
 const getters: GetterTree<AssetsState, RootState> = {
+  /**
+   * Get all assets
+   *
+   * @param state
+   * @returns {Object}
+   */
   allAssets: (state) => state.assets,
+
+  /**
+   * Get all asset keys
+   *
+   * @param state
+   * @returns {Array}
+   */
   assetsList: (state) => state.assetsList,
+
+  /**
+   * Count all loaded assets
+   *
+   * @param state
+   * @returns {Number}
+   */
   loadedAssets: (state) => state.loadedAssets,
+
+  /**
+   * Get whether all assets have been loaded from the registry
+   *
+   * @param state
+   * @returns {Boolean}
+   */
   hasLoaded: (state) => state.hasLoaded,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
+  /**
+   * Fetch all assets from the registry
+   *
+   * @param commit
+   * @param dispatch
+   * @param vm
+   */
   fetchAssets({ commit, dispatch }, { vm }) {
     let assets: any = {};
     let assetsList: any = [];
 
-    let registry_url = store.getters.mockDataEnabled
+    let registry_url = store.getters['endpoints/mockDataEnabled']
       ? '/data/registry.json'
-      : store.getters.registryUrl;
+      : store.getters['endpoints/registryUrl'];
 
     vm.$Progress.start();
 
@@ -72,6 +106,14 @@ const actions: ActionTree<AssetsState, RootState> = {
         dispatch('fetchCCInterfaceSubmodels', { vm });
       });
   },
+
+  /**
+   * Fetch all ID submodels from the AAS server
+   *
+   * @param commit
+   * @param state
+   * @param vm
+   */
   fetchIdSubmodels({ commit, state }, { vm }) {
     let slicedAssetsList = state.assetsList.slice(state.loadedAssets, (state.loadedAssets += 8));
     slicedAssetsList.forEach((assetId) => {
@@ -94,13 +136,20 @@ const actions: ActionTree<AssetsState, RootState> = {
         });
     });
   },
+
+  /**
+   * Fetch all control components
+   *
+   * @param commit
+   * @param vm
+   */
   fetchCCInterfaceSubmodels({ commit }, { vm }) {
     state.assetsList.forEach((assetId) => {
       let cci: CCISubmodel = {};
 
       let url = state.assets[assetId].CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
-      let properties_url = store.getters.mockDataEnabled ? url : url + '/values';
+      let properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
 
       axios
         .get(properties_url)
@@ -125,16 +174,44 @@ const actions: ActionTree<AssetsState, RootState> = {
 };
 
 const mutations: MutationTree<AssetsState> = {
+  /**
+   * commit all assets to state
+   * @param state
+   * @param assets
+   */
   setAssets: (state, assets) => {
     state.assets = assets;
     state.hasLoaded = true;
   },
+
+  /**
+   * commit all asset keys to state
+   *
+   * @param state
+   * @param list
+   * @returns
+   */
   setAssetsList: (state, list) => (state.assetsList = list),
+
+  /**
+   * commit a new submodel to an asset
+   *
+   * @param state
+   * @param newSubmodel
+   * @returns
+   */
   addSubmodel: (state, newSubmodel) =>
     (state.assets[newSubmodel.assetID] = {
       ...state.assets[newSubmodel.assetID],
       ...newSubmodel.content,
     }),
+
+  /**
+   * commit an updated asset to state
+   *
+   * @param state
+   * @param asset
+   */
   updateAsset: (state, asset) => {
     let data = JSON.parse(asset);
     let keyNames = Object.keys(data);
@@ -149,6 +226,7 @@ const mutations: MutationTree<AssetsState> = {
 };
 
 export const assets: Module<AssetsState, RootState> = {
+  namespaced: true,
   state,
   getters,
   mutations,

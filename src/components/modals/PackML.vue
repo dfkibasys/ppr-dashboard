@@ -24,7 +24,9 @@
 
     <template v-slot:modal-footer="{ cancel }">
       <div class="mr-auto">
-        <span class="mr-1">{{$t('modal.packML.occupationState')}}: {{ allAssets[openedAssetId].OCCST }}</span>
+        <span class="mr-1"
+          >{{ $t('modal.packML.occupationState') }}: {{ allAssets[openedAssetId].OCCST }}</span
+        >
         <span v-if="allAssets[openedAssetId].OCCST !== 'FREE'" class="mr-2"
           >({{ allAssets[openedAssetId].OCCUPIER }})</span
         >
@@ -39,7 +41,7 @@
             v-if="
               (allAssets[openedAssetId].OCCST === 'PRIORITY' ||
                 allAssets[openedAssetId].OCCST === 'OCCUPIED') &&
-                allAssets[openedAssetId].OCCUPIER === currentUser
+              allAssets[openedAssetId].OCCUPIER === currentUser
             "
             variant="info"
             @click="freeButton"
@@ -48,7 +50,7 @@
           <b-button
             v-if="
               allAssets[openedAssetId].OCCST === 'OCCUPIED' &&
-                allAssets[openedAssetId].OCCUPIER !== currentUser
+              allAssets[openedAssetId].OCCUPIER !== currentUser
             "
             variant="info"
             @click="prioButton"
@@ -57,7 +59,9 @@
         </span>
       </div>
       <div class="mr-auto">
-         <span class="mr-1">{{$t('modal.packML.operationMode')}}: {{ allAssets[openedAssetId].OPMODE }}</span>
+        <span class="mr-1"
+          >{{ $t('modal.packML.operationMode') }}: {{ allAssets[openedAssetId].OPMODE }}</span
+        >
       </div>
       <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
@@ -102,9 +106,17 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   props: {
     openedAssetId: String,
   },
-  computed: mapGetters(['allAssets', 'currentUser', 'isAuthorized']),
+  computed: {
+    ...mapGetters('assets', {
+      allAssets: 'allAssets',
+    }),
+    ...mapGetters('users', {
+      currentUser: 'currentUser',
+      isAuthorized: 'isAuthorized',
+    }),
+  },
   methods: {
-    initGraph: function() {
+    initGraph: function () {
       let that = this;
       if (mxClient.isBrowserSupported()) {
         let div = this.$refs.graphy;
@@ -149,7 +161,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
       this.setModeButton(this.allAssets);
     },
-    markCurrentState: function(state) {
+    markCurrentState: function (state) {
       let that = this;
 
       let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
@@ -172,10 +184,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         that.oldBorderColor = '';
       }
     },
-    clear: function() {
+    clear: function () {
       this.xmlLoaded = false;
     },
-    setModeButton: function(allAssets) {
+    setModeButton: function (allAssets) {
       //set mode toggle button (SIMULATION must be mapped to SIMULATE)
       this.selected =
         allAssets[this.openedAssetId].EXMODE == 'SIMULATION'
@@ -197,11 +209,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
       }
     },
-    stopButton: function() {
+    stopButton: function () {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/STOP/invoke`,
           [this.currentUser]
         )
@@ -213,11 +225,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    resetButton: function() {
+    resetButton: function () {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/RESET/invoke`,
           [this.currentUser]
         )
@@ -229,11 +241,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    modeButton: function(value) {
+    modeButton: function (value) {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/${value}/invoke`,
           [this.currentUser]
         )
@@ -245,11 +257,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    freeButton: function() {
+    freeButton: function () {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/FREE/invoke`,
           [this.currentUser]
         )
@@ -260,11 +272,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    occupyButton: function() {
+    occupyButton: function () {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/OCCUPY/invoke`,
           [this.currentUser]
         )
@@ -275,11 +287,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    prioButton: function() {
+    prioButton: function () {
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/PRIO/invoke`,
           [this.currentUser]
         )

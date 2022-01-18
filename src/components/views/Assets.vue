@@ -64,7 +64,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     PackML,
   },
   computed: {
-    ...mapGetters(['allAssets', 'assetsList', 'loadedAssets', 'hasLoaded']),
+    ...mapGetters('assets', {
+      allAssets: 'allAssets',
+      assetsList: 'assetsList',
+      loadedAssets: 'loadedAssets',
+      hasLoaded: 'hasLoaded',
+    }),
     sortedAssetsList: function () {
       let that = this;
 
@@ -90,7 +95,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   methods: {
-    ...mapActions(['fetchAssets']),
+    ...mapActions('assets', {
+      fetchAssets: 'fetchAssets',
+    }),
     openPackML: function (assetId) {
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
@@ -110,22 +117,21 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     scrollCallback: function () {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        this.$store.dispatch('fetchIdSubmodels', { vm: this });
+        this.$store.dispatch('assets/fetchIdSubmodels', { vm: this });
       }
     },
   },
   created() {
-    let that = this;
     if (!this.hasLoaded) {
       this.fetchAssets({ vm: this });
-    }
 
-    this.$mqtt.on((topic: string, message: string) => {
-      let msg = JSON.parse(message.toString());
-      console.log(`Message arrived on topic ${topic}, msg: ${msg}`);
-      //TODO: replace commit with dispatch
-      this.$store.commit('updateAsset', msg.payload);
-    });
+      this.$mqtt.on((topic: string, message: string) => {
+        let msg = JSON.parse(message.toString());
+        console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}`);
+        //TODO: replace commit with dispatch
+        this.$store.commit('assets/updateAsset', msg.payload);
+      });
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.scrollCallback);
