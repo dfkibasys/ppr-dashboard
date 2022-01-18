@@ -1,128 +1,137 @@
 [
-    {
-      "name": "axios",
-      "version": "0.19.2",
-      "repository": "https://github.com/axios/axios",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "bootstrap",
-      "version": "4.5.0",
-      "repository": "https://github.com/twbs/bootstrap",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "bootstrap-vue",
-      "version": "2.15.0",
-      "repository": "https://github.com/bootstrap-vue/bootstrap-vue",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": "MIT"
-    },
-    {
-      "name": "bpmn-js",
-      "version": "6.5.1",
-      "repository": "https://github.com/bpmn-io/bpmn-js",
-      "summary": "bpmn.io License",
-      "from package.json": "",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "core-js",
-      "version": "3.6.5",
-      "repository": "https://github.com/zloirock/core-js",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "mqtt",
-      "version": "4.1.0",
-      "repository": "http://github.com/mqttjs/MQTT.js",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": "MIT"
-    },
-    {
-      "name": "mxgraph",
-      "version": "4.1.1",
-      "repository": "https://github.com/jgraph/mxgraph",
-      "summary": "Apache;Apache-2.0",
-      "from package.json": "Apache-2.0",
-      "from license": "Apache",
-      "from readme": ""
-    },
-    {
-      "name": "ppr-dashboard",
-      "version": "1.0.0",
-      "repository": "(none)",
-      "summary": "EPLv2",
-      "from package.json": "EPLv2",
-      "from license": "",
-      "from readme": ""
-    },
-    {
-      "name": "uuid",
-      "version": "7.0.3",
-      "repository": "https://github.com/uuidjs/uuid",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "vue",
-      "version": "2.6.11",
-      "repository": "https://github.com/vuejs/vue",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "vue-i18n",
-      "version": "8.18.1",
-      "repository": "https://github.com/kazupon/vue-i18n",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "vue-moment",
-      "version": "4.1.0",
-      "repository": "https://github.com/brockpetrie/vue-moment",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "vue-router",
-      "version": "3.3.2",
-      "repository": "https://github.com/vuejs/vue-router",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    },
-    {
-      "name": "vuex",
-      "version": "3.4.0",
-      "repository": "https://github.com/vuejs/vuex",
-      "summary": "MIT",
-      "from package.json": "MIT",
-      "from license": "MIT",
-      "from readme": ""
-    }
-  ]
+  {
+    "name": "axios",
+    "version": "0.24.0",
+    "repository": "https://github.com/axios/axios",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "",
+    "from readme": ""
+  },
+  {
+    "name": "bootstrap",
+    "version": "4.5.3",
+    "repository": "https://github.com/twbs/bootstrap",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "bootstrap-vue",
+    "version": "2.21.1",
+    "repository": "https://github.com/bootstrap-vue/bootstrap-vue",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": "MIT"
+  },
+  {
+    "name": "bpmn-js",
+    "version": "8.9.0",
+    "repository": "https://github.com/bpmn-io/bpmn-js",
+    "summary": "bpmn.io License",
+    "from package.json": "",
+    "from license": "",
+    "from readme": ""
+  },
+  {
+    "name": "core-js",
+    "version": "3.20.3",
+    "repository": "https://github.com/zloirock/core-js",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "",
+    "from readme": ""
+  },
+  {
+    "name": "mqtt",
+    "version": "4.3.4",
+    "repository": "http://github.com/mqttjs/MQTT.js",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": "MIT"
+  },
+  {
+    "name": "mxgraph",
+    "version": "4.2.2",
+    "repository": "https://github.com/jgraph/mxgraph",
+    "summary": "Apache;Apache-2.0",
+    "from package.json": "Apache-2.0",
+    "from license": "Apache",
+    "from readme": ""
+  },
+  {
+    "name": "ppr-dashboard",
+    "version": "1.0.0",
+    "repository": "(none)",
+    "summary": "EPLv2",
+    "from package.json": "EPLv2",
+    "from license": "",
+    "from readme": ""
+  },
+  {
+    "name": "uuid",
+    "version": "7.0.3",
+    "repository": "https://github.com/uuidjs/uuid",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vue",
+    "version": "2.6.14",
+    "repository": "https://github.com/vuejs/vue",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vue-i18n",
+    "version": "8.26.8",
+    "repository": "https://github.com/kazupon/vue-i18n",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vue-moment",
+    "version": "4.1.0",
+    "repository": "https://github.com/brockpetrie/vue-moment",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vue-progressbar",
+    "version": "0.7.5",
+    "repository": "https://github.com/hilongjw/vue-progressbar",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vue-router",
+    "version": "3.5.3",
+    "repository": "https://github.com/vuejs/vue-router",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  },
+  {
+    "name": "vuex",
+    "version": "3.6.2",
+    "repository": "https://github.com/vuejs/vuex",
+    "summary": "MIT",
+    "from package.json": "MIT",
+    "from license": "MIT",
+    "from readme": ""
+  }
+]

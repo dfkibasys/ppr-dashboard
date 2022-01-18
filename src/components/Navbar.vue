@@ -3,7 +3,6 @@
     <b-navbar
       type="light"
       variant="light"
-      toggleable
       :fixed="fixedHeader ? 'top' : ''"
       :class="{ navshadow: fixedHeader }"
     >
