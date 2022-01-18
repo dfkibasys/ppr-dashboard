@@ -23,7 +23,7 @@
           $t('navbar.login')
         }}</b-button>
         <b-nav-item-dropdown v-if="authorized" :text="user" right>
-          <b-dropdown-item @click="openSettings">Settings</b-dropdown-item>
+          <b-dropdown-item @click="openSettings">{{ $t('navbar.settings') }}</b-dropdown-item>
           <b-dropdown-item @click="signout" href="#">{{ $t('navbar.logout') }}</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>

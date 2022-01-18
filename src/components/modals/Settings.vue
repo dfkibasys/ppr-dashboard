@@ -1,8 +1,8 @@
 <template>
-  <b-modal id="modal-settings" ref="modal" size="lg" title="Settings">
+  <b-modal id="modal-settings" ref="modal" size="lg" :title="$t('modal.settings.title')">
     <b-container>
       <b-row>
-        <b-col>{{ $t('navbar.language') }}:</b-col>
+        <b-col>{{ $t('modal.settings.language') }}:</b-col>
         <b-col cols="9">
           <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
         </b-col>
@@ -11,7 +11,7 @@
         <b-col class="rest" cols="9">
           <input class="form-control" v-model="registryUrl" />
           <button type="button" class="btn btn-success" @click="changeREGISTRYdata">{{
-            $t('navbar.change')
+            $t('modal.settings.change')
           }}</button>
         </b-col>
         <div class="w-100"></div>
@@ -19,14 +19,14 @@
         <b-col class="rest" cols="9">
           <input class="form-control" v-model="mqttUrl" />
           <button type="button" class="btn btn-success" @click="changeMQTTdata">{{
-            $t('navbar.change')
+            $t('modal.settings.change')
           }}</button>
         </b-col>
         <div class="w-100"></div>
         <b-col
-          >{{ $t('navbar.mockObjects') }}
+          >{{ $t('modal.settings.mockObjects') }}
           <b-icon-info-circle-fill
-            v-b-popover.hover.right="$t('navbar.info')"
+            v-b-popover.hover.right="$t('modal.settings.info')"
           ></b-icon-info-circle-fill
           >:</b-col
         >
@@ -55,6 +55,9 @@
         </b-col>
       </b-row>
     </b-container>
+    <template v-slot:modal-footer="{ cancel }">
+      <b-button variant="secondary" @click="cancel">{{ $t('modal.close') }}</b-button>
+    </template>
   </b-modal>
 </template>
 

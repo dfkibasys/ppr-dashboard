@@ -1,15 +1,12 @@
 {
   "navbar": {
-    "language": "Sprache",
-    "change": "Ändern",
     "assets": "Führungskomponenten",
     "services": "Services",
     "management": "Management",
     "processes": "Prozesse",
-    "mockObjects": "Mock-Objekte",
-    "info": "Nur für Komponenten verfügbar",
     "login": "Anmelden",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "settings": "Einstellungen"
   },
   "modal": {
     "close": "Schließen",
@@ -46,6 +43,13 @@
       "username": "Nutzername",
       "password": "Passwort",
       "feedback": "Nutzername/Passwort inkorrekt"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "language": "Sprache",
+      "change": "Ändern",
+      "mockObjects": "Mock-Objekte",
+      "info": "Nur für Komponenten verfügbar"
     }
   },
   "card": {
