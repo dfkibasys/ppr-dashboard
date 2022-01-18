@@ -213,7 +213,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/STOP/invoke`,
           [this.currentUser]
         )
@@ -229,7 +229,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/RESET/invoke`,
           [this.currentUser]
         )
@@ -245,7 +245,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/${value}/invoke`,
           [this.currentUser]
         )
@@ -261,7 +261,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/FREE/invoke`,
           [this.currentUser]
         )
@@ -276,7 +276,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/OCCUPY/invoke`,
           [this.currentUser]
         )
@@ -291,7 +291,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       axios
         .post(
           `${
-            this.allAssets[this.openedAssetId].ControlComponentInterfaceSubmodelEndpoint
+            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
           }/submodelElements/Operations/PRIO/invoke`,
           [this.currentUser]
         )
