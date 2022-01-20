@@ -130,16 +130,6 @@ const actions: ActionTree<AssetsState, RootState> = {
         .get(store.getters['assets/allAssets'][assetId].IdentificationSubmodelEndpoint)
         .then((res) => {
           res.data.submodelElements.forEach((submodelElement) => {
-            // TODO: Remove when properties and values in AASX file are unified
-            if (
-              submodelElement.idShort === 'TypeImageBase64' ||
-              submodelElement.idShort === 'TypeThumbnailBase64'
-            ) {
-              submodelElement.idShort = 'TypeThumbnailBase64';
-              if (!submodelElement.value.includes('data:image/png;base64,')) {
-                submodelElement.value = 'data:image/png;base64,' + submodelElement.value;
-              }
-            }
             id[submodelElement.idShort] = submodelElement.value;
           });
         })
