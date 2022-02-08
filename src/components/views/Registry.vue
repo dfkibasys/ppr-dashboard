@@ -84,7 +84,7 @@ export default {
 
         // Make AAS links interactable
         if (typeof element === 'string' && element.includes(this.domain)) {
-          span.innerHTML = `<a href=".#${this.$router.currentRoute.path}${encodeURIComponent(
+          span.innerHTML = `<a href=".#${this.$router.currentRoute.path}/${encodeURIComponent(
             element
           )}">${element}</a>`;
         } else {
@@ -122,26 +122,23 @@ export default {
   background-color: rgb(238, 238, 238);
   padding: 1em;
   > .array {
-    margin: 1em;
+    margin-bottom: 1em;
     padding: 1em 1em 1em 0em;
     background-color: rgb(197, 196, 196);
+  }
+  > .object,
+  > .array {
     .array {
       background-color: rgb(212, 221, 252);
       margin-bottom: 1em;
     }
   }
-  > .object {
-    .array {
-      background-color: rgb(212, 221, 252);
-      margin-bottom: 1em;
+  .array {
+    div {
+      margin-left: 1.5em;
     }
   }
-}
-.array {
-  div {
-    margin-left: 1.5em;
+  .object {
   }
-}
-.object {
 }
 </style>
