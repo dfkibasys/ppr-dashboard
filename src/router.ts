@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Devices from '@/components/views/Devices.vue';
+import Assets from '@/components/views/Assets.vue';
 import Services from '@/components/views/Services.vue';
 import Management from '@/components/views/Management.vue';
 import Processes from '@/components/views/Processes.vue';
@@ -9,13 +9,14 @@ import ProcessesInstance from '@/components/views/processes/ProcessesInstance.vu
 import Registry from '@/components/views/Registry.vue';
 
 Vue.use(Router);
+const DEFAULT_TITLE = 'PPR Dashboard';
 
-export default new Router({
+const router = new Router({
   routes: [
     {
-      path: '/devices',
-      name: 'Devices',
-      component: Devices,
+      path: '/assets',
+      name: 'Assets',
+      component: Assets,
     },
     {
       path: '/services',
@@ -47,6 +48,14 @@ export default new Router({
       name: 'Registry',
       component: Registry,
     },
-    { path: '*', redirect: '/devices' },
+    { path: '*', redirect: '/assets' },
   ],
 });
+
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+    document.title = to?.meta?.title || DEFAULT_TITLE;
+  });
+});
+
+export default router;

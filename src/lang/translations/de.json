@@ -1,28 +1,20 @@
 {
   "navbar": {
-    "language": "Sprache",
-    "change": "Ändern",
-    "devices": "Führungskomponenten",
+    "assets": "Führungskomponenten",
     "services": "Services",
     "management": "Management",
     "processes": "Prozesse",
-    "mockObjects": "Mock-Objekte",
-    "info": "Nur für Komponenten verfügbar",
     "login": "Anmelden",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "settings": "Einstellungen"
   },
   "modal": {
     "close": "Schließen",
     "cancel": "Abbrechen",
     "packML": {
-      "title": "Führungskomponente"
-    },
-    "capabilityOverview": {
-      "title": "Fähigkeiten Übersicht",
-      "name": "Name",
-      "status": "Status",
-      "remove": "Entfernen",
-      "teach": "Lernen"
+      "title": "Führungskomponente",
+      "occupationState": "Belegungszustand",
+      "operationMode": "Fahrweise"
     },
     "licences": {
       "title": "Lizenzen",
@@ -30,13 +22,34 @@
       "version": "Version",
       "summary": "Zusammenfassung"
     },
-    "createProcessInstance": {},
+    "createProcessInstance": {
+      "title": "Erzeuge Prozessinstanz",
+      "businessKey": {
+        "label": "Business Key",
+        "placeholder": "Business Key eingeben",
+        "feedback": "Der Business Key wird benötigt."
+      },
+      "variable": {
+        "button": "Variable hinzufügen",
+        "name": "Name",
+        "placeholder": "Wert"
+      },
+      "create": "Erzeugen",
+      "dontCreate": "Abbrechen"
+    },
     "login": {
       "title": "Anmelden",
       "login": "Anmelden",
       "username": "Nutzername",
       "password": "Passwort",
       "feedback": "Nutzername/Passwort inkorrekt"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "language": "Sprache",
+      "change": "Ändern",
+      "mockObjects": "Mock-Objekte",
+      "info": "Nur für Komponenten verfügbar"
     }
   },
   "card": {
@@ -47,5 +60,52 @@
     "show": "Anzeigen",
     "manufacturer": "Hersteller"
   },
-  "process": {}
+  "process": {
+    "processDefinition": "Prozessdefinition | Prozessdefinitionen",
+    "decisionDefinition": "Decision Definition | Decision Definitions",
+    "caseDefinition": "Case Definition | Case Definitions",
+    "deployment": "Deployment | Deployments",
+    "deployed": "Deployed",
+    "instances": "Instanzen",
+    "name": "Name",
+    "key": "Key",
+    "tenantId": "Tenant ID",
+    "definitionVersion": "Definitions-Version",
+    "versionTag": "Versions-Tag",
+    "definitionId": "Definitions-ID",
+    "definitionKey": "Definitions-Key",
+    "definitionName": "Definitions-Name",
+    "deploymentId": "Deployment ID",
+    "instancesRunning": "Laufende Instanzen",
+    "processInstances": "Prozessinstanzen",
+    "auditLog": "Audit-Protokoll",
+    "id": "ID",
+    "startTime": "Startzeit",
+    "endTime": "Endzeit",
+    "businessKey": "Business Key",
+    "state": "Status",
+    "processInstanceId": "Prozessinstanz ID",
+    "activityName": "Aktivitätsname",
+    "activityId": "Aktivitäts-ID",
+    "create": "Erzeugen",
+    "delete": "Löschen",
+    "instanceId": "Instanz ID",
+    "variables": "Variablen",
+    "incidents": "Vorfälle",
+    "duration": "Dauer",
+    "referenceTime": "Referenzzeit",
+    "message": "Message",
+    "value": "Wert",
+    "type": "Typ",
+    "emptyProcessInstancesMessage": "Keine laufenden Prozessinstanzen.",
+    "emptyLogDataMessage": "Keine Protokolldaten verfügbar.",
+    "emptyIncidentsMessage": "Keine Vorfälle gemeldet.",
+    "emptyVariablesMessage": "Keine Variablen gesetzt.",
+    "timeFormat": "DD.MM.YYYY HH:mm:ss",
+    "breadcrumb": {
+      "overview": "Übersicht",
+      "definition": "Definition",
+      "instance": "Instanz"
+    }
+  }
 }

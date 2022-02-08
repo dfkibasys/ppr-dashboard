@@ -1,9 +1,37 @@
-deploy_production:
-  stage: deploy
-  image: ubuntu:18.04
-  before_script:
-   - apt-get update -qq && apt-get install -qq sshpass
+image: docker:20.10.12
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  # When using dind, it's wise to use the overlayfs driver for
+  # improved performance.
+  DOCKER_DRIVER: overlay2
+  # Specify to Docker where to create the certificates, Docker will
+  # create them automatically on boot, and will create
+  # `/certs/client` that will be shared between the service and
+  # build container.
+  DOCKER_TLS_CERTDIR: '/certs'
+  CI_REGISTRY_NAME: '$REGISTRY/dfkibasys/ppr-dashboard'
+
+services:
+  - docker:20.10.12-dind
+
+before_script:
+  - docker info
+
+build:
+  stage: build
   script:
-  - sshpass -p "${SERVER_PASS}" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no mrk-admin@hybrit-lnv-1 "cd ppr-dashboard && git pull https://mrk40:${MRK_PASS}@mrk40.dfki.de/mrk-4.0/ppr-dashboard.git && docker-compose build && docker-compose up -d"
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker build -t "$CI_REGISTRY_NAME:latest" .
+    - docker push "$CI_REGISTRY_NAME:latest"
   only:
-  - master
+    - master
+
+build-dev:
+  stage: build
+  script:
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker build -t "$CI_REGISTRY_NAME:dev" .
+    - docker push "$CI_REGISTRY_NAME:dev"
+  only:
+    - develop

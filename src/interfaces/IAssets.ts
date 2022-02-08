@@ -1,16 +1,18 @@
 export interface Data {
-  openedIndex: number;
-  openedIdShort: string;
+  openedAssetId: string;
 }
 export interface Methods {
-  fetchDevices(vm: any): void;
   fetchAssets(vm: any): void;
-  openPackML(idShort: string): void;
-  openCapabilityOverview(index: number): void;
+  openPackML(assetId: string): void;
+  buttonVariant(assetId: string): string;
+  scrollCallback(): void;
 }
 export interface Computed {
   allAssets: any; //TODO
   assetsList: [];
   sortedAssetsList: [];
+  loadedAssets: number;
+  limitedAssetsList;
+  hasLoaded: boolean;
 }
 export interface Props {}

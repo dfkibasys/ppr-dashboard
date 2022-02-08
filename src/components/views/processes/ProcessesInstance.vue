@@ -135,6 +135,7 @@ import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
+import getEnv from '@/helpers/env';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesInstance',
@@ -142,9 +143,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     BpmnDisplay,
   },
   computed: {
-    ...mapGetters(['camundaUrl']),
+    ...mapGetters('endpoints', {
+      camundaUrl: 'camundaUrl',
+    }),
     baseUrl: function () {
-      return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {

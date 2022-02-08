@@ -2,96 +2,311 @@
   {
     "endpoints": [
       {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:mir200-1/aas",
+        "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F0043_1113_5012_9303/aas",
         "type": "http"
       }
     ],
     "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:mir200-1" },
-    "idShort": "mir200-1-aas",
+    "identification": { "idType": "IRI", "id": "https://dfki.de/ids/aas/0043_1113_5012_9303" },
+    "idShort": "mir100_2_aas",
     "asset": {
-      "parent": null,
-      "identification": {
-        "idType": "IRI",
-        "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:mir200-1"
-      },
-      "idShort": "mir200-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/8152_1113_5012_0429" },
+      "idShort": "mir100_2",
       "kind": "Instance",
       "dataSpecification": [],
-      "description": [],
       "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
+      "embeddedDataSpecifications": []
     },
     "submodels": [
       {
-        "endpoints": [{ "address": "/data/mir200-1-id.json", "type": "http" }],
+        "endpoints": [
+          {
+            "address": "/data/mir100-2-id.json",
+            "type": "http"
+          }
+        ],
         "semanticId": {
           "keys": [
             {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
               "local": false
             }
           ]
         },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:mir200-1"
-        },
-        "idShort": "mir200-1-id"
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/6291_5170_6012_9120" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      },
+      {
+        "endpoints": [
+          {
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F0043_1113_5012_9303/aas/submodels/Capabilities/submodel",
+            "type": "http"
+          }
+        ],
+        "semanticId": { "keys": [] },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/1435_3180_6012_0689" },
+        "idShort": "Capabilities",
+        "modelType": { "name": "SubmodelDescriptor" }
       }
     ]
   },
   {
     "endpoints": [
       {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:baxter-1/aas",
+        "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5453_1113_5012_9841/aas",
         "type": "http"
       }
     ],
     "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:baxter-1" },
-    "idShort": "baxter-1-aas",
+    "identification": { "idType": "IRI", "id": "https://dfki.de/ids/aas/5453_1113_5012_9841" },
+    "idShort": "ur10_1_aas",
     "asset": {
-      "parent": null,
-      "identification": {
-        "idType": "IRI",
-        "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:baxter-1"
-      },
-      "idShort": "baxter-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/3572_1113_5012_2487" },
+      "idShort": "ur10_1",
       "kind": "Instance",
       "dataSpecification": [],
-      "description": [],
       "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
+      "embeddedDataSpecifications": []
     },
     "submodels": [
       {
-        "endpoints": [{ "address": "/data/baxter-1-id.json", "type": "http" }],
+        "endpoints": [
+          {
+            "address": "/data/ur10-1-id.json",
+            "type": "http"
+          }
+        ],
+        "semanticId": { "keys": [] },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/5175_4182_7012_5135" },
+        "idShort": "Capabilities",
+        "modelType": { "name": "SubmodelDescriptor" }
+      },
+      {
+        "endpoints": [
+          {
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5453_1113_5012_9841/aas/submodels/Signals/submodel",
+            "type": "http"
+          }
+        ],
+        "semanticId": { "keys": [] },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/7151_3182_7012_7596" },
+        "idShort": "Signals",
+        "modelType": { "name": "SubmodelDescriptor" }
+      },
+      {
+        "endpoints": [
+          {
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5453_1113_5012_9841/aas/submodels/Identification/submodel",
+            "type": "http"
+          }
+        ],
+        "semanticId": {
+          "keys": [
+            {
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
+              "local": false
+            }
+          ]
+        },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/7154_5170_6012_5128" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      }
+    ]
+  },
+  {
+    "endpoints": [
+      {
+        "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F6253_1113_5012_7178/aas",
+        "type": "http"
+      }
+    ],
+    "modelType": { "name": "AssetAdministrationShellDescriptor" },
+    "identification": { "idType": "IRI", "id": "https://dfki.de/ids/aas/6253_1113_5012_7178" },
+    "idShort": "ur5_1_aas",
+    "asset": {
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/5472_1113_5012_2754" },
+      "idShort": "ur5_1",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": { "name": "Asset" },
+      "embeddedDataSpecifications": []
+    },
+    "submodels": [
+      {
+        "endpoints": [
+          {
+            "address": "/data/ur5-1-id.json",
+            "type": "http"
+          }
+        ],
+        "semanticId": {
+          "keys": [
+            {
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
+              "local": false
+            }
+          ]
+        },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/1144_5170_6012_4316" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      }
+    ]
+  },
+  {
+    "endpoints": [
+      {
+        "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F4233_1113_5012_4654/aas",
+        "type": "http"
+      }
+    ],
+    "modelType": { "name": "AssetAdministrationShellDescriptor" },
+    "identification": { "idType": "IRI", "id": "https://dfki.de/ids/aas/4233_1113_5012_4654" },
+    "idShort": "lap_1_aas",
+    "asset": {
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/6542_1113_5012_9769" },
+      "idShort": "lap_1",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": { "name": "Asset" },
+      "embeddedDataSpecifications": []
+    },
+    "submodels": [
+      {
+        "endpoints": [
+          {
+            "address": "/data/lap-1-id.json",
+            "type": "http"
+          }
+        ],
+        "semanticId": {
+          "keys": [
+            {
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
+              "local": false
+            }
+          ]
+        },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/4514_1110_6012_0882" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      }
+    ]
+  },
+  {
+    "endpoints": [
+      { "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/baxter_2_aas/aas", "type": "http" }
+    ],
+    "modelType": { "name": "AssetAdministrationShellDescriptor" },
+    "identification": { "idType": "Custom", "id": "baxter_2_aas" },
+    "idShort": "baxter_2_aas",
+    "asset": {
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/8125_0191_1112_1824" },
+      "idShort": "baxter_2",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": { "name": "Asset" },
+      "embeddedDataSpecifications": []
+    },
+    "submodels": [
+      {
+        "endpoints": [
+          {
+            "address": "/data/baxter-2-id.json",
+            "type": "http"
+          }
+        ],
+        "semanticId": {
+          "keys": [
+            {
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
+              "local": false
+            }
+          ]
+        },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/6520_7132_1112_3075" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      }
+    ]
+  },
+  {
+    "endpoints": [
+      {
+        "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5323_1113_5012_2226/aas",
+        "type": "http"
+      }
+    ],
+    "modelType": { "name": "AssetAdministrationShellDescriptor" },
+    "identification": { "idType": "IRI", "id": "https://dfki.de/ids/aas/5323_1113_5012_2226" },
+    "idShort": "drone_1_aas",
+    "asset": {
+      "identification": { "idType": "IRI", "id": "https://dfki.de/ids/asset/3332_1113_5012_4899" },
+      "idShort": "drone_1",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": { "name": "Asset" },
+      "embeddedDataSpecifications": []
+    },
+    "submodels": [
+      {
+        "endpoints": [
+          {
+            "address": "/data/drone-1-id.json",
+            "type": "http"
+          }
+        ],
+        "semanticId": {
+          "keys": [
+            {
+              "idType": "IRI",
+              "type": "Submodel",
+              "value": "https://www.hsu-hh.de/aut/aas/identification",
+              "local": false
+            }
+          ]
+        },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/5314_1110_6012_3213" },
+        "idShort": "Identification",
+        "modelType": { "name": "SubmodelDescriptor" }
+      },
+      {
+        "endpoints": [
+          {
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5323_1113_5012_2226/aas/submodels/Capabilities/submodel",
+            "type": "http"
+          }
+        ],
+        "semanticId": { "keys": [] },
+        "identification": { "idType": "IRI", "id": "https://dfki.de/ids/sm/4263_9080_6012_8626" },
+        "idShort": "Capabilities",
+        "modelType": { "name": "SubmodelDescriptor" }
+      },
+      {
+        "endpoints": [
+          {
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5323_1113_5012_2226/aas/submodels/drone-1-cc-instance/submodel",
+            "type": "http"
+          }
+        ],
         "semanticId": {
           "keys": [
             {
               "idType": "Custom",
               "type": "ConceptDescription",
-              "value": "Identification",
+              "value": "ControlComponentInstance",
               "local": false
             }
           ]
@@ -99,12 +314,12 @@
         "modelType": { "name": "SubmodelDescriptor" },
         "identification": {
           "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:baxter-1"
+          "id": "urn:de.dfki:devices.mrk40.cos:control-component-instance:1:1:drone-1"
         },
-        "idShort": "baxter-1-id"
+        "idShort": "drone-1-cc-instance"
       },
       {
-        "endpoints": [{ "address": "/data/baxter-1-cci.json", "type": "http" }],
+        "endpoints": [{ "address": "/data/drone-1-cc-interface.json", "type": "http" }],
         "semanticId": {
           "keys": [
             {
@@ -118,416 +333,9 @@
         "modelType": { "name": "SubmodelDescriptor" },
         "identification": {
           "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:baxter-1"
+          "id": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:drone-1"
         },
-        "idShort": "baxter-1-cci"
-      },
-      {
-        "endpoints": [
-          {
-            "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:baxter-1/aas/submodels/baxter-1-ccc",
-            "type": "http"
-          }
-        ],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "ControlComponentConfiguration",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component-config:1:1:baxter-1"
-        },
-        "idShort": "baxter-1-ccc"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:ur3-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:ur3-1" },
-    "idShort": "ur3-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:ur3-1" },
-      "idShort": "ur3-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/ur3-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:ur3-1" },
-        "idShort": "ur3-1-id"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:ur10-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:ur10-1" },
-    "idShort": "ur10-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:ur10-1" },
-      "idShort": "ur10-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/ur10-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:ur10-1" },
-        "idShort": "ur10-1-id"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:ur5-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:ur5-1" },
-    "idShort": "ur5-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:ur5-1" },
-      "idShort": "ur5-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/ur5-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:ur5-1" },
-        "idShort": "ur5-1-id"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:drone-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:drone-1" },
-    "idShort": "drone-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": {
-        "idType": "IRI",
-        "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:drone-1"
-      },
-      "idShort": "drone-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/drone-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:drone-1" },
-        "idShort": "drone-1-id"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:wallet-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:wallet-1" },
-    "idShort": "wallet-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": {
-        "idType": "IRI",
-        "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:wallet-1"
-      },
-      "idShort": "wallet-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/wallet-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:wallet-1"
-        },
-        "idShort": "wallet-1-id"
-      },
-      {
-        "endpoints": [{ "address": "/data/wallet-1-cci.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "ControlComponentInterface",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:wallet-1"
-        },
-        "idShort": "wallet-1-cci"
-      },
-      {
-        "endpoints": [
-          {
-            "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:wallet-1/aas/submodels/wallet-1-ccc",
-            "type": "http"
-          }
-        ],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "ControlComponentConfiguration",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component-config:1:1:wallet-1"
-        },
-        "idShort": "wallet-1-ccc"
-      }
-    ]
-  },
-  {
-    "endpoints": [
-      {
-        "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:mir100-1/aas",
-        "type": "http"
-      }
-    ],
-    "modelType": { "name": "AssetAdministrationShellDescriptor" },
-    "identification": { "idType": "IRI", "id": "urn:de.dfki:devices.mrk40.cos:aas:1:1:mir100-1" },
-    "idShort": "mir100-1-aas",
-    "asset": {
-      "parent": null,
-      "identification": {
-        "idType": "IRI",
-        "id": "urn:de.dfki:devices.mrk40.cos:asset:1:1:mir100-1"
-      },
-      "idShort": "mir100-1",
-      "administration": {
-        "dataSpecification": [],
-        "version": "",
-        "embeddedDataSpecifications": [],
-        "revision": ""
-      },
-      "kind": "Instance",
-      "dataSpecification": [],
-      "description": [],
-      "modelType": { "name": "Asset" },
-      "category": "",
-      "embeddedDataSpecifications": [],
-      "assetIdentificationModel": null
-    },
-    "submodels": [
-      {
-        "endpoints": [{ "address": "/data/mir100-1-id.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "Identification",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:id:1:1:mir100-1"
-        },
-        "idShort": "mir100-1-id"
-      },
-      {
-        "endpoints": [{ "address": "/data/mir100-1-cci.json", "type": "http" }],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "ControlComponentInterface",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:mir100-1"
-        },
-        "idShort": "mir100-1-cci"
-      },
-      {
-        "endpoints": [
-          {
-            "address": "http://192.168.0.10:5080/aasList/urn:de.dfki:devices.mrk40.cos:aas:1:1:mir100-1/aas/submodels/mir100-1-ccc",
-            "type": "http"
-          }
-        ],
-        "semanticId": {
-          "keys": [
-            {
-              "idType": "Custom",
-              "type": "ConceptDescription",
-              "value": "ControlComponentConfiguration",
-              "local": false
-            }
-          ]
-        },
-        "modelType": { "name": "SubmodelDescriptor" },
-        "identification": {
-          "idType": "IRI",
-          "id": "urn:de.dfki:devices.mrk40.cos:control-component-config:1:1:mir100-1"
-        },
-        "idShort": "mir100-1-ccc"
+        "idShort": "drone-1-cc-interface"
       }
     ]
   }

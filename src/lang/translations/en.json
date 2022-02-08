@@ -1,28 +1,20 @@
 {
   "navbar": {
-    "language": "Language",
-    "change": "Change",
-    "devices": "Control Components",
+    "assets": "Control Components",
     "services": "Services",
     "management": "Management",
     "processes": "Processes",
-    "mockObjects": "Mock objects",
-    "info": "Only available for components",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "settings": "Settings"
   },
   "modal": {
     "close": "Close",
     "cancel": "Cancel",
     "packML": {
-      "title": "Control Component"
-    },
-    "capabilityOverview": {
-      "title": "Capability Overview",
-      "name": "Name",
-      "status": "Status",
-      "remove": "Remove",
-      "teach": "Teach"
+      "title": "Control Component",
+      "occupationState": "Occupation State",
+      "operationMode": "Operation Mode"
     },
     "licences": {
       "title": "Licences",
@@ -51,6 +43,13 @@
       "username": "Username",
       "password": "Password",
       "feedback": "Username/Password incorrect"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "change": "Change",
+      "mockObjects": "Mock objects",
+      "info": "Only available for components"
     }
   },
   "card": {

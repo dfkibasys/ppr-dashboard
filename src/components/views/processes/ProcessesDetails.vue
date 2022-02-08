@@ -158,6 +158,7 @@ import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
+import getEnv from '@/helpers/env';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesDetails',
@@ -166,9 +167,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     CreateProcessInstance,
   },
   computed: {
-    ...mapGetters(['camundaUrl']),
+    ...mapGetters('endpoints', {
+      camundaUrl: 'camundaUrl',
+    }),
     baseUrl: function () {
-      return process.env.VUE_APP_AJAX_REQUEST_DOMAIN;
+      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
