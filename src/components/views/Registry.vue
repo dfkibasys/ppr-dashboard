@@ -119,26 +119,45 @@ export default {
 #json-root {
   word-wrap: break-word;
   width: 100%;
-  background-color: rgb(238, 238, 238);
+  background-color: #34393d;
   padding: 1em;
-  > .array {
-    margin-bottom: 1em;
-    padding: 1em 1em 1em 0em;
-    background-color: rgb(197, 196, 196);
-  }
+  color: #2e2d2d;
   > .object,
   > .array {
-    .array {
-      background-color: rgb(212, 221, 252);
-      margin-bottom: 1em;
+    padding: 0.5em;
+    background-color: #6a757d;
+
+    > .array,
+    > .object {
+      background-color: #8b98a3;
+
+      > .array,
+      > .object {
+        background-color: #a0b0bd;
+
+        > .array,
+        > .object {
+          background-color: #aabbc9;
+
+          > .array,
+          > .object {
+            background-color: #b6c9d8;
+
+            > .array,
+            > .object {
+              background-color: #bed3e2;
+            }
+          }
+        }
+      }
     }
   }
-  .array {
-    div {
-      margin-left: 1.5em;
-    }
-  }
+  .array,
   .object {
+    margin-bottom: 0.7em;
+    div {
+      padding: 0.4em;
+    }
   }
 }
 </style>
