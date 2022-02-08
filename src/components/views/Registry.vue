@@ -8,17 +8,37 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
+const IMAGE_BLOB_LIMIT = 100;
+
 export default {
   name: 'Registry',
-  computed: mapGetters(['registryUrl']),
   data() {
     return {
       registry: [],
     };
   },
+  computed: {
+    ...mapGetters('endpoints', {
+      registryUrl: 'registryUrl',
+    }),
+    domain() {
+      // get domain from e.g. https://domain:4001
+      const a = this.registryUrl.split('//');
+      const b = a[1].split(':');
+      return b[0];
+    },
+  },
   methods: {
     isArray(data) {
       return Object.prototype.toString.call(data) === '[object Array]';
+    },
+    loadData(url = this.registryUrl) {
+      axios.get(url).then((res) => {
+        this.registry = res.data;
+        // remove old data first in case of reloading
+        document.getElementById('json-root').innerHTML = '';
+        this.addJSONtoDOM('json-root', this.registry);
+      });
     },
     addJSONtoDOM(root, element) {
       if (this.isArray(element)) {
@@ -47,7 +67,7 @@ export default {
           let div = document.createElement('div');
           div.id = elementID;
           div.classList.add('object');
-          div.innerHTML = `${attr}: `;
+          div.innerHTML = `<b>${attr}</b>: `;
           document.getElementById(root).appendChild(div);
 
           if (element[attr] === null) element[attr] = 'null'; //workaround to trigger function call
@@ -61,26 +81,65 @@ export default {
         const elementID = root + '-' + element;
         let span = document.createElement('span');
         span.id = elementID;
-        span.innerHTML = element;
+
+        // Make AAS links interactable
+        if (typeof element === 'string' && element.includes(this.domain)) {
+          span.innerHTML = `<a href=".#${this.$router.currentRoute.path}${encodeURIComponent(
+            element
+          )}">${element}</a>`;
+        } else {
+          span.innerHTML = element;
+        }
+
+        // Shorten Base64 Image Blob
+        if (typeof element === 'string' && element.includes('data:image/png;base64')) {
+          span.innerHTML = `${element.substring(0, IMAGE_BLOB_LIMIT)}...`;
+        }
+
         document.getElementById(root).appendChild(span);
       }
     },
   },
+  watch: {
+    '$route.params.url': {
+      handler: function (url) {
+        this.loadData(url);
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   created() {
-    axios.get(this.registryUrl).then((res) => {
-      this.registry = res.data;
-      this.addJSONtoDOM('json-root', this.registry);
-    });
+    this.loadData(this.$route.params.url);
   },
 };
 </script>
 
 <style lang="scss">
-.array {
+#json-root {
+  word-wrap: break-word;
   width: 100%;
-  background-color: rgb(197, 196, 196);
+  background-color: rgb(238, 238, 238);
+  padding: 1em;
+  > .array {
+    margin: 1em;
+    padding: 1em 1em 1em 0em;
+    background-color: rgb(197, 196, 196);
+    .array {
+      background-color: rgb(212, 221, 252);
+      margin-bottom: 1em;
+    }
+  }
+  > .object {
+    .array {
+      background-color: rgb(212, 221, 252);
+      margin-bottom: 1em;
+    }
+  }
+}
+.array {
   div {
-    margin-left: 2em;
+    margin-left: 1.5em;
   }
 }
 .object {

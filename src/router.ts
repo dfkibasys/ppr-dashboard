@@ -44,7 +44,7 @@ const router = new Router({
       component: ProcessesInstance,
     },
     {
-      path: '/registry',
+      path: '/registry/:url?',
       name: 'Registry',
       component: Registry,
     },
