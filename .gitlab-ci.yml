@@ -21,7 +21,7 @@ before_script:
 build:
   stage: build
   script:
-    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:latest" .
     - docker push "$CI_REGISTRY_NAME:latest"
   only:
@@ -30,7 +30,7 @@ build:
 build-dev:
   stage: build
   script:
-    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:dev" .
     - docker push "$CI_REGISTRY_NAME:dev"
   only:
