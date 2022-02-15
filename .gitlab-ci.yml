@@ -20,6 +20,9 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - basys
+    - docker
   script:
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:latest" .
@@ -29,6 +32,9 @@ build:
 
 build-dev:
   stage: build
+  tags:
+    - basys
+    - docker
   script:
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:dev" .
