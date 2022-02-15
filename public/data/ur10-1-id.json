@@ -368,7 +368,7 @@
         ]
       },
       "semanticId": { "keys": [] },
-      "idShort": "TypeImageBase64",
+      "idShort": "TypeThumbnailBase64",
       "kind": "Instance",
       "qualifiers": [],
       "modelType": { "name": "Blob" },
