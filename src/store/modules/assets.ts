@@ -45,6 +45,14 @@ const getters: GetterTree<AssetsState, RootState> = {
    * @returns {Boolean}
    */
   hasLoaded: (state) => state.hasLoaded,
+
+  /**
+   * Get whether all available ID submodels have been loaded
+   *
+   * @param state
+   * @returns
+   */
+  hasMoreAssets: (state) => state.loadedAssets < state.assetsList.length,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {

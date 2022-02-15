@@ -6,6 +6,7 @@ export interface Methods {
   openPackML(assetId: string): void;
   buttonVariant(assetId: string): string;
   scrollCallback(): void;
+  loadMore(): void;
 }
 export interface Computed {
   allAssets: any; //TODO
@@ -14,5 +15,6 @@ export interface Computed {
   loadedAssets: number;
   limitedAssetsList;
   hasLoaded: boolean;
+  hasMoreAssets: boolean;
 }
 export interface Props {}

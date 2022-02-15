@@ -60,6 +60,9 @@
     "show": "Show",
     "manufacturer": "Producer"
   },
+  "button": {
+    "loadMore": "Load more"
+  },
   "process": {
     "processDefinition": "Process Definition | Process Definitions",
     "decisionDefinition": "Decision Definition | Decision Definitions",
