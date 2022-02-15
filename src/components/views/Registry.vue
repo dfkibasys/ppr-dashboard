@@ -38,6 +38,8 @@ export default {
         // remove old data first in case of reloading
         document.getElementById('json-root').innerHTML = '';
         this.addJSONtoDOM('json-root', this.registry);
+        // jump to top of browser page
+        window.scroll(0, 0);
       });
     },
     addJSONtoDOM(root, element) {
