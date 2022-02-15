@@ -1,0 +1,23 @@
+{
+  "Status": {
+    "ERRMSG": "OK",
+    "EXST": "STOPPED",
+    "WORKST": "",
+    "OCCST": "FREE",
+    "OCCUPIER": "INIT",
+    "ERRCODE": 0,
+    "EXMODE": "SIMULATE",
+    "OPMODE": "BSTATE"
+  },
+  "updateEvent": {
+    "keys": [
+      {
+        "idType": "IRI",
+        "type": "Submodel",
+        "value": "urn:de.dfki:devices.mrk40.cos:control-component:1:1:drone-1",
+        "local": true
+      }
+    ]
+  },
+  "Operations": {}
+}

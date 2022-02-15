@@ -22,7 +22,7 @@
           <div class="container">
             <div class="row">
               <div class="col-4 image">
-                <img :src="allAssets[assetId].TypeThumbnail" />
+                <img :src="allAssets[assetId].TypeThumbnailBase64" />
               </div>
               <div class="col-3">
                 {{ $t('card.type') }}:
@@ -48,6 +48,9 @@
       </div>
     </div>
     <br />
+    <b-button v-if="hasMoreAssets" class="mx-auto d-block" @click="loadMore()">
+      {{ $t('button.loadMore') }}</b-button
+    >
     <PackML :opened-asset-id="openedAssetId"></PackML>
   </div>
 </template>
@@ -69,6 +72,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       assetsList: 'assetsList',
       loadedAssets: 'loadedAssets',
       hasLoaded: 'hasLoaded',
+      hasMoreAssets: 'hasMoreAssets',
     }),
     sortedAssetsList: function () {
       let that = this;
@@ -117,8 +121,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     scrollCallback: function () {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        this.$store.dispatch('assets/fetchIdSubmodels', { vm: this });
+        this.loadMore();
       }
+    },
+    loadMore: function () {
+      if (this.hasMoreAssets) this.$store.dispatch('assets/fetchIdSubmodels', { vm: this });
     },
   },
   created() {

@@ -10,7 +10,7 @@ variables:
   # `/certs/client` that will be shared between the service and
   # build container.
   DOCKER_TLS_CERTDIR: '/certs'
-  CI_REGISTRY_NAME: '$REGISTRY/dfkibasys/ppr-dashboard'
+  CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
 
 services:
   - docker:20.10.12-dind
@@ -20,8 +20,11 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - basys
+    - docker
   script:
-    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:latest" .
     - docker push "$CI_REGISTRY_NAME:latest"
   only:
@@ -29,8 +32,11 @@ build:
 
 build-dev:
   stage: build
+  tags:
+    - basys
+    - docker
   script:
-    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker build -t "$CI_REGISTRY_NAME:dev" .
     - docker push "$CI_REGISTRY_NAME:dev"
   only:

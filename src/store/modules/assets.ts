@@ -4,6 +4,8 @@ import { AssetsState, IDSubmodel, CCISubmodel } from '@/interfaces/AssetsState';
 import axios from 'axios';
 import store from '..';
 
+const PAGE_SIZE = 8;
+
 const state: AssetsState = {
   assets: {},
   assetsList: [],
@@ -43,6 +45,14 @@ const getters: GetterTree<AssetsState, RootState> = {
    * @returns {Boolean}
    */
   hasLoaded: (state) => state.hasLoaded,
+
+  /**
+   * Get whether all available ID submodels have been loaded
+   *
+   * @param state
+   * @returns
+   */
+  hasMoreAssets: (state) => state.loadedAssets < state.assetsList.length,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
@@ -56,6 +66,7 @@ const actions: ActionTree<AssetsState, RootState> = {
   fetchAssets({ commit, dispatch }, { vm }) {
     let assets: any = {};
     let assetsList: any = [];
+    commit('setLoadedAssets', 0);
 
     let registry_url = store.getters['endpoints/mockDataEnabled']
       ? '/data/registry.json'
@@ -111,16 +122,20 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all ID submodels from the AAS server
    *
    * @param commit
-   * @param state
    * @param vm
    */
-  fetchIdSubmodels({ commit, state }, { vm }) {
-    let slicedAssetsList = state.assetsList.slice(state.loadedAssets, (state.loadedAssets += 8));
+  fetchIdSubmodels({ commit }, { vm }) {
+    let loadedAssets = store.getters['assets/loadedAssets'];
+    let slicedAssetsList = store.getters['assets/assetsList'].slice(
+      loadedAssets,
+      (loadedAssets += PAGE_SIZE)
+    );
+    commit('setLoadedAssets', loadedAssets);
+
     slicedAssetsList.forEach((assetId) => {
       let id: IDSubmodel = {};
-
       axios
-        .get(state.assets[assetId].IdentificationSubmodelEndpoint)
+        .get(store.getters['assets/allAssets'][assetId].IdentificationSubmodelEndpoint)
         .then((res) => {
           res.data.submodelElements.forEach((submodelElement) => {
             id[submodelElement.idShort] = submodelElement.value;
@@ -223,6 +238,14 @@ const mutations: MutationTree<AssetsState> = {
       }
     }
   },
+
+  /**
+   * commit amount of loaded asset to state
+   *
+   * @param state
+   * @param amount
+   */
+  setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
 };
 
 export const assets: Module<AssetsState, RootState> = {
