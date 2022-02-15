@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="modal-settings" ref="modal" size="lg" :title="$t('modal.settings.title')">
+  <b-modal id="modal-settings" ref="modal" size="lg" centered :title="$t('modal.settings.title')">
     <b-container>
       <b-row>
         <b-col>{{ $t('modal.settings.language') }}:</b-col>

@@ -472,7 +472,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   .button {
     position: absolute;
     right: 0px;
-    z-index: 9999;
+    z-index: 1000;
   }
 }
 .rightDiagram {
@@ -480,7 +480,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   .button {
     position: absolute;
     left: 0px;
-    z-index: 9999;
+    z-index: 1000;
   }
 }
 </style>

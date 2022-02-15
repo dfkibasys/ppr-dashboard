@@ -135,7 +135,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.$mqtt.on((topic: string, message: string) => {
         let msg = JSON.parse(message.toString());
         console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}`);
-        //TODO: replace commit with dispatch
         this.$store.commit('assets/updateAsset', msg.payload);
       });
     }
