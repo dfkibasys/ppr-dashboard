@@ -129,6 +129,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   created() {
+    this.$store.dispatch('assets/fetchDotAASAssets');
+
     if (!this.hasLoaded) {
       this.fetchAssets({ vm: this });
 

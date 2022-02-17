@@ -3,6 +3,7 @@ import { RootState } from '@/interfaces/RootState';
 import { AssetsState, IDSubmodel, CCISubmodel } from '@/interfaces/AssetsState';
 import axios from 'axios';
 import store from '..';
+import { RegistryAndDiscoveryInterfaceApi } from '@basys/aas-registry-client-ts-fetch';
 
 const PAGE_SIZE = 8;
 
@@ -56,6 +57,25 @@ const getters: GetterTree<AssetsState, RootState> = {
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
+  /**
+   * Fetch all assets from new dotaas registry
+   */
+  fetchDotAASAssets() {
+    const config = {
+      basePath: 'http://mrk-lnv-1.mrk40.dfki.lan:8020',
+    };
+    const api = new RegistryAndDiscoveryInterfaceApi(config);
+
+    api
+      .getAllAssetAdministrationShellDescriptors()
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },
+
   /**
    * Fetch all assets from the registry
    *
