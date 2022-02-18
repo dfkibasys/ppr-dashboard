@@ -3,7 +3,11 @@ import { RootState } from '@/interfaces/RootState';
 import { AssetsState, IDSubmodel, CCISubmodel } from '@/interfaces/AssetsState';
 import axios from 'axios';
 import store from '..';
-import { RegistryAndDiscoveryInterfaceApi } from '@basys/aas-registry-client-ts-fetch';
+import {
+  RegistryAndDiscoveryInterfaceApi,
+  SortDirection,
+  SortingPath,
+} from '@basys/aas-registry-client-ts-fetch';
 
 const PAGE_SIZE = 8;
 
@@ -66,8 +70,29 @@ const actions: ActionTree<AssetsState, RootState> = {
     };
     const api = new RegistryAndDiscoveryInterfaceApi(config);
 
+    // get all assets
     api
       .getAllAssetAdministrationShellDescriptors()
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    // search, paginate and sort
+    const body = {
+      page: {
+        index: 0,
+        size: 10,
+      },
+      sortBy: {
+        direction: SortDirection.ASC,
+        path: [SortingPath.IdShort],
+      },
+    };
+    api
+      .searchShellDescriptors(body)
       .then((response) => {
         console.log(response);
       })
