@@ -15,24 +15,30 @@ export interface CCISubmodel {
   OCCST?: string;
   WORKST?: string;
 }
+export interface Asset {
+  idShort?: string;
+  IdentificationSubmodelEndpoint?: string;
+  CapabilitiesSubmodelEndpoint?: string;
+  CCInterfaceSubmodelEndpoint?: string;
+  CCInstanceSubmodelEndpoint?: string;
+  ERRMSG?: string;
+  EXST?: string;
+  EXMODE?: string;
+  ERRCODE?: number;
+  OPMODE?: string;
+  OCCST?: string;
+  WORKST?: string;
+}
 
 export interface AssetsState {
   assets: {
-    [assetId: string]: {
-      IdentificationSubmodelEndpoint: string;
-      CapabilitiesSubmodelEndpoint?: string;
-      CCInterfaceSubmodelEndpoint?: string;
-      CCInstanceSubmodelEndpoint?: string;
-      ERRMSG?: string;
-      EXST?: string;
-      EXMODE?: string;
-      ERRCODE?: number;
-      OPMODE?: string;
-      OCCST?: string;
-      WORKST?: string;
+    keyMap: {
+      [assetId: string]: number;
     };
+    list: Asset[];
   };
-  assetsList: [];
   loadedAssets: number;
+  totalAssets: number;
+  currentPage: number;
   hasLoaded: boolean;
 }
