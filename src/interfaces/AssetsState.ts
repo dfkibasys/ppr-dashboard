@@ -22,11 +22,28 @@ export interface Asset {
   CCInterfaceSubmodelEndpoint?: string;
   CCInstanceSubmodelEndpoint?: string;
   ERRMSG?: string;
-  EXST?: string;
-  EXMODE?: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
+  EXST?:
+    | 'STOPPED'
+    | 'RESETTING'
+    | 'IDLE'
+    | 'STARTING'
+    | 'EXECUTE'
+    | 'COMPLETING'
+    | 'COMPLETE'
+    | 'STOPPING'
+    | 'ABORTING'
+    | 'ABORTED'
+    | 'CLEARING'
+    | 'HOLDING'
+    | 'HELD'
+    | 'UNHOLDING'
+    | 'SUSPENDING'
+    | 'SUSPENDED'
+    | 'UNSUSPENDING';
+  EXMODE?: 'AUTO' | 'SEMIAUTO' | 'SIMULATION';
   ERRCODE?: number;
   OPMODE?: string;
-  OCCST?: string;
+  OCCST?: 'FREE' | 'OCCUPIED' | 'PRIORITY';
   OCCUPIER?: string;
   WORKST?: string;
 }
