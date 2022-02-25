@@ -23,10 +23,11 @@ export interface Asset {
   CCInstanceSubmodelEndpoint?: string;
   ERRMSG?: string;
   EXST?: string;
-  EXMODE?: string;
+  EXMODE?: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
   ERRCODE?: number;
   OPMODE?: string;
   OCCST?: string;
+  OCCUPIER?: string;
   WORKST?: string;
 }
 
