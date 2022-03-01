@@ -1,3 +1,5 @@
+import { Asset } from './AssetsState';
+
 interface options {
   text: 'AUTOMATIC' | 'SEMI-AUTOMATIC' | 'SIMULATE';
   value: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
@@ -17,7 +19,7 @@ export interface Methods {
   initGraph(): void;
   markCurrentState(state: string): void;
   clear(): void;
-  setModeButton(allAssets: object): void;
+  setModeButton(): void;
   stopButton(): void;
   resetButton(): void;
   modeButton(value: string): void;
@@ -27,7 +29,7 @@ export interface Methods {
 }
 
 export interface Computed {
-  allAssets(val: any): any; //TODO
+  asset: Asset; //TODO
   currentUser: string;
   isAuthorized: boolean;
 }

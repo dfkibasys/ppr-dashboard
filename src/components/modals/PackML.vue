@@ -24,34 +24,23 @@
 
     <template v-slot:modal-footer="{ cancel }">
       <div class="mr-auto">
-        <span class="mr-1"
-          >{{ $t('modal.packML.occupationState') }}: {{ allAssets[openedAssetId].OCCST }}</span
-        >
-        <span v-if="allAssets[openedAssetId].OCCST !== 'FREE'" class="mr-2"
-          >({{ allAssets[openedAssetId].OCCUPIER }})</span
-        >
+        <span class="mr-1">{{ $t('modal.packML.occupationState') }}: {{ asset.OCCST }}</span>
+        <span v-if="asset.OCCST !== 'FREE'" class="mr-2">({{ asset.OCCUPIER }})</span>
         <span v-if="isAuthorized">
-          <b-button
-            v-if="allAssets[openedAssetId].OCCST === 'FREE'"
-            variant="info"
-            @click="occupyButton"
+          <b-button v-if="asset.OCCST === 'FREE'" variant="info" @click="occupyButton"
             >Occupy ({{ currentUser }})</b-button
           >
           <b-button
             v-if="
-              (allAssets[openedAssetId].OCCST === 'PRIORITY' ||
-                allAssets[openedAssetId].OCCST === 'OCCUPIED') &&
-              allAssets[openedAssetId].OCCUPIER === currentUser
+              (asset.OCCST === 'PRIORITY' || asset.OCCST === 'OCCUPIED') &&
+              asset.OCCUPIER === currentUser
             "
             variant="info"
             @click="freeButton"
             >Free ({{ currentUser }})</b-button
           >
           <b-button
-            v-if="
-              allAssets[openedAssetId].OCCST === 'OCCUPIED' &&
-              allAssets[openedAssetId].OCCUPIER !== currentUser
-            "
+            v-if="asset.OCCST === 'OCCUPIED' && asset.OCCUPIER !== currentUser"
             variant="info"
             @click="prioButton"
             >Prio ({{ currentUser }})</b-button
@@ -59,9 +48,7 @@
         </span>
       </div>
       <div class="mr-auto">
-        <span class="mr-1"
-          >{{ $t('modal.packML.operationMode') }}: {{ allAssets[openedAssetId].OPMODE }}</span
-        >
+        <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset.OPMODE }}</span>
       </div>
       <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
@@ -107,13 +94,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     openedAssetId: String,
   },
   computed: {
-    ...mapGetters('assets', {
-      allAssets: 'allAssets',
-    }),
     ...mapGetters('users', {
       currentUser: 'currentUser',
       isAuthorized: 'isAuthorized',
     }),
+    asset() {
+      return this.$store.getters['assets/getAssetById'](this.openedAssetId);
+    },
   },
   methods: {
     initGraph: function () {
@@ -155,11 +142,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             }
           })(div);
 
-          this.markCurrentState(this.allAssets[this.openedAssetId].EXST);
+          if (this.asset.EXST) this.markCurrentState(this.asset.EXST);
           this.xmlLoaded = true;
         });
       }
-      this.setModeButton(this.allAssets);
+      this.setModeButton();
     },
     markCurrentState: function (state) {
       let that = this;
@@ -187,15 +174,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     clear: function () {
       this.xmlLoaded = false;
     },
-    setModeButton: function (allAssets) {
+    setModeButton: function () {
       //set mode toggle button (SIMULATION must be mapped to SIMULATE)
-      this.selected =
-        allAssets[this.openedAssetId].EXMODE == 'SIMULATION'
-          ? 'SIMULATE'
-          : allAssets[this.openedAssetId].EXMODE;
+      if (this.asset.EXMODE)
+        this.selected = this.asset.EXMODE == 'SIMULATION' ? 'SIMULATE' : this.asset.EXMODE;
 
       //avoid mode switching when not in stopped state
-      if (allAssets[this.openedAssetId].EXST !== 'STOPPED') {
+      if (this.asset.EXST !== 'STOPPED') {
         this.options.map((val) => {
           if (val.value !== this.selected) {
             val.disabled = true;
@@ -211,12 +196,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     stopButton: function () {
       axios
-        .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/STOP/invoke`,
-          [this.currentUser]
-        )
+        .post(`${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/STOP/invoke`, [
+          this.currentUser,
+        ])
         .then((res) => {
           if (res.data === 'ACCEPTED') {
             console.log('Accepted');
@@ -228,9 +210,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     resetButton: function () {
       axios
         .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/RESET/invoke`,
+          `${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/RESET/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -244,9 +224,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     modeButton: function (value) {
       axios
         .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/${value}/invoke`,
+          `${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/${value}/invoke`,
           [this.currentUser]
         )
         .then((res) => {
@@ -259,56 +237,48 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     freeButton: function () {
       axios
-        .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/FREE/invoke`,
-          [this.currentUser]
-        )
+        .post(`${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/FREE/invoke`, [
+          this.currentUser,
+        ])
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedAssetId].OCCST = 'FREE';
-            this.allAssets[this.openedAssetId].OCCUPIER = 'INIT';
+            this.asset.OCCST = 'FREE';
+            this.asset.OCCUPIER = 'INIT';
           }
         });
     },
     occupyButton: function () {
       axios
         .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/OCCUPY/invoke`,
+          `${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/OCCUPY/invoke`,
           [this.currentUser]
         )
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedAssetId].OCCST = 'OCCUPIED';
-            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
+            this.asset.OCCST = 'OCCUPIED';
+            this.asset.OCCUPIER = this.currentUser;
           }
         });
     },
     prioButton: function () {
       axios
-        .post(
-          `${
-            this.allAssets[this.openedAssetId].CCInterfaceSubmodelEndpoint
-          }/submodelElements/Operations/PRIO/invoke`,
-          [this.currentUser]
-        )
+        .post(`${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/PRIO/invoke`, [
+          this.currentUser,
+        ])
         .then((res) => {
           if (res.data === 'DONE') {
-            this.allAssets[this.openedAssetId].OCCST = 'PRIORITY';
-            this.allAssets[this.openedAssetId].OCCUPIER = this.currentUser;
+            this.asset.OCCST = 'PRIORITY';
+            this.asset.OCCUPIER = this.currentUser;
           }
         });
     },
   },
   watch: {
-    allAssets: {
+    asset: {
       deep: true,
       handler(val) {
         if (this.xmlLoaded) {
-          this.setModeButton(val);
+          this.setModeButton();
 
           //set state cell
           //set old cell border to previous color
@@ -316,7 +286,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
             this.currentCell,
           ]);
           //set new cell border to red
-          this.markCurrentState(val[this.openedAssetId].EXST);
+          this.markCurrentState(val.EXST);
         }
       },
     },

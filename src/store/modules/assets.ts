@@ -1,34 +1,45 @@
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { RootState } from '@/interfaces/RootState';
-import { AssetsState, IDSubmodel, CCISubmodel } from '@/interfaces/AssetsState';
+import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/interfaces/AssetsState';
 import axios from 'axios';
 import store from '..';
+import {
+  RegistryAndDiscoveryInterfaceApi,
+  SortDirection,
+  SortingPath,
+} from '@basys/aas-registry-client-ts-fetch';
+import Vue from 'vue';
 
 const PAGE_SIZE = 8;
 
 const state: AssetsState = {
-  assets: {},
-  assetsList: [],
+  assets: {
+    keyMap: {},
+    list: [],
+  },
   loadedAssets: 0,
+  totalAssets: 0,
+  currentPage: 0,
   hasLoaded: false,
 };
 
 const getters: GetterTree<AssetsState, RootState> = {
-  /**
-   * Get all assets
-   *
-   * @param state
-   * @returns {Object}
-   */
-  allAssets: (state) => state.assets,
-
   /**
    * Get all asset keys
    *
    * @param state
    * @returns {Array}
    */
-  assetsList: (state) => state.assetsList,
+  assetsList: (state) => state.assets.list,
+
+  /**
+   * Return the asset with the given id
+   *
+   * @param state
+   * @returns Object | null
+   */
+  getAssetById: (state) => (id) =>
+    state.assets.keyMap[id] !== undefined ? state.assets.list[state.assets.keyMap[id]] : null,
 
   /**
    * Count all loaded assets
@@ -47,74 +58,94 @@ const getters: GetterTree<AssetsState, RootState> = {
   hasLoaded: (state) => state.hasLoaded,
 
   /**
-   * Get whether all available ID submodels have been loaded
+   * Get whether all available assets have been loaded (-1 for mrk lab)
    *
    * @param state
    * @returns
    */
-  hasMoreAssets: (state) => state.loadedAssets < state.assetsList.length,
+  hasMoreAssets: (state) => state.loadedAssets < state.totalAssets - 1,
+
+  /**
+   * Returns the currently loaded page
+   *
+   * @param state
+   * @returns
+   */
+  getCurrentPage: (state) => state.currentPage,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
   /**
-   * Fetch all assets from the registry
-   *
-   * @param commit
-   * @param dispatch
-   * @param vm
+   * Fetch all assets from new dotaas registry
    */
-  fetchAssets({ commit, dispatch }, { vm }) {
-    let assets: any = {};
-    let assetsList: any = [];
+  fetchAssets({ commit, dispatch, getters }, { vm, purge }) {
+    if (purge) commit('setCurrentPage', 0);
+
+    const config = {
+      basePath: store.getters['endpoints/registryUrl'],
+    };
+    const api = new RegistryAndDiscoveryInterfaceApi(config);
+
+    // search, paginate and sort
+    const body = {
+      page: {
+        index: getters.getCurrentPage,
+        size: PAGE_SIZE,
+      },
+      sortBy: {
+        direction: SortDirection.ASC,
+        path: [SortingPath.IdShort],
+      },
+    };
+
+    let assets: any = [];
+    let totalAssets: number = 0;
+
     commit('setLoadedAssets', 0);
-
-    let registry_url = store.getters['endpoints/mockDataEnabled']
-      ? '/data/registry.json'
-      : store.getters['endpoints/registryUrl'];
-
     vm.$Progress.start();
 
-    axios
-      .get(registry_url)
-      .then((res) => {
+    api
+      .searchShellDescriptors(body)
+      .then((response) => {
+        totalAssets = response.total;
         //asset loop
-        res.data.forEach((item) => {
-          let assetId = item.asset.identification.id;
-          let idShort = item.asset.idShort;
-          assets[assetId] = { idShort };
+        response.hits.forEach((item) => {
+          let asset: Asset = {};
+          asset.idShort = item.idShort;
 
           //submodel loop
-          item.submodels.forEach((submodel) => {
+          item.submodelDescriptors?.forEach((submodel) => {
             let idShort = submodel.idShort;
             let key = '';
 
-            if (idShort.includes('cc-instance')) {
+            if (idShort?.includes('cc-instance')) {
               key += 'CCInstance';
-            } else if (idShort.includes('cc-interface')) {
+            } else if (idShort?.includes('cc-interface')) {
               key += 'CCInterface';
             } else {
               key += idShort; // Identification or Capability
             }
             key += 'SubmodelEndpoint';
 
-            assets[assetId][key] = submodel.endpoints[0].address;
+            asset[key] =
+              submodel.endpoints !== undefined
+                ? submodel.endpoints[0].protocolInformation.endpointAddress
+                : [];
           });
 
           // don't add mrk lab to assetsList
-          if (item.asset.category != undefined && item.asset.category == 'CONSTANT') return;
-
-          assetsList.push(assetId);
+          if (asset.idShort === 'mrk40_lab_aas') return;
+          assets.push(asset);
         });
       })
-      .catch((err) => {
-        console.error(err.message);
+      .catch((error) => {
+        console.error(error);
         vm.$Progress.fail();
       })
       .finally(() => {
-        commit('setAssets', assets);
-        commit('setAssetsList', assetsList);
-        dispatch('fetchIdSubmodels', { vm });
-        dispatch('fetchCCInterfaceSubmodels', { vm });
+        commit('setAssets', { assets, totalAssets, purge });
+        dispatch('fetchIdSubmodels', { assets, vm });
+        dispatch('fetchCCInterfaceSubmodels', { assets, vm });
       });
   },
 
@@ -124,18 +155,11 @@ const actions: ActionTree<AssetsState, RootState> = {
    * @param commit
    * @param vm
    */
-  fetchIdSubmodels({ commit }, { vm }) {
-    let loadedAssets = store.getters['assets/loadedAssets'];
-    let slicedAssetsList = store.getters['assets/assetsList'].slice(
-      loadedAssets,
-      (loadedAssets += PAGE_SIZE)
-    );
-    commit('setLoadedAssets', loadedAssets);
-
-    slicedAssetsList.forEach((assetId) => {
+  fetchIdSubmodels({ commit }, { assets, vm }) {
+    assets.forEach((asset) => {
       let id: IDSubmodel = {};
       axios
-        .get(store.getters['assets/allAssets'][assetId].IdentificationSubmodelEndpoint)
+        .get(asset.IdentificationSubmodelEndpoint)
         .then((res) => {
           res.data.submodelElements.forEach((submodelElement) => {
             id[submodelElement.idShort] = submodelElement.value;
@@ -147,7 +171,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .finally(() => {
           vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
-          commit('addSubmodel', { assetID: assetId, content: id });
+          commit('addSubmodel', { assetID: asset.idShort, content: id });
         });
     });
   },
@@ -158,11 +182,11 @@ const actions: ActionTree<AssetsState, RootState> = {
    * @param commit
    * @param vm
    */
-  fetchCCInterfaceSubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((assetId) => {
+  fetchCCInterfaceSubmodels({ commit }, { assets, vm }) {
+    assets.forEach((asset) => {
       let cci: CCISubmodel = {};
 
-      let url = state.assets[assetId].CCInterfaceSubmodelEndpoint;
+      let url = asset.CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
       let properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
 
@@ -182,7 +206,7 @@ const actions: ActionTree<AssetsState, RootState> = {
           vm.$Progress.fail();
         })
         .finally(() => {
-          commit('addSubmodel', { assetID: assetId, content: cci });
+          commit('addSubmodel', { assetID: asset.idShort, content: cci });
         });
     });
   },
@@ -193,33 +217,43 @@ const mutations: MutationTree<AssetsState> = {
    * commit all assets to state
    * @param state
    * @param assets
+   * @param assetsList
+   * @param totalAssets
+   * @param purge
    */
-  setAssets: (state, assets) => {
-    state.assets = assets;
+  setAssets: (state, { assets, totalAssets, purge }) => {
+    if (purge) {
+      Vue.set(state.assets, 'keyMap', {});
+      Vue.set(state.assets, 'list', []);
+    }
+
+    assets.forEach((a) => {
+      let newLength = state.assets.list.push(a);
+      Vue.set(state.assets.keyMap, a.idShort, newLength - 1);
+    });
+
+    state.loadedAssets = state.assets.list.length;
+    state.totalAssets = totalAssets;
+    state.currentPage += 1;
     state.hasLoaded = true;
   },
-
-  /**
-   * commit all asset keys to state
-   *
-   * @param state
-   * @param list
-   * @returns
-   */
-  setAssetsList: (state, list) => (state.assetsList = list),
 
   /**
    * commit a new submodel to an asset
    *
    * @param state
-   * @param newSubmodel
+   * @param assetID
+   * @param content
    * @returns
    */
-  addSubmodel: (state, newSubmodel) =>
-    (state.assets[newSubmodel.assetID] = {
-      ...state.assets[newSubmodel.assetID],
-      ...newSubmodel.content,
-    }),
+  addSubmodel: (state, { assetID, content }) => {
+    let currentAssetIdx = state.assets.keyMap[assetID];
+    if (currentAssetIdx !== undefined) {
+      for (const key in content) {
+        Vue.set(state.assets.list[currentAssetIdx], key, content[key]);
+      }
+    }
+  },
 
   /**
    * commit an updated asset to state
@@ -230,11 +264,14 @@ const mutations: MutationTree<AssetsState> = {
   updateAsset: (state, asset) => {
     let data = JSON.parse(asset);
     let keyNames = Object.keys(data);
+    let currentAssetIdx = state.assets.keyMap[data.assetID];
 
-    // if state property is part of update payload -> update state property
-    for (let attr in state.assets[data.assetId]) {
-      if (keyNames.includes(attr)) {
-        state.assets[data.assetId][attr] = data[attr];
+    if (currentAssetIdx !== undefined) {
+      // if state property is part of update payload -> update state property
+      for (let attr in state.assets.list[currentAssetIdx]) {
+        if (keyNames.includes(attr)) {
+          Vue.set(state.assets.list[currentAssetIdx], attr, data[attr]);
+        }
       }
     }
   },
@@ -246,6 +283,14 @@ const mutations: MutationTree<AssetsState> = {
    * @param amount
    */
   setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
+
+  /**
+   * commit current page to state
+   *
+   * @param state
+   * @param page
+   */
+  setCurrentPage: (state, page) => (state.currentPage = page),
 };
 
 export const assets: Module<AssetsState, RootState> = {

@@ -1,28 +1,22 @@
 <template>
   <div>
     <div class="cardContainer" id="deviceContainer">
-      <div
-        class="card"
-        v-for="(assetId, index) in limitedAssetsList"
-        :key="limitedAssetsList[index]"
-      >
+      <div class="card" v-for="asset in assetsList" :key="asset.idShort">
         <div class="card-header">
-          <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
+          <h5 class="card-title">{{ asset.idShort }}</h5>
           <b-button
-            v-if="allAssets[assetId].EXMODE"
+            v-if="asset.EXMODE"
             @click="openPackML(assetId)"
             class="float-right"
             :variant="buttonVariant(assetId)"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{
-              allAssets[assetId].EXST
-            }})</b-button
+            >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</b-button
           >
         </div>
         <div class="card-body">
           <div class="container">
             <div class="row">
               <div class="col-4 image">
-                <img :src="allAssets[assetId].TypeThumbnailBase64" />
+                <img :src="asset.TypeThumbnailBase64" />
               </div>
               <div class="col-3">
                 {{ $t('card.type') }}:
@@ -33,13 +27,13 @@
                 <br />
               </div>
               <div class="col-5 properties">
-                <a target="_blank" :href="allAssets[assetId].Documentation">{{
-                  allAssets[assetId].ManufacturerProductDesignation
+                <a target="_blank" :href="asset.Documentation">{{
+                  asset.ManufacturerProductDesignation
                 }}</a>
                 <br />
-                {{ allAssets[assetId].ManufacturerName }}
+                {{ asset.ManufacturerName }}
                 <br />
-                {{ allAssets[assetId].ProductNumber }}
+                {{ asset.ProductNumber }}
                 <br />
               </div>
             </div>
@@ -68,30 +62,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     ...mapGetters('assets', {
-      allAssets: 'allAssets',
       assetsList: 'assetsList',
       loadedAssets: 'loadedAssets',
       hasLoaded: 'hasLoaded',
       hasMoreAssets: 'hasMoreAssets',
     }),
-    sortedAssetsList: function () {
-      let that = this;
-
-      function compare(a, b) {
-        if (that.allAssets[a].EXST !== undefined) {
-          return -1;
-        }
-        if (that.allAssets[b].EXST !== undefined) {
-          return 1;
-        }
-        return 0;
-      }
-
-      return this.assetsList.sort(compare);
-    },
-    limitedAssetsList: function () {
-      return this.assetsList.slice(0, this.loadedAssets);
-    },
   },
   data() {
     return {
@@ -107,10 +82,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.$bvModal.show('modal-pack');
     },
     buttonVariant: function (assetId) {
-      if (this.allAssets[assetId].EXMODE === 'SIMULATE') {
+      let asset = this.$store.getters('assets/getAssetById', assetId);
+      if (asset.EXMODE === 'SIMULATE') {
         return 'secondary';
-      } else if (this.allAssets[assetId].EXMODE === 'AUTO') {
-        if (this.allAssets[assetId].ERRCODE === 0) {
+      } else if (asset.EXMODE === 'AUTO') {
+        if (asset.ERRCODE === 0) {
           return 'info';
         } else {
           return 'warning';
@@ -125,12 +101,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
     },
     loadMore: function () {
-      if (this.hasMoreAssets) this.$store.dispatch('assets/fetchIdSubmodels', { vm: this });
+      if (this.hasMoreAssets) this.$store.dispatch('assets/fetchAssets', { vm: this });
     },
   },
   created() {
     if (!this.hasLoaded) {
-      this.fetchAssets({ vm: this });
+      this.$store.dispatch('assets/fetchAssets', { vm: this });
 
       this.$mqtt.on((topic: string, message: string) => {
         let msg = JSON.parse(message.toString());

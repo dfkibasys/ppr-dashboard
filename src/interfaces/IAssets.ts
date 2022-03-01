@@ -9,11 +9,8 @@ export interface Methods {
   loadMore(): void;
 }
 export interface Computed {
-  allAssets: any; //TODO
-  assetsList: [];
-  sortedAssetsList: [];
+  assetsList: any; //TODO
   loadedAssets: number;
-  limitedAssetsList;
   hasLoaded: boolean;
   hasMoreAssets: boolean;
 }
