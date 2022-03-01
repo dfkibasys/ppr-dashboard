@@ -90,7 +90,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.$mqtt.connect();
     },
     changeREGISTRYdata() {
-      this.fetchAssets({ vm: this });
+      this.fetchAssets({ vm: this, purge: true });
     },
     changeBASYSdata() {},
   },

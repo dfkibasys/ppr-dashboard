@@ -79,8 +79,10 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all assets from new dotaas registry
    */
   fetchAssets({ commit, dispatch, getters }, { vm, purge }) {
+    if (purge) commit('setCurrentPage', 0);
+
     const config = {
-      basePath: 'http://mrk-lnv-1.mrk40.dfki.lan:8020',
+      basePath: store.getters['endpoints/registryUrl'],
     };
     const api = new RegistryAndDiscoveryInterfaceApi(config);
 
@@ -246,8 +248,10 @@ const mutations: MutationTree<AssetsState> = {
    */
   addSubmodel: (state, { assetID, content }) => {
     let currentAssetIdx = state.assets.keyMap[assetID];
-    for (const key in content) {
-      Vue.set(state.assets.list[currentAssetIdx], key, content[key]);
+    if (currentAssetIdx !== undefined) {
+      for (const key in content) {
+        Vue.set(state.assets.list[currentAssetIdx], key, content[key]);
+      }
     }
   },
 
@@ -266,7 +270,7 @@ const mutations: MutationTree<AssetsState> = {
       // if state property is part of update payload -> update state property
       for (let attr in state.assets.list[currentAssetIdx]) {
         if (keyNames.includes(attr)) {
-          state.assets.list[currentAssetIdx][attr] = data[attr];
+          Vue.set(state.assets.list[currentAssetIdx], attr, data[attr]);
         }
       }
     }
@@ -279,6 +283,14 @@ const mutations: MutationTree<AssetsState> = {
    * @param amount
    */
   setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
+
+  /**
+   * commit current page to state
+   *
+   * @param state
+   * @param page
+   */
+  setCurrentPage: (state, page) => (state.currentPage = page),
 };
 
 export const assets: Module<AssetsState, RootState> = {
