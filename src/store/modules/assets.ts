@@ -246,10 +246,9 @@ const mutations: MutationTree<AssetsState> = {
    */
   addSubmodel: (state, { assetID, content }) => {
     let currentAssetIdx = state.assets.keyMap[assetID];
-    state.assets.list[currentAssetIdx] = {
-      ...state.assets.list[currentAssetIdx],
-      ...content,
-    };
+    for (const key in content) {
+      Vue.set(state.assets.list[currentAssetIdx], key, content[key]);
+    }
   },
 
   /**
