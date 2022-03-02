@@ -22,7 +22,7 @@
             $t('modal.settings.change')
           }}</button>
         </b-col>
-        <div class="w-100"></div>
+        <!-- <div class="w-100"></div>
         <b-col
           >{{ $t('modal.settings.mockObjects') }}
           <b-icon-info-circle-fill
@@ -32,7 +32,7 @@
         >
         <b-col cols="9">
           <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
-        </b-col>
+        </b-col> -->
         <!-- <div class="w-100"></div>
             <b-col>BaSys URL:</b-col>
             <b-col class="rest" cols="9">
