@@ -78,7 +78,7 @@ const actions: ActionTree<AssetsState, RootState> = {
   /**
    * Fetch all assets from new dotaas registry
    */
-  fetchAssets({ commit, dispatch, getters }, { vm, purge }) {
+  fetchAssets({ commit, dispatch, getters }, { vm, purge, sort }) {
     if (purge) commit('setCurrentPage', 0);
 
     const config = {
@@ -93,8 +93,8 @@ const actions: ActionTree<AssetsState, RootState> = {
         size: PAGE_SIZE,
       },
       sortBy: {
-        direction: SortDirection.ASC,
-        path: [SortingPath.IdShort],
+        direction: sort !== undefined ? sort.direction : SortDirection.ASC,
+        path: sort !== undefined ? [sort.path] : [SortingPath.IdShort],
       },
     };
 

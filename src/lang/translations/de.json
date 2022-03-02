@@ -63,6 +63,10 @@
   "button": {
     "loadMore": "Mehr laden"
   },
+  "sorting": {
+    "ascendingIdShort": "ID Short (aufsteigend)",
+    "descendingIdShort": "ID Short (absteigend)"
+  },
   "process": {
     "processDefinition": "Prozessdefinition | Prozessdefinitionen",
     "decisionDefinition": "Decision Definition | Decision Definitions",
