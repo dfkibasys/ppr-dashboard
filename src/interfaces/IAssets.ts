@@ -3,6 +3,7 @@ export interface Data {
   activeSort: number;
   containerId: string;
   sortOptions: Array<any>;
+  search: string;
 }
 export interface Methods {
   fetchAssets(vm: any): void;

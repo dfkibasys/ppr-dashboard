@@ -7,6 +7,7 @@ import {
   RegistryAndDiscoveryInterfaceApi,
   SortDirection,
   SortingPath,
+  ShellDescriptorQuery,
 } from '@basys/aas-registry-client-ts-fetch';
 import Vue from 'vue';
 
@@ -78,7 +79,7 @@ const actions: ActionTree<AssetsState, RootState> = {
   /**
    * Fetch all assets from new dotaas registry
    */
-  fetchAssets({ commit, dispatch, getters }, { vm, purge, sort }) {
+  fetchAssets({ commit, dispatch, getters }, { vm, purge, sort, search = '' }) {
     if (purge) commit('setCurrentPage', 0);
 
     const config = {
@@ -95,6 +96,11 @@ const actions: ActionTree<AssetsState, RootState> = {
       sortBy: {
         direction: sort !== undefined ? sort.direction : SortDirection.ASC,
         path: sort !== undefined ? [sort.path] : [SortingPath.IdShort],
+      },
+      query: {
+        path: 'idShort',
+        value: `[a-zA-Z0-9_]*${search}[a-zA-Z0-9_]*`,
+        queryType: ShellDescriptorQuery.QueryTypeEnum.Regex,
       },
     };
 

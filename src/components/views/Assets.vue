@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>
-      <b-dropdown id="sort-dropdown" :text="$t(sortOptions[activeSort].text)" class="m-md-2">
+    <div class="d-flex flex-row justify-content-center">
+      <b-dropdown id="sort-dropdown" :text="$t(sortOptions[activeSort].text)" class="m-2">
         <b-dropdown-item
           v-for="(option, index) in sortOptions"
           :key="option.text"
@@ -11,6 +11,7 @@
           {{ $t(option.text) }}
         </b-dropdown-item>
       </b-dropdown>
+      <input class="form-control w-25 m-2" v-model="search" placeholder="Search for ID Short" />
     </div>
     <div class="scrollable" :id="containerId">
       <div class="cardContainer" id="deviceContainer">
@@ -100,7 +101,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           direction: SortDirection.DESC,
         },
       ],
+      search: '',
     };
+  },
+  watch: {
+    search() {
+      this.loadAssets(true);
+    },
   },
   methods: {
     ...mapActions('assets', {
@@ -136,7 +143,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     loadAssets: function (purge = false) {
       const sort = this.sortOptions[this.activeSort];
-      this.$store.dispatch('assets/fetchAssets', { vm: this, purge, sort });
+      this.$store.dispatch('assets/fetchAssets', { vm: this, purge, sort, search: this.search });
     },
     setOrder: function (option) {
       this.activeSort = option;
