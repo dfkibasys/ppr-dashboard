@@ -37,7 +37,7 @@ const getters: GetterTree<AssetsState, RootState> = {
    * Return the asset with the given id
    *
    * @param state
-   * @returns Object | null
+   * @returns {Asset} | null
    */
   getAssetById: (state) => (id) =>
     state.assets.keyMap[id] !== undefined ? state.assets.list[state.assets.keyMap[id]] : null,
@@ -62,7 +62,7 @@ const getters: GetterTree<AssetsState, RootState> = {
    * Get whether all available assets have been loaded (-1 for mrk lab)
    *
    * @param state
-   * @returns
+   * @returns {Boolean}
    */
   hasMoreAssets: (state) => state.loadedAssets < state.totalAssets - 1,
 
@@ -70,14 +70,22 @@ const getters: GetterTree<AssetsState, RootState> = {
    * Returns the currently loaded page
    *
    * @param state
-   * @returns
+   * @returns {Number}
    */
   getCurrentPage: (state) => state.currentPage,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
   /**
-   * Fetch all assets from new dotaas registry
+   * Fetch paginated, sorted and filtered assets from registry
+   *
+   * @param commit
+   * @param dispatch
+   * @param getters
+   * @param vm
+   * @param purge
+   * @param sort
+   * @param search
    */
   fetchAssets({ commit, dispatch, getters }, { vm, purge, sort, search = '' }) {
     if (purge) commit('setCurrentPage', 0);
@@ -159,6 +167,7 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all ID submodels from the AAS server
    *
    * @param commit
+   * @param assets
    * @param vm
    */
   fetchIdSubmodels({ commit }, { assets, vm }) {
@@ -186,6 +195,7 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all control components
    *
    * @param commit
+   * @param assets
    * @param vm
    */
   fetchCCInterfaceSubmodels({ commit }, { assets, vm }) {
@@ -220,10 +230,10 @@ const actions: ActionTree<AssetsState, RootState> = {
 
 const mutations: MutationTree<AssetsState> = {
   /**
-   * commit all assets to state
+   * Commit all assets to state
+   *
    * @param state
    * @param assets
-   * @param assetsList
    * @param totalAssets
    * @param purge
    */
@@ -245,12 +255,11 @@ const mutations: MutationTree<AssetsState> = {
   },
 
   /**
-   * commit a new submodel to an asset
+   * Commit a new submodel to an asset
    *
    * @param state
    * @param assetID
    * @param content
-   * @returns
    */
   addSubmodel: (state, { assetID, content }) => {
     let currentAssetIdx = state.assets.keyMap[assetID];
@@ -262,7 +271,7 @@ const mutations: MutationTree<AssetsState> = {
   },
 
   /**
-   * commit an updated asset to state
+   * Commit an updated asset to state
    *
    * @param state
    * @param asset
@@ -283,7 +292,7 @@ const mutations: MutationTree<AssetsState> = {
   },
 
   /**
-   * commit amount of loaded asset to state
+   * Commit amount of loaded asset to state
    *
    * @param state
    * @param amount
@@ -291,7 +300,7 @@ const mutations: MutationTree<AssetsState> = {
   setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
 
   /**
-   * commit current page to state
+   * Commit current page to state
    *
    * @param state
    * @param page
