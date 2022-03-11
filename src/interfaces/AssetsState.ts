@@ -49,13 +49,10 @@ export interface Asset {
 }
 
 export interface AssetsState {
-  assets: {
-    keyMap: {
-      [assetId: string]: number;
-    };
-    list: Asset[];
+  assetMap: {
+    [assetId: string]: Asset;
   };
-  loadedAssets: number;
+  assetList: string[];
   totalAssets: number;
   currentPage: number;
   hasLoaded: boolean;

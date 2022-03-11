@@ -16,7 +16,6 @@ export interface Methods {
 }
 export interface Computed {
   assetsList: any; //TODO
-  loadedAssets: number;
   hasLoaded: boolean;
   hasMoreAssets: boolean;
 }

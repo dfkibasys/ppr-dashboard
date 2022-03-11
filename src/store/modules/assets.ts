@@ -14,11 +14,8 @@ import Vue from 'vue';
 const PAGE_SIZE = 8;
 
 const state: AssetsState = {
-  assets: {
-    keyMap: {},
-    list: [],
-  },
-  loadedAssets: 0,
+  assetMap: {}, // map of assetIds to asset objects
+  assetList: [], // list of assetIds displayed under control components
   totalAssets: 0,
   currentPage: 0,
   hasLoaded: false,
@@ -26,12 +23,12 @@ const state: AssetsState = {
 
 const getters: GetterTree<AssetsState, RootState> = {
   /**
-   * Get all asset keys
+   * Get all assets
    *
    * @param state
    * @returns {Array}
    */
-  assetsList: (state) => state.assets.list,
+  assetsList: (state) => state.assetList.map((id) => state.assetMap[id]),
 
   /**
    * Return the asset with the given id
@@ -39,16 +36,7 @@ const getters: GetterTree<AssetsState, RootState> = {
    * @param state
    * @returns {Asset} | null
    */
-  getAssetById: (state) => (id) =>
-    state.assets.keyMap[id] !== undefined ? state.assets.list[state.assets.keyMap[id]] : null,
-
-  /**
-   * Count all loaded assets
-   *
-   * @param state
-   * @returns {Number}
-   */
-  loadedAssets: (state) => state.loadedAssets,
+  getAssetById: (state) => (id) => state.assetMap[id] !== undefined ? state.assetMap[id] : null,
 
   /**
    * Get whether all assets have been loaded from the registry
@@ -64,7 +52,7 @@ const getters: GetterTree<AssetsState, RootState> = {
    * @param state
    * @returns {Boolean}
    */
-  hasMoreAssets: (state) => state.loadedAssets < state.totalAssets - 1,
+  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - 1,
 
   /**
    * Returns the currently loaded page
@@ -115,7 +103,6 @@ const actions: ActionTree<AssetsState, RootState> = {
     let assets: any = [];
     let totalAssets: number = 0;
 
-    commit('setLoadedAssets', 0);
     vm.$Progress.start();
 
     api
@@ -239,16 +226,15 @@ const mutations: MutationTree<AssetsState> = {
    */
   setAssets: (state, { assets, totalAssets, purge }) => {
     if (purge) {
-      Vue.set(state.assets, 'keyMap', {});
-      Vue.set(state.assets, 'list', []);
+      state.assetList = [];
+      state.assetMap = {};
     }
 
     assets.forEach((a) => {
-      let newLength = state.assets.list.push(a);
-      Vue.set(state.assets.keyMap, a.idShort, newLength - 1);
+      Vue.set(state.assetMap, a['idShort'], a);
+      if (!state.assetList.includes(a['idShort'])) state.assetList.push(a['idShort']);
     });
 
-    state.loadedAssets = state.assets.list.length;
     state.totalAssets = totalAssets;
     state.currentPage += 1;
     state.hasLoaded = true;
@@ -262,10 +248,9 @@ const mutations: MutationTree<AssetsState> = {
    * @param content
    */
   addSubmodel: (state, { assetID, content }) => {
-    let currentAssetIdx = state.assets.keyMap[assetID];
-    if (currentAssetIdx !== undefined) {
+    if (state.assetMap[assetID] !== undefined) {
       for (const key in content) {
-        Vue.set(state.assets.list[currentAssetIdx], key, content[key]);
+        Vue.set(state.assetMap[assetID], key, content[key]);
       }
     }
   },
@@ -279,25 +264,16 @@ const mutations: MutationTree<AssetsState> = {
   updateAsset: (state, asset) => {
     let data = JSON.parse(asset);
     let keyNames = Object.keys(data);
-    let currentAssetIdx = state.assets.keyMap[data.assetID];
 
-    if (currentAssetIdx !== undefined) {
+    if (state.assetMap[data.assetID] !== undefined) {
       // if state property is part of update payload -> update state property
-      for (let attr in state.assets.list[currentAssetIdx]) {
+      for (let attr in state.assetMap[data.assetID]) {
         if (keyNames.includes(attr)) {
-          Vue.set(state.assets.list[currentAssetIdx], attr, data[attr]);
+          Vue.set(state.assetMap[data.assetID], attr, data[attr]);
         }
       }
     }
   },
-
-  /**
-   * Commit amount of loaded asset to state
-   *
-   * @param state
-   * @param amount
-   */
-  setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
 
   /**
    * Commit current page to state

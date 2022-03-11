@@ -81,7 +81,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   computed: {
     ...mapGetters('assets', {
       assetsList: 'assetsList',
-      loadedAssets: 'loadedAssets',
       hasLoaded: 'hasLoaded',
       hasMoreAssets: 'hasMoreAssets',
     }),
