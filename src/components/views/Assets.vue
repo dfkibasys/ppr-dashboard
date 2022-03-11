@@ -11,7 +11,7 @@
           {{ $t(option.text) }}
         </b-dropdown-item>
       </b-dropdown>
-      <input class="form-control w-25 m-2" v-model="search" placeholder="Search for ID Short" />
+      <search-field :delay-input="0.2" v-model="search"></search-field>
     </div>
     <div class="scrollable" :id="containerId">
       <div class="cardContainer" id="deviceContainer">
@@ -70,11 +70,13 @@ import PackML from '@/components/modals/PackML.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IAssets';
 import { SortDirection, SortingPath } from '@basys/aas-registry-client-ts-fetch';
+import SearchField from '@/components/SearchField.vue';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'Assets',
   components: {
     PackML,
+    SearchField,
   },
   computed: {
     ...mapGetters('assets', {
