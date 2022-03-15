@@ -1,0 +1,1562 @@
+{
+  "page0ASC": {
+    "statusCode": 200,
+    "body": {
+      "total": 24,
+      "hits": [
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/aio_1"]
+          },
+          "idShort": "aio_1_aas",
+          "identification": "https://dfki.de/ids/aas/aio_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/9364_0110_6012_2117",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/baxter_1"]
+          },
+          "idShort": "baxter_1_aas",
+          "identification": "https://dfki.de/ids/aas/baxter_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/9014_1110_6012_1842",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzI=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/baxter_2"]
+          },
+          "idShort": "baxter_2_aas",
+          "identification": "https://dfki.de/ids/aas/baxter_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzI=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/6520_7132_1112_3075",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYm1iXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/bmb_1"]
+          },
+          "idShort": "bmb_1_aas",
+          "identification": "https://dfki.de/ids/aas/bmb_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYm1iXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/4213_8020_6012_7967",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYm1iXzI=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/bmb_2"]
+          },
+          "idShort": "bmb_2_aas",
+          "identification": "https://dfki.de/ids/aas/bmb_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYm1iXzI=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/4233_8020_6012_0953",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMQ==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/drone_1"]
+          },
+          "idShort": "drone_1_aas",
+          "identification": "https://dfki.de/ids/aas/drone_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMQ==/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/4263_9080_6012_8626",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMQ==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/5314_1110_6012_3213",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMg==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/drone_2"]
+          },
+          "idShort": "drone_2_aas",
+          "identification": "https://dfki.de/ids/aas/drone_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMg==/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/4263_9080_6012_8626",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvZHJvbmVfMg==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/4024_8020_6012_8167",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvaG9sb2xlbnMyXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/hololens2_1"]
+          },
+          "idShort": "hololens2_1_aas",
+          "identification": "https://dfki.de/ids/aas/hololens2_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvaG9sb2xlbnMyXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/5013_7132_1112_1389",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "page1ASC": {
+    "statusCode": 200,
+    "body": {
+      "total": 24,
+      "hits": [
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbGFwXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/lap_1"]
+          },
+          "idShort": "lap_1_aas",
+          "identification": "https://dfki.de/ids/aas/lap_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbGFwXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/4514_1110_6012_0882",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/mir100_1"]
+          },
+          "idShort": "mir100_1_aas",
+          "identification": "https://dfki.de/ids/aas/mir100_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzE=/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/1435_3180_6012_0689",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7024_1110_6012_7746",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzI=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/mir100_2"]
+          },
+          "idShort": "mir100_2_aas",
+          "identification": "https://dfki.de/ids/aas/mir100_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzI=/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/1435_3180_6012_0689",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzI=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/6291_5170_6012_9120",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzM=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/mir100_3"]
+          },
+          "idShort": "mir100_3_aas",
+          "identification": "https://dfki.de/ids/aas/mir100_3",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzM=/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/1435_3180_6012_0689",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzM=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7491_5170_6012_5831",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzQ=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/mir100_4"]
+          },
+          "idShort": "mir100_4_aas",
+          "identification": "https://dfki.de/ids/aas/mir100_4",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzQ=/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/1435_3180_6012_0689",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbWlyMTAwXzQ=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/8165_6132_1112_4319",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbXJrNDBfbGFi/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/mrk40_lab"]
+          },
+          "idShort": "mrk40_lab_aas",
+          "identification": "https://dfki.de/ids/aas/mrk40_lab",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbXJrNDBfbGFi/aas/submodels/Layout_I40/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Layout_I40",
+              "identification": "https://dfki.de/ids/sm/8391_8081_1112_0109",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvbXJrNDBfbGFi/aas/submodels/Topology_I40/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Topology_I40",
+              "identification": "https://dfki.de/ids/sm/6301_0120_8012_5974",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvcGFuZGFfMQ==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/panda_1"]
+          },
+          "idShort": "panda_1_aas",
+          "identification": "https://dfki.de/ids/aas/panda_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvcGFuZGFfMQ==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/5414_1110_6012_8530",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvcGFuZGFfMg==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/panda_2"]
+          },
+          "idShort": "panda_2_aas",
+          "identification": "https://dfki.de/ids/aas/panda_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvcGFuZGFfMg==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7401_5170_6012_2623",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "page2ASC": {
+    "statusCode": 200,
+    "body": {
+      "total": 24,
+      "hits": [
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvc2F3eWVyXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/sawyer_1"]
+          },
+          "idShort": "sawyer_1_aas",
+          "identification": "https://dfki.de/ids/aas/sawyer_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvc2F3eWVyXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/2102_5170_6012_2032",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10_1"]
+          },
+          "idShort": "ur10_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur10_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/5175_4182_7012_5135",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/ControlComponentInstance/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "ControlComponentInstance",
+              "identification": "https://dfki.de/ids/sm/9485_2152_8012_0976",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7154_5170_6012_5128",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Signals/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Signals",
+              "identification": "https://dfki.de/ids/sm/7151_3182_7012_7596",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8y/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10_2"]
+          },
+          "idShort": "ur10_2_aas",
+          "identification": "https://dfki.de/ids/aas/ur10_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8y/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1274_5170_6012_2788",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMGVfMQ==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10e_1"]
+          },
+          "idShort": "ur10e_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur10e_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMGVfMQ==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/2184_5170_6012_8745",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIzXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur3_1"]
+          },
+          "idShort": "ur3_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur3_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIzXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7124_1110_6012_4383",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXI1XzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur5_1"]
+          },
+          "idShort": "ur5_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur5_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXI1XzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1144_5170_6012_4316",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8x/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/yumi_1"]
+          },
+          "idShort": "yumi_1_aas",
+          "identification": "https://dfki.de/ids/aas/yumi_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8x/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1324_1110_6012_7891",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/yumi_2"]
+          },
+          "idShort": "yumi_2_aas",
+          "identification": "https://dfki.de/ids/aas/yumi_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7005_5170_6012_5369",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "page0DESC": {
+    "statusCode": 200,
+    "body": {
+      "total": 24,
+      "hits": [
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/yumi_2"]
+          },
+          "idShort": "yumi_2_aas",
+          "identification": "https://dfki.de/ids/aas/yumi_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7005_5170_6012_5369",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8x/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/yumi_1"]
+          },
+          "idShort": "yumi_1_aas",
+          "identification": "https://dfki.de/ids/aas/yumi_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8x/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1324_1110_6012_7891",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXI1XzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur5_1"]
+          },
+          "idShort": "ur5_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur5_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXI1XzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1144_5170_6012_4316",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIzXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur3_1"]
+          },
+          "idShort": "ur3_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur3_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIzXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7124_1110_6012_4383",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMGVfMQ==/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10e_1"]
+          },
+          "idShort": "ur10e_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur10e_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMGVfMQ==/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/2184_5170_6012_8745",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8y/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10_2"]
+          },
+          "idShort": "ur10_2_aas",
+          "identification": "https://dfki.de/ids/aas/ur10_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8y/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/1274_5170_6012_2788",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/ur10_1"]
+          },
+          "idShort": "ur10_1_aas",
+          "identification": "https://dfki.de/ids/aas/ur10_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Capabilities/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Capabilities",
+              "identification": "https://dfki.de/ids/sm/5175_4182_7012_5135",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/ControlComponentInstance/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "ControlComponentInstance",
+              "identification": "https://dfki.de/ids/sm/9485_2152_8012_0976",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/7154_5170_6012_5128",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            },
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvdXIxMF8x/aas/submodels/Signals/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Signals",
+              "identification": "https://dfki.de/ids/sm/7151_3182_7012_7596",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": []
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvc2F3eWVyXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/sawyer_1"]
+          },
+          "idShort": "sawyer_1_aas",
+          "identification": "https://dfki.de/ids/aas/sawyer_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvc2F3eWVyXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/2102_5170_6012_2032",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
