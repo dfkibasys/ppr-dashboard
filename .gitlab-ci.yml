@@ -20,6 +20,8 @@ test:
   script:
     - npm install
     - npm run test
+  tags:
+    - basys
 
 build:
   image: docker:20.10.12
