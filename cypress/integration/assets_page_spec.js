@@ -27,12 +27,12 @@ describe('The assets page', () => {
         });
       }).as('getAssets');
     });
-
-    cy.visit('/');
-    cy.wait(['@getAssets', '@getIdSubmodel']);
   });
 
   it('loads', () => {
+    cy.visit('/');
+    cy.wait(['@getAssets', '@getIdSubmodel']);
+
     // Url correctly updated
     cy.url().should('include', '/assets');
 
@@ -80,23 +80,6 @@ describe('The assets page', () => {
     cy.get('button').contains('Load more').should('not.exist');
   });
 
-  it('loads more items when pressing load button', () => {
-    // Click load button without triggering load-on-scroll
-    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 1);
-
-    // Click load button without triggering load-on-scroll
-    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 2);
-
-    // Last card should contain (alphabetically) last asset
-    let lastCard = cy.get('.card').last();
-    lastCard.get('.card-title').should('contain', 'yumi_2_aas');
-
-    // Load button should be hidden after last page
-    cy.get('button').contains('Load more').should('not.exist');
-  });
-
   it('loads descending order when using sort field', () => {
     // Select descending order from dropdown
     cy.get('.btn.dropdown-toggle').click();
@@ -108,6 +91,23 @@ describe('The assets page', () => {
     firstCard.get('.card-title').should('contain', 'yumi_2_aas');
   });
 
+  it('loads more items when pressing load button', () => {
+    // Click load button without triggering load-on-scroll
+    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
+    cy.wait('@getAssets').its('request.body.page.index').should('eq', 1);
+
+    // Click load button without triggering load-on-scroll
+    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
+    cy.wait('@getAssets').its('request.body.page.index').should('eq', 2);
+
+    // Last card should contain (alphabetically) last asset
+    let lastCard = cy.get('.card').last();
+    lastCard.get('.card-title').should('contain', 'aio_1_aas');
+
+    // Load button should be hidden after last page
+    cy.get('button').contains('Load more').should('not.exist');
+  });
+
   it('searches for assets', () => {
     // Search for 'Baxter' assets
     cy.get('.form-control').type('ax');
@@ -115,6 +115,9 @@ describe('The assets page', () => {
 
     // Correct amount of loaded assets
     cy.get('.cardContainer').children().should('have.length', 2);
+
+    // Clear input
+    cy.focused().clear();
   });
 
   it('logs out and logs in admin', () => {
