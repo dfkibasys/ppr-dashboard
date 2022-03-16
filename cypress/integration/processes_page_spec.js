@@ -53,4 +53,73 @@ describe('The processes page', () => {
     // Deployments changed to Deployment
     cy.contains('Deployment').siblings('h3').should('contain', 1);
   });
+
+  it('loads process definition', () => {
+    cy.interceptProcessDefinition();
+
+    cy.contains('ReviewInvoice').click();
+    cy.url().should('include', '/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+
+    // leftDetails should be loaded
+    cy.contains('Definition ID')
+      .siblings('p')
+      .should('contain', 'ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+    cy.contains('Deployment ID')
+      .siblings('p')
+      .should('contain', '94024e73-7ad3-11ec-8d34-0242ac170002');
+    cy.contains('Instances Running').siblings('p').should('contain', '2');
+
+    // XML Badge should contain correct amount
+    cy.get('[data-container-id="assignReviewer"]').should('contain', '2');
+
+    // Process instances table should be loaded
+    cy.get('.tab-pane.active').should('contain', 'randomKey');
+
+    // Audit log table should be loaded
+    cy.contains('Audit Log').click();
+    cy.get('.tab-pane.active').should('contain', 'assignReviewer');
+
+    // Go back to previous tab
+    cy.contains('Process Instances').click();
+  });
+
+  it('allows process instance deletion', () => {
+    cy.interceptProcessDefinition();
+
+    cy.get('.tab-pane.active').contains('Delete').click();
+
+    // Override server response (containing 1 unfinished instance)
+    cy.intercept(
+      'GET',
+      '/engine-rest/history/activity-instance?processDefinitionId=ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002&unfinished=true',
+      {
+        fixture: 'activityInstanceReviewInvoiceUnfinished1.json',
+      }
+    ).as('getActivityHistory');
+
+    // XML Badge should contain correct amount
+    cy.wait('@getActivityHistory')
+      .get('[data-container-id="assignReviewer"]')
+      .should('contain', '1');
+
+    // Left details should containt correct amount
+    cy.contains('Instances Running').siblings('p').should('contain', '1');
+  });
+
+  it('allows process instance creation', () => {
+    cy.interceptProcessDefinition();
+
+    cy.get('button').contains('Create').click();
+
+    cy.get('#businessKeyInput').type('randomKey');
+
+    cy.get('.modal-footer').contains('Create').click();
+
+    // TODO: Technically it just reloads the previously deleted instance
+    // Left details should containt correct amount
+    cy.contains('Instances Running').siblings('p').should('contain', '2');
+
+    // XML Badge should contain correct amount
+    cy.get('[data-container-id="assignReviewer"]').should('contain', '2');
+  });
 });

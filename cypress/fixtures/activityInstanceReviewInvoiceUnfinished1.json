@@ -1,0 +1,25 @@
+[
+  {
+    "id": "assignReviewer:95625497-7ad3-11ec-8d34-0242ac170002",
+    "parentActivityInstanceId": "95622d78-7ad3-11ec-8d34-0242ac170002",
+    "activityId": "assignReviewer",
+    "activityName": "Assign Reviewer",
+    "activityType": "userTask",
+    "processDefinitionKey": "ReviewInvoice",
+    "processDefinitionId": "ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002",
+    "processInstanceId": "95622d78-7ad3-11ec-8d34-0242ac170002",
+    "executionId": "95622d78-7ad3-11ec-8d34-0242ac170002",
+    "taskId": "95625498-7ad3-11ec-8d34-0242ac170002",
+    "calledProcessInstanceId": null,
+    "calledCaseInstanceId": null,
+    "assignee": "demo",
+    "startTime": "2022-01-21T16:02:50.408+0000",
+    "endTime": null,
+    "durationInMillis": null,
+    "canceled": false,
+    "completeScope": false,
+    "tenantId": null,
+    "removalTime": null,
+    "rootProcessInstanceId": "955ada3e-7ad3-11ec-8d34-0242ac170002"
+  }
+]
