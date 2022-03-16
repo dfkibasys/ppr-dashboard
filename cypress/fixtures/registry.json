@@ -1558,5 +1558,95 @@
         }
       ]
     }
+  },
+  "searchAX": {
+    "statusCode": 200,
+    "body": {
+      "total": 2,
+      "hits": [
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzE=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/baxter_1"]
+          },
+          "idShort": "baxter_1_aas",
+          "identification": "https://dfki.de/ids/aas/baxter_1",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzE=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/9014_1110_6012_1842",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "endpoints": [
+            {
+              "interface": "AAS-1.0",
+              "protocolInformation": {
+                "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzI=/aas",
+                "endpointProtocol": "http"
+              }
+            }
+          ],
+          "globalAssetId": {
+            "type": "GlobalReference",
+            "value": ["https://dfki.de/ids/asset/baxter_2"]
+          },
+          "idShort": "baxter_2_aas",
+          "identification": "https://dfki.de/ids/aas/baxter_2",
+          "submodelDescriptors": [
+            {
+              "endpoints": [
+                {
+                  "interface": "SUBMODEL-1.0",
+                  "protocolInformation": {
+                    "endpointAddress": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYmF4dGVyXzI=/aas/submodels/Identification/submodel",
+                    "endpointProtocol": "http"
+                  }
+                }
+              ],
+              "idShort": "Identification",
+              "identification": "https://dfki.de/ids/sm/6520_7132_1112_3075",
+              "semanticId": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "ConceptDescription",
+                    "value": "https://www.hsu-hh.de/aut/aas/identification"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 }

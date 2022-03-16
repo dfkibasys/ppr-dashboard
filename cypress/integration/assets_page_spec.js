@@ -9,19 +9,30 @@ describe('The assets page', () => {
     cy.fixture('registry.json').then((data) => {
       cy.intercept('POST', '/registry/shell-descriptors/search', (req) => {
         const body = req.body;
-        req.reply((res) => {
-          res.statusCode = data['page' + body.page.index + body.sortBy.direction].statusCode;
-          res.body = data['page' + body.page.index];
+
+        // check if search was triggered
+        const resStatusCode =
+          body.query.value === '[a-zA-Z0-9_]*ax[a-zA-Z0-9_]*'
+            ? data['searchAX'].statusCode
+            : data['page' + body.page.index + body.sortBy.direction].statusCode;
+
+        const resBody =
+          body.query.value === '[a-zA-Z0-9_]*ax[a-zA-Z0-9_]*'
+            ? data['searchAX'].body
+            : data['page' + body.page.index + body.sortBy.direction].body;
+
+        req.reply({
+          statusCode: resStatusCode,
+          body: resBody,
         });
       }).as('getAssets');
     });
+
+    cy.visit('/');
+    cy.wait(['@getAssets', '@getIdSubmodel']);
   });
 
   it('loads', () => {
-    cy.visit('/');
-
-    cy.wait(['@getAssets', '@getIdSubmodel']);
-
     // Url correctly updated
     cy.url().should('include', '/assets');
 
@@ -70,9 +81,6 @@ describe('The assets page', () => {
   });
 
   it('loads more items when pressing load button', () => {
-    cy.visit('/');
-    cy.wait(['@getAssets', '@getIdSubmodel']);
-
     // Click load button without triggering load-on-scroll
     cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
     cy.wait('@getAssets').its('request.body.page.index').should('eq', 1);
@@ -107,9 +115,6 @@ describe('The assets page', () => {
 
     // Correct amount of loaded assets
     cy.get('.cardContainer').children().should('have.length', 2);
-
-    // Remove input
-    cy.focused().clear();
   });
 
   it('logs out and logs in admin', () => {
