@@ -65,28 +65,24 @@ describe('The assets page', () => {
     firstCard.get('.properties').should('contain', 'sn123');
   });
 
-  it(
-    'loads more items when scrolling down',
-    {
-      requestTimeout: 10000,
-    },
-    () => {
-      // Scroll down to trigger reload
-      cy.get('#scroll-container').scrollTo('bottom');
-      cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
+  it('loads more items when scrolling down', () => {
+    // Scroll down to trigger reload
+    cy.get('#scroll-container').scrollTo('bottom');
+    cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
+    cy.wait('@getIdSubmodel');
 
-      // Scroll down to trigger reload
-      cy.get('#scroll-container').scrollTo('bottom');
-      cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
+    // Scroll down to trigger reload
+    cy.get('#scroll-container').scrollTo('bottom');
+    cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
+    cy.wait('@getIdSubmodel');
 
-      // Last card should contain (alphabetically) last asset
-      let lastCard = cy.get('.card').last();
-      lastCard.get('.card-title').should('contain', 'yumi_2_aas');
+    // Last card should contain (alphabetically) last asset
+    let lastCard = cy.get('.card').last();
+    lastCard.get('.card-title').should('contain', 'yumi_2_aas');
 
-      // Load button should be hidden after last page
-      cy.get('button').contains('Load more').should('not.exist');
-    }
-  );
+    // Load button should be hidden after last page
+    cy.get('button').contains('Load more').should('not.exist');
+  });
 
   it('loads descending order when using sort field', () => {
     // Select descending order from dropdown
@@ -99,28 +95,24 @@ describe('The assets page', () => {
     firstCard.get('.card-title').should('contain', 'yumi_2_aas');
   });
 
-  it(
-    'loads more items when pressing load button',
-    {
-      requestTimeout: 10000,
-    },
-    () => {
-      // Click load button without triggering load-on-scroll
-      cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-      cy.wait('@page1DESC').its('request.body.page.index').should('eq', 1);
+  it('loads more items when pressing load button', () => {
+    // Click load button without triggering load-on-scroll
+    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
+    cy.wait('@page1DESC').its('request.body.page.index').should('eq', 1);
+    cy.wait('@getIdSubmodel');
 
-      // Click load button without triggering load-on-scroll
-      cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-      cy.wait('@page2DESC').its('request.body.page.index').should('eq', 2);
+    // Click load button without triggering load-on-scroll
+    cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
+    cy.wait('@page2DESC').its('request.body.page.index').should('eq', 2);
+    cy.wait('@getIdSubmodel');
 
-      // Last card should contain (alphabetically) last asset
-      let lastCard = cy.get('.card').last();
-      lastCard.get('.card-title').should('contain', 'aio_1_aas');
+    // Last card should contain (alphabetically) last asset
+    let lastCard = cy.get('.card').last();
+    lastCard.get('.card-title').should('contain', 'aio_1_aas');
 
-      // Load button should be hidden after last page
-      cy.get('button').contains('Load more').should('not.exist');
-    }
-  );
+    // Load button should be hidden after last page
+    cy.get('button').contains('Load more').should('not.exist');
+  });
 
   it('searches for assets', () => {
     // Search for 'Baxter' assets
