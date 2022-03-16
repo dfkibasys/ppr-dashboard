@@ -25,13 +25,15 @@ describe('The assets page', () => {
           statusCode: resStatusCode,
           body: resBody,
         });
-      }).as('getAssets');
+
+        req.alias = 'page' + body.page.index + body.sortBy.direction;
+      });
     });
   });
 
   it('loads', () => {
     cy.visit('/');
-    cy.wait(['@getAssets', '@getIdSubmodel']);
+    cy.wait(['@page0ASC', '@getIdSubmodel']);
 
     // Url correctly updated
     cy.url().should('include', '/assets');
@@ -66,11 +68,11 @@ describe('The assets page', () => {
   it('loads more items when scrolling down', () => {
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 1);
+    cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
 
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 2);
+    cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
@@ -84,7 +86,7 @@ describe('The assets page', () => {
     // Select descending order from dropdown
     cy.get('.btn.dropdown-toggle').click();
     cy.get('.dropdown-item').contains('Descending ID Short').click();
-    cy.wait(['@getAssets', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel']);
 
     // First card should contain (alphabetically) last asset
     let firstCard = cy.get('.card').first();
@@ -94,11 +96,11 @@ describe('The assets page', () => {
   it('loads more items when pressing load button', () => {
     // Click load button without triggering load-on-scroll
     cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 1);
+    cy.wait('@page1DESC').its('request.body.page.index').should('eq', 1);
 
     // Click load button without triggering load-on-scroll
     cy.get('button').contains('Load more').click({ scrollBehavior: false, force: true });
-    cy.wait('@getAssets').its('request.body.page.index').should('eq', 2);
+    cy.wait('@page2DESC').its('request.body.page.index').should('eq', 2);
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
@@ -111,7 +113,7 @@ describe('The assets page', () => {
   it('searches for assets', () => {
     // Search for 'Baxter' assets
     cy.get('.form-control').type('ax');
-    cy.wait(['@getAssets', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel']);
 
     // Correct amount of loaded assets
     cy.get('.cardContainer').children().should('have.length', 2);
