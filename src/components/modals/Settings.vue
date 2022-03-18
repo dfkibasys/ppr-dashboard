@@ -33,14 +33,6 @@
         <b-col cols="9">
           <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
         </b-col> -->
-        <!-- <div class="w-100"></div>
-            <b-col>BaSys URL:</b-col>
-            <b-col class="rest" cols="9">
-              <input class="form-control" v-model="basysUrl" />
-              <button type="button" class="btn btn-success" @click="changeBASYSdata">{{
-                $t('navbar.change')
-              }}</button>
-            </b-col> -->
         <div class="w-100"></div>
         <b-col>Camunda URL:</b-col>
         <b-col class="rest" cols="9">
@@ -92,7 +84,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     changeREGISTRYdata() {
       this.fetchAssets({ vm: this, purge: true });
     },
-    changeBASYSdata() {},
   },
   computed: {
     /**
@@ -104,14 +95,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       },
       set(value) {
         this.$store.commit('endpoints/setRegistryUrl', value);
-      },
-    },
-    basysUrl: {
-      get() {
-        return this.$store.getters['endpoints/basysUrl'];
-      },
-      set(value) {
-        this.$store.commit('endpoints/setBasysUrl', value);
       },
     },
     mqttUrl: {

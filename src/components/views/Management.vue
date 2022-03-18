@@ -44,7 +44,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   computed: {
     ...mapGetters('endpoints', {
-      basysUrl: 'basysUrl',
       mockDataEnabled: 'mockDataEnabled',
     }),
   },
@@ -53,7 +52,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       let that = this;
       let man_url = mockData
         ? '/data/management_components.json'
-        : `${that.basysUrl}/services/registry/MANAGEMENT_COMPONENT`;
+        : `NEEDS_TO_BE_SET/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
       this.$Progress.start();
