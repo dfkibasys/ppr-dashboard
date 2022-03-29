@@ -20,9 +20,9 @@
             <h5 class="card-title">{{ asset.idShort }}</h5>
             <b-button
               v-if="asset.EXMODE"
-              @click="openPackML(assetId)"
+              @click="openPackML(asset.idShort)"
               class="float-right"
-              :variant="buttonVariant(assetId)"
+              :variant="buttonVariant(asset)"
               >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</b-button
             >
           </div>
@@ -118,8 +118,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.openedAssetId = assetId;
       this.$bvModal.show('modal-pack');
     },
-    buttonVariant: function (assetId) {
-      let asset = this.$store.getters('assets/getAssetById', assetId);
+    buttonVariant: function (asset) {
       if (asset.EXMODE === 'SIMULATE') {
         return 'secondary';
       } else if (asset.EXMODE === 'AUTO') {
@@ -157,8 +156,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       this.$mqtt.on((topic: string, message: string) => {
         let msg = JSON.parse(message.toString());
-        console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}`);
-        this.$store.commit('assets/updateAsset', msg.payload);
+        // TODO: Remove when payload contains assetId again
+        const id = atob(topic.split('/')[0]) + '_aas';
+        console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}, id: ${id}`);
+        this.$store.commit('assets/updateAsset', { id, asset: msg.payload });
       });
     }
   },

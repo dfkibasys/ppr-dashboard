@@ -1,3 +1,5 @@
+import { Asset } from './AssetsState';
+
 export interface Data {
   openedAssetId: string;
   activeSort: number;
@@ -8,7 +10,7 @@ export interface Data {
 export interface Methods {
   fetchAssets(vm: any): void;
   openPackML(assetId: string): void;
-  buttonVariant(assetId: string): string;
+  buttonVariant(asset: Asset): string;
   scrollCallback(): void;
   loadMore(): void;
   loadAssets(purge?: Boolean): void;

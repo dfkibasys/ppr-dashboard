@@ -119,9 +119,9 @@ const actions: ActionTree<AssetsState, RootState> = {
             let idShort = submodel.idShort;
             let key = '';
 
-            if (idShort?.includes('cc-instance')) {
+            if (idShort?.includes('CCInstance')) {
               key += 'CCInstance';
-            } else if (idShort?.includes('cc-interface')) {
+            } else if (idShort?.includes('CCInterface')) {
               key += 'CCInterface';
             } else {
               key += idShort; // Identification or Capability
@@ -202,7 +202,10 @@ const actions: ActionTree<AssetsState, RootState> = {
           }
 
           let topic = res.data.updateEvent.keys[0].value;
-          vm.$mqtt.subscribe(`${topic}/update`);
+          //TODO: Workaround until submodel contains correct topic
+          const id = topic.split('/')[5];
+          const base64ID = btoa(id);
+          vm.$mqtt.subscribe(`${base64ID}/update`);
         })
         .catch((err) => {
           console.error(err.message);
@@ -259,17 +262,20 @@ const mutations: MutationTree<AssetsState> = {
    * Commit an updated asset to state
    *
    * @param state
+   * @param id
    * @param asset
    */
-  updateAsset: (state, asset) => {
+  updateAsset: (state, { id, asset }) => {
     let data = JSON.parse(asset);
+    // TODO: Remove when payload contains assetId again
+    data.assetId = id;
     let keyNames = Object.keys(data);
 
-    if (state.assetMap[data.assetID] !== undefined) {
+    if (state.assetMap[data.assetId] !== undefined) {
       // if state property is part of update payload -> update state property
-      for (let attr in state.assetMap[data.assetID]) {
+      for (let attr in state.assetMap[data.assetId]) {
         if (keyNames.includes(attr)) {
-          Vue.set(state.assetMap[data.assetID], attr, data[attr]);
+          Vue.set(state.assetMap[data.assetId], attr, data[attr]);
         }
       }
     }

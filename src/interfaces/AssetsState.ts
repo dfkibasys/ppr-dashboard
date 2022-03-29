@@ -40,7 +40,7 @@ export interface Asset {
     | 'SUSPENDING'
     | 'SUSPENDED'
     | 'UNSUSPENDING';
-  EXMODE?: 'AUTO' | 'SEMIAUTO' | 'SIMULATION';
+  EXMODE?: 'AUTO' | 'SEMIAUTO' | 'SIMULATE';
   ERRCODE?: number;
   OPMODE?: string;
   OCCST?: 'FREE' | 'OCCUPIED' | 'PRIORITY';

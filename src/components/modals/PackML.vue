@@ -175,9 +175,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.xmlLoaded = false;
     },
     setModeButton: function () {
-      //set mode toggle button (SIMULATION must be mapped to SIMULATE)
-      if (this.asset.EXMODE)
-        this.selected = this.asset.EXMODE == 'SIMULATION' ? 'SIMULATE' : this.asset.EXMODE;
+      if (this.asset.EXMODE) this.selected = this.asset.EXMODE;
 
       //avoid mode switching when not in stopped state
       if (this.asset.EXST !== 'STOPPED') {
