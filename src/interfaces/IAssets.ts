@@ -9,7 +9,7 @@ export interface Data {
 }
 export interface Methods {
   fetchAssets(vm: any): void;
-  openPackML(assetId: string): void;
+  openPackML(aasId: string): void;
   buttonVariant(asset: Asset): string;
   scrollCallback(): void;
   loadMore(): void;

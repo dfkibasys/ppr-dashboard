@@ -14,8 +14,8 @@ import Vue from 'vue';
 const PAGE_SIZE = 8;
 
 const state: AssetsState = {
-  assetMap: {}, // map of assetIds to asset objects
-  assetList: [], // list of assetIds displayed under control components
+  assetMap: {}, // map of aasIds to asset objects
+  assetList: [], // list of aasIds displayed under control components
   totalAssets: 0,
   currentPage: 0,
   hasLoaded: false,
@@ -113,6 +113,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         response.hits.forEach((item) => {
           let asset: Asset = {};
           asset.idShort = item.idShort;
+          asset.aasId = item.identification;
 
           //submodel loop
           item.submodelDescriptors?.forEach((submodel) => {
@@ -173,7 +174,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .finally(() => {
           vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
-          commit('addSubmodel', { assetID: asset.idShort, content: id });
+          commit('addSubmodel', { aasID: asset.aasId, content: id });
         });
     });
   },
@@ -191,28 +192,30 @@ const actions: ActionTree<AssetsState, RootState> = {
 
       let url = asset.CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
-      let properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
+      const properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
+      const update_url = store.getters['endpoints/mockDataEnabled']
+        ? url
+        : url + '/submodelElements/updateEvent';
 
       axios
-        .get(properties_url)
-        .then((res) => {
-          let status = res.data.Status;
-          for (const attr in status) {
-            cci[attr] = status[attr];
-          }
+        .all([axios.get(properties_url), axios.get(update_url)])
+        .then(
+          axios.spread((props, update) => {
+            let status = props.data.Status;
+            for (const attr in status) {
+              cci[attr] = status[attr];
+            }
 
-          let topic = res.data.updateEvent.keys[0].value;
-          //TODO: Workaround until submodel contains correct topic
-          const id = topic.split('/')[5];
-          const base64ID = btoa(id);
-          vm.$mqtt.subscribe(`${base64ID}/update`);
-        })
+            let topic = update.data.messageTopic;
+            vm.$mqtt.subscribe(topic);
+          })
+        )
         .catch((err) => {
           console.error(err.message);
           vm.$Progress.fail();
         })
         .finally(() => {
-          commit('addSubmodel', { assetID: asset.idShort, content: cci });
+          commit('addSubmodel', { aasID: asset.aasId, content: cci });
         });
     });
   },
@@ -234,8 +237,8 @@ const mutations: MutationTree<AssetsState> = {
     }
 
     assets.forEach((a) => {
-      Vue.set(state.assetMap, a['idShort'], a);
-      if (!state.assetList.includes(a['idShort'])) state.assetList.push(a['idShort']);
+      Vue.set(state.assetMap, a['aasId'], a);
+      if (!state.assetList.includes(a['aasId'])) state.assetList.push(a['aasId']);
     });
 
     state.totalAssets = totalAssets;
@@ -247,13 +250,13 @@ const mutations: MutationTree<AssetsState> = {
    * Commit a new submodel to an asset
    *
    * @param state
-   * @param assetID
+   * @param aasID
    * @param content
    */
-  addSubmodel: (state, { assetID, content }) => {
-    if (state.assetMap[assetID] !== undefined) {
+  addSubmodel: (state, { aasID, content }) => {
+    if (state.assetMap[aasID] !== undefined) {
       for (const key in content) {
-        Vue.set(state.assetMap[assetID], key, content[key]);
+        Vue.set(state.assetMap[aasID], key, content[key]);
       }
     }
   },
@@ -262,20 +265,17 @@ const mutations: MutationTree<AssetsState> = {
    * Commit an updated asset to state
    *
    * @param state
-   * @param id
    * @param asset
    */
-  updateAsset: (state, { id, asset }) => {
+  updateAsset: (state, asset) => {
     let data = JSON.parse(asset);
-    // TODO: Remove when payload contains assetId again
-    data.assetId = id;
     let keyNames = Object.keys(data);
 
-    if (state.assetMap[data.assetId] !== undefined) {
+    if (state.assetMap[data.aasId] !== undefined) {
       // if state property is part of update payload -> update state property
-      for (let attr in state.assetMap[data.assetId]) {
+      for (let attr in state.assetMap[data.aasId]) {
         if (keyNames.includes(attr)) {
-          Vue.set(state.assetMap[data.assetId], attr, data[attr]);
+          Vue.set(state.assetMap[data.aasId], attr, data[attr]);
         }
       }
     }

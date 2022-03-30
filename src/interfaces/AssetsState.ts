@@ -17,6 +17,7 @@ export interface CCISubmodel {
 }
 export interface Asset {
   idShort?: string;
+  aasId?: string;
   IdentificationSubmodelEndpoint?: string;
   CapabilitiesSubmodelEndpoint?: string;
   CCInterfaceSubmodelEndpoint?: string;
@@ -50,7 +51,7 @@ export interface Asset {
 
 export interface AssetsState {
   assetMap: {
-    [assetId: string]: Asset;
+    [aasId: string]: Asset;
   };
   assetList: string[];
   totalAssets: number;

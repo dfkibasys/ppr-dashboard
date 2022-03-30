@@ -15,12 +15,12 @@
     </div>
     <div class="scrollable" :id="containerId">
       <div class="cardContainer" id="deviceContainer">
-        <div class="card" v-for="asset in assetsList" :key="asset.idShort">
+        <div class="card" v-for="asset in assetsList" :key="asset.aasId">
           <div class="card-header">
             <h5 class="card-title">{{ asset.idShort }}</h5>
             <b-button
               v-if="asset.EXMODE"
-              @click="openPackML(asset.idShort)"
+              @click="openPackML(asset.aasId)"
               class="float-right"
               :variant="buttonVariant(asset)"
               >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</b-button
@@ -114,8 +114,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     ...mapActions('assets', {
       fetchAssets: 'fetchAssets',
     }),
-    openPackML: function (assetId) {
-      this.openedAssetId = assetId;
+    openPackML: function (aasId) {
+      this.openedAssetId = aasId;
       this.$bvModal.show('modal-pack');
     },
     buttonVariant: function (asset) {
@@ -156,10 +156,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       this.$mqtt.on((topic: string, message: string) => {
         let msg = JSON.parse(message.toString());
-        // TODO: Remove when payload contains assetId again
-        const id = atob(topic.split('/')[0]) + '_aas';
-        console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}, id: ${id}`);
-        this.$store.commit('assets/updateAsset', { id, asset: msg.payload });
+        console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}`);
+        this.$store.commit('assets/updateAsset', msg.payload);
       });
     }
   },
