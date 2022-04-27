@@ -7,7 +7,7 @@ describe('The assets page', () => {
 
     // stub registry request
     cy.fixture('registry.json').then((data) => {
-      cy.intercept('POST', '/registry/shell-descriptors/search', (req) => {
+      cy.intercept('POST', '/registry/search', (req) => {
         const body = req.body;
 
         // check if search was triggered
