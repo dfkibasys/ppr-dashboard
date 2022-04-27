@@ -145,6 +145,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         )
         .then((res) => {
           this.$emit('process-started');
+        })
+        .catch((err) => {
+          console.error(err);
         });
     },
     checkFormVariables() {

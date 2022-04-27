@@ -75,7 +75,7 @@
       {
         "endpoints": [
           {
-            "address": "/data/ur10-1-id.json",
+            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5453_1113_5012_9841/aas/submodels/Capabilities/submodel",
             "type": "http"
           }
         ],
@@ -99,7 +99,7 @@
       {
         "endpoints": [
           {
-            "address": "http://mrk-lnv-1.mrk40.dfki.lan:4001/shells/https%3A%2F%2Fdfki.de%2Fids%2Faas%2F5453_1113_5012_9841/aas/submodels/Identification/submodel",
+            "address": "/data/ur10-1-id.json",
             "type": "http"
           }
         ],

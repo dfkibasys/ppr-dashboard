@@ -6,6 +6,5 @@ export interface Methods {
 export interface Computed {
   user: string;
   authorized: boolean;
-  fixedHeader: boolean;
 }
 export interface Props {}

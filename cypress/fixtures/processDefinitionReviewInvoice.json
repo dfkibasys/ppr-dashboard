@@ -1,0 +1,16 @@
+{
+  "id": "ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002",
+  "key": "ReviewInvoice",
+  "category": "http://bpmn.io/schema/bpmn",
+  "description": null,
+  "name": "Review Invoice",
+  "version": 1,
+  "resource": "reviewInvoice.bpmn",
+  "deploymentId": "94024e73-7ad3-11ec-8d34-0242ac170002",
+  "diagram": null,
+  "suspended": false,
+  "tenantId": null,
+  "versionTag": null,
+  "historyTimeToLive": null,
+  "startableInTasklist": false
+}

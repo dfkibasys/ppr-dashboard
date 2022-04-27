@@ -63,6 +63,11 @@
   "button": {
     "loadMore": "Load more"
   },
+  "search": "Search",
+  "sorting": {
+    "ascendingIdShort": "Ascending ID Short",
+    "descendingIdShort": "Descending ID Short"
+  },
   "process": {
     "processDefinition": "Process Definition | Process Definitions",
     "decisionDefinition": "Decision Definition | Decision Definitions",

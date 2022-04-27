@@ -1,11 +1,6 @@
 <template>
-  <div :class="{ navpadding: fixedHeader }">
-    <b-navbar
-      type="light"
-      variant="light"
-      :fixed="fixedHeader ? 'top' : ''"
-      :class="{ navshadow: fixedHeader }"
-    >
+  <div>
+    <b-navbar type="light" variant="light">
       <b-navbar-brand href="#">
         <img src="@/assets/DFKI_Logo.png" class="mr-3" height="40" alt />
         <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" alt />
@@ -55,13 +50,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     authorized: function () {
       return this.$store.getters['users/isAuthorized'];
     },
-
-    /**
-     * Fixed header only on Assets page since other pages fit into screen
-     */
-    fixedHeader: function () {
-      return this.$route.name === 'Assets';
-    },
   },
 
   methods: {
@@ -81,13 +69,5 @@ a {
 }
 .router-link-active {
   color: darken(gray, 50%);
-}
-
-.navpadding {
-  padding-top: 66px;
-}
-
-.navshadow {
-  box-shadow: 0px -3px 40px 6px rgba(0, 0, 0, 0.33);
 }
 </style>

@@ -6,7 +6,6 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex';
 
 const IMAGE_BLOB_LIMIT = 100;
 
@@ -18,11 +17,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('endpoints', {
-      registryUrl: 'registryUrl',
-    }),
+    registryUrl() {
+      return this.$store.getters['endpoints/registryUrl'] + '/registry/shell-descriptors';
+    },
     domain() {
-      // get domain from e.g. https://domain:4001
+      // get domain from e.g. https://domain:8020
       const a = this.registryUrl.split('//');
       const b = a[1].split(':');
       return b[0];

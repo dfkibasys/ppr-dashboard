@@ -1,15 +1,23 @@
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { RootState } from '@/interfaces/RootState';
-import { AssetsState, IDSubmodel, CCISubmodel } from '@/interfaces/AssetsState';
+import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/interfaces/AssetsState';
 import axios from 'axios';
 import store from '..';
+import {
+  RegistryAndDiscoveryInterfaceApi,
+  SortDirection,
+  SortingPath,
+  ShellDescriptorQuery,
+} from '@basys/aas-registry-client-ts-fetch';
+import Vue from 'vue';
 
 const PAGE_SIZE = 8;
 
 const state: AssetsState = {
-  assets: {},
-  assetsList: [],
-  loadedAssets: 0,
+  assetMap: {}, // map of aasIds to asset objects
+  assetList: [], // list of aasIds displayed under control components
+  totalAssets: 0,
+  currentPage: 0,
   hasLoaded: false,
 };
 
@@ -18,25 +26,17 @@ const getters: GetterTree<AssetsState, RootState> = {
    * Get all assets
    *
    * @param state
-   * @returns {Object}
-   */
-  allAssets: (state) => state.assets,
-
-  /**
-   * Get all asset keys
-   *
-   * @param state
    * @returns {Array}
    */
-  assetsList: (state) => state.assetsList,
+  assetsList: (state) => state.assetList.map((id) => state.assetMap[id]),
 
   /**
-   * Count all loaded assets
+   * Return the asset with the given id
    *
    * @param state
-   * @returns {Number}
+   * @returns {Asset} | null
    */
-  loadedAssets: (state) => state.loadedAssets,
+  getAssetById: (state) => (id) => state.assetMap[id] !== undefined ? state.assetMap[id] : null,
 
   /**
    * Get whether all assets have been loaded from the registry
@@ -47,74 +47,107 @@ const getters: GetterTree<AssetsState, RootState> = {
   hasLoaded: (state) => state.hasLoaded,
 
   /**
-   * Get whether all available ID submodels have been loaded
+   * Get whether all available assets have been loaded (-1 for mrk lab)
    *
    * @param state
-   * @returns
+   * @returns {Boolean}
    */
-  hasMoreAssets: (state) => state.loadedAssets < state.assetsList.length,
+  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - 1,
+
+  /**
+   * Returns the currently loaded page
+   *
+   * @param state
+   * @returns {Number}
+   */
+  getCurrentPage: (state) => state.currentPage,
 };
 
 const actions: ActionTree<AssetsState, RootState> = {
   /**
-   * Fetch all assets from the registry
+   * Fetch paginated, sorted and filtered assets from registry
    *
    * @param commit
    * @param dispatch
+   * @param getters
    * @param vm
+   * @param purge
+   * @param sort
+   * @param search
    */
-  fetchAssets({ commit, dispatch }, { vm }) {
-    let assets: any = {};
-    let assetsList: any = [];
-    commit('setLoadedAssets', 0);
+  fetchAssets({ commit, dispatch, getters }, { vm, purge, sort, search = '' }) {
+    if (purge) commit('setCurrentPage', 0);
 
-    let registry_url = store.getters['endpoints/mockDataEnabled']
-      ? '/data/registry.json'
-      : store.getters['endpoints/registryUrl'];
+    const config = {
+      basePath: store.getters['endpoints/registryUrl'],
+    };
+    const api = new RegistryAndDiscoveryInterfaceApi(config);
+
+    // search, paginate and sort
+    const body = {
+      page: {
+        index: getters.getCurrentPage,
+        size: PAGE_SIZE,
+      },
+      sortBy: {
+        direction: sort !== undefined ? sort.direction : SortDirection.ASC,
+        path: sort !== undefined ? [sort.path] : [SortingPath.IdShort],
+      },
+      query: {
+        path: 'idShort',
+        value: `[a-zA-Z0-9_]*${search}[a-zA-Z0-9_]*`,
+        queryType: ShellDescriptorQuery.QueryTypeEnum.Regex,
+      },
+    };
+
+    let assets: any = [];
+    let totalAssets: number = 0;
 
     vm.$Progress.start();
 
-    axios
-      .get(registry_url)
-      .then((res) => {
+    api
+      .searchShellDescriptors(body)
+      .then((response) => {
+        totalAssets = response.total;
         //asset loop
-        res.data.forEach((item) => {
-          let assetId = item.asset.identification.id;
-          let idShort = item.asset.idShort;
-          assets[assetId] = { idShort };
+        response.hits.forEach((item) => {
+          let asset: Asset = {};
+          asset.idShort = item.idShort;
+          asset.aasId = item.identification;
 
           //submodel loop
-          item.submodels.forEach((submodel) => {
+          item.submodelDescriptors?.forEach((submodel) => {
             let idShort = submodel.idShort;
             let key = '';
 
-            if (idShort.includes('cc-instance')) {
+            if (idShort?.includes('CCInstance')) {
               key += 'CCInstance';
-            } else if (idShort.includes('cc-interface')) {
+            } else if (idShort?.includes('CCInterface')) {
               key += 'CCInterface';
             } else {
               key += idShort; // Identification or Capability
             }
             key += 'SubmodelEndpoint';
 
-            assets[assetId][key] = submodel.endpoints[0].address;
+            asset[key] =
+              submodel.endpoints !== undefined
+                ? submodel.endpoints[0].protocolInformation.endpointAddress
+                : [];
           });
 
           // don't add mrk lab to assetsList
-          if (item.asset.category != undefined && item.asset.category == 'CONSTANT') return;
-
-          assetsList.push(assetId);
+          if (asset.idShort === 'mrk40_lab_aas') return;
+          assets.push(asset);
         });
       })
-      .catch((err) => {
-        console.error(err.message);
+      .catch((error) => {
+        console.error(error);
         vm.$Progress.fail();
       })
       .finally(() => {
-        commit('setAssets', assets);
-        commit('setAssetsList', assetsList);
-        dispatch('fetchIdSubmodels', { vm });
-        dispatch('fetchCCInterfaceSubmodels', { vm });
+        commit('setAssets', { assets, totalAssets, purge });
+        dispatch('fetchIdSubmodels', { assets, vm });
+        dispatch('fetchCCInterfaceSubmodels', { assets, vm });
       });
   },
 
@@ -122,20 +155,14 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all ID submodels from the AAS server
    *
    * @param commit
+   * @param assets
    * @param vm
    */
-  fetchIdSubmodels({ commit }, { vm }) {
-    let loadedAssets = store.getters['assets/loadedAssets'];
-    let slicedAssetsList = store.getters['assets/assetsList'].slice(
-      loadedAssets,
-      (loadedAssets += PAGE_SIZE)
-    );
-    commit('setLoadedAssets', loadedAssets);
-
-    slicedAssetsList.forEach((assetId) => {
+  fetchIdSubmodels({ commit }, { assets, vm }) {
+    assets.forEach((asset) => {
       let id: IDSubmodel = {};
       axios
-        .get(store.getters['assets/allAssets'][assetId].IdentificationSubmodelEndpoint)
+        .get(asset.IdentificationSubmodelEndpoint)
         .then((res) => {
           res.data.submodelElements.forEach((submodelElement) => {
             id[submodelElement.idShort] = submodelElement.value;
@@ -147,7 +174,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .finally(() => {
           vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
-          commit('addSubmodel', { assetID: assetId, content: id });
+          commit('addSubmodel', { aasID: asset.aasId, content: id });
         });
     });
   },
@@ -156,33 +183,39 @@ const actions: ActionTree<AssetsState, RootState> = {
    * Fetch all control components
    *
    * @param commit
+   * @param assets
    * @param vm
    */
-  fetchCCInterfaceSubmodels({ commit }, { vm }) {
-    state.assetsList.forEach((assetId) => {
+  fetchCCInterfaceSubmodels({ commit }, { assets, vm }) {
+    assets.forEach((asset) => {
       let cci: CCISubmodel = {};
 
-      let url = state.assets[assetId].CCInterfaceSubmodelEndpoint;
+      let url = asset.CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
-      let properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
+      const properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
+      const update_url = store.getters['endpoints/mockDataEnabled']
+        ? url
+        : url + '/submodelElements/updateEvent';
 
       axios
-        .get(properties_url)
-        .then((res) => {
-          let status = res.data.Status;
-          for (const attr in status) {
-            cci[attr] = status[attr];
-          }
+        .all([axios.get(properties_url), axios.get(update_url)])
+        .then(
+          axios.spread((props, update) => {
+            let status = props.data.Status;
+            for (const attr in status) {
+              cci[attr] = status[attr];
+            }
 
-          let topic = res.data.updateEvent.keys[0].value;
-          vm.$mqtt.subscribe(`${topic}/update`);
-        })
+            let topic = update.data.messageTopic;
+            vm.$mqtt.subscribe(topic);
+          })
+        )
         .catch((err) => {
           console.error(err.message);
           vm.$Progress.fail();
         })
         .finally(() => {
-          commit('addSubmodel', { assetID: assetId, content: cci });
+          commit('addSubmodel', { aasID: asset.aasId, content: cci });
         });
     });
   },
@@ -190,39 +223,46 @@ const actions: ActionTree<AssetsState, RootState> = {
 
 const mutations: MutationTree<AssetsState> = {
   /**
-   * commit all assets to state
+   * Commit all assets to state
+   *
    * @param state
    * @param assets
+   * @param totalAssets
+   * @param purge
    */
-  setAssets: (state, assets) => {
-    state.assets = assets;
+  setAssets: (state, { assets, totalAssets, purge }) => {
+    if (purge) {
+      state.assetList = [];
+      state.assetMap = {};
+    }
+
+    assets.forEach((a) => {
+      Vue.set(state.assetMap, a['aasId'], a);
+      if (!state.assetList.includes(a['aasId'])) state.assetList.push(a['aasId']);
+    });
+
+    state.totalAssets = totalAssets;
+    state.currentPage += 1;
     state.hasLoaded = true;
   },
 
   /**
-   * commit all asset keys to state
+   * Commit a new submodel to an asset
    *
    * @param state
-   * @param list
-   * @returns
+   * @param aasID
+   * @param content
    */
-  setAssetsList: (state, list) => (state.assetsList = list),
+  addSubmodel: (state, { aasID, content }) => {
+    if (state.assetMap[aasID] !== undefined) {
+      for (const key in content) {
+        Vue.set(state.assetMap[aasID], key, content[key]);
+      }
+    }
+  },
 
   /**
-   * commit a new submodel to an asset
-   *
-   * @param state
-   * @param newSubmodel
-   * @returns
-   */
-  addSubmodel: (state, newSubmodel) =>
-    (state.assets[newSubmodel.assetID] = {
-      ...state.assets[newSubmodel.assetID],
-      ...newSubmodel.content,
-    }),
-
-  /**
-   * commit an updated asset to state
+   * Commit an updated asset to state
    *
    * @param state
    * @param asset
@@ -231,21 +271,23 @@ const mutations: MutationTree<AssetsState> = {
     let data = JSON.parse(asset);
     let keyNames = Object.keys(data);
 
-    // if state property is part of update payload -> update state property
-    for (let attr in state.assets[data.assetId]) {
-      if (keyNames.includes(attr)) {
-        state.assets[data.assetId][attr] = data[attr];
+    if (state.assetMap[data.aasId] !== undefined) {
+      // if state property is part of update payload -> update state property
+      for (let attr in state.assetMap[data.aasId]) {
+        if (keyNames.includes(attr)) {
+          Vue.set(state.assetMap[data.aasId], attr, data[attr]);
+        }
       }
     }
   },
 
   /**
-   * commit amount of loaded asset to state
+   * Commit current page to state
    *
    * @param state
-   * @param amount
+   * @param page
    */
-  setLoadedAssets: (state, amount) => (state.loadedAssets = amount),
+  setCurrentPage: (state, page) => (state.currentPage = page),
 };
 
 export const assets: Module<AssetsState, RootState> = {

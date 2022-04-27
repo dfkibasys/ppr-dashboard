@@ -29,7 +29,7 @@ export default Vue.extend({
   $cardWidth: 500px;
 
   .cardContainer {
-    padding-top: 10px;
+    padding-top: 1em;
     display: grid;
     grid-template-columns: $cardWidth;
     @media (min-width: 1010px) {

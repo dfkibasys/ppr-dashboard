@@ -23,7 +23,7 @@ npm run build
 Set the needed Registry/MQTT/Camunda URLS in `.env` file
 
 ```
-VUE_APP_AAS_REGISTRY_URL=http://10.2.10.4:4999/api/v1/registry
+VUE_APP_AAS_REGISTRY_URL=http://10.2.10.4:8020
 VUE_APP_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
 VUE_APP_CAMUNDA_REST_URL=http://10.2.10.4:8080
 ```

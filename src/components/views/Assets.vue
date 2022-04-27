@@ -1,56 +1,65 @@
 <template>
   <div>
-    <div class="cardContainer" id="deviceContainer">
-      <div
-        class="card"
-        v-for="(assetId, index) in limitedAssetsList"
-        :key="limitedAssetsList[index]"
-      >
-        <div class="card-header">
-          <h5 class="card-title">{{ allAssets[assetId].idShort }}</h5>
-          <b-button
-            v-if="allAssets[assetId].EXMODE"
-            @click="openPackML(assetId)"
-            class="float-right"
-            :variant="buttonVariant(assetId)"
-            >{{ allAssets[assetId].EXMODE }} - {{ allAssets[assetId].OPMODE }} ({{
-              allAssets[assetId].EXST
-            }})</b-button
-          >
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-4 image">
-                <img :src="allAssets[assetId].TypeThumbnailBase64" />
-              </div>
-              <div class="col-3">
-                {{ $t('card.type') }}:
-                <br />
-                {{ $t('card.manufacturer') }}:
-                <br />
-                {{ $t('card.serial') }}:
-                <br />
-              </div>
-              <div class="col-5 properties">
-                <a target="_blank" :href="allAssets[assetId].Documentation">{{
-                  allAssets[assetId].ManufacturerProductDesignation
-                }}</a>
-                <br />
-                {{ allAssets[assetId].ManufacturerName }}
-                <br />
-                {{ allAssets[assetId].ProductNumber }}
-                <br />
+    <div class="d-flex flex-row justify-content-center">
+      <b-dropdown id="sort-dropdown" :text="$t(sortOptions[activeSort].text)" class="m-2">
+        <b-dropdown-item
+          v-for="(option, index) in sortOptions"
+          :key="option.text"
+          :active="index === activeSort"
+          @click="setOrder(index)"
+        >
+          {{ $t(option.text) }}
+        </b-dropdown-item>
+      </b-dropdown>
+      <search-field :delay-input="0.2" v-model="search"></search-field>
+    </div>
+    <div class="scrollable" :id="containerId">
+      <div class="cardContainer" id="deviceContainer">
+        <div class="card" v-for="asset in assetsList" :key="asset.aasId">
+          <div class="card-header">
+            <h5 class="card-title">{{ asset.idShort }}</h5>
+            <b-button
+              v-if="asset.EXMODE"
+              @click="openPackML(asset.aasId)"
+              class="float-right"
+              :variant="buttonVariant(asset)"
+              >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</b-button
+            >
+          </div>
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-4 image">
+                  <img :src="asset.TypeThumbnailBase64" />
+                </div>
+                <div class="col-3">
+                  {{ $t('card.type') }}:
+                  <br />
+                  {{ $t('card.manufacturer') }}:
+                  <br />
+                  {{ $t('card.serial') }}:
+                  <br />
+                </div>
+                <div class="col-5 properties">
+                  <a target="_blank" :href="asset.Documentation">{{
+                    asset.ManufacturerProductDesignation
+                  }}</a>
+                  <br />
+                  {{ asset.ManufacturerName }}
+                  <br />
+                  {{ asset.ProductNumber }}
+                  <br />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <b-button v-if="hasMoreAssets" class="mt-2 mx-auto d-block" @click="loadMore()">
+        {{ $t('button.loadMore') }}
+      </b-button>
     </div>
-    <br />
-    <b-button v-if="hasMoreAssets" class="mx-auto d-block" @click="loadMore()">
-      {{ $t('button.loadMore') }}</b-button
-    >
+
     <PackML :opened-asset-id="openedAssetId"></PackML>
   </div>
 </template>
@@ -60,57 +69,60 @@ import Vue from 'vue';
 import PackML from '@/components/modals/PackML.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IAssets';
+import { SortDirection, SortingPath } from '@basys/aas-registry-client-ts-fetch';
+import SearchField from '@/components/SearchField.vue';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'Assets',
   components: {
     PackML,
+    SearchField,
   },
   computed: {
     ...mapGetters('assets', {
-      allAssets: 'allAssets',
       assetsList: 'assetsList',
-      loadedAssets: 'loadedAssets',
       hasLoaded: 'hasLoaded',
       hasMoreAssets: 'hasMoreAssets',
     }),
-    sortedAssetsList: function () {
-      let that = this;
-
-      function compare(a, b) {
-        if (that.allAssets[a].EXST !== undefined) {
-          return -1;
-        }
-        if (that.allAssets[b].EXST !== undefined) {
-          return 1;
-        }
-        return 0;
-      }
-
-      return this.assetsList.sort(compare);
-    },
-    limitedAssetsList: function () {
-      return this.assetsList.slice(0, this.loadedAssets);
-    },
   },
   data() {
     return {
       openedAssetId: '',
+      activeSort: 0,
+      containerId: 'scroll-container',
+      sortOptions: [
+        {
+          text: 'sorting.ascendingIdShort',
+          path: SortingPath.IdShort,
+          direction: SortDirection.ASC,
+        },
+        {
+          text: 'sorting.descendingIdShort',
+          path: SortingPath.IdShort,
+          direction: SortDirection.DESC,
+        },
+      ],
+      search: '',
     };
+  },
+  watch: {
+    search() {
+      this.loadAssets(true);
+    },
   },
   methods: {
     ...mapActions('assets', {
       fetchAssets: 'fetchAssets',
     }),
-    openPackML: function (assetId) {
-      this.openedAssetId = assetId;
+    openPackML: function (aasId) {
+      this.openedAssetId = aasId;
       this.$bvModal.show('modal-pack');
     },
-    buttonVariant: function (assetId) {
-      if (this.allAssets[assetId].EXMODE === 'SIMULATE') {
+    buttonVariant: function (asset) {
+      if (asset.EXMODE === 'SIMULATE') {
         return 'secondary';
-      } else if (this.allAssets[assetId].EXMODE === 'AUTO') {
-        if (this.allAssets[assetId].ERRCODE === 0) {
+      } else if (asset.EXMODE === 'AUTO') {
+        if (asset.ERRCODE === 0) {
           return 'info';
         } else {
           return 'warning';
@@ -120,31 +132,40 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       return '';
     },
     scrollCallback: function () {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        this.loadMore();
-      }
+      let sh = document.getElementById(this.containerId)?.scrollHeight ?? 0;
+      let st = document.getElementById(this.containerId)?.scrollTop ?? 0;
+      let oh = document.getElementById(this.containerId)?.offsetHeight ?? 0;
+
+      if (sh - st - oh < 1) this.loadMore();
     },
     loadMore: function () {
-      if (this.hasMoreAssets) this.$store.dispatch('assets/fetchIdSubmodels', { vm: this });
+      if (this.hasMoreAssets) this.loadAssets();
+    },
+    loadAssets: function (purge = false) {
+      const sort = this.sortOptions[this.activeSort];
+      this.$store.dispatch('assets/fetchAssets', { vm: this, purge, sort, search: this.search });
+    },
+    setOrder: function (option) {
+      this.activeSort = option;
+      this.loadAssets(true);
     },
   },
   created() {
     if (!this.hasLoaded) {
-      this.fetchAssets({ vm: this });
+      this.loadAssets();
 
       this.$mqtt.on((topic: string, message: string) => {
         let msg = JSON.parse(message.toString());
         console.log(`Message arrived on topic ${topic}, msg: ${msg.payload}`);
-        //TODO: replace commit with dispatch
         this.$store.commit('assets/updateAsset', msg.payload);
       });
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.scrollCallback);
+    document.getElementById(this.containerId)?.addEventListener('scroll', this.scrollCallback);
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.scrollCallback);
+    document.getElementById(this.containerId)?.removeEventListener('scroll', this.scrollCallback);
   },
 });
 </script>
@@ -153,5 +174,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 h5 {
   width: 30%;
   float: left;
+}
+
+.scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 150px);
 }
 </style>

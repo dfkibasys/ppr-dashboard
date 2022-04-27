@@ -1,4 +1,6 @@
-image: docker:20.10.12
+stages:
+  - test
+  - build
 
 variables:
   DOCKER_HOST: tcp://docker:2376
@@ -12,14 +14,20 @@ variables:
   DOCKER_TLS_CERTDIR: '/certs'
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
 
-services:
-  - docker:20.10.12-dind
-
-before_script:
-  - docker info
+test:
+  image: cypress/base:10
+  stage: test
+  script:
+    - npm install
+    - npm run test
+  tags:
+    - basys
 
 build:
+  image: docker:20.10.12
   stage: build
+  services:
+    - docker:20.10.12-dind
   tags:
     - basys
     - docker
@@ -31,7 +39,10 @@ build:
     - master
 
 build-dev:
+  image: docker:20.10.12
   stage: build
+  services:
+    - docker:20.10.12-dind
   tags:
     - basys
     - docker

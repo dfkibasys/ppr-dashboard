@@ -4,20 +4,12 @@ import { RootState } from '@/interfaces/RootState';
 import getEnv from '@/helpers/env';
 
 const state: EndpointsState = {
-  BASYS_REST_URL: getEnv('VUE_APP_BASYS_REST_URL'),
   MQTT_BROKER_URL: getEnv('VUE_APP_MQTT_BROKER_URL'),
   CAMUNDA_REST_URL: getEnv('VUE_APP_CAMUNDA_REST_URL'),
   REGISTRY_URL: getEnv('VUE_APP_AAS_REGISTRY_URL'),
   mockData: false,
 };
 const getters: GetterTree<EndpointsState, RootState> = {
-  /**
-   * Get current BaSys url
-   * @param state
-   * @returns {String}
-   */
-  basysUrl: (state) => state.BASYS_REST_URL,
-
   /**
    * Get current MQTT broker url
    * @param state
@@ -47,14 +39,6 @@ const getters: GetterTree<EndpointsState, RootState> = {
   mockDataEnabled: (state) => state.mockData,
 };
 const mutations: MutationTree<EndpointsState> = {
-  /**
-   * commit BaSys url to state
-   *
-   * @param state
-   * @param url
-   */
-  setBasysUrl: (state, url: string) => (state.BASYS_REST_URL = url),
-
   /**
    * commit MQTT broker to state
    *
