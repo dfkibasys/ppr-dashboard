@@ -29,11 +29,33 @@ describe('The assets page', () => {
         req.alias = 'page' + body.page.index + body.sortBy.direction;
       });
     });
+
+    // stub asset ID request
+    cy.fixture('aas.json').then((data) => {
+      cy.intercept('GET', '/shells/*/aas', (req) => {
+        let asset = req.url.split('/')[4];
+
+        // Only the idShorts of the first (aio_1) and last (yumi_2) registry assets are needed / mocked in the fixture file
+        if (
+          asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=' &&
+          asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y'
+        ) {
+          asset = 'default'; // title will be ur5_1
+        }
+
+        req.reply({
+          statusCode: 200,
+          body: data[asset],
+        });
+
+        req.alias = asset;
+      });
+    });
   });
 
   it('loads', () => {
     cy.visit('/');
-    cy.wait(['@page0ASC', '@getIdSubmodel']);
+    cy.wait(['@page0ASC', '@getIdSubmodel', '@default']);
 
     // Url correctly updated
     cy.url().should('include', '/assets');
@@ -53,7 +75,7 @@ describe('The assets page', () => {
     let firstCard = cy.get('.card').first();
 
     // (Alphabetically) first ID short gets rendered
-    firstCard.get('.card-title').should('contain', 'aio_1_aas');
+    firstCard.get('.card-title').should('contain', 'aio_1');
 
     // Type gets rendered
     firstCard.get('.properties').should('contain', 'AIO ROBOTGUIDANCE');
@@ -78,7 +100,7 @@ describe('The assets page', () => {
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
-    lastCard.get('.card-title').should('contain', 'yumi_2_aas');
+    lastCard.get('.card-title').should('contain', 'yumi_2');
 
     // Load button should be hidden after last page
     cy.get('button').contains('Load more').should('not.exist');
@@ -92,7 +114,7 @@ describe('The assets page', () => {
 
     // First card should contain (alphabetically) last asset
     let firstCard = cy.get('.card').first();
-    firstCard.get('.card-title').should('contain', 'yumi_2_aas');
+    firstCard.get('.card-title').should('contain', 'yumi_2');
   });
 
   it('loads more items when pressing load button', () => {
@@ -108,7 +130,7 @@ describe('The assets page', () => {
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
-    lastCard.get('.card-title').should('contain', 'aio_1_aas');
+    lastCard.get('.card-title').should('contain', 'aio_1');
 
     // Load button should be hidden after last page
     cy.get('button').contains('Load more').should('not.exist');
