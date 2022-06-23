@@ -17,7 +17,9 @@
       <div class="cardContainer" id="deviceContainer">
         <div class="card" v-for="asset in assetsList" :key="asset.aasId">
           <div class="card-header">
-            <h5 class="card-title">{{ asset.idShort }}</h5>
+            <h5 class="card-title"
+              ><a target="_blank" :href="asset.aasEndpoint">{{ asset.idShort }}</a></h5
+            >
             <b-button
               v-if="asset.EXMODE"
               @click="openPackML(asset.aasId)"

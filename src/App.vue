@@ -49,6 +49,12 @@ export default Vue.extend({
       background-color: lighten(#555555, 15%);
       color: white;
 
+      .card-title {
+        a {
+          color: white;
+        }
+      }
+
       .card-body {
         padding-left: 0;
         padding-right: 0;
