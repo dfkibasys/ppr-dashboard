@@ -299,7 +299,7 @@ const mutations: MutationTree<AssetsState> = {
    */
   setAssetIDShort: (state, { aasID, idShort }) => {
     if (state.assetMap[aasID] !== undefined) {
-      state.assetMap[aasID].idShort = idShort;
+      Vue.set(state.assetMap[aasID], 'idShort', idShort);
     }
   },
 
