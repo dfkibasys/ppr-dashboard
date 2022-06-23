@@ -9,6 +9,7 @@ import {
   SortingPath,
   ShellDescriptorQuery,
 } from '@basys/aas-registry-client-ts-fetch';
+import { excludedAssets } from '@/config/settings';
 import Vue from 'vue';
 
 const PAGE_SIZE = 8;
@@ -138,8 +139,9 @@ const actions: ActionTree<AssetsState, RootState> = {
                 : [];
           });
 
-          // don't add mrk lab to assetsList
-          if (asset.idShort === 'mrk40_lab_aas') return;
+          // don't add excluded assets to assetsList
+          if (excludedAssets.indexOf(item.idShort) > -1) return;
+
           assets.push(asset);
         });
       })
@@ -299,6 +301,7 @@ const mutations: MutationTree<AssetsState> = {
    */
   setAssetIDShort: (state, { aasID, idShort }) => {
     if (state.assetMap[aasID] !== undefined) {
+      console.log('got id', idShort);
       state.assetMap[aasID].idShort = idShort;
     }
   },
