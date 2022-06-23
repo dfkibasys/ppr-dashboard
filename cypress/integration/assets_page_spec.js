@@ -10,6 +10,7 @@ describe('The assets page', () => {
       cy.intercept('POST', '/registry/search', (req) => {
         const body = req.body;
 
+        console.log('Fehler ', body.page.index, body.sortBy.direction);
         // check if search was triggered
         const resStatusCode =
           body.query.value === '[a-zA-Z0-9_]*ax[a-zA-Z0-9_]*'
@@ -91,12 +92,13 @@ describe('The assets page', () => {
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
-    cy.wait('@getIdSubmodel');
+    cy.wait(['@getIdSubmodel', '@default']);
+    cy.wait(5000);
 
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
-    cy.wait('@getIdSubmodel');
+    cy.wait(['@getIdSubmodel', '@default']);
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
@@ -110,7 +112,7 @@ describe('The assets page', () => {
     // Select descending order from dropdown
     cy.get('.btn.dropdown-toggle').click();
     cy.get('.dropdown-item').contains('Descending ID Short').click();
-    cy.wait(['@page0DESC', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel', '@default']);
 
     // First card should contain (alphabetically) last asset
     let firstCard = cy.get('.card').first();
