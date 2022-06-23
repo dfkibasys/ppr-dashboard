@@ -117,7 +117,7 @@
       }
     ]
   },
-  "default": {
+  "defaultAsset": {
     "conceptDictionary": [],
     "assetRef": {
       "keys": [

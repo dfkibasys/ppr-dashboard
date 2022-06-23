@@ -10,7 +10,6 @@ describe('The assets page', () => {
       cy.intercept('POST', '/registry/search', (req) => {
         const body = req.body;
 
-        console.log('Fehler ', body.page.index, body.sortBy.direction);
         // check if search was triggered
         const resStatusCode =
           body.query.value === '[a-zA-Z0-9_]*ax[a-zA-Z0-9_]*'
@@ -41,7 +40,7 @@ describe('The assets page', () => {
           asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=' &&
           asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y'
         ) {
-          asset = 'default'; // title will be ur5_1
+          asset = 'defaultAsset'; // title will be ur5_1
         }
 
         req.reply({
@@ -56,7 +55,7 @@ describe('The assets page', () => {
 
   it('loads', () => {
     cy.visit('/');
-    cy.wait(['@page0ASC', '@getIdSubmodel', '@default']);
+    cy.wait(['@page0ASC', '@getIdSubmodel', '@defaultAsset']);
 
     // Url correctly updated
     cy.url().should('include', '/assets');
@@ -92,13 +91,13 @@ describe('The assets page', () => {
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
-    cy.wait(['@getIdSubmodel', '@default']);
-    cy.wait(5000);
+    cy.wait(['@getIdSubmodel', '@defaultAsset']);
+    cy.wait(2000);
 
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
-    cy.wait(['@getIdSubmodel', '@default']);
+    cy.wait(['@getIdSubmodel', '@defaultAsset']);
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
@@ -112,7 +111,7 @@ describe('The assets page', () => {
     // Select descending order from dropdown
     cy.get('.btn.dropdown-toggle').click();
     cy.get('.dropdown-item').contains('Descending ID Short').click();
-    cy.wait(['@page0DESC', '@getIdSubmodel', '@default']);
+    cy.wait(['@page0DESC', '@getIdSubmodel', '@defaultAsset']);
 
     // First card should contain (alphabetically) last asset
     let firstCard = cy.get('.card').first();
@@ -141,7 +140,7 @@ describe('The assets page', () => {
   it('searches for assets', () => {
     // Search for 'Baxter' assets
     cy.get('.form-control').type('ax');
-    cy.wait(['@page0DESC', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel', '@defaultAsset']);
 
     // Correct amount of loaded assets
     cy.get('.cardContainer').children().should('have.length', 2);
