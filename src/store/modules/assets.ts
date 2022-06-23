@@ -9,10 +9,8 @@ import {
   SortingPath,
   ShellDescriptorQuery,
 } from '@basys/aas-registry-client-ts-fetch';
-import { EXCLUDED_ASSETS } from '@/config/settings';
+import { EXCLUDED_ASSETS, PAGE_SIZE } from '@/config/settings';
 import Vue from 'vue';
-
-const PAGE_SIZE = 8;
 
 const state: AssetsState = {
   assetMap: {}, // map of aasIds to asset objects
@@ -48,12 +46,12 @@ const getters: GetterTree<AssetsState, RootState> = {
   hasLoaded: (state) => state.hasLoaded,
 
   /**
-   * Get whether all available assets have been loaded (-1 for mrk lab)
+   * Get whether all available assets have been loaded
    *
    * @param state
    * @returns {Boolean}
    */
-  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - 1,
+  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - EXCLUDED_ASSETS.length,
 
   /**
    * Returns the currently loaded page
