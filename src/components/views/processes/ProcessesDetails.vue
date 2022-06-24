@@ -3,6 +3,7 @@
     <b-breadcrumb :items="bcItems"></b-breadcrumb>
     <b-row class="pb-2 container-top">
       <create-process-instance @process-started="fetchAllData"></create-process-instance>
+      <deletion-warning @delete="deleteDeployment"></deletion-warning>
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
           <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
@@ -61,7 +62,7 @@
             <p class="mb-0">{{ processDefinition.instances || '0' }}</p>
           </b-list-group-item>
           <b-list-group-item class="border-0">
-            <b-button variant="danger" @click="deleteDeployment">{{
+            <b-button variant="danger" @click="checkForRunningInstances">{{
               $t('process.delete')
             }}</b-button>
           </b-list-group-item>
@@ -155,6 +156,7 @@
 import Vue from 'vue';
 import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue';
+import DeletionWarning from '@/components/modals/DeletionWarning.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
@@ -165,6 +167,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   components: {
     BpmnDisplay,
     CreateProcessInstance,
+    DeletionWarning,
   },
   computed: {
     ...mapGetters('endpoints', {
@@ -226,6 +229,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         params: { pid: this.currentVersionID },
       });
       this.fetchAllData();
+    },
+    checkForRunningInstances() {
+      //Show warning if deployment has running instances
+      if (this.processDefinition.instances > 0) {
+        this.$bvModal.show('modal-warning');
+      } else {
+        this.deleteDeployment();
+      }
     },
     deleteDeployment() {
       let version = this.processDefinition.version;

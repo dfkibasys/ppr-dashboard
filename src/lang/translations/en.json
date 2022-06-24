@@ -50,6 +50,11 @@
       "change": "Change",
       "mockObjects": "Mock objects",
       "info": "Only available for components"
+    },
+    "deletionWarning": {
+      "title": "Are you sure?",
+      "content": "This deployment has running instances. Are you sure?",
+      "delete": "Delete"
     }
   },
   "card": {

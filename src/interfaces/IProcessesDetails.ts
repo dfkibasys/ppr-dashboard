@@ -25,6 +25,7 @@ export interface Methods {
   handleError(err: any): void;
   handleShown(): void;
   versionChange(): void;
+  checkForRunningInstances(): void;
   deleteDeployment(): void;
   fetchAllData(): void;
   fetchLeftDetails(id: string): Promise<any>;

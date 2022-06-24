@@ -50,6 +50,11 @@
       "change": "Ändern",
       "mockObjects": "Mock-Objekte",
       "info": "Nur für Komponenten verfügbar"
+    },
+    "deletionWarning": {
+      "title": "Sind Sie sicher?",
+      "content": "Dieses Deployment hat noch laufende Instanzen. Sind Sie sicher?",
+      "delete": "Löschen"
     }
   },
   "card": {
