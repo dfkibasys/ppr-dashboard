@@ -128,10 +128,13 @@ describe('The processes page', () => {
 
     cy.contains('Instances Running').siblings('p').should('contain', '2');
 
+    // Try to delete deployment
     cy.get('.leftDetails').contains('Delete').click();
 
+    // Modal should appear
     cy.get('#modal-warning').should('contain', 'Are you sure?');
 
+    // Cancel deletion
     cy.get('#modal-warning').contains('Cancel').click();
   });
 
@@ -143,6 +146,7 @@ describe('The processes page', () => {
     // Delete two existing process instances first
     cy.get('.tab-pane.active').contains('Delete').click();
     cy.wait('@deleteInstance1').get('.tab-pane.active').contains('Delete').click();
+    cy.wait('@deleteInstance2');
 
     cy.contains('Instances Running').siblings('p').should('contain', '0');
 
