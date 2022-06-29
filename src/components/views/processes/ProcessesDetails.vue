@@ -390,7 +390,18 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               overlays.remove(o);
             });
 
-            //ais
+            //Activity instances
+
+            //Detection of completed process instances
+            //Check if amount of activity instances differs from running instances count
+            if (this.processDefinition.instances === ais.data.length) {
+              //Compare and remove missing process instance from table
+              const ids = ais.data.map((obj) => obj.processInstanceId);
+              this.processInstances = this.processInstances.filter(
+                (instance) => ids.indexOf(instance.id) > -1
+              );
+            }
+
             let activityIdsCount = {} as any;
 
             ais.data.forEach((val: any) => {
@@ -411,7 +422,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               that.overlaysArr.push(oID);
             }
 
-            //incidents
+            //Incidents
             let incidentIdsCount = {} as any;
 
             incidents.data.forEach((val: any) => {
