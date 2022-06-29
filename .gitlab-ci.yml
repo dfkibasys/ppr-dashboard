@@ -15,7 +15,7 @@ variables:
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
 
 test:
-  image: cypress/base:10
+  image: cypress/base:16.14.2
   stage: test
   script:
     - npm install
