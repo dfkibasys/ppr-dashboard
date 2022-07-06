@@ -168,12 +168,18 @@ describe('The processes page', () => {
   it('allows deleting a deployment without running instances directly', () => {
     cy.interceptProcessDefinition();
 
-    cy.contains('Instances Running').siblings('p').should('contain', '2');
+    cy.contains('Instances Running').siblings('p').should('contain', '1');
 
-    // Delete two existing process instances first
+    // Delete existing process instance first
     cy.get('.tab-pane.active').contains('Delete').click();
-    cy.wait('@deleteInstance1').get('.tab-pane.active').contains('Delete').click();
     cy.wait('@deleteInstance2');
+
+    // Override server response (containing no unfinished instance)
+    cy.intercept(
+      'GET',
+      '/engine-rest/history/activity-instance?processDefinitionId=ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002&unfinished=true',
+      []
+    ).as('getActivityHistory');
 
     cy.contains('Instances Running').siblings('p').should('contain', '0');
 
