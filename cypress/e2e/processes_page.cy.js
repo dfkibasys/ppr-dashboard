@@ -123,6 +123,21 @@ describe('The processes page', () => {
     cy.get('[data-container-id="assignReviewer"]').should('contain', '2');
   });
 
+  it('warns before deleting a deployment with running instances', () => {
+    cy.interceptProcessDefinition();
+
+    cy.contains('Instances Running').siblings('p').should('contain', '2');
+
+    // Try to delete deployment
+    cy.get('.leftDetails').contains('Delete').click();
+
+    // Modal should appear
+    cy.get('#modal-warning').should('contain', 'Are you sure?');
+
+    // Cancel deletion
+    cy.get('#modal-warning').contains('Cancel').click();
+  });
+
   it('updates the UI after running instances have been completed', () => {
     cy.interceptProcessDefinition();
 
@@ -148,5 +163,31 @@ describe('The processes page', () => {
 
     // Left details should contain correct amount
     cy.contains('Instances Running').siblings('p').should('contain', '1');
+  });
+
+  it('allows deleting a deployment without running instances directly', () => {
+    cy.interceptProcessDefinition();
+
+    cy.contains('Instances Running').siblings('p').should('contain', '1');
+
+    // Delete existing process instance first
+    cy.get('.tab-pane.active').contains('Delete').click();
+    cy.wait('@deleteInstance2');
+
+    // Override server response (containing no unfinished instance)
+    cy.intercept(
+      'GET',
+      '/engine-rest/history/activity-instance?processDefinitionId=ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002&unfinished=true',
+      []
+    ).as('getActivityHistory');
+
+    cy.contains('Instances Running').siblings('p').should('contain', '0');
+
+    // Delete deployment without warning
+    cy.get('.leftDetails').contains('Delete').click();
+
+    // Should be navigating back to overview page
+    cy.wait('@deleteDeployment').url().should('include', '/processes');
+    cy.get('.container').should('contain', 'Deployed');
   });
 });

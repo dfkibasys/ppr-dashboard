@@ -69,7 +69,7 @@ Cypress.Commands.add('interceptProcessDefinition', () => {
         statusCode: 204,
       });
     }
-  );
+  ).as('deleteInstance1');
   cy.intercept(
     'POST',
     '/engine-rest/process-definition/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002/start',
@@ -95,6 +95,21 @@ Cypress.Commands.add('interceptProcessDefinition', () => {
       });
     }
   );
+
+  cy.intercept(
+    'DELETE',
+    '/engine-rest/process-instance/95622d78-7ad3-11ec-8d34-0242ac170002',
+    (req) => {
+      req.reply({
+        statusCode: 204,
+      });
+    }
+  ).as('deleteInstance2');
+  cy.intercept('DELETE', '/engine-rest/deployment/94024e73-7ad3-11ec-8d34-0242ac170002', (req) => {
+    req.reply({
+      statusCode: 204,
+    });
+  }).as('deleteDeployment');
 });
 //
 //
