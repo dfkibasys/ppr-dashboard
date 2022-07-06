@@ -29,11 +29,33 @@ describe('The assets page', () => {
         req.alias = 'page' + body.page.index + body.sortBy.direction;
       });
     });
+
+    // stub asset ID request
+    cy.fixture('aas.json').then((data) => {
+      cy.intercept('GET', '/shells/*/aas', (req) => {
+        let asset = req.url.split('/')[4];
+
+        // Only the idShorts of the first (aio_1) and last (yumi_2) registry assets are needed / mocked in the fixture file
+        if (
+          asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=' &&
+          asset !== 'aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y'
+        ) {
+          asset = 'defaultAsset'; // title will be ur5_1
+        }
+
+        req.reply({
+          statusCode: 200,
+          body: data[asset],
+        });
+
+        req.alias = asset;
+      });
+    });
   });
 
   it('loads', () => {
     cy.visit('/');
-    cy.wait(['@page0ASC', '@getIdSubmodel']);
+    cy.wait(['@page0ASC', '@getIdSubmodel', '@defaultAsset']);
 
     // Url correctly updated
     cy.url().should('include', '/assets');
@@ -53,7 +75,7 @@ describe('The assets page', () => {
     let firstCard = cy.get('.card').first();
 
     // (Alphabetically) first ID short gets rendered
-    firstCard.get('.card-title').should('contain', 'aio_1_aas');
+    firstCard.get('.card-title').should('contain', 'aio_1');
 
     // Type gets rendered
     firstCard.get('.properties').should('contain', 'AIO ROBOTGUIDANCE');
@@ -69,16 +91,17 @@ describe('The assets page', () => {
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page1ASC').its('request.body.page.index').should('eq', 1);
-    cy.wait('@getIdSubmodel');
+    cy.wait(['@getIdSubmodel', '@defaultAsset']);
+    cy.wait(2000);
 
     // Scroll down to trigger reload
     cy.get('#scroll-container').scrollTo('bottom');
     cy.wait('@page2ASC').its('request.body.page.index').should('eq', 2);
-    cy.wait('@getIdSubmodel');
+    cy.wait(['@getIdSubmodel', '@defaultAsset']);
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
-    lastCard.get('.card-title').should('contain', 'yumi_2_aas');
+    lastCard.get('.card-title').should('contain', 'yumi_2');
 
     // Load button should be hidden after last page
     cy.get('button').contains('Load more').should('not.exist');
@@ -88,11 +111,11 @@ describe('The assets page', () => {
     // Select descending order from dropdown
     cy.get('.btn.dropdown-toggle').click();
     cy.get('.dropdown-item').contains('Descending ID Short').click();
-    cy.wait(['@page0DESC', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel', '@defaultAsset']);
 
     // First card should contain (alphabetically) last asset
     let firstCard = cy.get('.card').first();
-    firstCard.get('.card-title').should('contain', 'yumi_2_aas');
+    firstCard.get('.card-title').should('contain', 'yumi_2');
   });
 
   it('loads more items when pressing load button', () => {
@@ -108,7 +131,7 @@ describe('The assets page', () => {
 
     // Last card should contain (alphabetically) last asset
     let lastCard = cy.get('.card').last();
-    lastCard.get('.card-title').should('contain', 'aio_1_aas');
+    lastCard.get('.card-title').should('contain', 'aio_1');
 
     // Load button should be hidden after last page
     cy.get('button').contains('Load more').should('not.exist');
@@ -117,7 +140,7 @@ describe('The assets page', () => {
   it('searches for assets', () => {
     // Search for 'Baxter' assets
     cy.get('.form-control').type('ax');
-    cy.wait(['@page0DESC', '@getIdSubmodel']);
+    cy.wait(['@page0DESC', '@getIdSubmodel', '@defaultAsset']);
 
     // Correct amount of loaded assets
     cy.get('.cardContainer').children().should('have.length', 2);

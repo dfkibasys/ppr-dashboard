@@ -1,0 +1,179 @@
+{
+  "aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMvYWlvXzE=": {
+    "conceptDictionary": [],
+    "assetRef": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Asset",
+          "value": "https://dfki.de/ids/asset/aio_1",
+          "local": true
+        }
+      ]
+    },
+    "identification": {
+      "idType": "IRI",
+      "id": "https://dfki.de/ids/aas/aio_1"
+    },
+    "idShort": "aio_1_aas",
+    "dataSpecification": [],
+    "modelType": {
+      "name": "AssetAdministrationShell"
+    },
+    "asset": {
+      "identification": {
+        "idType": "IRI",
+        "id": "https://dfki.de/ids/asset/aio_1"
+      },
+      "idShort": "aio_1",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": {
+        "name": "Asset"
+      },
+      "embeddedDataSpecifications": [],
+      "assetIdentificationModel": {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/9364_0110_6012_2117",
+            "local": true
+          }
+        ]
+      }
+    },
+    "embeddedDataSpecifications": [],
+    "views": [],
+    "submodels": [
+      {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/9364_0110_6012_2117",
+            "local": true
+          }
+        ]
+      }
+    ]
+  },
+  "aHR0cHM6Ly9kZmtpLmRlL2lkcy9hYXMveXVtaV8y": {
+    "conceptDictionary": [],
+    "assetRef": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Asset",
+          "value": "https://dfki.de/ids/asset/yumi_2",
+          "local": true
+        }
+      ]
+    },
+    "identification": {
+      "idType": "IRI",
+      "id": "https://dfki.de/ids/aas/yumi_2"
+    },
+    "idShort": "yumi_2_aas",
+    "dataSpecification": [],
+    "modelType": {
+      "name": "AssetAdministrationShell"
+    },
+    "asset": {
+      "identification": {
+        "idType": "IRI",
+        "id": "https://dfki.de/ids/asset/yumi_2"
+      },
+      "idShort": "yumi_2",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": {
+        "name": "Asset"
+      },
+      "embeddedDataSpecifications": [],
+      "assetIdentificationModel": {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/7005_5170_6012_5369",
+            "local": true
+          }
+        ]
+      }
+    },
+    "embeddedDataSpecifications": [],
+    "views": [],
+    "submodels": [
+      {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/7005_5170_6012_5369",
+            "local": true
+          }
+        ]
+      }
+    ]
+  },
+  "defaultAsset": {
+    "conceptDictionary": [],
+    "assetRef": {
+      "keys": [
+        {
+          "idType": "IRI",
+          "type": "Asset",
+          "value": "https://dfki.de/ids/asset/ur5_1",
+          "local": true
+        }
+      ]
+    },
+    "identification": {
+      "idType": "IRI",
+      "id": "https://dfki.de/ids/aas/ur5_1"
+    },
+    "idShort": "ur5_1_aas",
+    "dataSpecification": [],
+    "modelType": {
+      "name": "AssetAdministrationShell"
+    },
+    "asset": {
+      "identification": {
+        "idType": "IRI",
+        "id": "https://dfki.de/ids/asset/ur5_1"
+      },
+      "idShort": "ur5_1",
+      "kind": "Instance",
+      "dataSpecification": [],
+      "modelType": {
+        "name": "Asset"
+      },
+      "embeddedDataSpecifications": [],
+      "assetIdentificationModel": {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/1144_5170_6012_4316",
+            "local": true
+          }
+        ]
+      }
+    },
+    "embeddedDataSpecifications": [],
+    "views": [],
+    "submodels": [
+      {
+        "keys": [
+          {
+            "idType": "IRI",
+            "type": "Submodel",
+            "value": "https://dfki.de/ids/sm/1144_5170_6012_4316",
+            "local": true
+          }
+        ]
+      }
+    ]
+  }
+}

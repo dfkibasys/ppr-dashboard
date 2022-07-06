@@ -18,6 +18,7 @@ export interface CCISubmodel {
 export interface Asset {
   idShort?: string;
   aasId?: string;
+  aasEndpoint?: string;
   IdentificationSubmodelEndpoint?: string;
   CapabilitiesSubmodelEndpoint?: string;
   CCInterfaceSubmodelEndpoint?: string;

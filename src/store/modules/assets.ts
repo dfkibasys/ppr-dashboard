@@ -9,9 +9,8 @@ import {
   SortingPath,
   ShellDescriptorQuery,
 } from '@basys/aas-registry-client-ts-fetch';
+import { EXCLUDED_ASSETS, PAGE_SIZE } from '@/config/settings';
 import Vue from 'vue';
-
-const PAGE_SIZE = 8;
 
 const state: AssetsState = {
   assetMap: {}, // map of aasIds to asset objects
@@ -47,12 +46,12 @@ const getters: GetterTree<AssetsState, RootState> = {
   hasLoaded: (state) => state.hasLoaded,
 
   /**
-   * Get whether all available assets have been loaded (-1 for mrk lab)
+   * Get whether all available assets have been loaded
    *
    * @param state
    * @returns {Boolean}
    */
-  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - 1,
+  hasMoreAssets: (state) => state.assetList.length < state.totalAssets - EXCLUDED_ASSETS.length,
 
   /**
    * Returns the currently loaded page
@@ -112,7 +111,10 @@ const actions: ActionTree<AssetsState, RootState> = {
         //asset loop
         response.hits.forEach((item) => {
           let asset: Asset = {};
-          asset.idShort = item.idShort;
+          asset.aasEndpoint =
+            item.endpoints !== undefined
+              ? item.endpoints[0].protocolInformation.endpointAddress
+              : '';
           asset.aasId = item.identification;
 
           //submodel loop
@@ -135,8 +137,9 @@ const actions: ActionTree<AssetsState, RootState> = {
                 : [];
           });
 
-          // don't add mrk lab to assetsList
-          if (asset.idShort === 'mrk40_lab_aas') return;
+          // don't add excluded assets to assetsList
+          if (EXCLUDED_ASSETS.indexOf(item.idShort) > -1) return;
+
           assets.push(asset);
         });
       })
@@ -146,9 +149,35 @@ const actions: ActionTree<AssetsState, RootState> = {
       })
       .finally(() => {
         commit('setAssets', { assets, totalAssets, purge });
+        dispatch('fetchAssetIDShort', { assets, vm });
         dispatch('fetchIdSubmodels', { assets, vm });
         dispatch('fetchCCInterfaceSubmodels', { assets, vm });
       });
+  },
+
+  /**
+   * Fetch all asset idShorts from the AAS server
+   *
+   * @param commit
+   * @param assets
+   * @param vm
+   */
+  fetchAssetIDShort({ commit }, { assets, vm }) {
+    assets.forEach((asset) => {
+      let idShort = '';
+      axios
+        .get(asset.aasEndpoint)
+        .then((res) => {
+          idShort = res.data.asset.idShort;
+        })
+        .catch((err) => {
+          console.error(err.message);
+          vm.$Progress.fail();
+        })
+        .finally(() => {
+          commit('setAssetIDShort', { aasID: asset.aasId, idShort });
+        });
+    });
   },
 
   /**
@@ -258,6 +287,19 @@ const mutations: MutationTree<AssetsState> = {
       for (const key in content) {
         Vue.set(state.assetMap[aasID], key, content[key]);
       }
+    }
+  },
+
+  /**
+   * Commit an idShort to an asset
+   *
+   * @param state
+   * @param aasID
+   * @param idShort
+   */
+  setAssetIDShort: (state, { aasID, idShort }) => {
+    if (state.assetMap[aasID] !== undefined) {
+      Vue.set(state.assetMap[aasID], 'idShort', idShort);
     }
   },
 
