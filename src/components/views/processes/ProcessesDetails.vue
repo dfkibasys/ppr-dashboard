@@ -95,6 +95,7 @@
               :items="processInstances"
               :fields="instanceFields"
               class="clickable-table"
+              id="instance-table"
               show-empty
             >
               <template v-slot:head(id)>{{ $t('process.id') }}</template>
@@ -120,7 +121,14 @@
             </b-table>
           </b-tab>
           <b-tab :title="$t('process.auditLog')">
-            <b-table hover striped :items="auditLog" :fields="auditFields" show-empty>
+            <b-table
+              hover
+              striped
+              :items="auditLog"
+              :fields="auditFields"
+              id="audit-table"
+              show-empty
+            >
               <template v-slot:head(state)>{{ $t('process.state') }}</template>
               <template v-slot:head(processInstanceId)>{{
                 $t('process.processInstanceId')
@@ -390,7 +398,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               overlays.remove(o);
             });
 
-            //ais
+            //Activity instances
+
+            //Detection of completed process instances
+            //Check if amount of activity instances differs from running instances count
+            if (this.processDefinition.instances !== ais.data.length) {
+              //Compare and remove missing process instance from table
+              const ids = ais.data.map((obj) => obj.processInstanceId);
+              this.processInstances = this.processInstances.filter(
+                (instance) => ids.indexOf(instance.id) > -1
+              );
+              this.processDefinition.instances = ais.data.length;
+            }
+
             let activityIdsCount = {} as any;
 
             ais.data.forEach((val: any) => {
@@ -411,7 +431,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               that.overlaysArr.push(oID);
             }
 
-            //incidents
+            //Incidents
             let incidentIdsCount = {} as any;
 
             incidents.data.forEach((val: any) => {
