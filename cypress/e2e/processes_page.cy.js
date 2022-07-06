@@ -116,7 +116,7 @@ describe('The processes page', () => {
     cy.get('.modal-footer').contains('Create').click();
 
     // TODO: Technically it just reloads the previously deleted instance
-    // Left details should containt correct amount
+    // Left details should contain correct amount
     cy.contains('Instances Running').siblings('p').should('contain', '2');
 
     // XML Badge should contain correct amount
@@ -136,6 +136,33 @@ describe('The processes page', () => {
 
     // Cancel deletion
     cy.get('#modal-warning').contains('Cancel').click();
+  });
+
+  it('updates the UI after running instances have been completed', () => {
+    cy.interceptProcessDefinition();
+
+    // Table should display both running instances
+    cy.get('#instance-table tbody').children('tr').should('have.length', 2);
+
+    // Left details should containt correct amount
+    cy.contains('Instances Running').siblings('p').should('contain', '2');
+
+    // Override server response (containing 1 unfinished instance)
+    cy.intercept(
+      'GET',
+      '/engine-rest/history/activity-instance?processDefinitionId=ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002&unfinished=true',
+      {
+        fixture: 'activityInstanceReviewInvoiceUnfinished1.json',
+      }
+    ).as('getActivityHistory');
+
+    cy.wait('@getActivityHistory');
+
+    // Table should display remaining running instance
+    cy.get('#instance-table tbody').children('tr').should('have.length', 1);
+
+    // Left details should contain correct amount
+    cy.contains('Instances Running').siblings('p').should('contain', '1');
   });
 
   it('allows deleting a deployment without running instances directly', () => {
