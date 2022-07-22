@@ -4,8 +4,9 @@ FROM node:lts-alpine as build-stage
 # make the 'app' folder the current working directory
 WORKDIR /app
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
+# copy both 'package.json' and 'package-lock.json' 
+COPY package.json ./
+COPY package-lock.json ./
 
 # install project dependencies
 RUN npm install
