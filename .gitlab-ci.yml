@@ -24,31 +24,33 @@ test:
     - basys
 
 build:
-  image: docker:20.10.12
+  image: docker:20.10.17
   stage: build
   services:
-    - docker:20.10.12-dind
+    - docker:20.10.17-dind
   tags:
     - basys
     - docker
   script:
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
-    - docker build -t "$CI_REGISTRY_NAME:latest" .
-    - docker push "$CI_REGISTRY_NAME:latest"
+    - docker context create build-ctx
+    - docker buildx create build-ctx --use
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"  "$DOCKER_REGISTRY"
+    - docker buildx build --platform linux/arm64/v8,linux/amd64 -t "$CI_REGISTRY_NAME:latest" . --push
   only:
     - master
 
 build-dev:
-  image: docker:20.10.12
+  image: docker:20.10.17
   stage: build
   services:
-    - docker:20.10.12-dind
+    - docker:20.10.17-dind
   tags:
     - basys
     - docker
   script:
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
-    - docker build -t "$CI_REGISTRY_NAME:dev" .
-    - docker push "$CI_REGISTRY_NAME:dev"
+    - docker context create build-ctx
+    - docker buildx create build-ctx --use
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"  "$DOCKER_REGISTRY"
+    - docker buildx build --platform linux/arm64/v8,linux/amd64 -t "$CI_REGISTRY_NAME:dev" . --push
   only:
     - develop
