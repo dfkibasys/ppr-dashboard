@@ -3,15 +3,11 @@ stages:
   - build
 
 variables:
-  DOCKER_HOST: tcp://docker:2376
   # When using dind, it's wise to use the overlayfs driver for
   # improved performance.
   DOCKER_DRIVER: overlay2
-  # Specify to Docker where to create the certificates, Docker will
-  # create them automatically on boot, and will create
-  # `/certs/client` that will be shared between the service and
-  # build container.
-  DOCKER_TLS_CERTDIR: '/certs'
+  DOCKER_HOST: "tcp://docker:2375" 
+  DOCKER_TLS_CERTDIR: ""
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
 
 test:
@@ -27,7 +23,10 @@ build:
   image: docker:20.10.17
   stage: build
   services:
-    - docker:20.10.17-dind
+    - name: docker:20.10.12-dind
+       # explicitly disable tls to avoid docker startup interruption
+      command: ["--tls=false"]
+
   tags:
     - basys
     - docker
@@ -43,7 +42,9 @@ build-dev:
   image: docker:20.10.17
   stage: build
   services:
-    - docker:20.10.17-dind
+    - name: docker:20.10.12-dind
+       # explicitly disable tls to avoid docker startup interruption
+      command: ["--tls=false"]
   tags:
     - basys
     - docker
