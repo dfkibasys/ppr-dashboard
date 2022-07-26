@@ -34,7 +34,7 @@ build:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker buildx build --platform linux/arm64/v8,linux/amd64 -t "$CI_REGISTRY_NAME:latest" . --push
+    - docker buildx build --platform linux/amd64,linux/arm64 -t "$CI_REGISTRY_NAME:latest" . --push
   only:
     - master
 
@@ -52,6 +52,6 @@ build-dev:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker buildx build --platform linux/amd64 -t "$CI_REGISTRY_NAME:dev" . --push
+    - docker buildx build --platform linux/amd64,linux/arm64 -t "$CI_REGISTRY_NAME:dev" . --push
   only:
     - develop
