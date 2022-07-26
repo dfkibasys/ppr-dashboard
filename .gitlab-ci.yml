@@ -9,6 +9,7 @@ variables:
   DOCKER_HOST: "tcp://docker:2375" 
   DOCKER_TLS_CERTDIR: ""
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
+  TARGET_PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
 
 test:
   image: cypress/base:16.14.2
@@ -34,7 +35,7 @@ build:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker buildx build --platform linux/amd64,linux/arm64 -t "$CI_REGISTRY_NAME:latest" . --push
+    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" . --push
   only:
     - master
 
@@ -52,6 +53,6 @@ build-dev:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker buildx build --platform linux/amd64,linux/arm64 -t "$CI_REGISTRY_NAME:dev" . --push
+    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" . --push
   only:
     - develop
