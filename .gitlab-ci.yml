@@ -6,8 +6,8 @@ variables:
   # When using dind, it's wise to use the overlayfs driver for
   # improved performance.
   DOCKER_DRIVER: overlay2
-  DOCKER_HOST: "tcp://docker:2375" 
-  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: 'tcp://docker:2375'
+  DOCKER_TLS_CERTDIR: ''
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
   TARGET_PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
 
@@ -24,9 +24,10 @@ build:
   image: docker:20.10.17
   stage: build
   services:
-    - name: docker:20.10.12-dind
-       # explicitly disable tls to avoid docker startup interruption
-      command: ["--tls=false"]
+    - name:
+        docker:20.10.17-dind
+        # explicitly disable tls to avoid docker startup interruption
+      command: ['--tls=false']
 
   tags:
     - basys
@@ -43,9 +44,10 @@ build-dev:
   image: docker:20.10.17
   stage: build
   services:
-    - name: docker:20.10.12-dind
-       # explicitly disable tls to avoid docker startup interruption
-      command: ["--tls=false"]
+    - name:
+        docker:20.10.17-dind
+        # explicitly disable tls to avoid docker startup interruption
+      command: ['--tls=false']
   tags:
     - basys
     - docker
