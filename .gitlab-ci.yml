@@ -15,6 +15,7 @@ test:
   image: cypress/base:16.18.1
   stage: test
   script:
+    - unset NODE_OPTIONS
     - npm install
     - npm run test
   tags:
