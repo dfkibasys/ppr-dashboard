@@ -35,7 +35,7 @@ build:
   script:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" . --push
   only:
     - master
@@ -54,7 +54,7 @@ build-dev:
   script:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" . --push
   only:
     - develop
