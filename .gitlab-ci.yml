@@ -12,10 +12,9 @@ variables:
   TARGET_PLATFORMS: linux/amd64,linux/arm64
 
 test:
-  image: cypress/base:16.18.1
+  image: cypress/base:18.12.1
   stage: test
   script:
-    - unset NODE_OPTIONS
     - npm install
     - npm run test
   tags:
