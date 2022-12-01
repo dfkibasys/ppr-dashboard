@@ -12,7 +12,7 @@ variables:
   TARGET_PLATFORMS: linux/amd64,linux/arm64
 
 test:
-  image: cypress/base:16.14.2
+  image: cypress/base:16.18.1
   stage: test
   script:
     - npm install
@@ -21,11 +21,11 @@ test:
     - basys
 
 build:
-  image: docker:20.10.17
+  image: docker:20.10.21
   stage: build
   services:
     - name:
-        docker:20.10.17-dind
+        docker:20.10.21-dind
         # explicitly disable tls to avoid docker startup interruption
       command: ['--tls=false']
 
@@ -41,11 +41,11 @@ build:
     - master
 
 build-dev:
-  image: docker:20.10.17
+  image: docker:20.10.21
   stage: build
   services:
     - name:
-        docker:20.10.17-dind
+        docker:20.10.21-dind
         # explicitly disable tls to avoid docker startup interruption
       command: ['--tls=false']
   tags:
