@@ -5,9 +5,9 @@
   "author": "Jonas Mohr (jonas.mohr@dfki.de)",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8081",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve --port 8081",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
+    "lint": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service lint",
     "e2e": "cypress run",
     "cy:open": "cypress open",
     "test": "npm run serve & cypress run"
