@@ -1,5 +1,5 @@
 # build stage (responsible for building a production-ready artifact of our Vue.js app)
-FROM --platform=$BUILDPLATFORM node:lts-alpine as build-stage
+FROM --platform=$BUILDPLATFORM node:18-alpine as build-stage
 
 # make the 'app' folder the current working directory
 WORKDIR /app
