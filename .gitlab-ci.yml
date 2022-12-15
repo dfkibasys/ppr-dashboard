@@ -1,6 +1,6 @@
 stages:
-  - test
-  - build
+- test
+- build
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for
@@ -9,52 +9,55 @@ variables:
   DOCKER_HOST: 'tcp://docker:2375'
   DOCKER_TLS_CERTDIR: ''
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
+  CI_REGISTRY_NAME_UNPRIVILEGED: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard-unprivileged'
+  DOCKER_FILE_NAME: Dockerfile
+  DOCKER_FILE_NAME_UNPRIVILEGED: Dockerfile.unprivileged
   TARGET_PLATFORMS: linux/amd64,linux/arm64
 
 test:
   image: cypress/base:18.12.1
   stage: test
   script:
-    - npm install
-    - npm run test
+  - npm install
+  - npm run test
   tags:
-    - basys
+  - basys
 
 build:
   image: docker:20.10.21
   stage: build
   services:
-    - name:
-        docker:20.10.21-dind
-        # explicitly disable tls to avoid docker startup interruption
-      command: ['--tls=false']
+  - name: docker:20.10.21-dind
+    # explicitly disable tls to avoid docker startup interruption
+    command: ['--tls=false']
 
   tags:
-    - basys
-    - docker
+  - basys
+  - docker
   script:
-    - docker context create build-ctx
-    - docker buildx create build-ctx --use
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
-    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" . --push
+  - docker context create build-ctx
+  - docker buildx create build-ctx --use
+  - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
+  - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" -f $DOCKER_FILE_NAME . --push
+  - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:latest" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
-    - master
+  - master
 
 build-dev:
   image: docker:20.10.21
   stage: build
   services:
-    - name:
-        docker:20.10.21-dind
-        # explicitly disable tls to avoid docker startup interruption
-      command: ['--tls=false']
+  - name: docker:20.10.21-dind
+    # explicitly disable tls to avoid docker startup interruption
+    command: ['--tls=false']
   tags:
-    - basys
-    - docker
+  - basys
+  - docker
   script:
-    - docker context create build-ctx
-    - docker buildx create build-ctx --use
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
-    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" . --push
+  - docker context create build-ctx
+  - docker buildx create build-ctx --use
+  - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
+  - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" -f $DOCKER_FILE_NAME . --push
+  - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:dev" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
-    - develop
+  - develop
