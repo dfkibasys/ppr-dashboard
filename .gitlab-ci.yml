@@ -37,6 +37,9 @@ build:
   script:
   - docker context create build-ctx
   - docker buildx create build-ctx --use
+  # fix potential win / linux line ending problems otherwise it will not be executable
+  - sed -i 's/\r$//' ./deploy_unprivileged.sh
+  - sed -i 's/\r$//' ./entrypoint.shs
   - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" -f $DOCKER_FILE_NAME . --push
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:latest" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
@@ -56,6 +59,9 @@ build-dev:
   script:
   - docker context create build-ctx
   - docker buildx create build-ctx --use
+  # fix potential win / linux line ending problems otherwise it will not be executable
+  - sed -i 's/\r$//' ./deploy_unprivileged.sh
+  - sed -i 's/\r$//' ./entrypoint.sh
   - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" -f $DOCKER_FILE_NAME . --push
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:dev" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push

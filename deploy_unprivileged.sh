@@ -10,7 +10,6 @@ echo "#################################################################"
 echo "# Injecting Environment variables "
 
 set -eu
-# envsubst '${NGINX_PROXY}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 JSON_STRING='window.configs = { \
   "VUE_APP_MQTT_BROKER_URL":"'"${VUE_APP_MQTT_BROKER_URL}"'", \
