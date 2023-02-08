@@ -3,8 +3,19 @@
     <template v-slot:modal-header>
       <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
 
-      <b-button variant="danger" @click="stopButton" :disabled="!isAuthorized">Stop</b-button>
-      <b-button variant="warning" @click="resetButton" :disabled="!isAuthorized">Reset</b-button>
+      <div>
+        <b-button
+          variant="danger"
+          size="sm"
+          class="m-1"
+          @click="stopButton"
+          :disabled="!isAuthorized"
+          >Stop</b-button
+        >
+        <b-button variant="warning" size="sm" @click="resetButton" :disabled="!isAuthorized"
+          >Reset</b-button
+        >
+      </div>
 
       <b-form-group>
         <b-form-radio-group
@@ -16,6 +27,8 @@
           name="radios-btn-default"
           @change="modeButton"
           :disabled="!isAuthorized"
+          class="my-1"
+          size="sm"
         ></b-form-radio-group>
       </b-form-group>
     </template>
@@ -36,12 +49,14 @@
               asset.OCCUPIER === currentUser
             "
             variant="info"
+            size="sm"
             @click="freeButton"
             >Free ({{ currentUser }})</b-button
           >
           <b-button
             v-if="asset.OCCST === 'OCCUPIED' && asset.OCCUPIER !== currentUser"
             variant="info"
+            size="sm"
             @click="prioButton"
             >Prio ({{ currentUser }})</b-button
           >
@@ -50,7 +65,7 @@
       <div class="mr-auto">
         <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset.OPMODE }}</span>
       </div>
-      <b-button @click="cancel" variant="secondary">{{ $t('modal.close') }}</b-button>
+      <b-button @click="cancel" size="sm" variant="secondary">{{ $t('modal.close') }}</b-button>
     </template>
   </b-modal>
 </template>
@@ -85,7 +100,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       selected: 'SIMULATE',
       options: [
         { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
-        { text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
+        //{ text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
         { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
       ],
     };
