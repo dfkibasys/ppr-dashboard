@@ -40,7 +40,7 @@
         <span class="mr-1">{{ $t('modal.packML.occupationState') }}: {{ asset.OCCST }}</span>
         <span v-if="asset.OCCST !== 'FREE'" class="mr-2">({{ asset.OCCUPIER }})</span>
         <span v-if="isAuthorized">
-          <b-button v-if="asset.OCCST === 'FREE'" variant="info" @click="occupyButton"
+          <b-button v-if="asset.OCCST === 'FREE'" variant="info" size="sm" @click="occupyButton"
             >Occupy ({{ currentUser }})</b-button
           >
           <b-button
