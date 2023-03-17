@@ -11,6 +11,7 @@
         <!-- <b-link class="pr-3" to="/services">{{ $t('navbar.services') }}</b-link>
         <b-link class="pr-3" to="/management">{{ $t('navbar.management') }}</b-link> -->
         <b-link class="pr-3" to="/processes">{{ $t('navbar.processes') }}</b-link>
+        <b-link class="pr-3" to="/basysafe">{{ $t('navbar.basysafe') }}</b-link>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto pr-3">

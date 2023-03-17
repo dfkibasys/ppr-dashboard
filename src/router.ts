@@ -7,6 +7,7 @@ import Processes from '@/components/views/Processes.vue';
 import ProcessesDetails from '@/components/views/processes/ProcessesDetails.vue';
 import ProcessesInstance from '@/components/views/processes/ProcessesInstance.vue';
 import Registry from '@/components/views/Registry.vue';
+import Basysafe from '@/components/views/Basysafe.vue';
 
 Vue.use(Router);
 const DEFAULT_TITLE = 'PPR Dashboard';
@@ -47,6 +48,11 @@ const router = new Router({
       path: '/registry/:url?',
       name: 'Registry',
       component: Registry,
+    },
+    {
+      path: '/basysafe',
+      name: 'Basysafe',
+      component: Basysafe,
     },
     { path: '*', redirect: '/assets' },
   ],

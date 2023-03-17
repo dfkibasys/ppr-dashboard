@@ -6,7 +6,8 @@
     "processes": "Prozesse",
     "login": "Anmelden",
     "logout": "Abmelden",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "basysafe": "BaSySafe"
   },
   "modal": {
     "close": "Schließen",
@@ -120,5 +121,29 @@
       "definition": "Definition",
       "instance": "Instanz"
     }
+  },
+  "basysafe": {
+    "ack":"Bestätigungstaster",
+    "ackPressed":"bestätigen",
+    "estop": "Not-Aus-Taster",
+    "estopPressed": "gedrückt",
+    "estopReleased": "entsperrt",
+    "initiator": "Initiator",
+    "initiatorFree": "frei",
+    "initiatorOccupied": "belegt",
+    "signalLights": "Signalleuchte",
+    "signalLightsRed": "rot",
+    "signalLightsYellow": "gelb",
+    "signalLightsGreen": "grün",
+    "signalLightsWhite": "weiß",
+    "lightOff": "aus",
+    "lightOn": "an",
+    "lightBlinking": "blinken",
+    "safetylightcurtain":"Sicherheitslichtgitter",
+    "safetylightcurtainFree":"frei",
+    "safetylightcurtainDetection":"durchgegriffen",
+    "press": "Presse",
+    "pressPress": "pressen",
+    "pressRetract": "hochfahren"
   }
 }
