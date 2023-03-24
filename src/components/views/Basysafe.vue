@@ -91,16 +91,6 @@
       </b-form-radio-group>
       <br/>
       <b-form-radio-group
-        id="btn-signalcolumn.green"       
-        name="btn-signalcolumn.green"
-        v-model="states.signalcolumn.green"
-        buttons >
-          <b-form-radio value="0" class="btn-success" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="1" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
-          <b-form-radio value="2" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-      </b-form-radio-group>      
-      <br/>
-      <b-form-radio-group
         id="btn-signalcolumn.white"       
         name="btn-signalcolumn.white"
         v-model="states.signalcolumn.white"
@@ -108,6 +98,16 @@
           <b-form-radio value="0" class="btn-light" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
           <b-form-radio value="1" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
           <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
+      </b-form-radio-group>     
+      <br/>
+      <b-form-radio-group
+        id="btn-signalcolumn.green"       
+        name="btn-signalcolumn.green"
+        v-model="states.signalcolumn.green"
+        buttons >
+          <b-form-radio value="0" class="btn-success" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
+          <b-form-radio value="1" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
+          <b-form-radio value="2" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
       </b-form-radio-group>
       </b-col>
     </b-row>
@@ -257,7 +257,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         msg.state = "completing";
         this.$mqtt.publish(this.topics.press, msg);        
         await new Promise(resolve => setTimeout(resolve, 1000));
-        msg.state = "completed";
+        msg.state = "complete";
         this.$mqtt.publish(this.topics.press, msg);
       }
 
@@ -294,7 +294,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         msg.state = "completing";
         this.$mqtt.publish(this.topics.press, msg);        
         await new Promise(resolve => setTimeout(resolve, 1000));
-        msg.state = "completed";
+        msg.state = "complete";
         this.$mqtt.publish(this.topics.press, msg);
       }
 
