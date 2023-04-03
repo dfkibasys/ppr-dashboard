@@ -8,14 +8,14 @@ export interface Data {
     }
   }
   states: {
-    estopbutton: number,
-    initiator: number,
-    safetylightcurtain: number,
+    estopbutton: boolean,
+    initiator: boolean,
+    safetylightcurtain: boolean,
     signalcolumn: {
-      red: number,
-      yellow: number,
-      green: number,
-      white: number
+      red: boolean,
+      yellow: boolean,
+      green: boolean,
+      white: boolean
     },
     press: {
       counter: number,
@@ -24,12 +24,13 @@ export interface Data {
     }
   },
   topics: {
-    safetylightcurtain: string,
-    signalcolumn: string,
-    initiator: string
-    estopbutton: string,
-    ackbutton: string,
-    press: string
+    statusSafetyLightCurtain: string,
+    statusSignalColumn: string,
+    statusInitiator: string
+    statusEstopButton: string,
+    statusAckButton: string,
+    statusPress: string,
+    commandSignalColumn: string
   }
 }
 export interface Methods {
@@ -39,7 +40,8 @@ export interface Methods {
   setInitiatorState(state:number): void;
   setSignalColumnState(): void;  
   simulatePress(): void;  
-  simulateRetract(): void;  
+  simulateRetract(): void;
+  
 }
 export interface Computed {}
 export interface Props {}
