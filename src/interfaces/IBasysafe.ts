@@ -35,13 +35,13 @@ export interface Data {
 }
 export interface Methods {
   ackButton(): void;
-  setEstopButtonState(state:number): void;
-  setSafetyLightCurtainState(state:number): void;
-  setInitiatorState(state:number): void;
+  setEstopButtonState(state:boolean): void;
+  setSafetyLightCurtainState(state:boolean): void;
+  setInitiatorState(state:boolean): void;
   setSignalColumnState(): void;  
   simulatePress(): void;  
   simulateRetract(): void;
-  
+  setYellowLight(state:boolean): void;
 }
 export interface Computed {}
 export interface Props {}

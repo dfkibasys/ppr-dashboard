@@ -137,6 +137,23 @@
         </b-form-radio-group>
       </b-col>
     </b-row>
+    
+    <br/>
+
+    <b-row>
+      <b-col sm="3">
+        <label>{{ $t('basysafe.signalLightsYellowCommand') }}</label>
+      </b-col>
+      <b-col>
+        <b-form-radio-group
+          id="btn-radios-yellow-light"       
+          name="btn-radios-yellow-light"
+          buttons>
+            <b-form-radio value="false"  @change="setYellowLight($event)">{{ $t('basysafe.lightOff') }}</b-form-radio>
+            <b-form-radio value="true" class="btn-warning" @change="setYellowLight($event)" >{{ $t('basysafe.lightOn') }}</b-form-radio>
+        </b-form-radio-group>
+      </b-col>
+    </b-row>
 
   </b-container>    
 </template>
@@ -236,6 +253,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         "white": this.states.signalcolumn.white,
       };
       this.$mqtt.publish(this.topics.statusSignalColumn, msg);
+    },    
+    setYellowLight: function (state) {
+      console.log("setYellowLight: " + state); 
+      var msg = {
+        "timestamp": new Date().toISOString(),
+        "status": state
+      };
+      this.$mqtt.publish(this.topics.commandSignalColumn, msg);
     },
     simulatePress: async function() {
       console.log("simulatePress: "); 
