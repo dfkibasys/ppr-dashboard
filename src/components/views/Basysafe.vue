@@ -209,15 +209,15 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         "status": true
       };
       this.$mqtt.publish(this.topics.statusAckButton, msg);
-    /*
+    
       setTimeout(()=> {
         var msg = {
           "timestamp": new Date().toISOString(),
-          "status": Number(0)
+          "status": false
         };
         this.$mqtt.publish(this.topics.statusAckButton, msg);
       }, 500);
-    */
+    
     },
     setEstopButtonState: function (state) {
       console.log("setEstopButtonState: " + state); 
