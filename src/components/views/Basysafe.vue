@@ -111,8 +111,8 @@
         name="btn-signalcolumn.green"
         v-model="states.signalcolumn.green"
         buttons >
-          <b-form-radio value="0" class="btn-success" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="1" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
+          <b-form-radio value="false" class="btn-success" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
+          <b-form-radio value="true" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
           <!--
           <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
           -->
