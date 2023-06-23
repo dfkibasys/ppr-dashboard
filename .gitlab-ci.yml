@@ -87,6 +87,7 @@ build-stable:
   - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:$CI_COMMIT_TAG" -f $DOCKER_FILE_NAME . --push
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:$CI_COMMIT_TAG" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
+  rules:
   - if: '"$CI_COMMIT_TAG" == ""'
     when: never
 
