@@ -5,7 +5,7 @@
   "author": "Jonas Mohr (jonas.mohr@dfki.de)",
   "private": true,
   "scripts": {
-    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve --port 8081",
+    "serve": " vue-cli-service serve --port 8081",
     "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
     "lint": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service lint",
     "e2e": "cypress run",
@@ -13,7 +13,7 @@
     "test": "npm run serve & cypress run"
   },
   "dependencies": {
-    "@basys/aas-registry-client-ts-fetch": "^0.3.0-SNAPSHOT.202204270656",
+    "@basys/aas-registry-client-ts-fetch": "^0.4.2-SNAPSHOT.202210262111",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.3",
