@@ -89,3 +89,4 @@ build-stable:
   - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:$CI_COMMIT_TAG" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
   - tags
+
