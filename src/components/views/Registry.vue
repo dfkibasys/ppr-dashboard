@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     registryUrl() {
-      return this.$store.getters['endpoints/registryUrl'] + '/registry/shell-descriptors';
+      return this.$store.getters['endpoints/registryUrl'] + '/shell-descriptors';
     },
     domain() {
       // get domain from e.g. https://domain:8020
