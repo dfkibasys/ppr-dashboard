@@ -11,6 +11,7 @@ import {
 } from '@basys/aas-registry-client-ts-fetch';
 import { EXCLUDED_ASSETS, PAGE_SIZE } from '@/config/settings';
 import Vue from 'vue';
+import getProtocol from '@/helpers/protocol';
 
 const state: AssetsState = {
   assetMap: {}, // map of aasIds to asset objects
@@ -111,10 +112,18 @@ const actions: ActionTree<AssetsState, RootState> = {
         //asset loop
         response.hits.forEach((item) => {
           let asset: Asset = {};
-          asset.aasEndpoint =
-            item.endpoints !== undefined
-              ? item.endpoints[0].protocolInformation.endpointAddress
-              : '';
+
+          //Check current protocol and set equivalent endpoints
+          asset.aasEndpoint = '';
+          if (item.endpoints !== undefined) {
+            for (let i = 0; i < item.endpoints.length; i++) {
+              if (item.endpoints[i].protocolInformation.endpointProtocol === getProtocol()) {
+                asset.aasEndpoint = item.endpoints[i].protocolInformation.endpointAddress;
+                break;
+              }
+            }
+          }
+
           asset.aasId = item.identification;
 
           //submodel loop
