@@ -11,7 +11,7 @@ import {
 } from '@basys/aas-registry-client-ts-fetch';
 import { EXCLUDED_ASSETS, PAGE_SIZE } from '@/config/settings';
 import Vue from 'vue';
-import getProtocol from '@/helpers/protocol';
+import getEquivalentEndpoint from '@/helpers/endpoint';
 
 const state: AssetsState = {
   assetMap: {}, // map of aasIds to asset objects
@@ -114,15 +114,7 @@ const actions: ActionTree<AssetsState, RootState> = {
           let asset: Asset = {};
 
           //Check current protocol and set equivalent endpoints
-          asset.aasEndpoint = '';
-          if (item.endpoints !== undefined) {
-            for (let i = 0; i < item.endpoints.length; i++) {
-              if (item.endpoints[i].protocolInformation.endpointProtocol === getProtocol()) {
-                asset.aasEndpoint = item.endpoints[i].protocolInformation.endpointAddress;
-                break;
-              }
-            }
-          }
+          asset.aasEndpoint = getEquivalentEndpoint(item.endpoints);
 
           asset.aasId = item.identification;
 
@@ -140,10 +132,8 @@ const actions: ActionTree<AssetsState, RootState> = {
             }
             key += 'SubmodelEndpoint';
 
-            asset[key] =
-              submodel.endpoints !== undefined
-                ? submodel.endpoints[0].protocolInformation.endpointAddress
-                : [];
+            //Check current protocol and set equivalent endpoints
+            asset[key] = getEquivalentEndpoint(submodel.endpoints);
           });
 
           // don't add excluded assets to assetsList
@@ -198,6 +188,8 @@ const actions: ActionTree<AssetsState, RootState> = {
    */
   fetchIdSubmodels({ commit }, { assets, vm }) {
     assets.forEach((asset) => {
+      if (asset.IdentificationSubmodelEndpoint === undefined) return;
+
       let id: IDSubmodel = {};
       axios
         .get(asset.IdentificationSubmodelEndpoint)
@@ -207,7 +199,7 @@ const actions: ActionTree<AssetsState, RootState> = {
           });
         })
         .catch((err) => {
-          console.error(err.message);
+          console.error(err.message, asset);
           vm.$Progress.fail();
         })
         .finally(() => {
