@@ -22,6 +22,8 @@ export interface Data {
   incidentsFields: string[];
 }
 export interface Methods {
+  moment: any;
+  duration: any;
   handleError(err: any): void;
   handleShown(): void;
   fetchLeftDetails(piid: string, pdid: string): Promise<any>;

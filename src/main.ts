@@ -41,7 +41,6 @@ Vue.use(IconsPlugin);
 Vue.use(VueI18n);
 const i18n = new VueI18n(i18nOptions);
 Vue.use(VueProgressBar, ProgressBarOptions);
-Vue.use(require('vue-moment'));
 
 new Vue({
   render: (h) => h(App),

@@ -77,17 +77,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
 
-const {
-  mxClient,
-  mxGraph,
-  mxRubberband,
-  mxUtils,
-  mxEvent,
-  mxCodec,
-  mxConstants,
-  mxGraphModel,
-  mxGeometry,
-} = mxgraph();
+const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'PackML',

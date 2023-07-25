@@ -89,14 +89,10 @@
               <template v-slot:head(durationInMillis)>{{ $t('process.duration') }}</template>
               <template v-slot:head(referenceTime)>{{ $t('process.referenceTime') }}</template>
               <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
-              <template v-slot:cell(endTime)="value">{{
-                value.item.endTime | moment($t('process.timeFormat'))
-              }}</template>
+              <template v-slot:cell(startTime)="value">{{ moment(value.item.startTime) }}</template>
+              <template v-slot:cell(endTime)="value">{{ moment(value.item.endTime) }}</template>
               <template v-slot:cell(durationInMillis)="value">{{
-                value.item.durationInMillis | duration('humanize')
+                duration(value.item.durationInMillis)
               }}</template>
               <template v-slot:cell(referenceTime)="value">{{
                 value.item.referenceTime || '-'
@@ -117,9 +113,7 @@
               <template v-slot:head(message)>{{ $t('process.message') }}</template>
               <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
               <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
+              <template v-slot:cell(startTime)="value">{{ moment(value.item.startTime) }}</template>
               <template v-slot:empty>{{ $t('process.emptyIncidentsMessage') }}</template>
             </b-table>
           </b-tab>
@@ -136,6 +130,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
 import getEnv from '@/helpers/env';
+import moment from 'moment';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesInstance',
@@ -147,7 +142,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       camundaUrl: 'camundaUrl',
     }),
     baseUrl: function () {
-      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
+      return getEnv('VITE_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
@@ -189,6 +184,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   methods: {
+    moment(date) {
+      return moment(date).format(this.$t('process.timeFormat') as any);
+    },
+    duration(val) {
+      return moment.duration(val, 'milliseconds').humanize();
+    },
     handleError: function (err) {
       console.error('failed to show diagram', err);
     },

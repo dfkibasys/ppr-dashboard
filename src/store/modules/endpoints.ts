@@ -4,9 +4,9 @@ import { RootState } from '@/interfaces/RootState';
 import getEnv from '@/helpers/env';
 
 const state: EndpointsState = {
-  MQTT_BROKER_URL: getEnv('VUE_APP_MQTT_BROKER_URL'),
-  CAMUNDA_REST_URL: getEnv('VUE_APP_CAMUNDA_REST_URL'),
-  REGISTRY_URL: getEnv('VUE_APP_AAS_REGISTRY_URL'),
+  MQTT_BROKER_URL: getEnv('VITE_MQTT_BROKER_URL'),
+  CAMUNDA_REST_URL: getEnv('VITE_CAMUNDA_REST_URL'),
+  REGISTRY_URL: getEnv('VITE_AAS_REGISTRY_URL'),
   mockData: false,
 };
 const getters: GetterTree<EndpointsState, RootState> = {

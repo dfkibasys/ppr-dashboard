@@ -21,6 +21,7 @@ export interface Data {
   overlaysArr: any; //since there is no BpmnJS typescript support
 }
 export interface Methods {
+  moment: any;
   goToProcessInstance(item: any): void;
   handleError(err: any): void;
   handleShown(): void;

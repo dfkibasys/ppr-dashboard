@@ -107,9 +107,7 @@
                   $t('process.create')
                 }}</b-button>
               </template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
+              <template v-slot:cell(startTime)="value">{{ moment(value.item.startTime) }}</template>
               <template v-slot:cell(businessKey)="value">{{
                 value.item.businessKey || '-'
               }}</template>
@@ -145,12 +143,8 @@
                 ></b-icon-check-circle>
                 <b-icon-circle-half font-scale="2" v-else></b-icon-circle-half>
               </template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
-              <template v-slot:cell(endTime)="value">{{
-                value.item.endTime | moment($t('process.timeFormat'))
-              }}</template>
+              <template v-slot:cell(startTime)="value">{{ moment(value.item.startTime) }}</template>
+              <template v-slot:cell(endTime)="value">{{ moment(value.item.endTime) }}</template>
               <template v-slot:empty>{{ $t('process.emptyLogDataMessage') }}</template>
             </b-table>
           </b-tab>
@@ -169,6 +163,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
 import getEnv from '@/helpers/env';
+import moment from 'moment';
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   name: 'ProcessesDetails',
@@ -182,7 +177,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       camundaUrl: 'camundaUrl',
     }),
     baseUrl: function () {
-      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
+      return getEnv('VITE_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
@@ -219,6 +214,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
   methods: {
+    moment(date) {
+      return moment(date).format(this.$t('process.timeFormat') as any);
+    },
     goToProcessInstance(item) {
       this.$router.push({
         name: 'ProcessesInstance',

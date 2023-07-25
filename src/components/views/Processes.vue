@@ -74,7 +74,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   created() {
     let that = this;
-    let baseUrl = getEnv('VUE_APP_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
+    let baseUrl = getEnv('VITE_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
     this.$Progress.start();
 
     axios

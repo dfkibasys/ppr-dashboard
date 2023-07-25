@@ -135,7 +135,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .post(
-          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+          `${getEnv('VITE_AJAX_REQUEST_DOMAIN')}/process-definition/${
             this.$route.params.pid
           }/start`,
           {
@@ -156,7 +156,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .get(
-          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+          `${getEnv('VITE_AJAX_REQUEST_DOMAIN')}/process-definition/${
             this.$route.params.pid
           }/form-variables`
         )
