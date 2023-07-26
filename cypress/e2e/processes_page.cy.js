@@ -23,7 +23,7 @@ describe('The processes page', () => {
   });
 
   it('loads content', () => {
-    cy.visit('/#/processes');
+    cy.visit('/processes');
 
     // Url correctly updated
     cy.url().should('include', '/processes');
@@ -46,7 +46,7 @@ describe('The processes page', () => {
     cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 2 });
     cy.intercept('GET', '/engine-rest/deployment/count*', { count: 1 });
 
-    cy.visit('/#/processes');
+    cy.visit('/processes');
 
     // Definition changed to Definitions
     cy.contains('Process Definitions').siblings('h3').should('contain', 2);

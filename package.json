@@ -20,7 +20,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
-    "bpmn-js": "^8.9.0",
+    "bpmn-js": "^13.2.2",
     "moment": "^2.29.4",
     "mqtt": "^4.3.7",
     "mxgraph": "^4.2.2",
