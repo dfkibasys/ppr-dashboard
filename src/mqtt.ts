@@ -1,4 +1,4 @@
-import store from '@/store/index';
+import getEnv from '@/helpers/env'; //TODO: Get broker from store
 import * as mqtt from 'mqtt/dist/mqtt.min';
 import * as uuid from 'uuid';
 
@@ -6,10 +6,10 @@ let client;
 
 export default {
   connect() {
-    client = mqtt.connect(store.getters['endpoints/mqttUrl'], { clientId: uuid.v4(), clean: true });
+    client = mqtt.connect(getEnv('VITE_MQTT_BROKER_URL'), { clientId: uuid.v4(), clean: true });
 
     client.on('connect', function () {
-      console.log(`Connected to ${store.getters['endpoints/mqttUrl']}`);
+      console.log(`Connected to ${getEnv('VITE_MQTT_BROKER_URL')}`);
     });
   },
   on(callback: any) {

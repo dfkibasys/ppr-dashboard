@@ -67,14 +67,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import PackML from '@/components/modals/PackML.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IAssets';
 import { SortDirection, SortingPath } from '@basys/aas-registry-client-ts-fetch';
 import SearchField from '@/components/SearchField.vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Assets',
   components: {
     PackML,
@@ -166,7 +166,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   mounted() {
     document.getElementById(this.containerId)?.addEventListener('scroll', this.scrollCallback);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     document.getElementById(this.containerId)?.removeEventListener('scroll', this.scrollCallback);
   },
 });

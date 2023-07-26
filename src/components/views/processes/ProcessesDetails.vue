@@ -155,7 +155,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue';
 import DeletionWarning from '@/components/modals/DeletionWarning.vue';
@@ -165,7 +165,7 @@ import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'ProcessesDetails',
   components: {
     BpmnDisplay,
@@ -268,7 +268,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
     },
     fetchAllData() {
-      this.$Progress.start();
+      //this.$Progress.start();
 
       Promise.all([
         this.fetchLeftDetails(this.$route.params.pid),
@@ -276,11 +276,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         this.fetchBPMN(this.$route.params.pid),
       ])
         .then(() => {
-          this.$Progress.finish();
+          //this.$Progress.finish();
         })
         .catch((err) => {
           console.error(err);
-          this.$Progress.fail();
+          //this.$Progress.fail();
         });
     },
     fetchLeftDetails(id) {
@@ -311,7 +311,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   });
 
                   //pic
-                  that.$set(that.processDefinition, 'instances', pic.data.count);
+                  that.processDefinition['instances'] = pic.data.count;
 
                   resolve();
                 })
@@ -463,7 +463,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           })
         )
         .catch((err) => {
-          this.$Progress.fail();
+          //this.$Progress.fail();
           console.error(err);
         });
     },
@@ -480,7 +480,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           that.processDefinition.instances--;
         })
         .catch((err) => {
-          this.$Progress.fail();
+          //this.$Progress.fail();
           console.error(err);
         });
     },
@@ -488,7 +488,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   created() {
     this.fetchAllData();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.intervalRef);
   },
 });

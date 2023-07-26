@@ -30,12 +30,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IManagement';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Management',
   data() {
     return {
@@ -55,12 +55,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         : `NEEDS_TO_BE_SET/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
-      this.$Progress.start();
+      //this.$Progress.start();
 
       axios
         .get(man_url)
         .then((man) => {
-          this.$Progress.finish();
+          //this.$Progress.finish();
           //management
           management = man.data.map((val: any) => {
             // return element to new Array
@@ -75,7 +75,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           that.managements = management;
         })
         .catch((err) => {
-          this.$Progress.fail();
+          //this.$Progress.fail();
           console.error(err);
         });
     },

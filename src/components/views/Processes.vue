@@ -4,25 +4,25 @@
     <h2>{{ $t('process.deployed') }}</h2>
     <b-row class="pb-5">
       <b-col>
-        <span>{{ $tc('process.processDefinition', processDefinitionsCount) }}</span>
+        <span>{{ $t('process.processDefinition', processDefinitionsCount) }}</span>
         <h3>{{ processDefinitionsCount }}</h3>
       </b-col>
       <b-col>
-        <span>{{ $tc('process.decisionDefinition', decisionDefinitionsCount) }}</span>
+        <span>{{ $t('process.decisionDefinition', decisionDefinitionsCount) }}</span>
         <h3>{{ decisionDefinitionsCount }}</h3>
       </b-col>
       <b-col>
-        <span>{{ $tc('process.caseDefinition', caseDefinitionsCount) }}</span>
+        <span>{{ $t('process.caseDefinition', caseDefinitionsCount) }}</span>
         <h3>{{ caseDefinitionsCount }}</h3>
       </b-col>
       <b-col>
-        <span>{{ $tc('process.deployment', deploymentsCount) }}</span>
+        <span>{{ $t('process.deployment', deploymentsCount) }}</span>
         <h3>{{ deploymentsCount }}</h3>
       </b-col>
     </b-row>
     <b-row class="pt-5">
       <b-col>
-        <h2>{{ $tc('process.processDefinition', processDefinitionsCount) }}</h2>
+        <h2>{{ $t('process.processDefinition', processDefinitionsCount) }}</h2>
         <b-table
           hover
           striped
@@ -43,12 +43,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcesses';
 import getEnv from '@/helpers/env';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Processes',
   data() {
     return {
@@ -75,7 +75,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   created() {
     let that = this;
     let baseUrl = getEnv('VITE_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
-    this.$Progress.start();
+    //this.$Progress.start();
 
     axios
       .all([
@@ -103,19 +103,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               })
               .then((res) => {
                 //add reactive properties to nested object
-                that.$set(pp, 'instances', res.data.count);
+                pp['instances'] = res.data.count;
               })
               .catch((err) => {
-                this.$Progress.fail();
+                //this.$Progress.fail();
                 console.error(err);
               });
           });
 
-          this.$Progress.finish();
+          //this.$Progress.finish();
         })
       )
       .catch((err) => {
-        this.$Progress.fail();
+        //this.$Progress.fail();
         console.error(err);
       });
   },

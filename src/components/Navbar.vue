@@ -31,13 +31,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import Licences from '@/components/modals/Licences.vue';
 import Login from '@/components/modals/Login.vue';
 import Settings from '@/components/modals/Settings.vue';
 import { Data, Methods, Computed, Props } from '@/interfaces/INavbar';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Navbar',
   components: {
     Licences,

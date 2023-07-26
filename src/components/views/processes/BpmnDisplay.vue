@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import { Data, Methods, Computed, Props } from '@/interfaces/IBpmnDisplay';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'bpmn-display',
   props: {
     url: String,
@@ -53,7 +53,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.diagramXML = this.xml;
     }
   },
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     this.bpmnViewer.destroy();
   },
   watch: {

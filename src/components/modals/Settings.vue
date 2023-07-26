@@ -54,11 +54,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/ISettings';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Settings',
   data() {
     return {

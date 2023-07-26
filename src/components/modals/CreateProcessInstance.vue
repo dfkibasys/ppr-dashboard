@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
 import getEnv from '@/helpers/env';
 
@@ -90,7 +90,7 @@ import {
   ProcessVariable,
 } from '@/interfaces/ICreateProcessInstance';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'CreateProcessInstance',
   data() {
     return {
@@ -181,7 +181,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
     });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     // remove ALL listeners for that event
     this.$root.$off('bv::modal::show');
   },

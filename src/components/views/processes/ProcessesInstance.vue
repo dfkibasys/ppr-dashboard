@@ -124,7 +124,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -132,7 +132,7 @@ import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance'
 import getEnv from '@/helpers/env';
 import moment from 'moment';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'ProcessesInstance',
   components: {
     BpmnDisplay,
@@ -294,7 +294,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           })
         )
         .catch((err) => {
-          this.$Progress.fail();
+          //this.$Progress.fail();
           console.error(err);
         });
     },
@@ -341,7 +341,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   })
                   .then((res) => {
                     let v = res.data.find((v: any) => v.name == 'referenceTime');
-                    that.$set(_a, 'referenceTime', v ? v.value : null);
+                    _a['referenceTime'] = v ? v.value : null;
                   })
                   .catch((err) => {
                     reject(err);
@@ -358,7 +358,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   created() {
-    this.$Progress.start();
+    //this.$Progress.start();
 
     Promise.all([
       this.fetchLeftDetails(this.$route.params.iid, this.$route.params.pid),
@@ -366,14 +366,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.fetchTabContent(),
     ])
       .then(() => {
-        this.$Progress.finish();
+        //this.$Progress.finish();
       })
       .catch((err) => {
         console.error(err);
-        this.$Progress.fail();
+        //this.$Progress.fail();
       });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.intervalRef);
   },
 });

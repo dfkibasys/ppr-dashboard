@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import * as mxgraph from 'mxgraph';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -79,7 +79,7 @@ import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
 
 const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'PackML',
   data() {
     return {

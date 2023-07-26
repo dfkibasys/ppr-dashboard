@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import { Data, Methods, Computed, Props } from '@/interfaces/IDeletionWarning';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'DeletionWarning',
 });
 </script>
