@@ -64,7 +64,9 @@ describe('The assets page', () => {
     cy.get('.dropdown-item.active').should('contain', 'Ascending ID Short');
 
     // Search field exists
-    cy.get('.form-control').invoke('attr', 'placeholder').should('contain', 'Search');
+    cy.get('#search-field > .form-control')
+      .invoke('attr', 'placeholder')
+      .should('contain', 'Search');
   });
 
   it('loads assets', () => {
@@ -139,7 +141,7 @@ describe('The assets page', () => {
 
   it('searches for assets', () => {
     // Search for 'Baxter' assets
-    cy.get('.form-control').type('ax');
+    cy.get('#search-field > .form-control').type('ax');
     cy.wait(['@page0DESC', '@getIdSubmodel', '@defaultAsset']);
 
     // Correct amount of loaded assets

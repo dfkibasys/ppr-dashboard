@@ -26,6 +26,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       vue: '@vue/compat',
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
     },
   },
   define: {

@@ -1,8 +1,8 @@
 <template>
-  <div class="input-group m-2 w-25">
+  <div class="input-group m-2 w-25" id="search-field">
     <input
       type="text"
-      :value="value"
+      :value="modelValue"
       class="form-control"
       @input="handleInputEvent"
       :placeholder="$t('search')"
@@ -20,11 +20,14 @@ import { Data, Methods, Computed, Props } from '@/interfaces/ISearchField';
 export default defineComponent({
   name: 'SearchField',
 
+  //TODO: Remove later
+  compatConfig: { MODE: 3 },
+
   props: {
     /**
      * Used primarly here to provide v-model support
      */
-    value: { type: String, default: '' },
+    modelValue: { type: String, default: '' },
     /**
      * Length of time to wait before emitting the input value.
      */
@@ -42,12 +45,12 @@ export default defineComponent({
       if (this.delayInput > 0) {
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-          this.$emit('input', $event.target.value);
+          this.$emit('update:modelValue', $event.target.value);
         }, this.delayInput * 1000);
         return;
       }
 
-      this.$emit('input', $event.target.value);
+      this.$emit('update:modelValue', $event.target.value);
     },
   },
 });

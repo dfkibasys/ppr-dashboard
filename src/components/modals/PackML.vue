@@ -192,7 +192,6 @@ export default defineComponent({
       }
     },
     clear: function () {
-      console.log('clearing');
       this.xmlLoaded = false;
     },
     setModeButton: function () {
