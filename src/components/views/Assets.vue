@@ -1,16 +1,31 @@
 <template>
   <div>
     <div class="d-flex flex-row justify-content-center">
-      <b-dropdown id="sort-dropdown" :text="$t(sortOptions[activeSort].text)" class="m-2">
-        <b-dropdown-item
-          v-for="(option, index) in sortOptions"
-          :key="option.text"
-          :active="index === activeSort"
-          @click="setOrder(index)"
+      <div class="dropdown" id="sort-dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle m-2"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-          {{ $t(option.text) }}
-        </b-dropdown-item>
-      </b-dropdown>
+          {{ $t(sortOptions[activeSort].text) }}
+        </button>
+        <ul class="dropdown-menu">
+          <li
+            ><a
+              class="dropdown-item"
+              href="#"
+              v-for="(option, index) in sortOptions"
+              :key="option.text"
+              :class="{ active: index === activeSort }"
+              @click="setOrder(index)"
+              >{{ $t(option.text) }}</a
+            ></li
+          >
+        </ul>
+      </div>
+
       <search-field :delay-input="0.2" v-model="search"></search-field>
     </div>
     <div class="scrollable" :id="containerId">
@@ -20,12 +35,15 @@
             <h5 class="card-title"
               ><a target="_blank" :href="asset.aasEndpoint">{{ asset.idShort }}</a></h5
             >
-            <b-button
+            <button
+              type="button"
+              class="btn btn-primary float-end"
               v-if="asset.EXMODE"
               @click="openPackML(asset.aasId)"
-              class="float-right"
-              :variant="buttonVariant(asset)"
-              >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</b-button
+              data-bs-toggle="modal"
+              data-bs-target="#modal-pack"
+              :class="buttonVariant(asset)"
+              >{{ asset.EXMODE }} - {{ asset.OPMODE }} ({{ asset.EXST }})</button
             >
           </div>
           <div class="card-body">
@@ -57,9 +75,14 @@
           </div>
         </div>
       </div>
-      <b-button v-if="hasMoreAssets" class="mt-2 mx-auto d-block" @click="loadMore()">
+      <button
+        type="button"
+        v-if="hasMoreAssets"
+        class="btn btn-secondary mt-2 mx-auto d-block"
+        @click="loadMore()"
+      >
         {{ $t('button.loadMore') }}
-      </b-button>
+      </button>
     </div>
 
     <PackML :opened-asset-id="openedAssetId"></PackML>
@@ -118,16 +141,15 @@ export default defineComponent({
     }),
     openPackML: function (aasId) {
       this.openedAssetId = aasId;
-      this.$bvModal.show('modal-pack');
     },
     buttonVariant: function (asset) {
       if (asset.EXMODE === 'SIMULATE') {
-        return 'secondary';
+        return 'btn-secondary';
       } else if (asset.EXMODE === 'AUTO') {
         if (asset.ERRCODE === 0) {
-          return 'info';
+          return 'btn-info';
         } else {
-          return 'warning';
+          return 'btn-warning';
         }
       }
 

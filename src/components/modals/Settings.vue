@@ -1,56 +1,82 @@
 <template>
-  <b-modal id="modal-settings" ref="modal" size="lg" centered :title="$t('modal.settings.title')">
-    <b-container>
-      <b-row>
-        <b-col>{{ $t('modal.settings.language') }}:</b-col>
-        <b-col cols="9">
-          <b-form-select v-model="$i18n.locale" :options="langs"></b-form-select>
-        </b-col>
-        <div class="w-100"></div>
-        <b-col>Registry URL:</b-col>
-        <b-col class="rest" cols="9">
-          <input class="form-control" v-model="registryUrl" />
-          <button type="button" class="btn btn-success" @click="changeREGISTRYdata">{{
-            $t('modal.settings.change')
-          }}</button>
-        </b-col>
-        <div class="w-100"></div>
-        <b-col>Broker URL:</b-col>
-        <b-col class="rest" cols="9">
-          <input class="form-control" v-model="mqttUrl" />
-          <button type="button" class="btn btn-success" @click="changeMQTTdata">{{
-            $t('modal.settings.change')
-          }}</button>
-        </b-col>
-        <!-- <div class="w-100"></div>
-        <b-col
+  <div class="modal modal-lg fade" id="modal-settings" ref="settingsModalRef">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ $t('modal.settings.title') }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col">{{ $t('modal.settings.language') }}:</div>
+              <div class="col-9">
+                <select class="form-select" v-model="$i18n.locale">
+                  <option v-for="option in langs" :value="option.value" :key="option.value">{{
+                    option.text
+                  }}</option>
+                </select>
+              </div>
+              <div class="w-100"></div>
+              <div class="col">Registry URL:</div>
+              <div class="col-9 rest">
+                <input class="form-control" v-model="registryUrl" />
+                <button type="button" class="btn btn-success" @click="changeREGISTRYdata">{{
+                  $t('modal.settings.change')
+                }}</button>
+              </div>
+              <div class="w-100"></div>
+              <div class="col">Broker URL:</div>
+              <div class="col-9 rest">
+                <input class="form-control" v-model="mqttUrl" />
+                <button type="button" class="btn btn-success" @click="changeMQTTdata">{{
+                  $t('modal.settings.change')
+                }}</button>
+              </div>
+              <!-- <div class="w-100"></div>
+        <div class="col"
           >{{ $t('modal.settings.mockObjects') }}
           <b-icon-info-circle-fill
             v-b-popover.hover.right="$t('modal.settings.info')"
           ></b-icon-info-circle-fill
-          >:</b-col
+          >:</div
         >
-        <b-col cols="9">
+        <div class="col-9">
           <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
-        </b-col> -->
-        <div class="w-100"></div>
-        <b-col>Camunda URL:</b-col>
-        <b-col class="rest" cols="9">
-          <input class="form-control" v-model="camundaUrl" />
-        </b-col>
-        <div class="w-100"></div>
-        <b-col></b-col>
-        <b-col cols="9">
-          <button type="button" class="btn btn-info float-right" v-b-modal.modal-licences>
-            <b-icon-question font-scale="2" />
-          </button>
-        </b-col>
-      </b-row>
-    </b-container>
-    <template v-slot:modal-footer="{ cancel }">
-      <b-button variant="secondary" @click="cancel">{{ $t('modal.close') }}</b-button>
-    </template>
-  </b-modal>
+        </div> -->
+              <div class="w-100"></div>
+              <div class="col">Camunda URL:</div>
+              <div class="col-9 rest">
+                <input class="form-control" v-model="camundaUrl" />
+              </div>
+              <div class="w-100"></div>
+              <div class="col"></div>
+              <div class="col-9">
+                <button
+                  type="button"
+                  class="btn btn-info float-end"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-licences"
+                >
+                  <i class="bi bi-question"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
+              $t('modal.close')
+            }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

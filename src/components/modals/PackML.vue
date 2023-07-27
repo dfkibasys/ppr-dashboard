@@ -1,73 +1,88 @@
 <template>
-  <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
-    <template v-slot:modal-header>
-      <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
+  <div class="modal modal-lg fade" id="modal-pack" ref="packModalRef">
+    <!--<b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
+          <div>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm me-1"
+              @click="stopButton"
+              :disabled="!isAuthorized"
+              >Stop</button
+            >
+            <button class="btn btn-warning btn-sm" @click="resetButton" :disabled="!isAuthorized"
+              >Reset</button
+            >
+          </div>
 
-      <div>
-        <b-button
-          variant="danger"
-          size="sm"
-          class="m-1"
-          @click="stopButton"
-          :disabled="!isAuthorized"
-          >Stop</b-button
-        >
-        <b-button variant="warning" size="sm" @click="resetButton" :disabled="!isAuthorized"
-          >Reset</b-button
-        >
-      </div>
+          <div class="btn-group my-1" role="group">
+            <span v-for="option in options" :key="option.value">
+              <input
+                type="radio"
+                :value="option.value"
+                class="btn-check"
+                v-model="selected"
+                name="btnradio"
+                :id="option.value"
+                :disabled="!isAuthorized"
+                :checked="selected === option.value"
+                @change="modeButton(option.value)"
+              />
+              <label class="btn btn-outline-info btn-sm" :for="option.value">{{
+                option.text
+              }}</label>
+            </span>
+          </div>
+        </div>
 
-      <b-form-group>
-        <b-form-radio-group
-          button-variant="info"
-          id="btn-radios-1"
-          v-model="selected"
-          :options="options"
-          buttons
-          name="radios-btn-default"
-          @change="modeButton"
-          :disabled="!isAuthorized"
-          class="my-1"
-          size="sm"
-        ></b-form-radio-group>
-      </b-form-group>
-    </template>
+        <div class="modal-body">
+          <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
 
-    <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
-
-    <template v-slot:modal-footer="{ cancel }">
-      <div class="mr-auto">
-        <span class="mr-1">{{ $t('modal.packML.occupationState') }}: {{ asset.OCCST }}</span>
-        <span v-if="asset.OCCST !== 'FREE'" class="mr-2">({{ asset.OCCUPIER }})</span>
-        <span v-if="isAuthorized">
-          <b-button v-if="asset.OCCST === 'FREE'" variant="info" size="sm" @click="occupyButton"
-            >Occupy ({{ currentUser }})</b-button
-          >
-          <b-button
-            v-if="
-              (asset.OCCST === 'PRIORITY' || asset.OCCST === 'OCCUPIED') &&
-              asset.OCCUPIER === currentUser
-            "
-            variant="info"
-            size="sm"
-            @click="freeButton"
-            >Free ({{ currentUser }})</b-button
-          >
-          <b-button
-            v-if="asset.OCCST === 'OCCUPIED' && asset.OCCUPIER !== currentUser"
-            variant="info"
-            size="sm"
-            @click="prioButton"
-            >Prio ({{ currentUser }})</b-button
-          >
-        </span>
-      </div>
-      <div class="mr-auto">
-        <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset.OPMODE }}</span>
-      </div>
-      <b-button @click="cancel" size="sm" variant="secondary">{{ $t('modal.close') }}</b-button>
-    </template>
-  </b-modal>
+          <div class="modal-footer">
+            <div class="me-auto">
+              <span class="me-1">{{ $t('modal.packML.occupationState') }}: {{ asset?.OCCST }}</span>
+              <span v-if="asset?.OCCST !== 'FREE'" class="mr-2">({{ asset?.OCCUPIER }})</span>
+              <span v-if="isAuthorized">
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  v-if="asset?.OCCST === 'FREE'"
+                  @click="occupyButton"
+                  >Occupy ({{ currentUser }})</button
+                >
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  v-if="
+                    (asset?.OCCST === 'PRIORITY' || asset?.OCCST === 'OCCUPIED') &&
+                    asset?.OCCUPIER === currentUser
+                  "
+                  @click="freeButton"
+                  >Free ({{ currentUser }})</button
+                >
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  v-if="asset?.OCCST === 'OCCUPIED' && asset?.OCCUPIER !== currentUser"
+                  @click="prioButton"
+                  >Prio ({{ currentUser }})</button
+                >
+              </span>
+            </div>
+            <div class="mr-auto">
+              <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset?.OPMODE }}</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">{{
+              $t('modal.close')
+            }}</button>
+          </div>
+        </div></div
+      ></div
+    >
+  </div>
 </template>
 
 <script lang="ts">
@@ -177,6 +192,7 @@ export default defineComponent({
       }
     },
     clear: function () {
+      console.log('clearing');
       this.xmlLoaded = false;
     },
     setModeButton: function () {
@@ -293,6 +309,18 @@ export default defineComponent({
         }
       },
     },
+  },
+  mounted() {
+    const PackModal = document.getElementById('modal-pack');
+    PackModal?.addEventListener('shown.bs.modal', this.initGraph);
+    PackModal?.addEventListener('hide.bs.modal', this.clear);
+  },
+
+  beforeUnmount() {
+    //TODO: Should also be executed when modal is hidden
+    const PackModal = document.getElementById('modal-pack');
+    PackModal?.removeEventListener('shown.bs.modal', this.initGraph);
+    PackModal?.removeEventListener('hide.bs.modal', this.clear);
   },
 });
 </script>

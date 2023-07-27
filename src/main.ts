@@ -5,12 +5,17 @@ import { createRouter } from '@/router';
 import { createStore } from '@/store';
 import mqtt from '@/mqtt';
 import Axios from 'axios';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { createI18n } from 'vue-i18n';
 import messages from '@/lang';
 import VueProgressBar from 'vue-progressbar';
+
+//Bootstrap
+// Import our custom CSS
+import './scss/styles.scss';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import '@popperjs/core';
+import 'bootstrap';
 
 //Options
 Axios.defaults.timeout = 4000;
@@ -45,8 +50,6 @@ const app = createApp(App);
 app.config.globalProperties.$mqtt = mqtt;
 
 //Usage
-app.use(BootstrapVue);
-app.use(IconsPlugin);
 app.use(i18n);
 app.use(store);
 app.use(router);

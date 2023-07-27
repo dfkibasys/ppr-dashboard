@@ -1,44 +1,62 @@
 <template>
-  <b-modal id="modal-login" ref="modal" size="sm" :title="$t('modal.login.title')">
-    <b-input-group class="mb-2">
-      <b-input-group-prepend>
-        <b-icon-person font-scale="2" />
-      </b-input-group-prepend>
-      <b-form-input
-        id="input-username"
-        :placeholder="$t('modal.login.username')"
-        v-model="user"
-        :state="userState"
-        required
-      />
-    </b-input-group>
+  <div class="modal fade" id="modal-login" ref="modalRef" size="sm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ $t('modal.login.title') }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-2">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': invalid }"
+              id="input-username"
+              :placeholder="$t('modal.login.username')"
+              v-model="user"
+              required
+            />
+          </div>
 
-    <b-input-group>
-      <b-input-group-prepend>
-        <b-icon-lock font-scale="2" />
-      </b-input-group-prepend>
-      <b-form-input
-        id="input-password"
-        :placeholder="$t('modal.login.password')"
-        type="password"
-        v-model="password"
-        :state="passwordState"
-        required
-      />
-      <b-form-invalid-feedback id="input-password-feedback">
-        {{ $t('modal.login.feedback') }}
-      </b-form-invalid-feedback>
-    </b-input-group>
-
-    <template #modal-footer="{ cancel }">
-      <b-button @click="cancel">{{ $t('modal.cancel') }}</b-button>
-      <b-button variant="primary" @click="login">{{ $t('modal.login.login') }}</b-button>
-    </template>
-  </b-modal>
+          <div class="input-group mb-2">
+            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+            <input
+              type="password"
+              class="form-control"
+              :class="{ 'is-invalid': invalid }"
+              id="input-password"
+              :placeholder="$t('modal.login.password')"
+              v-model="password"
+              required
+            />
+            <div class="invalid-feedback" id="input-password-feedback">
+              {{ $t('modal.login.feedback') }}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
+            $t('modal.cancel')
+          }}</button>
+          <button type="button" class="btn btn-primary" @click="login">{{
+            $t('modal.login.login')
+          }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { Modal } from 'bootstrap';
 import { Data, Methods, Computed, Props } from '@/interfaces/ILogin';
 
 export default defineComponent({
@@ -47,8 +65,7 @@ export default defineComponent({
     return {
       user: '',
       password: '',
-      userState: null,
-      passwordState: null,
+      invalid: false,
     };
   },
   methods: {
@@ -56,17 +73,20 @@ export default defineComponent({
       this.$store
         .dispatch('users/loginUser', { user: this.user, password: this.password })
         .then(() => {
-          this.userState = null;
-          this.passwordState = null;
+          this.invalid = false;
           console.log(`Login accepted`);
-          this.$bvModal.hide('modal-login');
+          this.closeModal();
         })
         .catch(() => {
-          this.userState = false;
-          this.passwordState = false;
+          this.invalid = true;
           console.log(`Login denied`);
         });
     },
+  },
+  setup() {
+    const modalRef = ref(null);
+    const closeModal = () => Modal.getInstance(modalRef.value)?.hide();
+    return { modalRef, closeModal };
   },
 });
 </script>

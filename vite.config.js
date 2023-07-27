@@ -25,6 +25,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       vue: '@vue/compat',
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     },
   },
   define: {

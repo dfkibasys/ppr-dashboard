@@ -7,11 +7,9 @@
       @input="handleInputEvent"
       :placeholder="$t('search')"
     />
-    <div class="input-group-append">
-      <span class="input-group-text">
-        <b-icon-search></b-icon-search>
-      </span>
-    </div>
+    <span class="input-group-text">
+      <i class="bi bi-search"></i>
+    </span>
   </div>
 </template>
 
