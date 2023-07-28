@@ -1,6 +1,6 @@
 export enum VarType {
   Placeholder = 'Type',
-  Boolean = 'boolean',
+  Boolean = 'Boolean',
   String = 'String',
   Long = 'Long',
 }

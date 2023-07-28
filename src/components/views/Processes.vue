@@ -1,45 +1,49 @@
 <template>
-  <b-container>
-    <b-breadcrumb :items="bcItems"></b-breadcrumb>
+  <div class="container">
+    <breadcrumb :items="bcItems"></breadcrumb>
     <h2>{{ $t('process.deployed') }}</h2>
-    <b-row class="pb-5">
-      <b-col>
+    <div class="row pb-5">
+      <div class="col">
         <span>{{ $t('process.processDefinition', processDefinitionsCount) }}</span>
         <h3>{{ processDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
+      </div>
+      <div class="col">
         <span>{{ $t('process.decisionDefinition', decisionDefinitionsCount) }}</span>
         <h3>{{ decisionDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
+      </div>
+      <div class="col">
         <span>{{ $t('process.caseDefinition', caseDefinitionsCount) }}</span>
         <h3>{{ caseDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
+      </div>
+      <div class="col">
         <span>{{ $t('process.deployment', deploymentsCount) }}</span>
         <h3>{{ deploymentsCount }}</h3>
-      </b-col>
-    </b-row>
-    <b-row class="pt-5">
-      <b-col>
+      </div>
+    </div>
+    <div class="row pt-5">
+      <div class="col">
         <h2>{{ $t('process.processDefinition', processDefinitionsCount) }}</h2>
-        <b-table
-          hover
-          striped
-          @row-clicked="goToProcessView"
-          :items="processDefinitions"
-          :fields="fields"
-          class="clickable-table"
-        >
-          <template v-slot:head(instances)>{{ $t('process.instances') }}</template>
-          <template v-slot:head(name)>{{ $t('process.name') }}</template>
-          <template v-slot:head(key)>{{ $t('process.key') }}</template>
-          <template v-slot:head(tenantId)>{{ $t('process.tenantId') }}</template>
-          <template v-slot:cell(tenantId)="value">{{ value.item.tenantId || '-' }}</template>
-        </b-table>
-      </b-col>
-    </b-row>
-  </b-container>
+        <table class="table table-striped table-hover clickable-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ $t('process.instances') }}</th>
+              <th scope="col">{{ $t('process.name') }}</th>
+              <th scope="col">{{ $t('process.key') }}</th>
+              <th scope="col">{{ $t('process.tenantId') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="def in processDefinitions" :key="def.key" @click="goToProcessView(def)">
+              <td>{{ def.instances }}</td>
+              <td>{{ def.name }}</td>
+              <td>{{ def.key }}</td>
+              <td>{{ def.tenantId || '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -47,8 +51,10 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcesses';
 import getEnv from '@/helpers/env';
+import Breadcrumb from '@/components/common/Breadcrumb.vue';
 
 export default defineComponent({
+  components: { Breadcrumb },
   name: 'Processes',
   data() {
     return {
@@ -64,7 +70,6 @@ export default defineComponent({
       caseDefinitionsCount: 0,
       deploymentsCount: 0,
       processDefinitions: [],
-      fields: ['instances', 'name', 'key', 'tenantId'],
     };
   },
   methods: {

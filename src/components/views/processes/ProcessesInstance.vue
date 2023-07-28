@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <b-breadcrumb :items="bcItems"></b-breadcrumb>
+    <breadcrumb :items="bcItems"></breadcrumb>
     <b-row class="pb-2 container-top">
       <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
@@ -131,11 +131,13 @@ import { mapGetters } from 'vuex';
 import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
+import Breadcrumb from '@/components/common/Breadcrumb.vue';
 
 export default defineComponent({
   name: 'ProcessesInstance',
   components: {
     BpmnDisplay,
+    Breadcrumb,
   },
   computed: {
     ...mapGetters('endpoints', {

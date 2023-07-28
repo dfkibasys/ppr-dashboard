@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["types"],
     "noImplicitAny": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitThis": false
   }
 }
