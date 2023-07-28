@@ -138,15 +138,15 @@
                     ></td
                   >
                 </tr>
-                <div v-if="processInstances.length === 0">{{
-                  $t('process.emptyProcessInstancesMessage')
-                }}</div>
+                <tr v-if="processInstances.length === 0">
+                  <td colspan="4">{{ $t('process.emptyProcessInstancesMessage') }}</td>
+                </tr>
               </tbody>
             </table>
           </div>
 
           <div class="tab-pane fade" id="audit">
-            <table class="table table-striped table-hover clickable-table" id="audit-table">
+            <table class="table table-striped table-hover" id="audit-table">
               <thead>
                 <tr>
                   <th scope="col">{{ $t('process.state') }}</th>
@@ -173,7 +173,9 @@
                   <td>{{ moment(audit.endTime) }}</td>
                   <td>{{ audit.activityId || '-' }}</td>
                 </tr>
-                <div v-if="auditLog.length === 0">{{ $t('process.emptyLogDataMessage') }}</div>
+                <tr v-if="auditLog.length === 0">
+                  <td colspan="6">{{ $t('process.emptyLogDataMessage') }}</td>
+                </tr>
               </tbody>
             </table>
           </div>
