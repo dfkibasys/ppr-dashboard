@@ -438,6 +438,9 @@ export default defineComponent({
               overlays.remove(o);
             });
 
+            //Clear after usage
+            that.overlaysArr = [];
+
             //Activity instances
 
             //Detection of completed process instances
@@ -466,7 +469,7 @@ export default defineComponent({
                   bottom: 0,
                   left: 0,
                 },
-                html: `<span class="badge badge-pill badge-primary">${activityIdsCount[id]}</span>`,
+                html: `<span class="badge rounded-pill bg-primary">${activityIdsCount[id]}</span>`,
               });
               that.overlaysArr.push(oID);
             }
@@ -487,7 +490,7 @@ export default defineComponent({
                   bottom: 0,
                   left: 30,
                 },
-                html: `<span class="badge badge-pill badge-danger">${incidentIdsCount[id]}</span>`,
+                html: `<span class="badge rounded-pill bg-danger">${incidentIdsCount[id]}</span>`,
               });
               that.overlaysArr.push(oID);
             }

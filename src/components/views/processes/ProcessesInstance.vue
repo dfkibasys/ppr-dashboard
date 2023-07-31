@@ -314,6 +314,9 @@ export default defineComponent({
               overlays.remove(o);
             });
 
+            //Clear after usage
+            that.overlaysArr = [];
+
             //ais
             ais.data.forEach((val: any) => {
               let oID = overlays.add(val.activityId, {
@@ -321,7 +324,7 @@ export default defineComponent({
                   bottom: 0,
                   left: 0,
                 },
-                html: '<span class="badge badge-pill badge-primary">1</span>',
+                html: '<span class="badge rounded-pill bg-primary">1</span>',
               });
               that.overlaysArr.push(oID);
             });
@@ -333,7 +336,7 @@ export default defineComponent({
                   bottom: 0,
                   left: 30,
                 },
-                html: '<span class="badge badge-pill badge-danger">1</span>',
+                html: '<span class="badge rounded-pill bg-danger">1</span>',
               });
               that.overlaysArr.push(oID);
             });
