@@ -346,7 +346,7 @@ export default defineComponent({
           })
         )
         .catch((err) => {
-          //this.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -410,7 +410,7 @@ export default defineComponent({
     },
   },
   created() {
-    //this.$Progress.start();
+    this.$Progress.start();
 
     Promise.all([
       this.fetchLeftDetails(this.$route.params.iid, this.$route.params.pid),
@@ -418,11 +418,11 @@ export default defineComponent({
       this.fetchTabContent(),
     ])
       .then(() => {
-        //this.$Progress.finish();
+        this.$Progress.finish();
       })
       .catch((err) => {
         console.error(err);
-        //this.$Progress.fail();
+        this.$Progress.fail();
       });
   },
   beforeUnmount() {

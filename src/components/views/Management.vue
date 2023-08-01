@@ -55,12 +55,12 @@ export default defineComponent({
         : `NEEDS_TO_BE_SET/services/registry/MANAGEMENT_COMPONENT`;
       let management = [];
 
-      //this.$Progress.start();
+      this.$Progress.start();
 
       axios
         .get(man_url)
         .then((man) => {
-          //this.$Progress.finish();
+          this.$Progress.finish();
           //management
           management = man.data.map((val: any) => {
             // return element to new Array
@@ -75,7 +75,7 @@ export default defineComponent({
           that.managements = management;
         })
         .catch((err) => {
-          //this.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },

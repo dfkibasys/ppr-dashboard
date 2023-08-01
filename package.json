@@ -14,6 +14,7 @@
     "test": "npm run dev & cypress run"
   },
   "dependencies": {
+    "@aacassandra/vue3-progressbar": "^1.0.3",
     "@basys/aas-registry-client-ts-fetch": "^0.4.2-SNAPSHOT.202210262111",
     "@popperjs/core": "^2.11.8",
     "@vue/compat": "^3.1.0",
@@ -29,7 +30,6 @@
     "uuid": "^7.0.3",
     "vue": "^3.1.0",
     "vue-i18n": "^9.2.2",
-    "vue-progressbar": "^0.7.5",
     "vue-router": "^4.2.4",
     "vuex": "^4.1.0"
   },

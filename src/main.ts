@@ -7,7 +7,7 @@ import mqtt from '@/mqtt';
 import Axios from 'axios';
 import { createI18n } from 'vue-i18n';
 import messages from '@/lang';
-import VueProgressBar from 'vue-progressbar';
+import VueProgressBar from '@aacassandra/vue3-progressbar';
 
 //Bootstrap
 // Import our custom CSS
@@ -53,6 +53,6 @@ app.config.globalProperties.$mqtt = mqtt;
 app.use(i18n);
 app.use(store);
 app.use(router);
-//app.use(VueProgressBar, ProgressBarOptions);
+app.use(VueProgressBar, ProgressBarOptions);
 
 app.mount('#app');

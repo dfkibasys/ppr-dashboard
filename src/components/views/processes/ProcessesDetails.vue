@@ -301,7 +301,7 @@ export default defineComponent({
         });
     },
     fetchAllData() {
-      //this.$Progress.start();
+      this.$Progress.start();
 
       Promise.all([
         this.fetchLeftDetails(this.$route.params.pid),
@@ -309,11 +309,11 @@ export default defineComponent({
         this.fetchBPMN(this.$route.params.pid),
       ])
         .then(() => {
-          //this.$Progress.finish();
+          this.$Progress.finish();
         })
         .catch((err) => {
           console.error(err);
-          //this.$Progress.fail();
+          this.$Progress.fail();
         });
     },
     fetchLeftDetails(id) {
@@ -499,7 +499,7 @@ export default defineComponent({
           })
         )
         .catch((err) => {
-          //this.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
@@ -516,7 +516,7 @@ export default defineComponent({
           that.processDefinition.instances--;
         })
         .catch((err) => {
-          //this.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },

@@ -102,7 +102,7 @@ const actions: ActionTree<AssetsState, RootState> = {
     let assets: any = [];
     let totalAssets: number = 0;
 
-    //vm.$Progress.start();
+    vm.$Progress.start();
 
     api
       .searchShellDescriptors(body)
@@ -143,7 +143,7 @@ const actions: ActionTree<AssetsState, RootState> = {
       })
       .catch((error) => {
         console.error(error);
-        //vm.$Progress.fail();
+        vm.$Progress.fail();
       })
       .finally(() => {
         commit('setAssets', { assets, totalAssets, purge });
@@ -170,7 +170,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .catch((err) => {
           console.error(err.message);
-          //vm.$Progress.fail();
+          vm.$Progress.fail();
         })
         .finally(() => {
           commit('setAssetIDShort', { aasID: asset.aasId, idShort });
@@ -199,10 +199,10 @@ const actions: ActionTree<AssetsState, RootState> = {
         })
         .catch((err) => {
           console.error(err.message, asset);
-          //vm.$Progress.fail();
+          vm.$Progress.fail();
         })
         .finally(() => {
-          //vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
+          vm.$Progress.finish(); //TODO: finish only when fetchCCInterfaceSubmodels's finally was triggered too
           commit('addSubmodel', { aasID: asset.aasId, content: id });
         });
     });
@@ -241,7 +241,7 @@ const actions: ActionTree<AssetsState, RootState> = {
         )
         .catch((err) => {
           console.error(err.message);
-          //vm.$Progress.fail();
+          vm.$Progress.fail();
         })
         .finally(() => {
           commit('addSubmodel', { aasID: asset.aasId, content: cci });

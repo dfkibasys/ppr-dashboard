@@ -80,7 +80,7 @@ export default defineComponent({
   created() {
     let that = this;
     let baseUrl = getEnv('VITE_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
-    //this.$Progress.start();
+    this.$Progress.start();
 
     axios
       .all([
@@ -111,16 +111,16 @@ export default defineComponent({
                 pp['instances'] = res.data.count;
               })
               .catch((err) => {
-                //this.$Progress.fail();
+                this.$Progress.fail();
                 console.error(err);
               });
           });
 
-          //this.$Progress.finish();
+          this.$Progress.finish();
         })
       )
       .catch((err) => {
-        //this.$Progress.fail();
+        this.$Progress.fail();
         console.error(err);
       });
   },

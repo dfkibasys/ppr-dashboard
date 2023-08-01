@@ -55,12 +55,12 @@ export default defineComponent({
         : `NEEDS_TO_BE_SET/services/registry/SERVICE_COMPONENT`;
       let services = [];
 
-      //this.$Progress.start();
+      this.$Progress.start();
 
       axios
         .get(serv_url)
         .then((serv) => {
-          //this.$Progress.finish();
+          this.$Progress.finish();
           //services
           services = serv.data.map((val: any) => {
             // return element to new Array
@@ -75,7 +75,7 @@ export default defineComponent({
           that.services = services;
         })
         .catch((err) => {
-          //this.$Progress.fail();
+          this.$Progress.fail();
           console.error(err);
         });
     },
