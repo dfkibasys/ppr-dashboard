@@ -133,7 +133,7 @@
                     <button
                       type="button"
                       class="btn btn-danger"
-                      @click.stop="deleteProcessInstance(value.item.id)"
+                      @click.stop="deleteProcessInstance(instance.id)"
                       >{{ $t('process.delete') }}</button
                     ></td
                   >

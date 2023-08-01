@@ -109,9 +109,9 @@ describe('The processes page', () => {
   it('allows process instance creation', () => {
     cy.interceptProcessDefinition();
 
-    cy.get('button').contains('Create').click();
+    cy.get('.tab-pane.active').contains('Create').click();
 
-    cy.get('#businessKeyInput').type('randomKey');
+    cy.get('#input-business-key').type('randomKey');
 
     cy.get('.modal-footer').contains('Create').click();
 
@@ -132,7 +132,7 @@ describe('The processes page', () => {
     cy.get('.leftDetails').contains('Delete').click();
 
     // Modal should appear
-    cy.get('#modal-warning').should('contain', 'Are you sure?');
+    cy.get('#modal-warning.show').should('contain', 'Are you sure?');
 
     // Cancel deletion
     cy.get('#modal-warning').contains('Cancel').click();

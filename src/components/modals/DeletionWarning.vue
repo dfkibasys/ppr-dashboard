@@ -8,13 +8,9 @@
         <div class="modal-body">
           {{ $t('modal.deletionWarning.content') }}
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              @click="$emit('close')"
-              data-bs-dismiss="modal"
-              >{{ $t('modal.cancel') }}</button
-            >
+            <button type="button" class="btn btn-secondary" @click="$emit('close')">{{
+              $t('modal.cancel')
+            }}</button>
             <button type="button" class="btn btn-danger" @click="$emit('delete')">{{
               $t('modal.deletionWarning.delete')
             }}</button>
@@ -43,7 +39,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    const myModal = new Modal('#modal-warning');
+    const myModal = new Modal('#modal-warning', { backdrop: 'static', keyboard: false });
   },
 });
 </script>
