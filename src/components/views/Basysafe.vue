@@ -1,207 +1,314 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col sm="3">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
         <label label-for="btn-radios-estop">{{ $t('basysafe.estop') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-estop"
-          name="btn-radios-estop"
-          v-model="states.estopbutton"
-          buttons
-        >
-          <b-form-radio value="true" class="btn-success" @change="setEstopButtonState($event)">{{
-            $t('basysafe.estopReleased')
-          }}</b-form-radio>
-          <b-form-radio value="false" class="btn-danger" @change="setEstopButtonState($event)">{{
-            $t('basysafe.estopPressed')
-          }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-
-    <br />
-
-    <b-row>
-      <b-col sm="3">
-        <label>{{ $t('basysafe.safetylightcurtain') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-safetylightcurtain"
-          name="btn-radios-safetylightcurtain"
-          v-model="states.safetylightcurtain"
-          buttons
-        >
-          <b-form-radio
+      </div>
+      <div class="col">
+        <div id="btn-radios-estop" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="estop-1"
             value="true"
-            class="btn-success"
-            @change="setSafetyLightCurtainState($event)"
-            >{{ $t('basysafe.safetylightcurtainFree') }}</b-form-radio
-          >
-          <b-form-radio
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-estop"
+            @change="setEstopButtonState($event)"
+          />
+          <label class="btn btn-success" for="estop-1"> {{ $t('basysafe.estopReleased') }}</label>
+
+          <input
+            type="radio"
+            id="estop-2"
             value="false"
-            class="btn-danger"
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-estop"
+            @change="setEstopButtonState($event)"
+          />
+          <label class="btn btn-danger" for="estop-2">{{ $t('basysafe.estopPressed') }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
+        <label>{{ $t('basysafe.safetylightcurtain') }}</label>
+      </div>
+      <div class="col">
+        <div id="btn-radios-safetylightcurtain" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="safetylightcurtain-1"
+            value="true"
+            class="btn-check"
+            v-model="states.safetylightcurtain"
+            name="btn-radios-safetylightcurtain"
             @change="setSafetyLightCurtainState($event)"
-            >{{ $t('basysafe.safetylightcurtainDetection') }}</b-form-radio
+          />
+          <label class="btn btn-success" for="safetylightcurtain-1">
+            {{ $t('basysafe.safetylightcurtainFree') }}</label
           >
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
+
+          <input
+            type="radio"
+            id="essafetylightcurtaintop-2"
+            value="false"
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-safetylightcurtain"
+            @change="setSafetyLightCurtainState($event)"
+          />
+          <label class="btn btn-danger" for="safetylightcurtain-2">{{
+            $t('basysafe.safetylightcurtainDetection')
+          }}</label>
+        </div>
+      </div>
+    </div>
 
     <br />
 
-    <b-row>
-      <b-col sm="3">
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.initiator') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-initiator"
-          name="btn-radios-initiator"
-          v-model="states.initiator"
-          buttons
-        >
-          <b-form-radio value="false" @change="setInitiatorState($event)">{{
-            $t('basysafe.initiatorFree')
-          }}</b-form-radio>
-          <b-form-radio value="true" @change="setInitiatorState($event)">{{
+      </div>
+      <div class="col">
+        <div id="btn-radios-initiator" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="initiator-1"
+            value="false"
+            class="btn-check"
+            v-model="states.initiator"
+            name="btn-radios-initiator"
+            @change="setInitiatorState($event)"
+          />
+          <label class="btn btn-secondary" for="initiator-1">
+            {{ $t('basysafe.initiatorFree') }}</label
+          >
+
+          <input
+            type="radio"
+            id="initiator-2"
+            value="true"
+            class="btn-check"
+            v-model="states.initiator"
+            name="btn-radios-initiator"
+            @change="setInitiatorState($event)"
+          />
+          <label class="btn btn-secondary" for="initiator-2">{{
             $t('basysafe.initiatorOccupied')
-          }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
+          }}</label>
+        </div>
+      </div>
+    </div>
 
     <br />
 
-    <b-row>
-      <b-col sm="3">
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.ack') }}</label>
-      </b-col>
-      <b-col>
-        <b-button variant="info" @click="ackButton()">{{ $t('basysafe.ackPressed') }}</b-button>
-      </b-col>
-    </b-row>
+      </div>
+      <div class="col">
+        <button class="btn btn-info" @click="ackButton()">{{ $t('basysafe.ackPressed') }}</button>
+      </div>
+    </div>
 
     <br />
 
-    <b-row>
-      <b-col sm="3">
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.signalLights') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-signalcolumn.red"
-          name="btn-signalcolumn.red"
-          v-model="states.signalcolumn.red"
-          buttons
-        >
-          <b-form-radio value="false" class="btn-danger" @change="setSignalColumnState()">{{
-            $t('basysafe.lightOff')
-          }}</b-form-radio>
-          <b-form-radio value="true" class="btn-danger" @change="setSignalColumnState()">{{
+      </div>
+      <div class="col">
+        <div id="btn-radios-signalcolumn.red" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.red-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.red"
+            name="btn-radios-signalcolumn.red"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-danger" for="signalcolumn.red-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.red-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.red"
+            name="btn-radios-signalcolumn.red"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-danger" for="signalcolumn.red-2">{{
             $t('basysafe.lightOn')
-          }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-danger" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-        </b-form-radio-group>
+          }}</label>
+        </div>
         <br />
-        <b-form-radio-group
-          id="btn-signalcolumn.yellow"
-          name="btn-signalcolumn.yellow"
-          v-model="states.signalcolumn.yellow"
-          buttons
-        >
-          <b-form-radio value="false" class="btn-warning" @change="setSignalColumnState()">{{
-            $t('basysafe.lightOff')
-          }}</b-form-radio>
-          <b-form-radio value="true" class="btn-warning" @change="setSignalColumnState()">{{
+
+        <div id="btn-radios-signalcolumn.yellow" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.yellow-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-signalcolumn.yellow"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-warning" for="signalcolumn.yellow-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.yellow-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-signalcolumn.yellow"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-warning" for="signalcolumn.yellow-2">{{
             $t('basysafe.lightOn')
-          }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-warning" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-        </b-form-radio-group>
+          }}</label>
+        </div>
+
         <br />
-        <b-form-radio-group
-          id="btn-signalcolumn.white"
-          name="btn-signalcolumn.white"
-          v-model="states.signalcolumn.white"
-          buttons
-        >
-          <b-form-radio value="false" class="btn-light" @change="setSignalColumnState()">{{
-            $t('basysafe.lightOff')
-          }}</b-form-radio>
-          <b-form-radio value="true" class="btn-light" @change="setSignalColumnState()">{{
+        <div id="btn-radios-signalcolumn.white" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.white-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.white"
+            name="btn-radios-signalcolumn.white"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-light" for="signalcolumn.white-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.white-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.white"
+            name="btn-radios-signalcolumn.white"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-light" for="signalcolumn.white-2">{{
             $t('basysafe.lightOn')
-          }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-        </b-form-radio-group>
+          }}</label>
+        </div>
+
         <br />
-        <b-form-radio-group
-          id="btn-signalcolumn.green"
-          name="btn-signalcolumn.green"
-          v-model="states.signalcolumn.green"
-          buttons
-        >
-          <b-form-radio value="false" class="btn-success" @change="setSignalColumnState()">{{
-            $t('basysafe.lightOff')
-          }}</b-form-radio>
-          <b-form-radio value="true" class="btn-success" @change="setSignalColumnState()">{{
+
+        <div id="btn-radios-signalcolumn.green" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.green-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.green"
+            name="btn-radios-signalcolumn.green"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-success" for="signalcolumn.green-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.green-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.green"
+            name="btn-radios-signalcolumn.green"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-success" for="signalcolumn.green-2">{{
             $t('basysafe.lightOn')
-          }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
+          }}</label>
+        </div>
+      </div>
+    </div>
 
     <br />
 
-    <b-row>
-      <b-col sm="3">
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.press') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-press"
-          name="btn-radios-press"
-          v-model="states.press.opmode"
-          buttons
-        >
-          <b-form-radio value="retract" @change="simulateRetract()">{{
-            $t('basysafe.pressRetract')
-          }}</b-form-radio>
-          <b-form-radio value="press" @change="simulatePress()">{{
-            $t('basysafe.pressPress')
-          }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
+      </div>
+      <div class="col">
+        <div id="btn-radios-press" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="press-1"
+            value="retract"
+            class="btn-check"
+            v-model="states.press.opmode"
+            name="btn-radios-press"
+            @change="simulateRetract()"
+          />
+          <label class="btn btn-secondary" for="press-1"> {{ $t('basysafe.pressRetract') }}</label>
+
+          <input
+            type="radio"
+            id="press-2"
+            value="press"
+            class="btn-check"
+            v-model="states.press.opmode"
+            name="btn-radios-press"
+            @change="simulatePress()"
+          />
+          <label class="btn btn-secondary" for="press-2">{{ $t('basysafe.pressPress') }}</label>
+        </div>
+      </div>
+    </div>
 
     <br />
 
-    <b-row>
-      <b-col sm="3">
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.signalLightsYellowCommand') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group id="btn-radios-yellow-light" name="btn-radios-yellow-light" buttons>
-          <b-form-radio value="false" @change="setYellowLight($event)">{{
-            $t('basysafe.lightOff')
-          }}</b-form-radio>
-          <b-form-radio value="true" class="btn-warning" @change="setYellowLight($event)">{{
-            $t('basysafe.lightOn')
-          }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-  </b-container>
+      </div>
+      <div class="col">
+        <div id="btn-radios-yellow-light" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="yellow-light-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-yellow-light"
+            @change="setYellowLight($event)"
+          />
+          <label class="btn btn-secondary" for="yellow-light-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="yellow-light-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-yellow-light"
+            @change="setYellowLight($event)"
+          />
+          <label class="btn btn-warning" for="yellow-light-2">{{ $t('basysafe.lightOn') }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
