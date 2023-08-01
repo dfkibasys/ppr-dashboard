@@ -1,5 +1,3 @@
-import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import { RootState } from '@/interfaces/RootState';
 import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/interfaces/AssetsState';
 import axios from 'axios';
 
@@ -20,7 +18,7 @@ const state: AssetsState = {
   hasLoaded: false,
 };
 
-const getters: GetterTree<AssetsState, RootState> = {
+const getters = {
   /**
    * Get all assets
    *
@@ -62,7 +60,7 @@ const getters: GetterTree<AssetsState, RootState> = {
   getCurrentPage: (state) => state.currentPage,
 };
 
-const actions: ActionTree<AssetsState, RootState> = {
+const actions = {
   /**
    * Fetch paginated, sorted and filtered assets from registry
    *
@@ -250,7 +248,7 @@ const actions: ActionTree<AssetsState, RootState> = {
   },
 };
 
-const mutations: MutationTree<AssetsState> = {
+const mutations = {
   /**
    * Commit all assets to state
    *
@@ -332,7 +330,7 @@ const mutations: MutationTree<AssetsState> = {
   setCurrentPage: (state, page) => (state.currentPage = page),
 };
 
-export const assets: Module<AssetsState, RootState> = {
+export const assets = {
   namespaced: true,
   state,
   getters,

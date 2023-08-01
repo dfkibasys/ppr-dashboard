@@ -313,9 +313,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
-import { createLogger, mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IBasysafe';
 
 export default defineComponent({
   name: 'Basysafe',
@@ -371,7 +368,7 @@ export default defineComponent({
         this.$mqtt.publish(this.topics.statusAckButton, msg);
       }, 500);
     },
-    setEstopButtonState: function (state) {
+    setEstopButtonState: function (state: boolean) {
       console.log('setEstopButtonState: ' + state);
       var msg = {
         timestamp: new Date().toISOString(),
@@ -379,7 +376,7 @@ export default defineComponent({
       };
       this.$mqtt.publish(this.topics.statusEstopButton, msg);
     },
-    setSafetyLightCurtainState: function (state) {
+    setSafetyLightCurtainState: function (state: boolean) {
       console.log('setSafetyLightCurtainState: ' + state);
       var msg = {
         timestamp: new Date().toISOString(),
@@ -387,7 +384,7 @@ export default defineComponent({
       };
       this.$mqtt.publish(this.topics.statusSafetyLightCurtain, msg);
     },
-    setInitiatorState: function (state) {
+    setInitiatorState: function (state: boolean) {
       console.log('setInitiatorState: ' + state);
       var msg = {
         timestamp: new Date().toISOString(),
@@ -406,7 +403,7 @@ export default defineComponent({
       };
       this.$mqtt.publish(this.topics.statusSignalColumn, msg);
     },
-    setYellowLight: function (state) {
+    setYellowLight: function (state: boolean) {
       console.log('setYellowLight: ' + state);
       var msg = {
         timestamp: new Date().toISOString(),

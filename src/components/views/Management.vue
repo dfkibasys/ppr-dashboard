@@ -33,7 +33,6 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IManagement';
 
 export default defineComponent({
   name: 'Management',

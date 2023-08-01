@@ -12,6 +12,7 @@
     "typeRoots": ["types"],
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "isolatedModules": true
   }
 }

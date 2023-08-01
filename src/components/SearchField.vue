@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/ISearchField';
 
 export default defineComponent({
   name: 'SearchField',
@@ -36,7 +35,7 @@ export default defineComponent({
 
   data() {
     return {
-      timeout: null,
+      timeout: typeof setTimeout,
     };
   },
 

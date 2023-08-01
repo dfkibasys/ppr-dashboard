@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { Data, Methods, Computed, Props } from '@/interfaces/IProcesses';
+import { breadcrumbItem, processDefinition } from '@/interfaces/IProcesses';
 import getEnv from '@/helpers/env';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 
@@ -64,16 +64,16 @@ export default defineComponent({
           to: '/processes',
           active: true,
         },
-      ],
+      ] as breadcrumbItem[],
       processDefinitionsCount: 0,
       decisionDefinitionsCount: 0,
       caseDefinitionsCount: 0,
       deploymentsCount: 0,
-      processDefinitions: [],
+      processDefinitions: [] as processDefinition[],
     };
   },
   methods: {
-    goToProcessView(item) {
+    goToProcessView(item: processDefinition) {
       this.$router.push({ name: 'ProcessesDetails', params: { pid: item.id } });
     },
   },

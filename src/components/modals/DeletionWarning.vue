@@ -24,7 +24,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Modal } from 'bootstrap';
-import { Data, Methods, Computed, Props } from '@/interfaces/IDeletionWarning';
 
 export default defineComponent({
   name: 'DeletionWarning',

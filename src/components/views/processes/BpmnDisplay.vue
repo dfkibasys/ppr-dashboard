@@ -5,7 +5,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
-import { Data, Methods, Computed, Props } from '@/interfaces/IBpmnDisplay';
 
 export default defineComponent({
   name: 'bpmn-display',
@@ -70,7 +69,7 @@ export default defineComponent({
     },
   },
   methods: {
-    fetchDiagram: function (url) {
+    fetchDiagram: function (url: string) {
       let self = this;
 
       fetch(url)
@@ -87,7 +86,7 @@ export default defineComponent({
     getOverlays: function () {
       return this.bpmnViewer.get('overlays');
     },
-    addBaSysLogo: function (element) {
+    addBaSysLogo: function (element: any) {
       let self = this;
 
       if (

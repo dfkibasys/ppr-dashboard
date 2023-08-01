@@ -3,8 +3,8 @@
     <nav class="navbar navbar-light bg-light navbar-expand">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="@/assets/DFKI_Logo.png" class="me-3" height="40" alt />
-          <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" alt />
+          <img src="@/assets/DFKI_Logo.png" class="me-3" height="40" />
+          <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" />
         </a>
 
         <ul class="navbar-nav">
@@ -61,7 +61,6 @@ import { defineComponent } from 'vue';
 import Licences from '@/components/modals/Licences.vue';
 import Login from '@/components/modals/Login.vue';
 import Settings from '@/components/modals/Settings.vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/INavbar';
 
 export default defineComponent({
   name: 'Navbar',
@@ -71,10 +70,10 @@ export default defineComponent({
     Settings,
   },
   computed: {
-    user: function () {
+    user: function (): string {
       return this.$store.getters['users/currentUser'];
     },
-    authorized: function () {
+    authorized: function (): boolean {
       return this.$store.getters['users/isAuthorized'];
     },
   },

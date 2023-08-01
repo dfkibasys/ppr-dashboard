@@ -82,7 +82,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/ISettings';
+import { language } from '@/interfaces/ISettings';
 
 export default defineComponent({
   name: 'Settings',
@@ -91,7 +91,7 @@ export default defineComponent({
       langs: [
         { value: 'de', text: 'Deutsch' },
         { value: 'en', text: 'English' },
-      ],
+      ] as language[],
     };
   },
   watch: {

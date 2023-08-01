@@ -44,13 +44,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { Data, Methods, Computed, Props } from '@/interfaces/ILicences';
+import { Licence } from '@/interfaces/ILicences';
 
 export default defineComponent({
   name: 'Licences',
   data() {
     return {
-      licences: [],
+      licences: [] as Licence[],
     };
   },
   created() {

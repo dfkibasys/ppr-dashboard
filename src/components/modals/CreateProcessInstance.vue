@@ -110,14 +110,7 @@ import { Modal } from 'bootstrap';
 import axios from 'axios';
 import getEnv from '@/helpers/env';
 
-import {
-  Data,
-  Methods,
-  Computed,
-  Props,
-  VarType,
-  ProcessVariable,
-} from '@/interfaces/ICreateProcessInstance';
+import { VarType, ProcessVariable } from '@/interfaces/ICreateProcessInstance';
 
 export default defineComponent({
   name: 'CreateProcessInstance',
@@ -130,7 +123,7 @@ export default defineComponent({
     return {
       modalId: 'modal-instance',
       businessKey: '',
-      processVariables: [],
+      processVariables: [] as ProcessVariable[],
       processVariableID: 0,
       typeOptions: [VarType.Placeholder, VarType.Boolean, VarType.String, VarType.Long],
       boolOptions: ['true', 'false'],
@@ -153,7 +146,7 @@ export default defineComponent({
         value: '',
       });
     },
-    deleteVariable(id) {
+    deleteVariable(id: number) {
       this.processVariables = this.processVariables.filter((pv: ProcessVariable) => pv.id !== id);
     },
     createInstance() {

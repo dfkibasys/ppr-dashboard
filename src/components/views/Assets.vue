@@ -93,9 +93,9 @@
 import { defineComponent } from 'vue';
 import PackML from '@/components/modals/PackML.vue';
 import { mapGetters, mapActions } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IAssets';
 import { SortDirection, SortingPath } from '@basys/aas-registry-client-ts-fetch';
 import SearchField from '@/components/SearchField.vue';
+import { Asset } from '@/interfaces/AssetsState';
 
 export default defineComponent({
   name: 'Assets',
@@ -139,10 +139,10 @@ export default defineComponent({
     ...mapActions('assets', {
       fetchAssets: 'fetchAssets',
     }),
-    openPackML: function (aasId) {
+    openPackML: function (aasId: string) {
       this.openedAssetId = aasId;
     },
-    buttonVariant: function (asset) {
+    buttonVariant: function (asset: Asset) {
       if (asset.EXMODE === 'SIMULATE') {
         return 'btn-secondary';
       } else if (asset.EXMODE === 'AUTO') {
@@ -169,7 +169,7 @@ export default defineComponent({
       const sort = this.sortOptions[this.activeSort];
       this.$store.dispatch('assets/fetchAssets', { vm: this, purge, sort, search: this.search });
     },
-    setOrder: function (option) {
+    setOrder: function (option: number) {
       this.activeSort = option;
       this.loadAssets(true);
     },

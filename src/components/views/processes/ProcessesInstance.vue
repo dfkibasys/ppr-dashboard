@@ -112,7 +112,7 @@
                 </thead>
 
                 <tbody>
-                  <tr v-for="audit in auditLog" :key="audit.activityId">
+                  <tr v-for="audit in auditLog" :key="audit.id">
                     <td>{{ audit.activityName }}</td>
                     <td>{{ moment(audit.startTime) }}</td>
                     <td>{{ moment(audit.endTime) }}</td>
@@ -137,7 +137,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="variable in variables" :key="variable.name">
+                  <tr v-for="variable in variables" :key="variable.id">
                     <td>{{ variable.name }}</td>
                     <td>{{ variable.value || '-' }}</td>
                     <td>{{ variable.type || '-' }}</td>
@@ -159,10 +159,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="incident in incidents" :key="incident.name">
-                    <td>{{ variable.message }}</td>
-                    <td>{{ moment(variable.startTime) }}</td>
-                    <td>{{ variable.activityName }}</td>
+                  <tr v-for="incident in incidents" :key="incident.id">
+                    <td>{{ incident.message }}</td>
+                    <td>{{ moment(incident.startTime) }}</td>
+                    <td>{{ incident.activityName }}</td>
                   </tr>
                   <tr v-if="incidents.length === 0">
                     <td colspan="3">{{ $t('process.emptyIncidentsMessage') }}</td>
@@ -182,10 +182,17 @@ import { defineComponent } from 'vue';
 import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesInstance';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import {
+  auditLog,
+  breadcrumbItem,
+  incident,
+  processDefinition,
+  processInstance,
+  variable,
+} from '@/interfaces/IProcesses';
 
 export default defineComponent({
   name: 'ProcessesInstance',
@@ -219,17 +226,17 @@ export default defineComponent({
           to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`,
           active: true,
         },
-      ],
+      ] as breadcrumbItem[],
       updateInterval: 500,
       intervalRef: 0,
       overlaysArr: [],
-      processInstance: {},
-      processDefinition: {},
+      processInstance: {} as processInstance,
+      processDefinition: {} as processDefinition,
       processDefinitionXML: '',
       showLeftDetails: true,
-      auditLog: [],
-      variables: [],
-      incidents: [],
+      auditLog: [] as auditLog[],
+      variables: [] as variable[],
+      incidents: [] as incident[],
     };
   },
   methods: {
@@ -245,7 +252,7 @@ export default defineComponent({
     handleShown: function () {
       console.log('diagram shown');
     },
-    fetchLeftDetails(piid, pdid) {
+    fetchLeftDetails(piid: string, pdid: string) {
       let that = this;
 
       const fetchedDetails = function (resolve, reject) {
@@ -268,7 +275,7 @@ export default defineComponent({
       };
       return new Promise(fetchedDetails);
     },
-    fetchBPMN(id) {
+    fetchBPMN(id: string) {
       let that = this;
 
       const fetchedBPMN = function (resolve, reject) {

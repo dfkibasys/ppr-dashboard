@@ -57,7 +57,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { Modal } from 'bootstrap';
-import { Data, Methods, Computed, Props } from '@/interfaces/ILogin';
 
 export default defineComponent({
   name: 'Login',

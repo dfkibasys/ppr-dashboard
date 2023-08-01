@@ -1,7 +1,9 @@
-export interface Data {
-  licences: object[];
-  fields: string[];
+export interface Licence {
+  name: string;
+  version: string;
+  repository: string;
+  summary: string;
+  'from package.json': string;
+  'from license': string;
+  'from readme': string;
 }
-export interface Methods {}
-export interface Computed {}
-export interface Props {}

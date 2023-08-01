@@ -1,6 +1,4 @@
-import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import EndpointsState from '@/interfaces/EndpointsState';
-import { RootState } from '@/interfaces/RootState';
 import getEnv from '@/helpers/env';
 
 const state: EndpointsState = {
@@ -9,7 +7,7 @@ const state: EndpointsState = {
   REGISTRY_URL: getEnv('VITE_AAS_REGISTRY_URL'),
   mockData: false,
 };
-const getters: GetterTree<EndpointsState, RootState> = {
+const getters = {
   /**
    * Get current MQTT broker url
    * @param state
@@ -38,7 +36,7 @@ const getters: GetterTree<EndpointsState, RootState> = {
    */
   mockDataEnabled: (state) => state.mockData,
 };
-const mutations: MutationTree<EndpointsState> = {
+const mutations = {
   /**
    * commit MQTT broker to state
    *
@@ -75,9 +73,9 @@ const mutations: MutationTree<EndpointsState> = {
   switchMockDataState: (state, value: boolean) => (state.mockData = value),
 };
 
-const actions: ActionTree<EndpointsState, RootState> = {};
+const actions = {};
 
-export const endpoints: Module<EndpointsState, RootState> = {
+export const endpoints = {
   namespaced: true,
   state,
   getters,

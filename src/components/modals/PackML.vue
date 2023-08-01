@@ -90,7 +90,8 @@ import { defineComponent } from 'vue';
 import * as mxgraph from 'mxgraph';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
+import { options } from '@/interfaces/IPackML';
+import { Asset } from '@/interfaces/AssetsState';
 
 const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
@@ -107,7 +108,7 @@ export default defineComponent({
         { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
         //{ text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
         { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
-      ],
+      ] as options[],
     };
   },
   props: {
@@ -118,7 +119,7 @@ export default defineComponent({
       currentUser: 'currentUser',
       isAuthorized: 'isAuthorized',
     }),
-    asset() {
+    asset(): Asset {
       return this.$store.getters['assets/getAssetById'](this.openedAssetId);
     },
   },
@@ -168,7 +169,7 @@ export default defineComponent({
       }
       this.setModeButton();
     },
-    markCurrentState: function (state) {
+    markCurrentState: function (state: string) {
       let that = this;
 
       let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
@@ -239,7 +240,7 @@ export default defineComponent({
           }
         });
     },
-    modeButton: function (value) {
+    modeButton: function (value: string) {
       axios
         .post(
           `${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/${value}/invoke`,

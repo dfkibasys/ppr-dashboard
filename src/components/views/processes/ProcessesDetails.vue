@@ -192,10 +192,15 @@ import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue
 import DeletionWarning from '@/components/modals/DeletionWarning.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import {
+  auditLog,
+  breadcrumbItem,
+  processDefinition,
+  processInstance,
+} from '@/interfaces/IProcesses';
 
 export default defineComponent({
   name: 'ProcessesDetails',
@@ -226,16 +231,16 @@ export default defineComponent({
           to: `/processes/${this.$route.params.pid}`,
           active: true,
         },
-      ],
+      ] as breadcrumbItem[],
       updateInterval: 500,
       intervalRef: 0,
       showLeftDetails: true,
       currentVersionID: '',
-      versions: [],
-      processInstances: [],
-      processDefinition: {},
+      versions: [] as any, //TODO
+      processInstances: [] as processInstance[],
+      processDefinition: {} as processDefinition,
       processDefinitionXML: '',
-      auditLog: [],
+      auditLog: [] as auditLog[],
       overlaysArr: [],
       showDeleteModal: false,
     };
@@ -316,7 +321,7 @@ export default defineComponent({
           this.$Progress.fail();
         });
     },
-    fetchLeftDetails(id) {
+    fetchLeftDetails(id: string) {
       let that = this;
 
       const fetchedDetails = function (resolve, reject) {
@@ -360,7 +365,7 @@ export default defineComponent({
 
       return new Promise(fetchedDetails);
     },
-    fetchBPMN(id) {
+    fetchBPMN(id: string) {
       let that = this;
 
       const fetchedBPMN = function (resolve, reject) {
@@ -382,7 +387,7 @@ export default defineComponent({
 
       return new Promise(fetchedBPMN);
     },
-    fetchTabContent(id) {
+    fetchTabContent(id: string) {
       let that = this;
 
       const fetchedTabContent = function (resolve, reject) {
@@ -506,7 +511,7 @@ export default defineComponent({
     createProcessInstance() {
       this.$bvModal.show('modal-instance');
     },
-    deleteProcessInstance(id) {
+    deleteProcessInstance(id: string) {
       let that = this;
 
       axios
