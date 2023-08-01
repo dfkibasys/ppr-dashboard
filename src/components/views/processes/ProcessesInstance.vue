@@ -207,14 +207,17 @@ export default defineComponent({
         {
           text: this.$t('process.breadcrumb.overview'),
           to: '/processes',
+          active: false,
         },
         {
           text: this.$t('process.breadcrumb.definition'),
           to: `/processes/${this.$route.params.pid}`,
+          active: false,
         },
         {
           text: this.$t('process.breadcrumb.instance'),
           to: `/processes/${this.$route.params.pid}/instance/${this.$route.params.iid}`,
+          active: true,
         },
       ],
       updateInterval: 500,

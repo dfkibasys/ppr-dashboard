@@ -6,13 +6,14 @@
         v-for="item in items"
         :key="item.text"
         :class="{ active: item.active }"
-        ><router-link :to="item.to">{{ item.text }}</router-link></li
+        ><router-link :to="item.to" v-if="!item.active"> {{ item.text }}</router-link>
+        <span v-else>{{ item.text }}</span></li
       >
     </ol>
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Breadcrumb',
   props: {

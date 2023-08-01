@@ -1,4 +1,5 @@
-import { createRouter as _createRouter, createWebHistory } from 'vue-router';
+import { h } from 'vue';
+import { createRouter as _createRouter, createWebHistory, RouterView } from 'vue-router';
 import Assets from '@/components/views/Assets.vue';
 import Services from '@/components/views/Services.vue';
 import Management from '@/components/views/Management.vue';
@@ -32,19 +33,26 @@ export function createRouter() {
       },
       {
         path: '/processes',
-        name: 'Processes',
-        component: Processes,
+        component: { render: () => h(RouterView) },
+        children: [
+          {
+            path: '',
+            name: 'Processes',
+            component: Processes,
+          },
+          {
+            path: ':pid',
+            name: 'ProcessesDetails',
+            component: ProcessesDetails,
+          },
+          {
+            path: ':pid/instance/:iid',
+            name: 'ProcessesInstance',
+            component: ProcessesInstance,
+          },
+        ],
       },
-      {
-        path: '/processes/:pid',
-        name: 'ProcessesDetails',
-        component: ProcessesDetails,
-      },
-      {
-        path: '/processes/:pid/instance/:iid',
-        name: 'ProcessesInstance',
-        component: ProcessesInstance,
-      },
+
       {
         path: '/registry/:url?',
         name: 'Registry',
