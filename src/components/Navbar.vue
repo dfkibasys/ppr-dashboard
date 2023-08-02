@@ -9,8 +9,6 @@
 
         <ul class="navbar-nav">
           <router-link class="pe-3" to="/assets">{{ $t('navbar.assets') }}</router-link>
-          <!-- <router-link class="pe-3" to="/services">{{ $t('navbar.services') }}</router-link>
-          <router-link class="pe-3" to="/management">{{ $t('navbar.management') }}</router-link> -->
           <router-link class="pe-3" to="/processes">{{ $t('navbar.processes') }}</router-link>
           <router-link class="pe-3" to="/basysafe">{{ $t('navbar.basysafe') }}</router-link>
         </ul>
