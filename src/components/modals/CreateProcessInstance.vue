@@ -109,8 +109,7 @@ import { defineComponent, ref } from 'vue';
 import { Modal } from 'bootstrap';
 import axios from 'axios';
 import getEnv from '@/helpers/env';
-
-import { VarType, ProcessVariable } from '@/interfaces/ICreateProcessInstance';
+import { VarType, ProcessVariable } from '@/types/ProcessVariable';
 
 export default defineComponent({
   name: 'CreateProcessInstance',

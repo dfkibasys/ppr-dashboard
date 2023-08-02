@@ -195,12 +195,10 @@ import { mapGetters } from 'vuex';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
-import {
-  auditLog,
-  breadcrumbItem,
-  processDefinition,
-  processInstance,
-} from '@/interfaces/IProcesses';
+import BreadcrumbItem from '@/types/BreadcrumbItem';
+import ProcessDefinition from '@/types/ProcessDefinition';
+import ProcessInstance from '@/types/ProcessInstance';
+import AuditLog from '@/types/AuditLog';
 
 export default defineComponent({
   name: 'ProcessesDetails',
@@ -231,16 +229,16 @@ export default defineComponent({
           to: `/processes/${this.$route.params.pid}`,
           active: true,
         },
-      ] as breadcrumbItem[],
+      ] as BreadcrumbItem[],
       updateInterval: 500,
       intervalRef: 0,
       showLeftDetails: true,
       currentVersionID: '',
       versions: [] as any, //TODO
-      processInstances: [] as processInstance[],
-      processDefinition: {} as processDefinition,
+      processInstances: [] as ProcessInstance[],
+      processDefinition: {} as ProcessDefinition,
       processDefinitionXML: '',
-      auditLog: [] as auditLog[],
+      auditLog: [] as AuditLog[],
       overlaysArr: [],
       showDeleteModal: false,
     };

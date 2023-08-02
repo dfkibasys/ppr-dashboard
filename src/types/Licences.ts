@@ -1,4 +1,4 @@
-export interface Licence {
+export default interface Licence {
   name: string;
   version: string;
   repository: string;

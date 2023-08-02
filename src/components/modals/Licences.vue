@@ -44,7 +44,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { Licence } from '@/interfaces/ILicences';
+import Licence from '@/types/Licences';
 
 export default defineComponent({
   name: 'Licences',

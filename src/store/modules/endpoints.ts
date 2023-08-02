@@ -1,4 +1,4 @@
-import EndpointsState from '@/interfaces/EndpointsState';
+import EndpointsState from '@/types/EndpointsState';
 import getEnv from '@/helpers/env';
 
 const state: EndpointsState = {

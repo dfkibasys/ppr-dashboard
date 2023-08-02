@@ -1,4 +1,4 @@
-import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/interfaces/AssetsState';
+import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/types/AssetsState';
 import axios from 'axios';
 
 import {

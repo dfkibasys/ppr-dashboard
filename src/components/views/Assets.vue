@@ -95,7 +95,7 @@ import PackML from '@/components/modals/PackML.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { SortDirection, SortingPath } from '@basys/aas-registry-client-ts-fetch';
 import SearchField from '@/components/SearchField.vue';
-import { Asset } from '@/interfaces/AssetsState';
+import { Asset } from '@/types/AssetsState';
 
 export default defineComponent({
   name: 'Assets',

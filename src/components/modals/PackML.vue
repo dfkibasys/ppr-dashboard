@@ -90,8 +90,8 @@ import { defineComponent } from 'vue';
 import * as mxgraph from 'mxgraph';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { options } from '@/interfaces/IPackML';
-import { Asset } from '@/interfaces/AssetsState';
+import OperationModeOptions from '@/types/OperationModeOptions';
+import { Asset } from '@/types/AssetsState';
 
 const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
@@ -108,7 +108,7 @@ export default defineComponent({
         { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
         //{ text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
         { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
-      ] as options[],
+      ] as OperationModeOptions[],
     };
   },
   props: {

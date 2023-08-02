@@ -1,4 +1,4 @@
-import UsersState from '@/interfaces/UsersState';
+import UsersState from '@/types/UsersState';
 import bcrypt from 'bcryptjs';
 
 const state: UsersState = {
