@@ -4,7 +4,6 @@ import Assets from '@/components/views/Assets.vue';
 import Processes from '@/components/views/Processes.vue';
 import ProcessesDetails from '@/components/views/processes/ProcessesDetails.vue';
 import ProcessesInstance from '@/components/views/processes/ProcessesInstance.vue';
-import Registry from '@/components/views/Registry.vue';
 import Basysafe from '@/components/views/Basysafe.vue';
 
 export function createRouter() {
@@ -37,12 +36,6 @@ export function createRouter() {
             component: ProcessesInstance,
           },
         ],
-      },
-
-      {
-        path: '/registry/:url?',
-        name: 'Registry',
-        component: Registry,
       },
       {
         path: '/basysafe',

@@ -19,9 +19,6 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'SearchField',
 
-  //TODO: Remove later
-  compatConfig: { MODE: 3 },
-
   props: {
     /**
      * Used primarly here to provide v-model support
