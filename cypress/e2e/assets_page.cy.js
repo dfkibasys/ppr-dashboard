@@ -1,4 +1,4 @@
-describe('The assets page', () => {
+describe('The assets page', { testIsolation: false }, () => {
   beforeEach(() => {
     // stub ID submodels requests
     cy.intercept('GET', '/shells/*/aas/submodels/Identification/submodel', {
