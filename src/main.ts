@@ -20,7 +20,6 @@ import 'bootstrap';
 //Options
 Axios.defaults.timeout = 4000;
 
-//TOOD: check out https://github.com/aacassandra/vue3-progressbar
 const ProgressBarOptions = {
   color: '#385ebc',
   failedColor: 'red',
