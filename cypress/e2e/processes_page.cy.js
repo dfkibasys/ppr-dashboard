@@ -6,22 +6,7 @@ describe('The processes page', () => {
   });
 
   it('loads content', () => {
-    cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 1 });
-    cy.intercept('GET', '/engine-rest/decision-definition/count', { count: 2 });
-    cy.intercept('GET', '/engine-rest/case-definition/count*', { count: 3 });
-    cy.intercept('GET', '/engine-rest/deployment/count*', { count: 4 });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=Process_0b', {
-      count: 5,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=ReviewInvoice', {
-      count: 6,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=TestDrone', {
-      count: 7,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=invoice', {
-      count: 8,
-    });
+    cy.interceptCounts();
 
     cy.visit('/processes');
 
@@ -43,23 +28,10 @@ describe('The processes page', () => {
 
   it('allows pluralization based on count', () => {
     // override intercepts from beforeEach hook
+    cy.interceptCounts();
+
     cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 2 });
     cy.intercept('GET', '/engine-rest/deployment/count*', { count: 1 });
-
-    cy.intercept('GET', '/engine-rest/decision-definition/count', { count: 2 });
-    cy.intercept('GET', '/engine-rest/case-definition/count*', { count: 3 });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=Process_0b', {
-      count: 5,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=ReviewInvoice', {
-      count: 6,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=TestDrone', {
-      count: 7,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=invoice', {
-      count: 8,
-    });
 
     cy.visit('/processes');
 
@@ -70,24 +42,8 @@ describe('The processes page', () => {
   });
 
   it('loads process definition', () => {
+    cy.interceptCounts();
     cy.interceptProcessDefinition();
-
-    cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 1 });
-    cy.intercept('GET', '/engine-rest/decision-definition/count', { count: 2 });
-    cy.intercept('GET', '/engine-rest/case-definition/count*', { count: 3 });
-    cy.intercept('GET', '/engine-rest/deployment/count*', { count: 4 });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=Process_0b', {
-      count: 5,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=ReviewInvoice', {
-      count: 6,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=TestDrone', {
-      count: 7,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=invoice', {
-      count: 8,
-    });
 
     cy.visit('/processes');
 
