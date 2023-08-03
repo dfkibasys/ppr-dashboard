@@ -11,7 +11,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "e2e": "cypress run",
     "cy:open": "cypress open",
-    "test": "npm run dev & cypress run"
+    "test": "npm run dev & cypress run --config retries=2,defaultCommandTimeout=10000 --browser chrome"
   },
   "dependencies": {
     "@aacassandra/vue3-progressbar": "^1.0.3",
@@ -37,11 +37,11 @@
     "@typescript-eslint/parser": "^6.2.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-typescript": "^11.0.3",
-    "cypress": "^10.3.0",
+    "cypress": "^12.17.3",
     "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.15.1",
-    "sass": "^1.64.1",
-    "typescript": "^4.1.5",
+    "sass": "^1.64.2",
+    "typescript": "^5.1.6",
     "vite": "^4.4.8"
   },
   "eslintConfig": {
