@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <breadcrumb :items="bcItems"></breadcrumb>
+    <CBreadcrumb :items="bcItems"></CBreadcrumb>
     <div class="row pb-2 container-top">
       <create-process-instance @process-started="fetchAllData"></create-process-instance>
       <deletion-warning
@@ -194,7 +194,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
-import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import CBreadcrumb from '@/components/common/CBreadcrumb.vue';
 import BreadcrumbItem from '@/types/BreadcrumbItem';
 import ProcessDefinition from '@/types/ProcessDefinition';
 import ProcessInstance from '@/types/ProcessInstance';
@@ -206,7 +206,7 @@ export default defineComponent({
     BpmnDisplay,
     CreateProcessInstance,
     DeletionWarning,
-    Breadcrumb,
+    CBreadcrumb,
   },
   computed: {
     ...mapGetters('endpoints', {
