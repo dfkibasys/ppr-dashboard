@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <breadcrumb :items="bcItems"></breadcrumb>
+    <CBreadcrumb :items="bcItems"></CBreadcrumb>
     <div class="row pb-2 container-top">
       <div class="col leftDetails ps-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
@@ -184,7 +184,7 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import getEnv from '@/helpers/env';
 import moment from 'moment';
-import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import CBreadcrumb from '@/components/common/CBreadcrumb.vue';
 import Incident from '@/types/Incident';
 import BreadcrumbItem from '@/types/BreadcrumbItem';
 import ProcessDefinition from '@/types/ProcessDefinition';
@@ -196,7 +196,7 @@ export default defineComponent({
   name: 'ProcessesInstance',
   components: {
     BpmnDisplay,
-    Breadcrumb,
+    CBreadcrumb,
   },
   computed: {
     ...mapGetters('endpoints', {

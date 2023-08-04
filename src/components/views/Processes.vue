@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <breadcrumb :items="bcItems"></breadcrumb>
+    <CBreadcrumb :items="bcItems"></CBreadcrumb>
     <h2>{{ $t('process.deployed') }}</h2>
     <div class="row pb-5">
       <div class="col">
@@ -50,12 +50,12 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 import getEnv from '@/helpers/env';
-import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import CBreadcrumb from '@/components/common/CBreadcrumb.vue';
 import BreadcrumbItem from '@/types/BreadcrumbItem';
 import ProcessDefinition from '@/types/ProcessDefinition';
 
 export default defineComponent({
-  components: { Breadcrumb },
+  components: { CBreadcrumb },
   name: 'Processes',
   data() {
     return {

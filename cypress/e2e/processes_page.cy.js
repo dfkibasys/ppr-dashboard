@@ -3,26 +3,11 @@ describe('The processes page', () => {
     cy.intercept('GET', '/engine-rest/process-definition?latestVersion=true', {
       fixture: 'processDefinition.json',
     }).as('processDefinition');
-
-    cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 1 });
-    cy.intercept('GET', '/engine-rest/decision-definition/count', { count: 2 });
-    cy.intercept('GET', '/engine-rest/case-definition/count*', { count: 3 });
-    cy.intercept('GET', '/engine-rest/deployment/count*', { count: 4 });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=Process_0b', {
-      count: 5,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=ReviewInvoice', {
-      count: 6,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=TestDrone', {
-      count: 7,
-    });
-    cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=invoice', {
-      count: 8,
-    });
   });
 
   it('loads content', () => {
+    cy.interceptCounts();
+
     cy.visit('/processes');
 
     // Url correctly updated
@@ -43,6 +28,8 @@ describe('The processes page', () => {
 
   it('allows pluralization based on count', () => {
     // override intercepts from beforeEach hook
+    cy.interceptCounts();
+
     cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 2 });
     cy.intercept('GET', '/engine-rest/deployment/count*', { count: 1 });
 
@@ -55,7 +42,10 @@ describe('The processes page', () => {
   });
 
   it('loads process definition', () => {
+    cy.interceptCounts();
     cy.interceptProcessDefinition();
+
+    cy.visit('/processes');
 
     cy.contains('ReviewInvoice').click();
     cy.url().should('include', '/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
@@ -86,6 +76,8 @@ describe('The processes page', () => {
   it('allows process instance deletion', () => {
     cy.interceptProcessDefinition();
 
+    cy.visit('/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+
     cy.get('.tab-pane.active').contains('Delete').click();
 
     // Override server response (containing 1 unfinished instance)
@@ -109,6 +101,8 @@ describe('The processes page', () => {
   it('allows process instance creation', () => {
     cy.interceptProcessDefinition();
 
+    cy.visit('/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+
     cy.get('.tab-pane.active').contains('Create').click();
 
     cy.get('#input-business-key').type('randomKey');
@@ -126,6 +120,8 @@ describe('The processes page', () => {
   it('warns before deleting a deployment with running instances', () => {
     cy.interceptProcessDefinition();
 
+    cy.visit('/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+
     cy.contains('Instances Running').siblings('p').should('contain', '2');
 
     // Try to delete deployment
@@ -141,6 +137,8 @@ describe('The processes page', () => {
   it('updates the UI after running instances have been completed', () => {
     cy.interceptProcessDefinition();
 
+    cy.visit('/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
+
     // Table should display both running instances
     cy.get('#instance-table tbody').children('tr').should('have.length', 2);
 
@@ -154,9 +152,9 @@ describe('The processes page', () => {
       {
         fixture: 'activityInstanceReviewInvoiceUnfinished1.json',
       }
-    ).as('getActivityHistory');
+    ).as('getActivityHistory2');
 
-    cy.wait('@getActivityHistory');
+    cy.wait('@getActivityHistory2');
 
     // Table should display remaining running instance
     cy.get('#instance-table tbody').children('tr').should('have.length', 1);
@@ -168,9 +166,12 @@ describe('The processes page', () => {
   it('allows deleting a deployment without running instances directly', () => {
     cy.interceptProcessDefinition();
 
-    cy.contains('Instances Running').siblings('p').should('contain', '1');
+    cy.visit('/processes/ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002');
 
-    // Delete existing process instance first
+    // Delete existing process instances first
+    cy.get('.tab-pane.active').contains('Delete').click();
+    cy.wait('@deleteInstance1');
+
     cy.get('.tab-pane.active').contains('Delete').click();
     cy.wait('@deleteInstance2');
 
@@ -179,7 +180,7 @@ describe('The processes page', () => {
       'GET',
       '/engine-rest/history/activity-instance?processDefinitionId=ReviewInvoice:1:9414c509-7ad3-11ec-8d34-0242ac170002&unfinished=true',
       []
-    ).as('getActivityHistory');
+    ).as('getActivityHistory3');
 
     cy.contains('Instances Running').siblings('p').should('contain', '0');
 
