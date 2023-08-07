@@ -1,88 +1,81 @@
 <template>
-  <div class="modal modal-lg fade" id="modal-pack" ref="packModalRef">
-    <!--<b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">-->
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
-          <div>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm me-1"
-              @click="stopButton"
-              :disabled="!isAuthorized"
-              >Stop</button
-            >
-            <button class="btn btn-warning btn-sm" @click="resetButton" :disabled="!isAuthorized"
-              >Reset</button
-            >
-          </div>
+  <CModal name="modal-pack" ref="packModalRef" size="lg">
+    <template v-slot:header>
+      <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
+      <div>
+        <button
+          type="button"
+          class="btn btn-danger btn-sm me-1"
+          @click="stopButton"
+          :disabled="!isAuthorized"
+          >Stop</button
+        >
+        <button class="btn btn-warning btn-sm" @click="resetButton" :disabled="!isAuthorized"
+          >Reset</button
+        >
+      </div>
 
-          <div class="btn-group my-1" role="group">
-            <span v-for="option in options" :key="option.value">
-              <input
-                type="radio"
-                :value="option.value"
-                class="btn-check"
-                v-model="selected"
-                name="btnradio"
-                :id="option.value"
-                :disabled="!isAuthorized"
-                :checked="selected === option.value"
-                @change="modeButton(option.value)"
-              />
-              <label class="btn btn-outline-info btn-sm" :for="option.value">{{
-                option.text
-              }}</label>
-            </span>
-          </div>
-        </div>
+      <div class="btn-group my-1" role="group">
+        <span v-for="option in options" :key="option.value">
+          <input
+            type="radio"
+            :value="option.value"
+            class="btn-check"
+            v-model="selected"
+            name="btnradio"
+            :id="option.value"
+            :disabled="!isAuthorized"
+            :checked="selected === option.value"
+            @change="modeButton(option.value)"
+          />
+          <label class="btn btn-outline-info btn-sm" :for="option.value">{{ option.text }}</label>
+        </span>
+      </div>
+    </template>
 
-        <div class="modal-body">
-          <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
+    <template v-slot:body>
+      <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
+    </template>
 
-          <div class="modal-footer">
-            <div class="me-auto">
-              <span class="me-1">{{ $t('modal.packML.occupationState') }}: {{ asset?.OCCST }}</span>
-              <span v-if="asset?.OCCST !== 'FREE'" class="mr-2">({{ asset?.OCCUPIER }})</span>
-              <span v-if="isAuthorized">
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  v-if="asset?.OCCST === 'FREE'"
-                  @click="occupyButton"
-                  >Occupy ({{ currentUser }})</button
-                >
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  v-if="
-                    (asset?.OCCST === 'PRIORITY' || asset?.OCCST === 'OCCUPIED') &&
-                    asset?.OCCUPIER === currentUser
-                  "
-                  @click="freeButton"
-                  >Free ({{ currentUser }})</button
-                >
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  v-if="asset?.OCCST === 'OCCUPIED' && asset?.OCCUPIER !== currentUser"
-                  @click="prioButton"
-                  >Prio ({{ currentUser }})</button
-                >
-              </span>
-            </div>
-            <div class="mr-auto">
-              <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset?.OPMODE }}</span>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">{{
-              $t('modal.close')
-            }}</button>
-          </div>
-        </div></div
-      ></div
-    >
-  </div>
+    <template v-slot:footer>
+      <div class="me-auto">
+        <span class="me-1">{{ $t('modal.packML.occupationState') }}: {{ asset?.OCCST }}</span>
+        <span v-if="asset?.OCCST !== 'FREE'" class="mr-2">({{ asset?.OCCUPIER }})</span>
+        <span v-if="isAuthorized">
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            v-if="asset?.OCCST === 'FREE'"
+            @click="occupyButton"
+            >Occupy ({{ currentUser }})</button
+          >
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            v-if="
+              (asset?.OCCST === 'PRIORITY' || asset?.OCCST === 'OCCUPIED') &&
+              asset?.OCCUPIER === currentUser
+            "
+            @click="freeButton"
+            >Free ({{ currentUser }})</button
+          >
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            v-if="asset?.OCCST === 'OCCUPIED' && asset?.OCCUPIER !== currentUser"
+            @click="prioButton"
+            >Prio ({{ currentUser }})</button
+          >
+        </span>
+      </div>
+      <div class="mr-auto">
+        <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset?.OPMODE }}</span>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">{{
+        $t('modal.close')
+      }}</button>
+    </template>
+  </CModal>
 </template>
 
 <script lang="ts">
@@ -92,11 +85,13 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 import OperationModeOptions from '@/types/OperationModeOptions';
 import { Asset } from '@/types/AssetsState';
+import CModal from '../common/CModal.vue';
 
 const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
 export default defineComponent({
   name: 'PackML',
+  components: { CModal },
   data() {
     return {
       graph: {},

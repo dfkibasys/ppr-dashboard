@@ -1,44 +1,38 @@
 <template>
-  <div class="modal modal-lg fade" id="modal-settings" ref="settingsModalRef">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ $t('modal.settings.title') }}</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="container">
-            <div class="row">
-              <div class="col">{{ $t('modal.settings.language') }}:</div>
-              <div class="col-9">
-                <select class="form-select" v-model="$i18n.locale">
-                  <option v-for="option in langs" :value="option.value" :key="option.value">{{
-                    option.text
-                  }}</option>
-                </select>
-              </div>
-              <div class="w-100"></div>
-              <div class="col">Registry URL:</div>
-              <div class="col-9 rest">
-                <input class="form-control" v-model="registryUrl" />
-                <button type="button" class="btn btn-success" @click="changeREGISTRYdata">{{
-                  $t('modal.settings.change')
-                }}</button>
-              </div>
-              <div class="w-100"></div>
-              <div class="col">Broker URL:</div>
-              <div class="col-9 rest">
-                <input class="form-control" v-model="mqttUrl" />
-                <button type="button" class="btn btn-success" @click="changeMQTTdata">{{
-                  $t('modal.settings.change')
-                }}</button>
-              </div>
-              <!-- <div class="w-100"></div>
+  <CModal
+    name="modal-settings"
+    ref="settingsModalRef"
+    size="lg"
+    :title="$t('modal.settings.title')"
+  >
+    <template v-slot:body>
+      <div class="container">
+        <div class="row">
+          <div class="col">{{ $t('modal.settings.language') }}:</div>
+          <div class="col-9">
+            <select class="form-select" v-model="$i18n.locale">
+              <option v-for="option in langs" :value="option.value" :key="option.value">{{
+                option.text
+              }}</option>
+            </select>
+          </div>
+          <div class="w-100"></div>
+          <div class="col">Registry URL:</div>
+          <div class="col-9 rest">
+            <input class="form-control" v-model="registryUrl" />
+            <button type="button" class="btn btn-success" @click="changeREGISTRYdata">{{
+              $t('modal.settings.change')
+            }}</button>
+          </div>
+          <div class="w-100"></div>
+          <div class="col">Broker URL:</div>
+          <div class="col-9 rest">
+            <input class="form-control" v-model="mqttUrl" />
+            <button type="button" class="btn btn-success" @click="changeMQTTdata">{{
+              $t('modal.settings.change')
+            }}</button>
+          </div>
+          <!-- <div class="w-100"></div>
         <div class="col"
           >{{ $t('modal.settings.mockObjects') }}
           <b-icon-info-circle-fill
@@ -49,43 +43,38 @@
         <div class="col-9">
           <b-form-checkbox name="check-button" v-model="mockDataEnabled" switch></b-form-checkbox>
         </div> -->
-              <div class="w-100"></div>
-              <div class="col">Camunda URL:</div>
-              <div class="col-9 rest">
-                <input class="form-control" v-model="camundaUrl" />
-              </div>
-              <div class="w-100"></div>
-              <div class="col"></div>
-              <div class="col-9">
-                <button
-                  type="button"
-                  class="btn btn-info float-end"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modal-licences"
-                >
-                  <i class="bi bi-question"></i>
-                </button>
-              </div>
-            </div>
+          <div class="w-100"></div>
+          <div class="col">Camunda URL:</div>
+          <div class="col-9 rest">
+            <input class="form-control" v-model="camundaUrl" />
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
-              $t('modal.close')
-            }}</button>
+          <div class="w-100"></div>
+          <div class="col"></div>
+          <div class="col-9">
+            <button
+              type="button"
+              class="btn btn-info float-end"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-licences"
+            >
+              <i class="bi bi-question"></i>
+            </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </CModal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
 import Language from '@/types/Language';
+import CModal from '../common/CModal.vue';
 
 export default defineComponent({
   name: 'Settings',
+  components: { CModal },
   data() {
     return {
       langs: [
