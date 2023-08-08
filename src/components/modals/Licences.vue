@@ -2,7 +2,7 @@
   <CModal
     name="modal-licences"
     ref="licensesModalRef"
-    size="mlg"
+    size="lg"
     :title="$t('modal.licences.title')"
   >
     <template v-slot:body>
