@@ -2,7 +2,11 @@
   <div class="container-fluid">
     <CBreadcrumb :items="bcItems"></CBreadcrumb>
     <div class="row pb-2 container-top">
-      <create-process-instance @process-started="fetchAllData"></create-process-instance>
+      <create-process-instance
+        @process-started="fetchAllData"
+        :show="showInstanceModal"
+        @close="showInstanceModal = false"
+      ></create-process-instance>
       <deletion-warning
         @delete="deleteDeployment"
         :show="showDeleteModal"
@@ -113,8 +117,7 @@
                     ><button
                       type="button"
                       class="btn btn-success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal-instance"
+                      @click="showInstanceModal = true"
                       >{{ $t('process.create') }}</button
                     ></th
                   >
@@ -241,6 +244,7 @@ export default defineComponent({
       auditLog: [] as AuditLog[],
       overlaysArr: [],
       showDeleteModal: false,
+      showInstanceModal: false,
     };
   },
   watch: {
@@ -304,6 +308,7 @@ export default defineComponent({
         });
     },
     fetchAllData() {
+      this.showInstanceModal = false;
       this.$Progress.start();
 
       Promise.all([

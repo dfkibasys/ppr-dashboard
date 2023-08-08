@@ -16,8 +16,7 @@
           <button
             v-if="!authorized"
             type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#modal-login"
+            @click="showLoginModal = true"
             class="btn btn-secondary btn-sm"
             >{{ $t('navbar.login') }}</button
           >
@@ -49,7 +48,7 @@
       </div>
     </nav>
     <Licences />
-    <Login />
+    <Login :show="showLoginModal" @close="showLoginModal = false" />
     <Settings />
   </div>
 </template>
@@ -66,6 +65,11 @@ export default defineComponent({
     Licences,
     Login,
     Settings,
+  },
+  data() {
+    return {
+      showLoginModal: false,
+    };
   },
   computed: {
     user: function (): string {

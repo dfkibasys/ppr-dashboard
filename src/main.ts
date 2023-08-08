@@ -43,6 +43,7 @@ const i18n = createI18n({
 
 const router = createRouter();
 const store = createStore(router);
+export default store;
 
 const app = createApp(App);
 
