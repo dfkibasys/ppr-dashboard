@@ -1,3 +1,3 @@
 export default function getEnv(name) {
-    return window?.configs?.[name] || process.env[name]
+  return window?.configs?.[name] || import.meta.env[name];
 }

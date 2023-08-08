@@ -1,6 +1,4 @@
-import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import UsersState from '@/interfaces/UsersState';
-import { RootState } from '@/interfaces/RootState';
+import UsersState from '@/types/UsersState';
 import bcrypt from 'bcryptjs';
 
 const state: UsersState = {
@@ -9,7 +7,7 @@ const state: UsersState = {
   hash: '$2a$10$V8BJ.Dhiw9t310rmSiGRgu7AXqsVEbsauGdWS6Y7xGSbX3.u6Hgo2',
 };
 
-const getters: GetterTree<UsersState, RootState> = {
+const getters = {
   /**
    * Get the currently logged in user
    *
@@ -27,7 +25,7 @@ const getters: GetterTree<UsersState, RootState> = {
   isAuthorized: (state) => state.authorized,
 };
 
-const mutations: MutationTree<UsersState> = {
+const mutations = {
   /**
    * commit the logged in user to state
    *
@@ -48,7 +46,7 @@ const mutations: MutationTree<UsersState> = {
     state.authorized = false;
   },
 };
-const actions: ActionTree<UsersState, RootState> = {
+const actions = {
   /**
    * If the provided credentials are valid, log in the user,
    * if not, reject the request
@@ -79,7 +77,7 @@ const actions: ActionTree<UsersState, RootState> = {
   },
 };
 
-export const users: Module<UsersState, RootState> = {
+export const users = {
   namespaced: true,
   state,
   getters,

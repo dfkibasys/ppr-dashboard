@@ -1,79 +1,87 @@
 <template>
-  <b-container fluid>
-    <b-breadcrumb :items="bcItems"></b-breadcrumb>
-    <b-row class="pb-2 container-top">
-      <create-process-instance @process-started="fetchAllData"></create-process-instance>
-      <deletion-warning @delete="deleteDeployment"></deletion-warning>
-      <b-col class="leftDetails pl-2 border" v-show="showLeftDetails">
+  <div class="container-fluid">
+    <CBreadcrumb :items="bcItems"></CBreadcrumb>
+    <div class="row pb-2 container-top">
+      <create-process-instance
+        @process-started="fetchAllData"
+        :show="showInstanceModal"
+        @close="showInstanceModal = false"
+      ></create-process-instance>
+      <deletion-warning
+        @delete="deleteDeployment"
+        :show="showDeleteModal"
+        @close="showDeleteModal = false"
+      ></deletion-warning>
+      <div class="col leftDetails ps-2 border" v-show="showLeftDetails">
         <div class="button" v-show="showLeftDetails">
-          <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
-            <b-icon-chevron-left font-scale="1" variant="secondary"></b-icon-chevron-left>
-          </b-button>
+          <button class="btn btn-outline" type="button" @click="showLeftDetails = !showLeftDetails">
+            <i class="bi bi-chevron-left"></i>
+          </button>
         </div>
-        <b-list-group>
-          <b-list-group-item class="border-0">
+        <ul class="list-group">
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.definitionVersion') }}:</h5>
             <p class="mb-0">
-              <b-form-select
-                v-model="currentVersionID"
-                :options="versions"
-                @change="versionChange"
-              ></b-form-select>
+              <select class="form-select" v-model="currentVersionID" @change="versionChange">
+                <option v-for="version in versions" :value="version.value" :key="version.value">{{
+                  version.text
+                }}</option>
+              </select>
             </p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.versionTag') }}:</h5>
             <p class="mb-0">{{ processDefinition.versionTag || 'null' }}</p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.definitionId') }}:</h5>
             <p class="mb-0">
-              <b-link
+              <a
                 :href="`${camundaUrl}/engine-rest/process-definition/${processDefinition.id}`"
                 target="_blank"
-                >{{ processDefinition.id || '-' }}</b-link
+                >{{ processDefinition.id || '-' }}</a
               >
             </p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.definitionKey') }}:</h5>
             <p class="mb-0">{{ processDefinition.key || '-' }}</p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.definitionName') }}:</h5>
             <p class="mb-0">{{ processDefinition.name || '-' }}</p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.tenantId') }}:</h5>
             <p class="mb-0">{{ processDefinition.tenantId || 'null' }}</p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.deploymentId') }}:</h5>
             <p class="mb-0">
-              <b-link
+              <a
                 :href="`${camundaUrl}/engine-rest/deployment/${processDefinition.deploymentId}`"
                 target="_blank"
-                >{{ processDefinition.deploymentId || '-' }}</b-link
+                >{{ processDefinition.deploymentId || '-' }}</a
               >
             </p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
+          </li>
+          <li class="list-group-item border-0">
             <h5 class="mb-0">{{ $t('process.instancesRunning') }}:</h5>
             <p class="mb-0">{{ processDefinition.instances || '0' }}</p>
-          </b-list-group-item>
-          <b-list-group-item class="border-0">
-            <b-button variant="danger" @click="checkForRunningInstances">{{
+          </li>
+          <li class="list-group-item border-0">
+            <button class="btn btn-danger" type="button" @click="checkForRunningInstances">{{
               $t('process.delete')
-            }}</b-button>
-          </b-list-group-item>
-        </b-list-group>
-      </b-col>
+            }}</button>
+          </li>
+        </ul>
+      </div>
 
-      <b-col class="rightDiagram border">
+      <div class="col rightDiagram border">
         <div class="button" v-show="!showLeftDetails">
-          <b-button variant="outline-light" @click="showLeftDetails = !showLeftDetails">
-            <b-icon-chevron-right font-scale="1" variant="secondary"></b-icon-chevron-right>
-          </b-button>
+          <button class="btn btn-outline" type="button" @click="showLeftDetails = !showLeftDetails">
+            <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
         <div id="diagram-container" class="h-100">
           <bpmn-display
@@ -83,106 +91,132 @@
             @shown="handleShown"
           ></bpmn-display>
         </div>
-      </b-col>
-    </b-row>
-    <b-row class="px-2">
-      <b-col>
-        <b-tabs>
-          <b-tab :title="$t('process.processInstances')">
-            <b-table
-              hover
-              striped
-              @row-clicked="goToProcessInstance"
-              :items="processInstances"
-              :fields="instanceFields"
-              class="clickable-table"
-              id="instance-table"
-              show-empty
-            >
-              <template v-slot:head(id)>{{ $t('process.id') }}</template>
-              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
-              <template v-slot:head(businessKey)>{{ $t('process.businessKey') }}</template>
-              <template v-slot:head(action)>
-                <b-button variant="success" @click="createProcessInstance">{{
-                  $t('process.create')
-                }}</b-button>
-              </template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
-              <template v-slot:cell(businessKey)="value">{{
-                value.item.businessKey || '-'
-              }}</template>
-              <template v-slot:cell(action)="value">
-                <b-button variant="danger" @click="deleteProcessInstance(value.item.id)">{{
-                  $t('process.delete')
-                }}</b-button>
-              </template>
-              <template v-slot:empty>{{ $t('process.emptyProcessInstancesMessage') }}</template>
-            </b-table>
-          </b-tab>
-          <b-tab :title="$t('process.auditLog')">
-            <b-table
-              hover
-              striped
-              :items="auditLog"
-              :fields="auditFields"
-              id="audit-table"
-              show-empty
-            >
-              <template v-slot:head(state)>{{ $t('process.state') }}</template>
-              <template v-slot:head(processInstanceId)>{{
-                $t('process.processInstanceId')
-              }}</template>
-              <template v-slot:head(activityName)>{{ $t('process.activityName') }}</template>
-              <template v-slot:head(startTime)>{{ $t('process.startTime') }}</template>
-              <template v-slot:head(endTime)>{{ $t('process.endTime') }}</template>
-              <template v-slot:head(activityId)>{{ $t('process.activityId') }}</template>
-              <template v-slot:cell(state)="value">
-                <b-icon-check-circle
-                  font-scale="2"
-                  v-if="value.item.endTime !== null"
-                ></b-icon-check-circle>
-                <b-icon-circle-half font-scale="2" v-else></b-icon-circle-half>
-              </template>
-              <template v-slot:cell(startTime)="value">{{
-                value.item.startTime | moment($t('process.timeFormat'))
-              }}</template>
-              <template v-slot:cell(endTime)="value">{{
-                value.item.endTime | moment($t('process.timeFormat'))
-              }}</template>
-              <template v-slot:empty>{{ $t('process.emptyLogDataMessage') }}</template>
-            </b-table>
-          </b-tab>
-        </b-tabs>
-      </b-col>
-    </b-row>
-  </b-container>
+      </div>
+    </div>
+    <div class="row px-2">
+      <div class="col">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a href="#process" class="nav-link active" data-bs-toggle="tab">{{
+              $t('process.processInstances')
+            }}</a>
+          </li>
+          <li class="nav-item">
+            <a href="#audit" class="nav-link" data-bs-toggle="tab">{{ $t('process.auditLog') }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="process">
+            <table class="table table-striped table-hover clickable-table" id="instance-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ $t('process.id') }}</th>
+                  <th scope="col">{{ $t('process.startTime') }}</th>
+                  <th scope="col">{{ $t('process.businessKey') }}</th>
+                  <th scope="col"
+                    ><button
+                      type="button"
+                      class="btn btn-success"
+                      @click="showInstanceModal = true"
+                      >{{ $t('process.create') }}</button
+                    ></th
+                  >
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="instance in processInstances"
+                  :key="instance.id"
+                  @click="goToProcessInstance(instance)"
+                >
+                  <td>{{ instance.id }}</td>
+                  <td>{{ moment(instance.startTime) }}</td>
+                  <td>{{ instance.businessKey || '-' }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click.stop="deleteProcessInstance(instance.id)"
+                      >{{ $t('process.delete') }}</button
+                    ></td
+                  >
+                </tr>
+                <tr v-if="processInstances.length === 0">
+                  <td colspan="4">{{ $t('process.emptyProcessInstancesMessage') }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-pane fade" id="audit">
+            <table class="table table-striped table-hover" id="audit-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ $t('process.state') }}</th>
+                  <th scope="col">{{ $t('process.processInstanceId') }}</th>
+                  <th scope="col">{{ $t('process.activityName') }}</th>
+                  <th scope="col">{{ $t('process.startTime') }}</th>
+                  <th scope="col">{{ $t('process.endTime') }}</th>
+                  <th scope="col">{{ $t('process.activityId') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="audit in auditLog" :key="audit.activityId">
+                  <td>
+                    <i
+                      class="bi bi-check-circle"
+                      style="font-size: 2rem"
+                      v-if="audit.endTime !== null"
+                    ></i>
+                    <i class="bi bi-circle-half" style="font-size: 2rem" v-else></i>
+                  </td>
+                  <td>{{ audit.processInstanceId }}</td>
+                  <td>{{ audit.activityName }}</td>
+                  <td>{{ moment(audit.startTime) }}</td>
+                  <td>{{ moment(audit.endTime) }}</td>
+                  <td>{{ audit.activityId || '-' }}</td>
+                </tr>
+                <tr v-if="auditLog.length === 0">
+                  <td colspan="6">{{ $t('process.emptyLogDataMessage') }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import BpmnDisplay from '@/components/views/processes/BpmnDisplay.vue';
 import CreateProcessInstance from '@/components/modals/CreateProcessInstance.vue';
 import DeletionWarning from '@/components/modals/DeletionWarning.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IProcessesDetails';
 import getEnv from '@/helpers/env';
+import moment from 'moment';
+import CBreadcrumb from '@/components/common/CBreadcrumb.vue';
+import BreadcrumbItem from '@/types/BreadcrumbItem';
+import ProcessDefinition from '@/types/ProcessDefinition';
+import ProcessInstance from '@/types/ProcessInstance';
+import AuditLog from '@/types/AuditLog';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'ProcessesDetails',
   components: {
     BpmnDisplay,
     CreateProcessInstance,
     DeletionWarning,
+    CBreadcrumb,
   },
   computed: {
     ...mapGetters('endpoints', {
       camundaUrl: 'camundaUrl',
     }),
     baseUrl: function () {
-      return getEnv('VUE_APP_AJAX_REQUEST_DOMAIN');
+      return getEnv('VITE_AJAX_REQUEST_DOMAIN');
     },
   },
   data() {
@@ -191,34 +225,38 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         {
           text: this.$t('process.breadcrumb.overview'),
           to: '/processes',
+          active: false,
         },
         {
           text: this.$t('process.breadcrumb.definition'),
           to: `/processes/${this.$route.params.pid}`,
+          active: true,
         },
-      ],
+      ] as BreadcrumbItem[],
       updateInterval: 500,
       intervalRef: 0,
-      instanceFields: ['id', 'startTime', 'businessKey', 'action'],
-      auditFields: [
-        'state',
-        'processInstanceId',
-        'activityName',
-        'startTime',
-        'endTime',
-        'activityId',
-      ],
       showLeftDetails: true,
       currentVersionID: '',
-      versions: [],
-      processInstances: [],
-      processDefinition: {},
+      versions: [] as any, //TODO
+      processInstances: [] as ProcessInstance[],
+      processDefinition: {} as ProcessDefinition,
       processDefinitionXML: '',
-      auditLog: [],
+      auditLog: [] as AuditLog[],
       overlaysArr: [],
+      showDeleteModal: false,
+      showInstanceModal: false,
     };
   },
+  watch: {
+    $route(to, from) {
+      // Fetch new data after route change (caused by version change)
+      this.fetchAllData();
+    },
+  },
   methods: {
+    moment(date) {
+      return moment(date).format(this.$t('process.timeFormat') as any);
+    },
     goToProcessInstance(item) {
       this.$router.push({
         name: 'ProcessesInstance',
@@ -236,17 +274,17 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         name: 'ProcessesDetails',
         params: { pid: this.currentVersionID },
       });
-      this.fetchAllData();
     },
     checkForRunningInstances() {
       //Show warning if deployment has running instances
       if (this.processDefinition.instances > 0) {
-        this.$bvModal.show('modal-warning');
+        this.showDeleteModal = true;
       } else {
         this.deleteDeployment();
       }
     },
     deleteDeployment() {
+      this.showDeleteModal = false; // Just in case coming from the modal
       let version = this.processDefinition.version;
 
       axios
@@ -270,6 +308,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         });
     },
     fetchAllData() {
+      this.showInstanceModal = false;
       this.$Progress.start();
 
       Promise.all([
@@ -285,7 +324,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           this.$Progress.fail();
         });
     },
-    fetchLeftDetails(id) {
+    fetchLeftDetails(id: string) {
       let that = this;
 
       const fetchedDetails = function (resolve, reject) {
@@ -313,7 +352,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   });
 
                   //pic
-                  that.$set(that.processDefinition, 'instances', pic.data.count);
+                  that.processDefinition['instances'] = pic.data.count;
 
                   resolve();
                 })
@@ -329,7 +368,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       return new Promise(fetchedDetails);
     },
-    fetchBPMN(id) {
+    fetchBPMN(id: string) {
       let that = this;
 
       const fetchedBPMN = function (resolve, reject) {
@@ -351,7 +390,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       return new Promise(fetchedBPMN);
     },
-    fetchTabContent(id) {
+    fetchTabContent(id: string) {
       let that = this;
 
       const fetchedTabContent = function (resolve, reject) {
@@ -409,6 +448,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               overlays.remove(o);
             });
 
+            //Clear after usage
+            that.overlaysArr = [];
+
             //Activity instances
 
             //Detection of completed process instances
@@ -437,7 +479,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   bottom: 0,
                   left: 0,
                 },
-                html: `<span class="badge badge-pill badge-primary">${activityIdsCount[id]}</span>`,
+                html: `<span class="badge rounded-pill bg-primary">${activityIdsCount[id]}</span>`,
               });
               that.overlaysArr.push(oID);
             }
@@ -458,7 +500,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
                   bottom: 0,
                   left: 30,
                 },
-                html: `<span class="badge badge-pill badge-danger">${incidentIdsCount[id]}</span>`,
+                html: `<span class="badge rounded-pill bg-danger">${incidentIdsCount[id]}</span>`,
               });
               that.overlaysArr.push(oID);
             }
@@ -472,7 +514,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     createProcessInstance() {
       this.$bvModal.show('modal-instance');
     },
-    deleteProcessInstance(id) {
+    deleteProcessInstance(id: string) {
       let that = this;
 
       axios
@@ -490,7 +532,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   created() {
     this.fetchAllData();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.intervalRef);
   },
 });

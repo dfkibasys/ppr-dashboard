@@ -1,32 +1,29 @@
 <template>
-  <div class="input-group m-2 w-25">
+  <div class="input-group m-2 w-25" id="search-field">
     <input
       type="text"
-      :value="value"
+      :value="modelValue"
       class="form-control"
       @input="handleInputEvent"
       :placeholder="$t('search')"
     />
-    <div class="input-group-append">
-      <span class="input-group-text">
-        <b-icon-search></b-icon-search>
-      </span>
-    </div>
+    <span class="input-group-text">
+      <i class="bi bi-search"></i>
+    </span>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/ISearchField';
+import { defineComponent } from 'vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'SearchField',
 
   props: {
     /**
      * Used primarly here to provide v-model support
      */
-    value: { type: String, default: '' },
+    modelValue: { type: String, default: '' },
     /**
      * Length of time to wait before emitting the input value.
      */
@@ -35,7 +32,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
   data() {
     return {
-      timeout: null,
+      timeout: typeof setTimeout,
     };
   },
 
@@ -44,12 +41,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       if (this.delayInput > 0) {
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-          this.$emit('input', $event.target.value);
+          this.$emit('update:modelValue', $event.target.value);
         }, this.delayInput * 1000);
         return;
       }
 
-      this.$emit('input', $event.target.value);
+      this.$emit('update:modelValue', $event.target.value);
     },
   },
 });

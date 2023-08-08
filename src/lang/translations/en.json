@@ -1,8 +1,6 @@
 {
   "navbar": {
     "assets": "Control Components",
-    "services": "Services",
-    "management": "Management",
     "processes": "Processes",
     "login": "Login",
     "logout": "Logout",
@@ -123,8 +121,8 @@
     }
   },
   "basysafe": {
-    "ack":"Ack Button",
-    "ackPressed":"trigger",
+    "ack": "Ack Button",
+    "ackPressed": "trigger",
     "estop": "E-Stop Button",
     "estopReleased": "ok",
     "estopPressed": "not ok",
@@ -140,12 +138,11 @@
     "lightOff": "off",
     "lightOn": "on",
     "lightBlinking": "blink",
-    "safetylightcurtain":"Safety Light Curtain",
-    "safetylightcurtainFree":"ok",
-    "safetylightcurtainDetection":"not ok",
+    "safetylightcurtain": "Safety Light Curtain",
+    "safetylightcurtainFree": "ok",
+    "safetylightcurtainDetection": "not ok",
     "press": "Press",
     "pressPress": "press",
     "pressRetract": "retract"
   }
-    
 }

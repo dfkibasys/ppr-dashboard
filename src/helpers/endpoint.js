@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 function getProtocol() {
   const url = new URL(document.location.href);
   return url.protocol.slice(0, -1); // Remove colon from protocol to fit registry protocol information

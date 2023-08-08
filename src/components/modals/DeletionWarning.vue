@@ -1,24 +1,35 @@
 <template>
-  <b-modal
-    @ok="$emit('delete')"
-    id="modal-warning"
+  <CModal
+    name="modal-warning"
+    ref="deleteModalRef"
     size="md"
+    :show="show"
     :title="$t('modal.deletionWarning.title')"
   >
-    {{ $t('modal.deletionWarning.content') }}
-    <template v-slot:modal-footer="{ ok, cancel }">
-      <b-button @click="cancel">{{ $t('modal.cancel') }}</b-button>
-      <b-button variant="danger" @click="ok">{{ $t('modal.deletionWarning.delete') }}</b-button>
+    <template v-slot:body>
+      {{ $t('modal.deletionWarning.content') }}
     </template>
-  </b-modal>
+    <template v-slot:footer>
+      <button type="button" class="btn btn-secondary" @click="$emit('close')">{{
+        $t('modal.cancel')
+      }}</button>
+      <button type="button" class="btn btn-danger" @click="$emit('delete')">{{
+        $t('modal.deletionWarning.delete')
+      }}</button>
+    </template>
+  </CModal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/IDeletionWarning';
+import { defineComponent } from 'vue';
+import CModal from '../common/CModal.vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'DeletionWarning',
+  props: {
+    show: Boolean,
+  },
+  components: { CModal },
 });
 </script>
 

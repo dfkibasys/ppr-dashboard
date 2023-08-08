@@ -1,8 +1,6 @@
-import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import { RootState } from '@/interfaces/RootState';
-import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/interfaces/AssetsState';
+import { AssetsState, IDSubmodel, CCISubmodel, Asset } from '@/types/AssetsState';
 import axios from 'axios';
-import store from '..';
+
 import {
   RegistryAndDiscoveryInterfaceApi,
   SortDirection,
@@ -10,7 +8,6 @@ import {
   ShellDescriptorQuery,
 } from '@basys/aas-registry-client-ts-fetch';
 import { EXCLUDED_ASSETS, PAGE_SIZE } from '@/config/settings';
-import Vue from 'vue';
 import getEquivalentEndpoint from '@/helpers/endpoint';
 
 const state: AssetsState = {
@@ -21,7 +18,7 @@ const state: AssetsState = {
   hasLoaded: false,
 };
 
-const getters: GetterTree<AssetsState, RootState> = {
+const getters = {
   /**
    * Get all assets
    *
@@ -63,7 +60,7 @@ const getters: GetterTree<AssetsState, RootState> = {
   getCurrentPage: (state) => state.currentPage,
 };
 
-const actions: ActionTree<AssetsState, RootState> = {
+const actions = {
   /**
    * Fetch paginated, sorted and filtered assets from registry
    *
@@ -75,11 +72,11 @@ const actions: ActionTree<AssetsState, RootState> = {
    * @param sort
    * @param search
    */
-  fetchAssets({ commit, dispatch, getters }, { vm, purge, sort, search = '' }) {
+  fetchAssets({ commit, dispatch, getters, rootGetters }, { vm, purge, sort, search = '' }) {
     if (purge) commit('setCurrentPage', 0);
 
     const config = {
-      basePath: store.getters['endpoints/registryUrl'],
+      basePath: rootGetters['endpoints/registryUrl'],
     };
     const api = new RegistryAndDiscoveryInterfaceApi(config);
 
@@ -216,14 +213,14 @@ const actions: ActionTree<AssetsState, RootState> = {
    * @param assets
    * @param vm
    */
-  fetchCCInterfaceSubmodels({ commit }, { assets, vm }) {
+  fetchCCInterfaceSubmodels({ commit, rootGetters }, { assets, vm }) {
     assets.forEach((asset) => {
       let cci: CCISubmodel = {};
 
       let url = asset.CCInterfaceSubmodelEndpoint;
       if (url == undefined) return;
-      const properties_url = store.getters['endpoints/mockDataEnabled'] ? url : url + '/values';
-      const update_url = store.getters['endpoints/mockDataEnabled']
+      const properties_url = rootGetters['endpoints/mockDataEnabled'] ? url : url + '/values';
+      const update_url = rootGetters['endpoints/mockDataEnabled']
         ? url
         : url + '/submodelElements/updateEvent';
 
@@ -251,7 +248,7 @@ const actions: ActionTree<AssetsState, RootState> = {
   },
 };
 
-const mutations: MutationTree<AssetsState> = {
+const mutations = {
   /**
    * Commit all assets to state
    *
@@ -267,7 +264,7 @@ const mutations: MutationTree<AssetsState> = {
     }
 
     assets.forEach((a) => {
-      Vue.set(state.assetMap, a['aasId'], a);
+      state.assetMap[a.aasId] = a;
       if (!state.assetList.includes(a['aasId'])) state.assetList.push(a['aasId']);
     });
 
@@ -286,7 +283,7 @@ const mutations: MutationTree<AssetsState> = {
   addSubmodel: (state, { aasID, content }) => {
     if (state.assetMap[aasID] !== undefined) {
       for (const key in content) {
-        Vue.set(state.assetMap[aasID], key, content[key]);
+        state.assetMap[aasID][key] = content[key];
       }
     }
   },
@@ -300,7 +297,7 @@ const mutations: MutationTree<AssetsState> = {
    */
   setAssetIDShort: (state, { aasID, idShort }) => {
     if (state.assetMap[aasID] !== undefined) {
-      Vue.set(state.assetMap[aasID], 'idShort', idShort);
+      state.assetMap[aasID]['idShort'] = idShort;
     }
   },
 
@@ -318,7 +315,7 @@ const mutations: MutationTree<AssetsState> = {
       // if state property is part of update payload -> update state property
       for (let attr in state.assetMap[data.aasId]) {
         if (keyNames.includes(attr)) {
-          Vue.set(state.assetMap[data.aasId], attr, data[attr]);
+          state.assetMap[data.aasId][attr] = data[attr];
         }
       }
     }
@@ -333,7 +330,7 @@ const mutations: MutationTree<AssetsState> = {
   setCurrentPage: (state, page) => (state.currentPage = page),
 };
 
-export const assets: Module<AssetsState, RootState> = {
+export const assets = {
   namespaced: true,
   state,
   getters,

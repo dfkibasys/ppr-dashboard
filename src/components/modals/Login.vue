@@ -1,54 +1,72 @@
 <template>
-  <b-modal id="modal-login" ref="modal" size="sm" :title="$t('modal.login.title')">
-    <b-input-group class="mb-2">
-      <b-input-group-prepend>
-        <b-icon-person font-scale="2" />
-      </b-input-group-prepend>
-      <b-form-input
-        id="input-username"
-        :placeholder="$t('modal.login.username')"
-        v-model="user"
-        :state="userState"
-        required
-      />
-    </b-input-group>
+  <CModal
+    name="modal-login"
+    ref="loginModalRef"
+    size="md"
+    :title="$t('modal.login.title')"
+    :show="show"
+    @close="$emit('close')"
+  >
+    <template v-slot:body>
+      <div class="input-group mb-2">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          :class="{ 'is-invalid': invalid }"
+          id="input-username"
+          :placeholder="$t('modal.login.username')"
+          v-model="user"
+          required
+        />
+      </div>
 
-    <b-input-group>
-      <b-input-group-prepend>
-        <b-icon-lock font-scale="2" />
-      </b-input-group-prepend>
-      <b-form-input
-        id="input-password"
-        :placeholder="$t('modal.login.password')"
-        type="password"
-        v-model="password"
-        :state="passwordState"
-        required
-      />
-      <b-form-invalid-feedback id="input-password-feedback">
-        {{ $t('modal.login.feedback') }}
-      </b-form-invalid-feedback>
-    </b-input-group>
-
-    <template #modal-footer="{ cancel }">
-      <b-button @click="cancel">{{ $t('modal.cancel') }}</b-button>
-      <b-button variant="primary" @click="login">{{ $t('modal.login.login') }}</b-button>
+      <div class="input-group mb-2">
+        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+        <input
+          type="password"
+          class="form-control"
+          :class="{ 'is-invalid': invalid }"
+          id="input-password"
+          :placeholder="$t('modal.login.password')"
+          v-model="password"
+          required
+        />
+        <div class="invalid-feedback" id="input-password-feedback">
+          {{ $t('modal.login.feedback') }}
+        </div>
+      </div>
     </template>
-  </b-modal>
+    <template v-slot:footer>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        @click="$emit('close')"
+        data-bs-dismiss="modal"
+        >{{ $t('modal.cancel') }}</button
+      >
+      <button type="button" class="btn btn-primary" @click="login">{{
+        $t('modal.login.login')
+      }}</button>
+    </template>
+  </CModal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/ILogin';
+import { defineComponent } from 'vue';
+import CModal from '../common/CModal.vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Login',
+  components: { CModal },
+  props: {
+    show: Boolean,
+  },
   data() {
     return {
       user: '',
       password: '',
-      userState: null,
-      passwordState: null,
+      invalid: false,
     };
   },
   methods: {
@@ -56,14 +74,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       this.$store
         .dispatch('users/loginUser', { user: this.user, password: this.password })
         .then(() => {
-          this.userState = null;
-          this.passwordState = null;
+          this.invalid = false;
           console.log(`Login accepted`);
-          this.$bvModal.hide('modal-login');
+          this.$emit('close');
         })
         .catch(() => {
-          this.userState = false;
-          this.passwordState = false;
+          this.invalid = true;
           console.log(`Login denied`);
         });
     },

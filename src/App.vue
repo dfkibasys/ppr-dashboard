@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 
-export default Vue.extend({
+export default defineComponent({
   name: 'App',
   components: {
     Navbar,

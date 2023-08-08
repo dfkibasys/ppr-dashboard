@@ -111,6 +111,25 @@ Cypress.Commands.add('interceptProcessDefinition', () => {
     });
   }).as('deleteDeployment');
 });
+
+Cypress.Commands.add('interceptCounts', () => {
+  cy.intercept('GET', '/engine-rest/process-definition/count*', { count: 1 });
+  cy.intercept('GET', '/engine-rest/decision-definition/count', { count: 2 });
+  cy.intercept('GET', '/engine-rest/case-definition/count*', { count: 3 });
+  cy.intercept('GET', '/engine-rest/deployment/count*', { count: 4 });
+  cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=Process_0b', {
+    count: 5,
+  });
+  cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=ReviewInvoice', {
+    count: 6,
+  });
+  cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=TestDrone', {
+    count: 7,
+  });
+  cy.intercept('GET', '/engine-rest/process-instance/count?processDefinitionKey=invoice', {
+    count: 8,
+  });
+});
 //
 //
 // -- This is a child command --

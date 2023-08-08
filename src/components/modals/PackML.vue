@@ -1,96 +1,97 @@
 <template>
-  <b-modal @shown="initGraph" @hide="clear" id="modal-pack" ref="modal" size="lg" title="PackML">
-    <template v-slot:modal-header>
+  <CModal name="modal-pack" ref="packModalRef" size="lg">
+    <template v-slot:header>
       <h5 class="modal-title">{{ $t('modal.packML.title') }}</h5>
-
       <div>
-        <b-button
-          variant="danger"
-          size="sm"
-          class="m-1"
+        <button
+          type="button"
+          class="btn btn-danger btn-sm me-1"
           @click="stopButton"
           :disabled="!isAuthorized"
-          >Stop</b-button
+          >Stop</button
         >
-        <b-button variant="warning" size="sm" @click="resetButton" :disabled="!isAuthorized"
-          >Reset</b-button
+        <button class="btn btn-warning btn-sm" @click="resetButton" :disabled="!isAuthorized"
+          >Reset</button
         >
       </div>
 
-      <b-form-group>
-        <b-form-radio-group
-          button-variant="info"
-          id="btn-radios-1"
-          v-model="selected"
-          :options="options"
-          buttons
-          name="radios-btn-default"
-          @change="modeButton"
-          :disabled="!isAuthorized"
-          class="my-1"
-          size="sm"
-        ></b-form-radio-group>
-      </b-form-group>
+      <div class="btn-group my-1" role="group">
+        <span v-for="option in options" :key="option.value">
+          <input
+            type="radio"
+            :value="option.value"
+            class="btn-check"
+            v-model="selected"
+            name="btnradio"
+            :id="option.value"
+            :disabled="!isAuthorized"
+            :checked="selected === option.value"
+            @change="modeButton(option.value)"
+          />
+          <label class="btn btn-outline-info btn-sm" :for="option.value">{{ option.text }}</label>
+        </span>
+      </div>
     </template>
 
-    <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
+    <template v-slot:body>
+      <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
+    </template>
 
-    <template v-slot:modal-footer="{ cancel }">
-      <div class="mr-auto">
-        <span class="mr-1">{{ $t('modal.packML.occupationState') }}: {{ asset.OCCST }}</span>
-        <span v-if="asset.OCCST !== 'FREE'" class="mr-2">({{ asset.OCCUPIER }})</span>
+    <template v-slot:footer>
+      <div class="me-auto">
+        <span class="me-1">{{ $t('modal.packML.occupationState') }}: {{ asset?.OCCST }}</span>
+        <span v-if="asset?.OCCST !== 'FREE'" class="mr-2">({{ asset?.OCCUPIER }})</span>
         <span v-if="isAuthorized">
-          <b-button v-if="asset.OCCST === 'FREE'" variant="info" size="sm" @click="occupyButton"
-            >Occupy ({{ currentUser }})</b-button
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            v-if="asset?.OCCST === 'FREE'"
+            @click="occupyButton"
+            >Occupy ({{ currentUser }})</button
           >
-          <b-button
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
             v-if="
-              (asset.OCCST === 'PRIORITY' || asset.OCCST === 'OCCUPIED') &&
-              asset.OCCUPIER === currentUser
+              (asset?.OCCST === 'PRIORITY' || asset?.OCCST === 'OCCUPIED') &&
+              asset?.OCCUPIER === currentUser
             "
-            variant="info"
-            size="sm"
             @click="freeButton"
-            >Free ({{ currentUser }})</b-button
+            >Free ({{ currentUser }})</button
           >
-          <b-button
-            v-if="asset.OCCST === 'OCCUPIED' && asset.OCCUPIER !== currentUser"
-            variant="info"
-            size="sm"
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            v-if="asset?.OCCST === 'OCCUPIED' && asset?.OCCUPIER !== currentUser"
             @click="prioButton"
-            >Prio ({{ currentUser }})</b-button
+            >Prio ({{ currentUser }})</button
           >
         </span>
       </div>
       <div class="mr-auto">
-        <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset.OPMODE }}</span>
+        <span class="mr-1">{{ $t('modal.packML.operationMode') }}: {{ asset?.OPMODE }}</span>
       </div>
-      <b-button @click="cancel" size="sm" variant="secondary">{{ $t('modal.close') }}</b-button>
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">{{
+        $t('modal.close')
+      }}</button>
     </template>
-  </b-modal>
+  </CModal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import * as mxgraph from 'mxgraph';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IPackML';
+import OperationModeOptions from '@/types/OperationModeOptions';
+import { Asset } from '@/types/AssetsState';
+import CModal from '../common/CModal.vue';
 
-const {
-  mxClient,
-  mxGraph,
-  mxRubberband,
-  mxUtils,
-  mxEvent,
-  mxCodec,
-  mxConstants,
-  mxGraphModel,
-  mxGeometry,
-} = mxgraph();
+const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'PackML',
+  components: { CModal },
   data() {
     return {
       graph: {},
@@ -102,7 +103,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         { text: 'AUTOMATIC', value: 'AUTO', disabled: false },
         //{ text: 'SEMI-AUTOMATIC', value: 'SEMIAUTO', disabled: false },
         { text: 'SIMULATE', value: 'SIMULATE', disabled: false },
-      ],
+      ] as OperationModeOptions[],
     };
   },
   props: {
@@ -113,7 +114,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       currentUser: 'currentUser',
       isAuthorized: 'isAuthorized',
     }),
-    asset() {
+    asset(): Asset {
       return this.$store.getters['assets/getAssetById'](this.openedAssetId);
     },
   },
@@ -163,7 +164,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       }
       this.setModeButton();
     },
-    markCurrentState: function (state) {
+    markCurrentState: function (state: string) {
       let that = this;
 
       let vertices = that.graph.getChildCells(that.graph.getDefaultParent(), true, false);
@@ -234,7 +235,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           }
         });
     },
-    modeButton: function (value) {
+    modeButton: function (value: string) {
       axios
         .post(
           `${this.asset.CCInterfaceSubmodelEndpoint}/submodelElements/Operations/${value}/invoke`,
@@ -303,6 +304,18 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         }
       },
     },
+  },
+  mounted() {
+    const PackModal = document.getElementById('modal-pack');
+    PackModal?.addEventListener('shown.bs.modal', this.initGraph);
+    PackModal?.addEventListener('hide.bs.modal', this.clear);
+  },
+
+  beforeUnmount() {
+    //TODO: Should also be executed when modal is hidden
+    const PackModal = document.getElementById('modal-pack');
+    PackModal?.removeEventListener('shown.bs.modal', this.initGraph);
+    PackModal?.removeEventListener('hide.bs.modal', this.clear);
   },
 });
 </script>

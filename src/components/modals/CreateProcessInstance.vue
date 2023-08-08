@@ -1,113 +1,128 @@
 <template>
-  <b-modal
-    @ok="createInstance"
-    :id="modalId"
+  <CModal
+    :name="modalId"
+    ref="createModalRef"
     size="md"
+    :show="showModal"
     :title="$t('modal.createProcessInstance.title')"
   >
-    <label for="businessKeyInput">{{ $t('modal.createProcessInstance.businessKey.label') }}</label>
-    <b-form-input
-      id="businessKeyInput"
-      :state="keyState"
-      required
-      v-model="businessKey"
-      :placeholder="$t('modal.createProcessInstance.businessKey.placeholder')"
-      class="mb-2"
-    ></b-form-input>
-    <b-form-invalid-feedback id="input-live-feedback" class="mb-2">{{
-      $t('modal.createProcessInstance.businessKey.feedback')
-    }}</b-form-invalid-feedback>
+    <template v-slot:body>
+      <label for="input-business-key">{{
+        $t('modal.createProcessInstance.businessKey.label')
+      }}</label>
+      <input
+        class="form-control mb-2"
+        id="input-business-key"
+        :class="{ 'is-invalid': invalid }"
+        :placeholder="$t('modal.createProcessInstance.businessKey.placeholder')"
+        v-model="businessKey"
+        required
+      />
+      <div class="invalid-feedback mb-2" id="input-business-key-feedback">{{
+        $t('modal.createProcessInstance.businessKey.feedback')
+      }}</div>
 
-    <b-container class="p-0">
-      <b-form-row class="mb-2" v-for="variable in processVariables" :key="variable.id">
-        <b-col>
-          <b-form-input
-            v-model="variable.name"
-            :placeholder="$t('modal.createProcessInstance.variable.name')"
-          ></b-form-input>
-        </b-col>
-        <b-col>
-          <b-form-select
-            v-model="variable.type"
-            :options="typeOptions"
-            placeholder="Type"
-          ></b-form-select>
-        </b-col>
-        <b-col>
-          <b-form-input
-            v-if="variable.type === VarType.String"
-            v-model="variable.value"
-            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
-            :type="'text'"
-          ></b-form-input>
-          <b-form-input
-            v-else-if="variable.type === VarType.Long"
-            v-model="variable.value"
-            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
-            :type="'number'"
-          ></b-form-input>
-          <b-form-select
-            v-else-if="variable.type === VarType.Boolean"
-            v-model="variable.value"
-            :options="boolOptions"
-          ></b-form-select>
-          <b-form-input
-            :disabled="true"
-            v-else
-            :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
-          ></b-form-input>
-        </b-col>
-        <b-col cols="1">
-          <b-button @click="deleteVariable(variable.id)" variant="danger">-</b-button>
-        </b-col>
-      </b-form-row>
-    </b-container>
+      <div class="container p-0">
+        <div class="row mb-2" v-for="variable in processVariables" :key="variable.id">
+          <div class="col">
+            <input
+              class="form-control"
+              v-model="variable.name"
+              :placeholder="$t('modal.createProcessInstance.variable.name')"
+            />
+          </div>
+          <div class="col">
+            <select class="form-select" v-model="variable.type" placeholder="Type">
+              <option v-for="option in typeOptions" :value="option" :key="option">{{
+                option
+              }}</option></select
+            >
+          </div>
+          <div class="col">
+            <input
+              class="form-control"
+              v-if="variable.type === VarType.String"
+              v-model="variable.value"
+              :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+              :type="'text'"
+            />
+            <input
+              class="form-control"
+              v-else-if="variable.type === VarType.Long"
+              v-model="variable.value"
+              :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+              :type="'number'"
+            />
+            <select
+              class="form-select"
+              v-else-if="variable.type === VarType.Boolean"
+              v-model="variable.value"
+            >
+              <option v-for="option in boolOptions" :value="option" :key="option">{{
+                option
+              }}</option></select
+            >
+            <input
+              class="form-control"
+              :disabled="true"
+              v-else
+              :placeholder="$t('modal.createProcessInstance.variable.placeholder')"
+            />
+          </div>
+          <div class="col-1">
+            <button type="button" class="btn btn-danger" @click="deleteVariable(variable.id)"
+              >-</button
+            >
+          </div>
+        </div>
+      </div>
 
-    <b-button @click="addVariable">{{
-      $t('modal.createProcessInstance.variable.button')
-    }}</b-button>
-
-    <template v-slot:modal-footer="{ ok, cancel }">
-      <b-button @click="cancel">{{ $t('modal.createProcessInstance.dontCreate') }}</b-button>
-      <b-button :disabled="!keyState" variant="success" @click="ok">{{
-        $t('modal.createProcessInstance.create')
-      }}</b-button>
+      <button type="button" class="btn btn-secondary" @click="addVariable">{{
+        $t('modal.createProcessInstance.variable.button')
+      }}</button>
     </template>
-  </b-modal>
+    <template v-slot:footer>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        @click="$emit('close')"
+        >{{ $t('modal.createProcessInstance.dontCreate') }}</button
+      >
+      <button type="button" class="btn btn-success" :disabled="invalid" @click="createInstance">{{
+        $t('modal.createProcessInstance.create')
+      }}</button>
+    </template>
+  </CModal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
 import getEnv from '@/helpers/env';
+import { VarType, ProcessVariable } from '@/types/ProcessVariable';
+import CModal from '../common/CModal.vue';
 
-import {
-  Data,
-  Methods,
-  Computed,
-  Props,
-  VarType,
-  ProcessVariable,
-} from '@/interfaces/ICreateProcessInstance';
-
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'CreateProcessInstance',
+  components: { CModal },
   data() {
     return {
       modalId: 'modal-instance',
       businessKey: '',
-      processVariables: [],
+      processVariables: [] as ProcessVariable[],
       processVariableID: 0,
       typeOptions: [VarType.Placeholder, VarType.Boolean, VarType.String, VarType.Long],
       boolOptions: ['true', 'false'],
+      showModal: false,
     };
   },
   computed: {
     VarType() {
       return VarType;
     },
-    keyState() {
-      return this.businessKey.length > 0 ? true : false;
+    invalid() {
+      return this.businessKey.length === 0 ? true : false;
     },
   },
   methods: {
@@ -119,7 +134,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         value: '',
       });
     },
-    deleteVariable(id) {
+    deleteVariable(id: number) {
       this.processVariables = this.processVariables.filter((pv: ProcessVariable) => pv.id !== id);
     },
     createInstance() {
@@ -135,7 +150,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .post(
-          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+          `${getEnv('VITE_AJAX_REQUEST_DOMAIN')}/process-definition/${
             this.$route.params.pid
           }/start`,
           {
@@ -156,7 +171,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
       axios
         .get(
-          `${getEnv('VUE_APP_AJAX_REQUEST_DOMAIN')}/process-definition/${
+          `${getEnv('VITE_AJAX_REQUEST_DOMAIN')}/process-definition/${
             this.$route.params.pid
           }/form-variables`
         )
@@ -175,15 +190,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   mounted() {
     // update form variables (in case process definition version has changed)
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
-      if (modalId === this.modalId) {
-        this.checkFormVariables();
-      }
-    });
+    const InstanceModal = document.getElementById(this.modalId);
+    InstanceModal?.addEventListener('show.bs.modal', this.checkFormVariables);
   },
-  beforeDestroy() {
-    // remove ALL listeners for that event
-    this.$root.$off('bv::modal::show');
+  beforeUnmount() {
+    // remove listeners for that event
+    //TODO: Should also be executed when modal is hidden
+    const InstanceModal = document.getElementById(this.modalId);
+    InstanceModal?.removeEventListener('show.bs.modal', this.checkFormVariables);
   },
 });
 </script>

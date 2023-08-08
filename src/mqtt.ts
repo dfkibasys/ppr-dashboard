@@ -1,14 +1,14 @@
-import store from '@/store/index';
-import mqtt, { Client } from 'mqtt';
+import * as mqtt from 'mqtt/dist/mqtt.min';
 import * as uuid from 'uuid';
+import store from '@/main';
 
-let client: Client;
+let client;
 
 export default {
   connect() {
     client = mqtt.connect(store.getters['endpoints/mqttUrl'], { clientId: uuid.v4(), clean: true });
 
-    client.on('connect', function() {
+    client.on('connect', function () {
       console.log(`Connected to ${store.getters['endpoints/mqttUrl']}`);
     });
   },
@@ -21,7 +21,7 @@ export default {
     client.end();
   },
   subscribe(topic: string) {
-    client.subscribe(topic, function(err: Error) {
+    client.subscribe(topic, function (err: Error) {
       if (!err) {
         console.log(`Subscribed to topic ${topic}`);
       }

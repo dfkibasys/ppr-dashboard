@@ -1,337 +1,491 @@
 <template>
-  <b-container>    
-    <b-row>
-      <b-col sm="3">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
         <label label-for="btn-radios-estop">{{ $t('basysafe.estop') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-estop"              
-          name="btn-radios-estop"
-          v-model="states.estopbutton"
-          buttons>
-            <b-form-radio value="true" class="btn-success" @change="setEstopButtonState($event)" >{{ $t('basysafe.estopReleased') }}</b-form-radio>
-            <b-form-radio value="false" class="btn-danger" @change="setEstopButtonState($event)">{{ $t('basysafe.estopPressed') }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-    
-    <br/>
+      </div>
+      <div class="col">
+        <div id="btn-radios-estop" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="estop-1"
+            value="true"
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-estop"
+            @change="setEstopButtonState($event)"
+          />
+          <label class="btn btn-success" for="estop-1"> {{ $t('basysafe.estopReleased') }}</label>
 
-    <b-row>
-      <b-col sm="3">
+          <input
+            type="radio"
+            id="estop-2"
+            value="false"
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-estop"
+            @change="setEstopButtonState($event)"
+          />
+          <label class="btn btn-danger" for="estop-2">{{ $t('basysafe.estopPressed') }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.safetylightcurtain') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-safetylightcurtain"       
-          name="btn-radios-safetylightcurtain"
-          v-model="states.safetylightcurtain"
-          buttons>
-            <b-form-radio value="true" class="btn-success" @change="setSafetyLightCurtainState($event)" >{{ $t('basysafe.safetylightcurtainFree') }}</b-form-radio>
-            <b-form-radio value="false" class="btn-danger" @change="setSafetyLightCurtainState($event)">{{ $t('basysafe.safetylightcurtainDetection') }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-    
-    <br/>
+      </div>
+      <div class="col">
+        <div id="btn-radios-safetylightcurtain" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="safetylightcurtain-1"
+            value="true"
+            class="btn-check"
+            v-model="states.safetylightcurtain"
+            name="btn-radios-safetylightcurtain"
+            @change="setSafetyLightCurtainState($event)"
+          />
+          <label class="btn btn-success" for="safetylightcurtain-1">
+            {{ $t('basysafe.safetylightcurtainFree') }}</label
+          >
 
-    <b-row>
-      <b-col sm="3">
+          <input
+            type="radio"
+            id="essafetylightcurtaintop-2"
+            value="false"
+            class="btn-check"
+            v-model="states.estopbutton"
+            name="btn-radios-safetylightcurtain"
+            @change="setSafetyLightCurtainState($event)"
+          />
+          <label class="btn btn-danger" for="safetylightcurtain-2">{{
+            $t('basysafe.safetylightcurtainDetection')
+          }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.initiator') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-initiator"       
-          name="btn-radios-initiator"
-          v-model="states.initiator"
-          buttons>
-            <b-form-radio value="false" @change="setInitiatorState($event)" >{{ $t('basysafe.initiatorFree') }}</b-form-radio>
-            <b-form-radio value="true" @change="setInitiatorState($event)">{{ $t('basysafe.initiatorOccupied') }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-    
-    <br/>
+      </div>
+      <div class="col">
+        <div id="btn-radios-initiator" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="initiator-1"
+            value="false"
+            class="btn-check"
+            v-model="states.initiator"
+            name="btn-radios-initiator"
+            @change="setInitiatorState($event)"
+          />
+          <label class="btn btn-secondary" for="initiator-1">
+            {{ $t('basysafe.initiatorFree') }}</label
+          >
 
-    <b-row>
-      <b-col sm="3">
+          <input
+            type="radio"
+            id="initiator-2"
+            value="true"
+            class="btn-check"
+            v-model="states.initiator"
+            name="btn-radios-initiator"
+            @change="setInitiatorState($event)"
+          />
+          <label class="btn btn-secondary" for="initiator-2">{{
+            $t('basysafe.initiatorOccupied')
+          }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.ack') }}</label>
-      </b-col>
-      <b-col>
-        <b-button variant="info" @click="ackButton()" >{{ $t('basysafe.ackPressed') }}</b-button>       
-      </b-col>
-    </b-row>
-    
-    <br/>
+      </div>
+      <div class="col">
+        <button class="btn btn-info" @click="ackButton()">{{ $t('basysafe.ackPressed') }}</button>
+      </div>
+    </div>
 
-    <b-row>
-      <b-col sm="3">
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.signalLights') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-        id="btn-signalcolumn.red"       
-        name="btn-signalcolumn.red"
-        v-model="states.signalcolumn.red"
-        buttons >
-          <b-form-radio value="false" class="btn-danger" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="true" class="btn-danger" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-danger" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-      </b-form-radio-group>      
-      <br/>
-      <b-form-radio-group
-        id="btn-signalcolumn.yellow"       
-        name="btn-signalcolumn.yellow"
-        v-model="states.signalcolumn.yellow"
-        buttons >        
-          <b-form-radio value="false" class="btn-warning" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="true" class="btn-warning" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-warning" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-      </b-form-radio-group>
-      <br/>
-      <b-form-radio-group
-        id="btn-signalcolumn.white"       
-        name="btn-signalcolumn.white"
-        v-model="states.signalcolumn.white"
-        buttons >
-          <b-form-radio value="false" class="btn-light" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="true" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-      </b-form-radio-group>     
-      <br/>
-      <b-form-radio-group
-        id="btn-signalcolumn.green"       
-        name="btn-signalcolumn.green"
-        v-model="states.signalcolumn.green"
-        buttons >
-          <b-form-radio value="false" class="btn-success" @change="setSignalColumnState()" >{{ $t('basysafe.lightOff') }}</b-form-radio>
-          <b-form-radio value="true" class="btn-success" @change="setSignalColumnState()">{{ $t('basysafe.lightOn') }}</b-form-radio>
-          <!--
-          <b-form-radio value="2" class="btn-light" @change="setSignalColumnState()">{{ $t('basysafe.lightBlinking') }}</b-form-radio>
-          -->
-      </b-form-radio-group>
-      </b-col>
-    </b-row>
+      </div>
+      <div class="col">
+        <div id="btn-radios-signalcolumn.red" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.red-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.red"
+            name="btn-radios-signalcolumn.red"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-danger" for="signalcolumn.red-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
 
-    <br/>
+          <input
+            type="radio"
+            id="signalcolumn.red-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.red"
+            name="btn-radios-signalcolumn.red"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-danger" for="signalcolumn.red-2">{{
+            $t('basysafe.lightOn')
+          }}</label>
+        </div>
+        <br />
 
-    <b-row>
-      <b-col sm="3">
+        <div id="btn-radios-signalcolumn.yellow" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.yellow-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-signalcolumn.yellow"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-warning" for="signalcolumn.yellow-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.yellow-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-signalcolumn.yellow"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-warning" for="signalcolumn.yellow-2">{{
+            $t('basysafe.lightOn')
+          }}</label>
+        </div>
+
+        <br />
+        <div id="btn-radios-signalcolumn.white" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.white-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.white"
+            name="btn-radios-signalcolumn.white"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-light" for="signalcolumn.white-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.white-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.white"
+            name="btn-radios-signalcolumn.white"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-light" for="signalcolumn.white-2">{{
+            $t('basysafe.lightOn')
+          }}</label>
+        </div>
+
+        <br />
+
+        <div id="btn-radios-signalcolumn.green" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="signalcolumn.green-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.green"
+            name="btn-radios-signalcolumn.green"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-success" for="signalcolumn.green-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
+
+          <input
+            type="radio"
+            id="signalcolumn.green-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.green"
+            name="btn-radios-signalcolumn.green"
+            @change="setSignalColumnState()"
+          />
+          <label class="btn btn-success" for="signalcolumn.green-2">{{
+            $t('basysafe.lightOn')
+          }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.press') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-press"       
-          name="btn-radios-press"
-          v-model="states.press.opmode"
-          buttons>
-            <b-form-radio value="retract" @change="simulateRetract()">{{ $t('basysafe.pressRetract') }}</b-form-radio>
-            <b-form-radio value="press" @change="simulatePress()" >{{ $t('basysafe.pressPress') }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
-    
-    <br/>
+      </div>
+      <div class="col">
+        <div id="btn-radios-press" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="press-1"
+            value="retract"
+            class="btn-check"
+            v-model="states.press.opmode"
+            name="btn-radios-press"
+            @change="simulateRetract()"
+          />
+          <label class="btn btn-secondary" for="press-1"> {{ $t('basysafe.pressRetract') }}</label>
 
-    <b-row>
-      <b-col sm="3">
+          <input
+            type="radio"
+            id="press-2"
+            value="press"
+            class="btn-check"
+            v-model="states.press.opmode"
+            name="btn-radios-press"
+            @change="simulatePress()"
+          />
+          <label class="btn btn-secondary" for="press-2">{{ $t('basysafe.pressPress') }}</label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="col-3">
         <label>{{ $t('basysafe.signalLightsYellowCommand') }}</label>
-      </b-col>
-      <b-col>
-        <b-form-radio-group
-          id="btn-radios-yellow-light"       
-          name="btn-radios-yellow-light"
-          buttons>
-            <b-form-radio value="false"  @change="setYellowLight($event)">{{ $t('basysafe.lightOff') }}</b-form-radio>
-            <b-form-radio value="true" class="btn-warning" @change="setYellowLight($event)" >{{ $t('basysafe.lightOn') }}</b-form-radio>
-        </b-form-radio-group>
-      </b-col>
-    </b-row>
+      </div>
+      <div class="col">
+        <div id="btn-radios-yellow-light" class="btn-group" role="group">
+          <input
+            type="radio"
+            id="yellow-light-1"
+            value="false"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-yellow-light"
+            @change="setYellowLight($event)"
+          />
+          <label class="btn btn-secondary" for="yellow-light-1">
+            {{ $t('basysafe.lightOff') }}</label
+          >
 
-  </b-container>    
+          <input
+            type="radio"
+            id="yellow-light-2"
+            value="true"
+            class="btn-check"
+            v-model="states.signalcolumn.yellow"
+            name="btn-radios-yellow-light"
+            @change="setYellowLight($event)"
+          />
+          <label class="btn btn-warning" for="yellow-light-2">{{ $t('basysafe.lightOn') }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import axios from 'axios';
-import { createLogger, mapGetters } from 'vuex';
-import { Data, Methods, Computed, Props } from '@/interfaces/IBasysafe';
+import { defineComponent } from 'vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Basysafe',
   data() {
-    return {      
+    return {
       config: {
         press: {
           maxCounter: 50,
-          freqHz: 10
-        }
+          freqHz: 10,
+        },
       },
       states: {
         estopbutton: true,
         safetylightcurtain: true,
-        initiator: false,        
+        initiator: false,
         signalcolumn: {
           red: false,
           yellow: false,
           green: false,
-          white: false
+          white: false,
         },
         press: {
           counter: 0,
-          opmode: "retract",
-          state: "stopped"
-        }
-      },      
+          opmode: 'retract',
+          state: 'stopped',
+        },
+      },
       topics: {
-        statusSafetyLightCurtain: "basysafe/safetylightcurtain/status",
-        statusSignalColumn: "basysafe/signalcolumn/status",
-        statusInitiator: "basysafe/initiator/status",
-        statusEstopButton: "basysafe/estopbutton/status",
-        statusAckButton: "basysafe/ackbutton/status",
-        statusPress: "basysafe/press/status",
-        commandSignalColumn: "basysafe/signalcolumn/command"
-      }
+        statusSafetyLightCurtain: 'basysafe/safetylightcurtain/status',
+        statusSignalColumn: 'basysafe/signalcolumn/status',
+        statusInitiator: 'basysafe/initiator/status',
+        statusEstopButton: 'basysafe/estopbutton/status',
+        statusAckButton: 'basysafe/ackbutton/status',
+        statusPress: 'basysafe/press/status',
+        commandSignalColumn: 'basysafe/signalcolumn/command',
+      },
     };
   },
   methods: {
     ackButton: function () {
-      console.log("ackButton: " );     
+      console.log('ackButton: ');
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "status": true
+        timestamp: new Date().toISOString(),
+        status: true,
       };
       this.$mqtt.publish(this.topics.statusAckButton, msg);
-    
-      setTimeout(()=> {
+
+      setTimeout(() => {
         var msg = {
-          "timestamp": new Date().toISOString(),
-          "status": false
+          timestamp: new Date().toISOString(),
+          status: false,
         };
         this.$mqtt.publish(this.topics.statusAckButton, msg);
       }, 500);
-    
     },
-    setEstopButtonState: function (state) {
-      console.log("setEstopButtonState: " + state); 
+    setEstopButtonState: function (state: boolean) {
+      console.log('setEstopButtonState: ' + state);
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "status": state
+        timestamp: new Date().toISOString(),
+        status: state,
       };
       this.$mqtt.publish(this.topics.statusEstopButton, msg);
     },
-    setSafetyLightCurtainState: function (state) {
-      console.log("setSafetyLightCurtainState: " + state); 
+    setSafetyLightCurtainState: function (state: boolean) {
+      console.log('setSafetyLightCurtainState: ' + state);
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "status": state
+        timestamp: new Date().toISOString(),
+        status: state,
       };
       this.$mqtt.publish(this.topics.statusSafetyLightCurtain, msg);
     },
-    setInitiatorState: function(state) {
-      console.log("setInitiatorState: " + state);     
+    setInitiatorState: function (state: boolean) {
+      console.log('setInitiatorState: ' + state);
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "status": state
+        timestamp: new Date().toISOString(),
+        status: state,
       };
       this.$mqtt.publish(this.topics.statusInitiator, msg);
     },
-    setSignalColumnState: function() {
-      console.log("setSignalColumnState: " + JSON.stringify(this.states.signalcolumn)); 
+    setSignalColumnState: function () {
+      console.log('setSignalColumnState: ' + JSON.stringify(this.states.signalcolumn));
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "red": this.states.signalcolumn.red,
-        "yellow": this.states.signalcolumn.yellow,
-        "green": this.states.signalcolumn.green,
-        "white": this.states.signalcolumn.white,
+        timestamp: new Date().toISOString(),
+        red: this.states.signalcolumn.red,
+        yellow: this.states.signalcolumn.yellow,
+        green: this.states.signalcolumn.green,
+        white: this.states.signalcolumn.white,
       };
       this.$mqtt.publish(this.topics.statusSignalColumn, msg);
-    },    
-    setYellowLight: function (state) {
-      console.log("setYellowLight: " + state); 
+    },
+    setYellowLight: function (state: boolean) {
+      console.log('setYellowLight: ' + state);
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "status": state
+        timestamp: new Date().toISOString(),
+        status: state,
       };
       this.$mqtt.publish(this.topics.commandSignalColumn, msg);
     },
-    simulatePress: async function() {
-      console.log("simulatePress: "); 
-      
+    simulatePress: async function () {
+      console.log('simulatePress: ');
+
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "counter": Number(this.states.press.counter),
-        "opmode": "press",
-        "state": "starting"
+        timestamp: new Date().toISOString(),
+        counter: Number(this.states.press.counter),
+        opmode: 'press',
+        state: 'starting',
       };
 
       this.$mqtt.publish(this.topics.statusPress, msg);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      msg.state = "execute";
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      msg.state = 'execute';
 
-      while (this.states.press.counter < this.config.press.maxCounter
-       && this.states.estopbutton && this.states.safetylightcurtain) {         
-        this.states.press.counter += 1;      
-        console.log("counter: ",  this.states.press.counter); 
+      while (
+        this.states.press.counter < this.config.press.maxCounter &&
+        this.states.estopbutton &&
+        this.states.safetylightcurtain
+      ) {
+        this.states.press.counter += 1;
+        console.log('counter: ', this.states.press.counter);
 
         msg.timestamp = new Date().toISOString();
-        msg.counter = this.states.press.counter;        
+        msg.counter = this.states.press.counter;
         this.$mqtt.publish(this.topics.statusPress, msg);
-        await new Promise(resolve => setTimeout(resolve, 1000/this.config.press.freqHz));
+        await new Promise((resolve) => setTimeout(resolve, 1000 / this.config.press.freqHz));
       }
-      
+
       if (this.states.press.counter == this.config.press.maxCounter) {
-        console.log("counter finally: ",  this.states.press.counter); 
-        msg.state = "completing";
-        this.$mqtt.publish(this.topics.statusPress, msg);        
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        msg.state = "complete";
+        console.log('counter finally: ', this.states.press.counter);
+        msg.state = 'completing';
+        this.$mqtt.publish(this.topics.statusPress, msg);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        msg.state = 'complete';
         this.$mqtt.publish(this.topics.statusPress, msg);
       }
     },
-    simulateRetract: async function() {
-      console.log("simulateRetract: "); 
-      
+    simulateRetract: async function () {
+      console.log('simulateRetract: ');
+
       var msg = {
-        "timestamp": new Date().toISOString(),
-        "counter": Number(this.states.press.counter),
-        "opmode": "retract",
-        "state": "starting"
+        timestamp: new Date().toISOString(),
+        counter: Number(this.states.press.counter),
+        opmode: 'retract',
+        state: 'starting',
       };
 
       this.$mqtt.publish(this.topics.statusPress, msg);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      msg.state = "execute";
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      msg.state = 'execute';
 
-      while (this.states.press.counter > 0
-       && this.states.estopbutton && this.states.safetylightcurtain) {         
-        this.states.press.counter -= 1;      
-        console.log("counter: ",  this.states.press.counter); 
+      while (
+        this.states.press.counter > 0 &&
+        this.states.estopbutton &&
+        this.states.safetylightcurtain
+      ) {
+        this.states.press.counter -= 1;
+        console.log('counter: ', this.states.press.counter);
 
         msg.timestamp = new Date().toISOString();
-        msg.counter = this.states.press.counter;        
+        msg.counter = this.states.press.counter;
         this.$mqtt.publish(this.topics.statusPress, msg);
-        await new Promise(resolve => setTimeout(resolve, 1000/this.config.press.freqHz));
-      }
-      
-      if (this.states.press.counter == 0) {
-        console.log("counter finally: ",  this.states.press.counter); 
-        msg.state = "completing";
-        this.$mqtt.publish(this.topics.statusPress, msg);        
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        msg.state = "complete";
-        this.$mqtt.publish(this.topics.statusPress, msg);
+        await new Promise((resolve) => setTimeout(resolve, 1000 / this.config.press.freqHz));
       }
 
-    }   
-  } 
+      if (this.states.press.counter == 0) {
+        console.log('counter finally: ', this.states.press.counter);
+        msg.state = 'completing';
+        this.$mqtt.publish(this.topics.statusPress, msg);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        msg.state = 'complete';
+        this.$mqtt.publish(this.topics.statusPress, msg);
+      }
+    },
+  },
 });
 </script>
 
