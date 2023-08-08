@@ -47,12 +47,12 @@ The same-origin policy of the browser protects web applications to interact only
 
 ### Development
 
-In `vue.config.js` a proxy has been defined for the development server:
+In `vite.config.js` a proxy has been defined for the development server:
 
 ```
-devServer: {
-    proxy: getEnv('VITE_CAMUNDA_REST_URL')
-}
+proxy: {
+    '^/engine-rest': env.VITE_CAMUNDA_REST_URL,
+},
 ```
 
 All AJAX requests will be sent to the local address of the VueJS application, which is defined in the `.env` file:
