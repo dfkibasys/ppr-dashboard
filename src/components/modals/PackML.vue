@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import * as mxgraph from 'mxgraph';
+import mxgraph from 'mxgraph';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import OperationModeOptions from '@/types/OperationModeOptions';
