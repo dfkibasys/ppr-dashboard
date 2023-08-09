@@ -1,53 +1,81 @@
 <template>
   <div>
-    <b-navbar type="light" variant="light">
-      <b-navbar-brand href="#">
-        <img src="@/assets/DFKI_Logo.png" class="mr-3" height="40" alt />
-        <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" alt />
-      </b-navbar-brand>
+    <nav class="navbar navbar-light bg-light navbar-expand">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="@/assets/DFKI_Logo.png" class="me-3" height="40" />
+          <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" />
+        </a>
 
-      <b-navbar-nav is-nav class="flex-row ml-auto">
-        <b-link class="pr-3" to="/assets">{{ $t('navbar.assets') }}</b-link>
-        <!-- <b-link class="pr-3" to="/services">{{ $t('navbar.services') }}</b-link>
-        <b-link class="pr-3" to="/management">{{ $t('navbar.management') }}</b-link> -->
-        <b-link class="pr-3" to="/processes">{{ $t('navbar.processes') }}</b-link>
-      </b-navbar-nav>
-
-      <b-navbar-nav class="ml-auto pr-3">
-        <b-button v-if="!authorized" size="sm" type="button" v-b-modal.modal-login>{{
-          $t('navbar.login')
-        }}</b-button>
-        <b-nav-item-dropdown v-if="authorized" :text="user" right>
-          <b-dropdown-item @click="openSettings">{{ $t('navbar.settings') }}</b-dropdown-item>
-          <b-dropdown-item @click="signout" href="#">{{ $t('navbar.logout') }}</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-    </b-navbar>
+        <ul class="navbar-nav">
+          <router-link class="pe-3" to="/assets">{{ $t('navbar.assets') }}</router-link>
+          <router-link class="pe-3" to="/processes">{{ $t('navbar.processes') }}</router-link>
+          <router-link class="pe-3" to="/basysafe">{{ $t('navbar.basysafe') }}</router-link>
+        </ul>
+        <ul class="navbar-nav pe-3">
+          <button
+            v-if="!authorized"
+            type="button"
+            @click="showLoginModal = true"
+            class="btn btn-secondary btn-sm"
+            >{{ $t('navbar.login') }}</button
+          >
+          <li v-if="authorized" class="nav-item dropdown"
+            ><a
+              role="button"
+              href="#"
+              class="nav-link dropdown-toggle"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              >{{ user }}</a
+            ><ul class="dropdown-menu dropdown-menu-right"
+              ><li
+                ><a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-settings"
+                  class="dropdown-item"
+                  >{{ $t('navbar.settings') }}</a
+                ></li
+              ><li
+                ><a @click="signout" href="#" class="dropdown-item">{{
+                  $t('navbar.logout')
+                }}</a></li
+              ></ul
+            ></li
+          ></ul
+        >
+      </div>
+    </nav>
     <Licences />
-    <Login />
+    <Login :show="showLoginModal" @close="showLoginModal = false" />
     <Settings />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import Licences from '@/components/modals/Licences.vue';
 import Login from '@/components/modals/Login.vue';
 import Settings from '@/components/modals/Settings.vue';
-import { Data, Methods, Computed, Props } from '@/interfaces/INavbar';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Navbar',
   components: {
     Licences,
     Login,
     Settings,
   },
+  data() {
+    return {
+      showLoginModal: false,
+    };
+  },
   computed: {
-    user: function () {
+    user: function (): string {
       return this.$store.getters['users/currentUser'];
     },
-    authorized: function () {
+    authorized: function (): boolean {
       return this.$store.getters['users/isAuthorized'];
     },
   },
@@ -55,9 +83,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   methods: {
     signout() {
       this.$store.dispatch('users/logoutUser');
-    },
-    openSettings() {
-      this.$bvModal.show('modal-settings');
     },
   },
 });

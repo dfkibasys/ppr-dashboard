@@ -9,7 +9,7 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
@@ -23,9 +23,9 @@ npm run build
 Set the needed Registry/MQTT/Camunda URLS in `.env` file
 
 ```
-VUE_APP_AAS_REGISTRY_URL=http://10.2.10.4:8020
-VUE_APP_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
-VUE_APP_CAMUNDA_REST_URL=http://10.2.10.4:8080
+VITE_AAS_REGISTRY_URL=http://10.2.10.4:8020
+VITE_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
+VITE_CAMUNDA_REST_URL=http://10.2.10.4:8080
 ```
 
 Build and start container
@@ -47,18 +47,18 @@ The same-origin policy of the browser protects web applications to interact only
 
 ### Development
 
-In `vue.config.js` a proxy has been defined for the development server:
+In `vite.config.js` a proxy has been defined for the development server:
 
 ```
-devServer: {
-    proxy: getEnv('VUE_APP_CAMUNDA_REST_URL')
-}
+proxy: {
+    '^/engine-rest': env.VITE_CAMUNDA_REST_URL,
+},
 ```
 
 All AJAX requests will be sent to the local address of the VueJS application, which is defined in the `.env` file:
 
 ```
-VUE_APP_AJAX_REQUEST_DOMAIN=http://localhost:8081/engine-rest
+VITE_AJAX_REQUEST_DOMAIN=http://localhost:3000/engine-rest
 ```
 
 Source: https://medium.com/js-dojo/how-to-deal-with-cors-error-on-vue-cli-3-d78c024ce8d3
@@ -77,7 +77,7 @@ location /engine-rest/
 The AJAX request domain needs to be adapted to the public domain of the VueJS application:
 
 ```
-VUE_APP_AJAX_REQUEST_DOMAIN=http://hybrit-lnv-1:8090/engine-rest
+VITE_AJAX_REQUEST_DOMAIN=http://hybrit-lnv-1:8090/engine-rest
 ```
 
 Source: https://medium.com/pareture/simple-docker-nginx-cors-reverse-proxy-5202a3445847

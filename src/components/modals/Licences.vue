@@ -1,30 +1,45 @@
 <template>
-  <b-modal id="modal-licences" size="lg" :title="$t('modal.licences.title')">
-    <b-table striped :items="licences" :fields="fields">
-      <template v-slot:head(name)>{{ $t('modal.licences.name') }}</template>
-      <template v-slot:head(version)>{{ $t('modal.licences.version') }}</template>
-      <template v-slot:head(summary)>{{ $t('modal.licences.summary') }}</template>
-      <template v-slot:cell(name)="value">
-        <b-link :href="value.item.repository" target="_blank">{{ value.item.name }}</b-link>
-      </template>
-    </b-table>
-    <template v-slot:modal-footer="{ cancel }">
-      <b-button variant="secondary" @click="cancel">{{ $t('modal.close') }}</b-button>
+  <CModal
+    name="modal-licences"
+    ref="licensesModalRef"
+    size="lg"
+    :title="$t('modal.licences.title')"
+  >
+    <template v-slot:body>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{{ $t('modal.licences.name') }}</th>
+            <th scope="col">{{ $t('modal.licences.version') }}</th>
+            <th scope="col">{{ $t('modal.licences.summary') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="licence in licences" :key="licence.name">
+            <td
+              ><a :href="licence.repository" target="_blank">{{ licence.name }}</a></td
+            >
+            <td>{{ licence.version }}</td>
+            <td>{{ licence.summary }}</td>
+          </tr>
+        </tbody>
+      </table>
     </template>
-  </b-modal>
+  </CModal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
-import { Data, Methods, Computed, Props } from '@/interfaces/ILicences';
+import Licence from '@/types/Licences';
+import CModal from '../common/CModal.vue';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
   name: 'Licences',
+  components: { CModal },
   data() {
     return {
-      licences: [],
-      fields: ['name', 'version', 'summary'],
+      licences: [] as Licence[],
     };
   },
   created() {

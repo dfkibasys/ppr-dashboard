@@ -1,0 +1,13 @@
+// Import all of Bootstrap's CSS
+@import '~bootstrap/scss/bootstrap';
+
+a {
+  text-decoration: none;
+}
+
+.breadcrumb {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}

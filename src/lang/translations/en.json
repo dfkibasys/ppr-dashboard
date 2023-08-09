@@ -1,12 +1,11 @@
 {
   "navbar": {
     "assets": "Control Components",
-    "services": "Services",
-    "management": "Management",
     "processes": "Processes",
     "login": "Login",
     "logout": "Logout",
-    "settings": "Settings"
+    "settings": "Settings",
+    "basysafe": "BaSySafe"
   },
   "modal": {
     "close": "Close",
@@ -50,6 +49,11 @@
       "change": "Change",
       "mockObjects": "Mock objects",
       "info": "Only available for components"
+    },
+    "deletionWarning": {
+      "title": "Are you sure?",
+      "content": "This deployment has running instances. Are you sure?",
+      "delete": "Delete"
     }
   },
   "card": {
@@ -115,5 +119,30 @@
       "definition": "Definition",
       "instance": "Instance"
     }
+  },
+  "basysafe": {
+    "ack": "Ack Button",
+    "ackPressed": "trigger",
+    "estop": "E-Stop Button",
+    "estopReleased": "ok",
+    "estopPressed": "not ok",
+    "initiator": "Initiator",
+    "initiatorFree": "free",
+    "initiatorOccupied": "occupied",
+    "signalLights": "Signal Column",
+    "signalLightsRed": "red",
+    "signalLightsYellow": "yellow",
+    "signalLightsGreen": "green",
+    "signalLightsWhite": "white",
+    "signalLightsYellowCommand": "Yellow Light",
+    "lightOff": "off",
+    "lightOn": "on",
+    "lightBlinking": "blink",
+    "safetylightcurtain": "Safety Light Curtain",
+    "safetylightcurtainFree": "ok",
+    "safetylightcurtainDetection": "not ok",
+    "press": "Press",
+    "pressPress": "press",
+    "pressRetract": "retract"
   }
 }

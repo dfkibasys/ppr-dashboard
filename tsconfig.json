@@ -1,17 +1,18 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "strict": true,
-      "moduleResolution": "node",
-      "baseUrl": ".",
-      "paths": {
-        "@/*": [
-          "src/*"
-        ]
-      },
-      "resolveJsonModule": true,
-      "allowSyntheticDefaultImports": true,
-      "typeRoots": ["types"],
-      "noImplicitAny": false,
-    }
+  "compilerOptions": {
+    "target": "esnext",
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["types"],
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "noImplicitThis": false,
+    "isolatedModules": true
   }
+}

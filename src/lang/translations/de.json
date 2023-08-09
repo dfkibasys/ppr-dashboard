@@ -1,12 +1,11 @@
 {
   "navbar": {
     "assets": "Führungskomponenten",
-    "services": "Services",
-    "management": "Management",
     "processes": "Prozesse",
     "login": "Anmelden",
     "logout": "Abmelden",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "basysafe": "BaSySafe"
   },
   "modal": {
     "close": "Schließen",
@@ -50,6 +49,11 @@
       "change": "Ändern",
       "mockObjects": "Mock-Objekte",
       "info": "Nur für Komponenten verfügbar"
+    },
+    "deletionWarning": {
+      "title": "Sind Sie sicher?",
+      "content": "Dieses Deployment hat noch laufende Instanzen. Sind Sie sicher?",
+      "delete": "Löschen"
     }
   },
   "card": {
@@ -115,5 +119,30 @@
       "definition": "Definition",
       "instance": "Instanz"
     }
+  },
+  "basysafe": {
+    "ack": "Bestätigungstaster",
+    "ackPressed": "bestätigen",
+    "estop": "Not-Aus-Taster",
+    "estopReleased": "entsperrt",
+    "estopPressed": "gedrückt",
+    "initiator": "Initiator",
+    "initiatorFree": "frei",
+    "initiatorOccupied": "belegt",
+    "signalLights": "Signalleuchte",
+    "signalLightsRed": "rot",
+    "signalLightsYellow": "gelb",
+    "signalLightsGreen": "grün",
+    "signalLightsWhite": "weiß",
+    "signalLightsYellowCommand": "Gelbe Leuchte",
+    "lightOff": "aus",
+    "lightOn": "an",
+    "lightBlinking": "blinken",
+    "safetylightcurtain": "Sicherheitslichtgitter",
+    "safetylightcurtainFree": "frei",
+    "safetylightcurtainDetection": "durchgegriffen",
+    "press": "Presse",
+    "pressPress": "pressen",
+    "pressRetract": "hochfahren"
   }
 }

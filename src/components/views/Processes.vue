@@ -1,54 +1,61 @@
 <template>
-  <b-container>
-    <b-breadcrumb :items="bcItems"></b-breadcrumb>
+  <div class="container">
+    <CBreadcrumb :items="bcItems"></CBreadcrumb>
     <h2>{{ $t('process.deployed') }}</h2>
-    <b-row class="pb-5">
-      <b-col>
-        <span>{{ $tc('process.processDefinition', processDefinitionsCount) }}</span>
+    <div class="row pb-5">
+      <div class="col">
+        <span>{{ $t('process.processDefinition', processDefinitionsCount) }}</span>
         <h3>{{ processDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
-        <span>{{ $tc('process.decisionDefinition', decisionDefinitionsCount) }}</span>
+      </div>
+      <div class="col">
+        <span>{{ $t('process.decisionDefinition', decisionDefinitionsCount) }}</span>
         <h3>{{ decisionDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
-        <span>{{ $tc('process.caseDefinition', caseDefinitionsCount) }}</span>
+      </div>
+      <div class="col">
+        <span>{{ $t('process.caseDefinition', caseDefinitionsCount) }}</span>
         <h3>{{ caseDefinitionsCount }}</h3>
-      </b-col>
-      <b-col>
-        <span>{{ $tc('process.deployment', deploymentsCount) }}</span>
+      </div>
+      <div class="col">
+        <span>{{ $t('process.deployment', deploymentsCount) }}</span>
         <h3>{{ deploymentsCount }}</h3>
-      </b-col>
-    </b-row>
-    <b-row class="pt-5">
-      <b-col>
-        <h2>{{ $tc('process.processDefinition', processDefinitionsCount) }}</h2>
-        <b-table
-          hover
-          striped
-          @row-clicked="goToProcessView"
-          :items="processDefinitions"
-          :fields="fields"
-          class="clickable-table"
-        >
-          <template v-slot:head(instances)>{{ $t('process.instances') }}</template>
-          <template v-slot:head(name)>{{ $t('process.name') }}</template>
-          <template v-slot:head(key)>{{ $t('process.key') }}</template>
-          <template v-slot:head(tenantId)>{{ $t('process.tenantId') }}</template>
-          <template v-slot:cell(tenantId)="value">{{ value.item.tenantId || '-' }}</template>
-        </b-table>
-      </b-col>
-    </b-row>
-  </b-container>
+      </div>
+    </div>
+    <div class="row pt-5">
+      <div class="col">
+        <h2>{{ $t('process.processDefinition', processDefinitionsCount) }}</h2>
+        <table class="table table-striped table-hover clickable-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ $t('process.instances') }}</th>
+              <th scope="col">{{ $t('process.name') }}</th>
+              <th scope="col">{{ $t('process.key') }}</th>
+              <th scope="col">{{ $t('process.tenantId') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="def in processDefinitions" :key="def.key" @click="goToProcessView(def)">
+              <td>{{ def.instances }}</td>
+              <td>{{ def.name }}</td>
+              <td>{{ def.key }}</td>
+              <td>{{ def.tenantId || '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
-import { Data, Methods, Computed, Props } from '@/interfaces/IProcesses';
 import getEnv from '@/helpers/env';
+import CBreadcrumb from '@/components/common/CBreadcrumb.vue';
+import BreadcrumbItem from '@/types/BreadcrumbItem';
+import ProcessDefinition from '@/types/ProcessDefinition';
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default defineComponent({
+  components: { CBreadcrumb },
   name: 'Processes',
   data() {
     return {
@@ -58,23 +65,22 @@ export default Vue.extend<Data, Methods, Computed, Props>({
           to: '/processes',
           active: true,
         },
-      ],
+      ] as BreadcrumbItem[],
       processDefinitionsCount: 0,
       decisionDefinitionsCount: 0,
       caseDefinitionsCount: 0,
       deploymentsCount: 0,
-      processDefinitions: [],
-      fields: ['instances', 'name', 'key', 'tenantId'],
+      processDefinitions: [] as ProcessDefinition[],
     };
   },
   methods: {
-    goToProcessView(item) {
+    goToProcessView(item: ProcessDefinition) {
       this.$router.push({ name: 'ProcessesDetails', params: { pid: item.id } });
     },
   },
   created() {
     let that = this;
-    let baseUrl = getEnv('VUE_APP_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
+    let baseUrl = getEnv('VITE_AJAX_REQUEST_DOMAIN'); //camundaUrl + "/engine-rest"
     this.$Progress.start();
 
     axios
@@ -103,7 +109,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
               })
               .then((res) => {
                 //add reactive properties to nested object
-                that.$set(pp, 'instances', res.data.count);
+                pp['instances'] = res.data.count;
               })
               .catch((err) => {
                 this.$Progress.fail();

@@ -1,11 +1,12 @@
 # build stage (responsible for building a production-ready artifact of our Vue.js app)
-FROM node:lts-alpine as build-stage
+FROM --platform=$BUILDPLATFORM node:18-alpine as build-stage
 
 # make the 'app' folder the current working directory
 WORKDIR /app
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
+# copy both 'package.json' and 'package-lock.json' 
+COPY package.json ./
+COPY package-lock.json ./
 
 # install project dependencies
 RUN npm install
@@ -17,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # production stage (responsible for serving such artifact using NGINX)
-FROM nginx:stable-alpine as production-stage
+FROM --platform=$TARGETPLATFORM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 COPY --from=build-stage /app/default.conf.template /etc/nginx/conf.d/default.conf.template

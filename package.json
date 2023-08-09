@@ -5,62 +5,55 @@
   "author": "Jonas Mohr (jonas.mohr@dfki.de)",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8081",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "e2e": "cypress run",
     "cy:open": "cypress open",
-    "test": "npm run serve & cypress run"
+    "test": "npm run dev & cypress run --config retries=2,defaultCommandTimeout=10000 --browser chrome"
   },
   "dependencies": {
-    "@basys/aas-registry-client-ts-fetch": "^0.3.0-SNAPSHOT.202203091218",
-    "axios": "^0.24.0",
+    "@aacassandra/vue3-progressbar": "^1.0.3",
+    "@basys/aas-registry-client-ts-fetch": "^0.4.2-SNAPSHOT.202210262111",
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.21.1",
-    "bpmn-js": "^8.9.0",
-    "core-js": "^3.20.3",
-    "mqtt": "^4.3.4",
+    "bootstrap": "^5.3.1",
+    "bootstrap-icons": "^1.10.5",
+    "bpmn-js": "^13.2.2",
+    "moment": "^2.29.4",
+    "mqtt": "^4.3.7",
     "mxgraph": "^4.2.2",
-    "uuid": "^7.0.3",
-    "vue": "^2.6.14",
-    "vue-i18n": "^8.26.8",
-    "vue-moment": "^4.1.0",
-    "vue-progressbar": "^0.7.5",
-    "vue-router": "^3.5.3",
-    "vuex": "^3.6.2"
+    "url": "^0.11.1",
+    "uuid": "^9.0.0",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.2.4",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@types/mqtt": "^2.5.0",
-    "@types/vue-i18n": "^7.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vue/cli-plugin-babel": "^4.5.0",
-    "@vue/cli-plugin-eslint": "^4.5.0",
-    "@vue/cli-plugin-typescript": "^4.5.0",
-    "@vue/cli-service": "^4.5.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "babel-eslint": "^10.1.0",
-    "cypress": "^9.5.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "typescript": "^4.1.5",
-    "vue-template-compiler": "^2.6.14"
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "cypress": "^12.17.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-vue": "^9.15.1",
+    "sass": "^1.64.2",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.8"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es2022": true
     },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
     "rules": {}
   },
   "browserslist": [

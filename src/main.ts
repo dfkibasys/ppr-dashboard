@@ -1,20 +1,26 @@
 //Import
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
-import router from '@/router';
-import store from '@/store';
+import { createRouter } from '@/router';
+import { createStore } from '@/store';
 import mqtt from '@/mqtt';
 import Axios from 'axios';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import messages from '@/lang';
-import VueProgressBar from 'vue-progressbar';
+import VueProgressBar from '@aacassandra/vue3-progressbar';
+
+//Bootstrap
+// Import our custom CSS
+import './scss/styles.scss';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import '@popperjs/core';
+import 'bootstrap';
 
 //Options
 Axios.defaults.timeout = 4000;
 
+//TOOD: check out https://github.com/aacassandra/vue3-progressbar
 const ProgressBarOptions = {
   color: '#385ebc',
   failedColor: 'red',
@@ -27,25 +33,27 @@ const ProgressBarOptions = {
   position: 'relative',
 };
 
-const i18nOptions = {
+const i18n = createI18n({
   locale: 'en',
+  legacy: false,
+  allowComposition: true,
   fallbackLocale: 'en',
+  globalInjection: true,
   messages,
-};
+});
 
-Vue.prototype.$mqtt = mqtt;
+const router = createRouter();
+const store = createStore(router);
+export default store;
+
+const app = createApp(App);
+
+app.config.globalProperties.$mqtt = mqtt;
 
 //Usage
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
-Vue.use(VueI18n);
-const i18n = new VueI18n(i18nOptions);
-Vue.use(VueProgressBar, ProgressBarOptions);
-Vue.use(require('vue-moment'));
+app.use(i18n);
+app.use(store);
+app.use(router);
+app.use(VueProgressBar, ProgressBarOptions);
 
-new Vue({
-  render: (h) => h(App),
-  i18n,
-  router,
-  store,
-}).$mount('#app');
+app.mount('#app');
