@@ -42,7 +42,7 @@ export function createRouter() {
         name: 'Basysafe',
         component: Basysafe,
       },
-      { path: '/:pathMatch(.*)*', redirect: '/assets' },
+      { path: '/:catchAll(.*)', redirect: '/assets' },
     ],
   });
 }

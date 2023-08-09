@@ -30,5 +30,8 @@ export default defineConfig(({ mode }) => {
       mxResourceExtension: {},
       mxLoadStylesheets: {},
     },
+    build: {
+      assetsDir: 'static',
+    },
   };
 });
