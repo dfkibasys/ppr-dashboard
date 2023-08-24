@@ -154,15 +154,15 @@
                 <thead>
                   <tr>
                     <th scope="col">{{ $t('process.message') }}</th>
-                    <th scope="col">{{ $t('process.startTime') }}</th>
-                    <th scope="col">{{ $t('process.activityName') }}</th>
+                    <th scope="col">{{ $t('process.createTime') }}</th>
+                    <th scope="col">{{ $t('process.activityId') }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="incident in incidents" :key="incident.id">
-                    <td>{{ incident.message }}</td>
-                    <td>{{ moment(incident.startTime) }}</td>
-                    <td>{{ incident.activityName }}</td>
+                    <td>{{ incident.incidentMessage }}</td>
+                    <td>{{ moment(incident.createTime) }}</td>
+                    <td>{{ incident.activityId }}</td>
                   </tr>
                   <tr v-if="incidents.length === 0">
                     <td colspan="3">{{ $t('process.emptyIncidentsMessage') }}</td>

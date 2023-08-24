@@ -94,6 +94,7 @@
     "id": "ID",
     "startTime": "Start Time",
     "endTime": "End Time",
+    "createTime": "Creation Time",
     "businessKey": "Business Key",
     "state": "State",
     "processInstanceId": "Process Instance ID",

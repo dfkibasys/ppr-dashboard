@@ -94,6 +94,7 @@
     "id": "ID",
     "startTime": "Startzeit",
     "endTime": "Endzeit",
+    "createTime": "Erstellungszeit",
     "businessKey": "Business Key",
     "state": "Status",
     "processInstanceId": "Prozessinstanz ID",
