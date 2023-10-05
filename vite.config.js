@@ -1,8 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
 import createVuePlugin from '@vitejs/plugin-vue';
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 const path = require('path');
 // https://vitejs.dev/config/
@@ -25,31 +22,6 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, './src'),
         '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
         'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
-        util: 'util/',
-      },
-    },
-    //https://github.com/mqttjs/MQTT.js#vite
-    optimizeDeps: {
-      esbuildOptions: {
-        // Node.js global to browser globalThis
-        define: {
-          global: 'globalThis',
-        },
-        // Enable esbuild polyfill plugins
-        plugins: [
-          NodeGlobalsPolyfillPlugin({
-            buffer: true, //https://github.com/mqttjs/MQTT.js/issues/1656
-            process: true,
-          }),
-          NodeModulesPolyfillPlugin(),
-        ],
-      },
-    },
-    build: {
-      rollupOptions: {
-        // Enable rollup polyfills plugin
-        // used during production bundling
-        plugins: [nodePolyfills()],
       },
     },
     define: {

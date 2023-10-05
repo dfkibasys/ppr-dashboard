@@ -1,4 +1,4 @@
-import * as mqtt from 'mqtt';
+import * as mqtt from 'mqtt/dist/mqtt.min';
 import * as uuid from 'uuid';
 import store from '@/main';
 
