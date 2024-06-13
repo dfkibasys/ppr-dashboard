@@ -16,6 +16,7 @@
   "dependencies": {
     "@aacassandra/vue3-progressbar": "^1.0.3",
     "@basys/aas-registry-client-ts-fetch": "^0.4.2-SNAPSHOT.202210262111",
+    "@maxgraph/core": "^0.11.0",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
@@ -24,7 +25,6 @@
     "bpmn-js": "^13.2.2",
     "moment": "^2.29.4",
     "mqtt": "^5.1.0",
-    "mxgraph": "^4.2.2",
     "url": "^0.11.1",
     "uuid": "^9.0.0",
     "vue": "^3.3.4",

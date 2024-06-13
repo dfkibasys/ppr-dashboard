@@ -34,7 +34,7 @@
     </template>
 
     <template v-slot:body>
-      <div class="mxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
+      <div class="maxgraph" ref="graphy" style="position: relative; overflow: auto"></div>
     </template>
 
     <template v-slot:footer>
@@ -80,14 +80,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import mxgraph from 'mxgraph';
+import { Client, Graph, xmlUtils, Codec, GraphDataModel, Geometry } from '@maxgraph/core';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import OperationModeOptions from '@/types/OperationModeOptions';
 import { Asset } from '@/types/AssetsState';
 import CModal from '../common/CModal.vue';
-
-const { mxClient, mxGraph, mxUtils, mxCodec, mxConstants, mxGraphModel, mxGeometry } = mxgraph();
 
 export default defineComponent({
   name: 'PackML',
@@ -121,36 +119,36 @@ export default defineComponent({
   methods: {
     initGraph: function () {
       let that = this;
-      if (mxClient.isBrowserSupported()) {
+      if (Client.isBrowserSupported()) {
         let div = this.$refs.graphy;
         axios.get('data/PackML.XML').then((resp) => {
           let xml = resp.data;
 
           ((container: any) => {
-            let xmlDocument = mxUtils.parseXml(xml);
+            let xmlDocument = xmlUtils.parseXml(xml);
 
             //decode method needs access to the following window params (VueJS hack)
-            (<any>window)['mxGraphModel'] = mxGraphModel;
-            (<any>window)['mxGeometry'] = mxGeometry;
+            (<any>window)['mxGraphModel'] = GraphDataModel;
+            (<any>window)['mxGeometry'] = Geometry;
 
             if (
               xmlDocument.documentElement != null &&
               xmlDocument.documentElement.nodeName == 'mxGraphModel'
             ) {
-              let codec = new mxCodec(xmlDocument);
+              let codec = new Codec(xmlDocument);
               let node = xmlDocument.documentElement;
 
               container.innerHTML = '';
 
-              that.graph = new mxGraph(container);
+              that.graph = new Graph(container);
               that.graph.setTooltips(true);
               that.graph.setEnabled(false);
 
               // Changes the default style for edges "in-place"
               let style = that.graph.getStylesheet().getDefaultEdgeStyle();
-              style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+              style.verticalAlign = "top";
 
-              codec.decode(node, that.graph.getModel());
+              codec.decode(node, that.graph.getDataModel());
 
               //zoom out to fit the modal size (leads to display errors on tablet)
               that.graph.zoomFactor = 1.15;
@@ -177,11 +175,9 @@ export default defineComponent({
 
       //change style of active state and save color for updates
       if (that.currentCell !== null) {
-        that.oldBorderColor = that.graph.getCellStyle(that.currentCell)[
-          mxConstants.STYLE_STROKECOLOR
-        ];
+        that.oldBorderColor = that.graph.getCellStyle(that.currentCell).strokeColor;
 
-        that.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, '#F00', [that.currentCell]);
+        that.graph.setCellStyles('strokeColor', '#F00', [that.currentCell]);
       } else {
         console.error(`Current state ${state} not found.`);
         that.oldBorderColor = '';
@@ -296,7 +292,7 @@ export default defineComponent({
 
           //set state cell
           //set old cell border to previous color
-          this.graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, this.oldBorderColor, [
+          this.graph.setCellStyles('strokeColor', this.oldBorderColor, [
             this.currentCell,
           ]);
           //set new cell border to red
