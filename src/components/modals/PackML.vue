@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Client, Graph, xmlUtils, Codec, GraphDataModel, Geometry } from '@maxgraph/core';
+import { Client, Graph, xmlUtils, ModelXmlSerializer } from '@maxgraph/core';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import OperationModeOptions from '@/types/OperationModeOptions';
@@ -127,28 +127,22 @@ export default defineComponent({
           ((container: any) => {
             let xmlDocument = xmlUtils.parseXml(xml);
 
-            //decode method needs access to the following window params (VueJS hack)
-            (<any>window)['mxGraphModel'] = GraphDataModel;
-            (<any>window)['mxGeometry'] = Geometry;
-
             if (
               xmlDocument.documentElement != null &&
               xmlDocument.documentElement.nodeName == 'mxGraphModel'
             ) {
-              let codec = new Codec(xmlDocument);
-              let node = xmlDocument.documentElement;
-
               container.innerHTML = '';
 
               that.graph = new Graph(container);
-              that.graph.setTooltips(true);
               that.graph.setEnabled(false);
 
               // Changes the default style for edges "in-place"
               let style = that.graph.getStylesheet().getDefaultEdgeStyle();
               style.verticalAlign = "top";
 
-              codec.decode(node, that.graph.getDataModel());
+              // Registers codecs under the hood
+              let serializer = new ModelXmlSerializer(that.graph.getDataModel())
+              serializer.import(xml)
 
               //zoom out to fit the modal size (leads to display errors on tablet)
               that.graph.zoomFactor = 1.15;
