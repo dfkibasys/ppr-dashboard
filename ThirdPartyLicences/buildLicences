@@ -38,7 +38,7 @@ mqtt@5.1.0 [license(s): MIT]
 ├── license files: MIT
 └── readme files: MIT
 
-mxgraph@4.2.2 [license(s): Apache, Apache-2.0]
+@maxgraph/core@0.11.0 [license(s): Apache, Apache-2.0]
 ├── package.json:  Apache-2.0
 └── license files: Apache
 
