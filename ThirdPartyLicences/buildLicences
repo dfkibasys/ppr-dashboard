@@ -11,34 +11,34 @@
 ├── license files: MIT
 └── readme files: MIT
 
-axios@1.4.0 [license(s): MIT]
+axios@1.7.2 [license(s): MIT]
 └── package.json:  MIT
 
 bcryptjs@2.4.3 [license(s): MIT]
 ├── package.json:  MIT
 └── readme files: MIT
 
-bootstrap@5.3.1 [license(s): MIT]
+bootstrap@5.3.3 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
-bootstrap-icons@1.10.5 [license(s): MIT]
+bootstrap-icons@1.11.3 [license(s): MIT]
 ├── package.json:  MIT
 ├── license files: MIT
 └── readme files: MIT
 
-bpmn-js@13.2.2 [license(s): SEE LICENSE IN LICENSE]
+bpmn-js@17.9.1 [license(s): SEE LICENSE IN LICENSE]
 └── package.json:  SEE LICENSE IN LICENSE
 
-moment@2.29.4 [license(s): MIT]
+moment@2.30.1 [license(s): MIT]
 └── package.json:  MIT
 
-mqtt@5.1.0 [license(s): MIT]
+mqtt@5.8.0 [license(s): MIT]
 ├── package.json:  MIT
 ├── license files: MIT
 └── readme files: MIT
 
-@maxgraph/core@0.11.0 [license(s): Apache, Apache-2.0]
+@maxgraph/core@0.12.0 [license(s): Apache, Apache-2.0]
 ├── package.json:  Apache-2.0
 └── license files: Apache
 
@@ -47,23 +47,23 @@ ppr-dashboard@1.0.0 [license(s): EPLv2, MIT, Public Domain]
 ├── license files: MIT
 └── readme files: Public Domain
 
-url@0.11.1 [license(s): MIT]
+url@0.11.3 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
-uuid@9.0.0 [license(s): MIT]
+uuid@10.0.0 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
-vue@3.3.4 [license(s): MIT]
+vue@3.4.31 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
-vue-i18n@9.2.2 [license(s): MIT]
+vue-i18n@9.13.1 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
-vue-router@4.2.4 [license(s): MIT]
+vue-router@4.4.0 [license(s): MIT]
 ├── package.json:  MIT
 └── license files: MIT
 
