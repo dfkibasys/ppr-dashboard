@@ -9,9 +9,7 @@ variables:
   DOCKER_HOST: 'tcp://docker:2375'
   DOCKER_TLS_CERTDIR: ''
   CI_REGISTRY_NAME: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard'
-  CI_REGISTRY_NAME_UNPRIVILEGED: '$DOCKER_REGISTRY/dfkibasys/ppr-dashboard-unprivileged'
   DOCKER_FILE_NAME: Dockerfile
-  DOCKER_FILE_NAME_UNPRIVILEGED: Dockerfile.unprivileged
   TARGET_PLATFORMS: linux/amd64,linux/arm64
 
 test:
@@ -38,11 +36,9 @@ build:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     # fix potential win / linux line ending problems otherwise it will not be executable
-    - sed -i 's/\r$//' ./deploy_unprivileged.sh
-    - sed -i 's/\r$//' ./entrypoint.shs
+    - sed -i 's/\r$//' ./entrypoint.sh
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:latest" -f $DOCKER_FILE_NAME . --push
-    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:latest" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
     - master
 
@@ -60,11 +56,9 @@ build-dev:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     # fix potential win / linux line ending problems otherwise it will not be executable
-    - sed -i 's/\r$//' ./deploy_unprivileged.sh
     - sed -i 's/\r$//' ./entrypoint.sh
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:dev" -f $DOCKER_FILE_NAME . --push
-    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:dev" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
     - develop
 
@@ -82,10 +76,8 @@ build-stable:
     - docker context create build-ctx
     - docker buildx create build-ctx --use
     # fix potential win / linux line ending problems otherwise it will not be executable
-    - sed -i 's/\r$//' ./deploy_unprivileged.sh
     - sed -i 's/\r$//' ./entrypoint.sh
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY"
     - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME:$CI_COMMIT_TAG" -f $DOCKER_FILE_NAME . --push
-    - docker buildx build --platform $TARGET_PLATFORMS -t "$CI_REGISTRY_NAME_UNPRIVILEGED:$CI_COMMIT_TAG" -f $DOCKER_FILE_NAME_UNPRIVILEGED . --push
   only:
     - tags
