@@ -20,6 +20,8 @@ RUN npm run build
 # production stage (responsible for serving such artifact using NGINX)
 FROM --platform=$TARGETPLATFORM nginxinc/nginx-unprivileged:stable-alpine as production-stage
 
+HEALTHCHECK CMD curl --fail http://localhost:8080/processes || exit 1
+
 USER root
 RUN rm -rf /usr/share/nginx/html/*
 

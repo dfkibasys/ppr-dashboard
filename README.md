@@ -32,14 +32,13 @@ VITE_ENABLE_BASYSAFE_INTEGRATION=false
 Build and start container
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Rebuild container after changes
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose up -d --build
 ```
 
 ## Circumventing CORS error
