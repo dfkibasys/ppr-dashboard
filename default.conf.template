@@ -1,5 +1,5 @@
 server {
-    listen       80;
+    listen       8080;
     server_name  localhost;
     error_page 404 =200 /index.html; 
     

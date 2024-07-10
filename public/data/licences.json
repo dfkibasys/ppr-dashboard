@@ -28,7 +28,7 @@
   },
   {
     "name": "axios",
-    "version": "1.4.0",
+    "version": "1.7.2",
     "repository": "https://github.com/axios/axios",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -46,7 +46,7 @@
   },
   {
     "name": "bootstrap",
-    "version": "5.3.1",
+    "version": "5.3.3",
     "repository": "https://github.com/twbs/bootstrap",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -55,7 +55,7 @@
   },
   {
     "name": "bootstrap-icons",
-    "version": "1.10.5",
+    "version": "1.11.3",
     "repository": "https://github.com/twbs/icons",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -64,7 +64,7 @@
   },
   {
     "name": "bpmn-js",
-    "version": "13.2.2",
+    "version": "17.9.1",
     "repository": "https://github.com/bpmn-io/bpmn-js",
     "summary": "bpmn.io License",
     "from package.json": "",
@@ -73,7 +73,7 @@
   },
   {
     "name": "moment",
-    "version": "2.29.4",
+    "version": "2.30.1",
     "repository": "https://github.com/moment/moment",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -82,7 +82,7 @@
   },
   {
     "name": "mqtt",
-    "version": "4.3.7",
+    "version": "5.8.0",
     "repository": "http://github.com/mqttjs/MQTT.js",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -90,9 +90,9 @@
     "from readme": "MIT"
   },
   {
-    "name": "mxgraph",
-    "version": "4.2.2",
-    "repository": "https://github.com/jgraph/mxgraph",
+    "name": "@maxgraph/core",
+    "version": "0.12.0",
+    "repository": "https://github.com/maxGraph/maxGraph",
     "summary": "Apache",
     "from package.json": "Apache-2.0",
     "from license": "Apache",
@@ -109,7 +109,7 @@
   },
   {
     "name": "url",
-    "version": "0.11.1",
+    "version": "0.11.3",
     "repository": "https://github.com/defunctzombie/node-url",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -118,7 +118,7 @@
   },
   {
     "name": "uuid",
-    "version": "9.0.0",
+    "version": "10.0.0",
     "repository": "https://github.com/uuidjs/uuid",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -127,7 +127,7 @@
   },
   {
     "name": "vue",
-    "version": "3.3.4",
+    "version": "3.4.31",
     "repository": "https://github.com/vuejs/vue",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -136,7 +136,7 @@
   },
   {
     "name": "vue-i18n",
-    "version": "9.2.2",
+    "version": "9.13.1",
     "repository": "https://github.com/kazupon/vue-i18n",
     "summary": "MIT",
     "from package.json": "MIT",
@@ -145,7 +145,7 @@
   },
   {
     "name": "vue-router",
-    "version": "4.2.4",
+    "version": "4.4.0",
     "repository": "https://github.com/vuejs/vue-router",
     "summary": "MIT",
     "from package.json": "MIT",

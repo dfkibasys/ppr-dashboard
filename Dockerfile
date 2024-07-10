@@ -18,12 +18,19 @@ COPY . .
 RUN npm run build
 
 # production stage (responsible for serving such artifact using NGINX)
-FROM --platform=$TARGETPLATFORM nginx:stable-alpine as production-stage
+FROM --platform=$TARGETPLATFORM nginxinc/nginx-unprivileged:stable-alpine as production-stage
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/processes || exit 1
+
+USER root
+RUN rm -rf /usr/share/nginx/html/*
+
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-
 COPY --from=build-stage /app/default.conf.template /etc/nginx/conf.d/default.conf.template
-COPY --from=build-stage /app/entrypoint.sh /usr/share/nginx/
+COPY --chmod=555 --from=build-stage /app/entrypoint.sh /docker-entrypoint.d/entrypoint.sh
 
-EXPOSE 80
-ENTRYPOINT ["/usr/share/nginx/entrypoint.sh"]
+RUN chown -R nginx:nginx /usr/share/nginx/html
+USER nginx
+
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

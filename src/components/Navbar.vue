@@ -10,7 +10,9 @@
         <ul class="navbar-nav">
           <router-link class="pe-3" to="/assets">{{ $t('navbar.assets') }}</router-link>
           <router-link class="pe-3" to="/processes">{{ $t('navbar.processes') }}</router-link>
-          <router-link class="pe-3" to="/basysafe">{{ $t('navbar.basysafe') }}</router-link>
+          <router-link class="pe-3" v-if="basysafeEnabled" to="/basysafe">{{
+            $t('navbar.basysafe')
+          }}</router-link>
         </ul>
         <ul class="navbar-nav pe-3">
           <button
@@ -58,6 +60,7 @@ import { defineComponent } from 'vue';
 import Licences from '@/components/modals/Licences.vue';
 import Login from '@/components/modals/Login.vue';
 import Settings from '@/components/modals/Settings.vue';
+import getEnv from '@/helpers/env';
 
 export default defineComponent({
   name: 'Navbar',
@@ -77,6 +80,9 @@ export default defineComponent({
     },
     authorized: function (): boolean {
       return this.$store.getters['users/isAuthorized'];
+    },
+    basysafeEnabled: function (): boolean {
+      return getEnv('VITE_ENABLE_BASYSAFE_INTEGRATION') === 'true';
     },
   },
 

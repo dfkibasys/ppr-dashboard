@@ -26,19 +26,19 @@ Set the needed Registry/MQTT/Camunda URLS in `.env` file
 VITE_AAS_REGISTRY_URL=http://10.2.10.4:8020
 VITE_MQTT_BROKER_URL=ws://10.2.10.1:8083/mqtt
 VITE_CAMUNDA_REST_URL=http://10.2.10.4:8080
+VITE_ENABLE_BASYSAFE_INTEGRATION=false
 ```
 
 Build and start container
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Rebuild container after changes
 
 ```
-docker-compose build
-docker-compose up -d
+docker compose up -d --build
 ```
 
 ## Circumventing CORS error
