@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light bg-light navbar-expand">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="@/assets/DFKI_Logo.png" class="me-3" height="40" />
+          <img src="@/assets/DFKI_logo.svg" class="me-3" height="40" />
           <img src="@/assets/Logo_BaSys4_1024px-300x79.png" height="40" />
         </a>
 
